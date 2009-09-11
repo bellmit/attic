@@ -3,7 +3,7 @@ from werkzeug.routing import Map, Rule, RuleFactory
 from werkzeug import Request, Response, ClosingIterator
 from werkzeug.exceptions import HTTPException
 
-class WebApplication(type):
+class BadlyNamedMetaclass(type):
     def __new__(meta, name, bases, dict):
         dict['__rule_defs__'] = rule_defs = meta.extract_rule_defs(dict)
         rules = [Rule(*args, **kwargs) for args, kwargs in rule_defs]
@@ -52,6 +52,9 @@ class WebApplication(type):
             hasattr(method, '__rule_kwargs__')
         ))
 
+class WebApplication(object):
+    __metaclass__ = BadlyNamedMetaclass
+
 def route(*args, **kwargs):
     def decorate_method(method):
         method.__rule_args__ = args
@@ -59,9 +62,7 @@ def route(*args, **kwargs):
         return method
     return decorate_method
 
-class Example(object):
-    __metaclass__ = WebApplication
-    
+class Example(WebApplication):
     def __init__(self, global_config, message, **config):
         self.message = message
     
