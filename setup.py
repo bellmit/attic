@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='proto',
+    name='crankshaft',
     version='0.dev',
     
-    py_modules=['proto'],
+    packages=find_packages(),
     
     install_requires=[
         'Werkzeug',
@@ -12,8 +12,8 @@ setup(
     
     entry_points = {
         'paste.app_factory': [
-            'example=proto:Example',
-            'inherited=proto:InheritanceExample',
+            'example=crankshaft.examples:Example',
+            'inherited=crankshaft.examples:InheritanceExample',
         ]
     },
 )
