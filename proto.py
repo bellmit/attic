@@ -7,6 +7,7 @@ class WebApplication(type):
     def __new__(meta, name, bases, dict):
         dict['__route_defs__'] = route_defs = meta.extract_route_defs(dict)
         routes = [Rule(*args, **kwargs) for args, kwargs in route_defs]
+        
         inherited_route_defs = chain(*[
             base.__route_defs__ for base in bases if hasattr(base, '__route_defs__')
         ])
@@ -23,7 +24,6 @@ class WebApplication(type):
             except HTTPException, e:
                 response = e
             return ClosingIterator(response(environ, start_response))
-
         dict['__call__'] = __call__
 
         return type.__new__(meta, name, bases, dict)
