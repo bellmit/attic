@@ -13,7 +13,9 @@ class WebApplication(type):
         ])
         inherited_routes = [Rule(*args, **kwargs) for args, kwargs in inherited_route_defs]
         dict['__route_map__'] = Map(routes + inherited_routes)
-
+        
+        # Define a real, honest-to-Zod function named __call__ so that
+        # the resulting type looks as normal as possible.
         def __call__(self, environ, start_response):
             request = Request(environ)
             adapter = self.__route_map__.bind_to_environ(environ)
@@ -50,10 +52,10 @@ class WebApplication(type):
             hasattr(method, '__route_kwargs__')
         ))
 
-def route(url):
+def route(*args, **kwargs):
     def decorate_method(method):
-        method.__route_args__ = (url,)
-        method.__route_kwargs__ = {}
+        method.__route_args__ = args
+        method.__route_kwargs__ = kwargs
         return method
     return decorate_method
 
@@ -69,7 +71,8 @@ class Example(object):
 
 class InheritanceExample(Example):
     
-    def index(self, request):
+    @route('/', methods=['POST'])
+    def post_index(self, request):
         return Response("I've totally hidden my parent class's behaviour.")
     
     @route('/ok')
