@@ -2,6 +2,7 @@ from itertools import chain
 from werkzeug.routing import Map, Rule, RuleFactory
 from werkzeug import Request, ClosingIterator
 from werkzeug.exceptions import HTTPException
+from crankshaft.routing import is_routable, to_rule
 
 # Define a real, honest-to-Zod function named __call__ so that
 # webapp-derived types look as normal as possible.
@@ -33,21 +34,15 @@ class WebApplication(type):
     @classmethod
     def extract_rule_defs(meta, attributes):
         return [
-            meta.rule_def(name, method)
+            meta.to_rule(name, method)
             for name, method in attributes.iteritems()
             if meta.is_routable(method)
         ]
     
     @classmethod
-    def rule_def(meta, name, method):
-        return (
-            method.__rule_args__,
-            dict(method.__rule_kwargs__, endpoint=name)
-        )
+    def to_rule(meta, name, method):
+        return to_rule(name, method)
     
     @classmethod
     def is_routable(meta, method):
-        return all((
-            hasattr(method, '__rule_args__'),
-            hasattr(method, '__rule_kwargs__')
-        ))
+        return is_routable(method)

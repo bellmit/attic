@@ -1,5 +1,6 @@
 from werkzeug import Response
-from crankshaft import WebApplication, get, post
+from crankshaft import WebApplication
+from crankshaft.routing import get, post
 
 class Example(WebApplication):
     def __init__(self, global_config, message, **config):
@@ -14,7 +15,6 @@ class Example(WebApplication):
         return Response(message)
 
 class InheritanceExample(Example):
-    
     @post('/')
     def post_index(self, request):
         return Response("I've totally hidden my parent class's behaviour.")
