@@ -5,20 +5,20 @@ from werkzeug.exceptions import HTTPException
 
 class WebApplication(type):
     def __new__(meta, name, bases, dict):
-        dict['__route_defs__'] = route_defs = meta.extract_route_defs(dict)
-        routes = [Rule(*args, **kwargs) for args, kwargs in route_defs]
+        dict['__rule_defs__'] = rule_defs = meta.extract_rule_defs(dict)
+        rules = [Rule(*args, **kwargs) for args, kwargs in rule_defs]
         
-        inherited_route_defs = chain(*[
-            base.__route_defs__ for base in bases if hasattr(base, '__route_defs__')
+        inherited_rule_defs = chain(*[
+            base.__rule_defs__ for base in bases if hasattr(base, '__rule_defs__')
         ])
-        inherited_routes = [Rule(*args, **kwargs) for args, kwargs in inherited_route_defs]
-        dict['__route_map__'] = Map(routes + inherited_routes)
+        inherited_rules = [Rule(*args, **kwargs) for args, kwargs in inherited_rule_defs]
+        dict['__rule_map__'] = Map(rules + inherited_rules)
         
         # Define a real, honest-to-Zod function named __call__ so that
         # the resulting type looks as normal as possible.
         def __call__(self, environ, start_response):
             request = Request(environ)
-            adapter = self.__route_map__.bind_to_environ(environ)
+            adapter = self.__rule_map__.bind_to_environ(environ)
             try:
                 endpoint, values = adapter.match()
                 handler = getattr(self, endpoint)
@@ -31,31 +31,31 @@ class WebApplication(type):
         return type.__new__(meta, name, bases, dict)
 
     @classmethod
-    def extract_route_defs(meta, attributes):
+    def extract_rule_defs(meta, attributes):
         return [
-            meta.route_def(name, method)
+            meta.rule_def(name, method)
             for name, method in attributes.iteritems()
             if meta.is_routable(method)
         ]
     
     @classmethod
-    def route_def(meta, name, method):
+    def rule_def(meta, name, method):
         return (
-            method.__route_args__,
-            dict(method.__route_kwargs__, endpoint=name)
+            method.__rule_args__,
+            dict(method.__rule_kwargs__, endpoint=name)
         )
     
     @classmethod
     def is_routable(meta, method):
         return all((
-            hasattr(method, '__route_args__'),
-            hasattr(method, '__route_kwargs__')
+            hasattr(method, '__rule_args__'),
+            hasattr(method, '__rule_kwargs__')
         ))
 
 def route(*args, **kwargs):
     def decorate_method(method):
-        method.__route_args__ = args
-        method.__route_kwargs__ = kwargs
+        method.__rule_args__ = args
+        method.__rule_kwargs__ = kwargs
         return method
     return decorate_method
 
