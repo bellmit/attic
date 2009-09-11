@@ -13,6 +13,7 @@ setup(
     entry_points = {
         'paste.app_factory': [
             'example=proto:Example',
+            'inherited=proto:InheritanceExample',
         ]
     },
 )
