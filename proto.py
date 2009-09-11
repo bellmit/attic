@@ -1,3 +1,4 @@
+from functools import partial
 from itertools import chain
 from werkzeug.routing import Map, Rule, RuleFactory
 from werkzeug import Request, Response, ClosingIterator
@@ -62,20 +63,25 @@ def route(*args, **kwargs):
         return method
     return decorate_method
 
+get = partial(route, methods=['GET'])
+post = partial(route, methods=['POST'])
+put = partial(route, methods=['PUT'])
+delete = partial(route, methods=['DELETE'])
+
 class Example(WebApplication):
     def __init__(self, global_config, message, **config):
         self.message = message
     
-    @route('/')
+    @get('/')
     def index(self, request):
         return Response(self.message)
 
 class InheritanceExample(Example):
     
-    @route('/', methods=['POST'])
+    @post('/')
     def post_index(self, request):
         return Response("I've totally hidden my parent class's behaviour.")
     
-    @route('/ok')
+    @get('/ok')
     def ok(self, request):
         return Response('Ok.')
