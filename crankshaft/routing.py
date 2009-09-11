@@ -1,24 +1,23 @@
 from functools import partial
 
-def is_routable(function):
+def is_routable(endpoint):
     return all((
-        callable(function),
-        hasattr(function, '__rule_args__'),
-        hasattr(function, '__rule_kwargs__')
+        hasattr(endpoint, '__rule_args__'),
+        hasattr(endpoint, '__rule_kwargs__')
     ))
 
-def to_rule(name, function):
+def to_rule(name, endpoint):
     return (
-        function.__rule_args__,
-        dict(function.__rule_kwargs__, endpoint=name)
+        endpoint.__rule_args__,
+        dict(endpoint.__rule_kwargs__, endpoint=name)
     )
 
 def route(*args, **kwargs):
-    def decorate_method(method):
-        method.__rule_args__ = args
-        method.__rule_kwargs__ = kwargs
-        return method
-    return decorate_method
+    def decorate_endpoint(endpoint):
+        endpoint.__rule_args__ = args
+        endpoint.__rule_kwargs__ = kwargs
+        return endpoint
+    return decorate_endpoint
 
 get = partial(route, methods=['GET'])
 post = partial(route, methods=['POST'])
