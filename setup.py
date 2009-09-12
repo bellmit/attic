@@ -7,7 +7,7 @@ setup(
     author_email='owen.jacobson@grimoire.ca',
     
     url='http://code.google.com/p/python-redfox/',
->     download_url='http://code.google.com/p/python-redfox/downloads/list',
+    download_url='http://code.google.com/p/python-redfox/downloads/list',
     description='WSGI request routing for Python objects',
     long_description="""
 Redfox provides a simple, declarative routing mechanism for creating
