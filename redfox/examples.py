@@ -1,6 +1,6 @@
 from werkzeug import Response
 from redfox import WebApplication
-from redfox.routing import get, post
+from redfox import get, post
 
 class Example(WebApplication):
     def __init__(self, global_config, message, **config):

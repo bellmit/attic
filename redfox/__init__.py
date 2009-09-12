@@ -4,13 +4,22 @@ microframeworks like juno_ or CherryPy_.
 """
 
 import redfox.meta
+from redfox.routing import route, get, post, put, delete
+
+__all__ = [
+    'WebApplication',
+    'route',
+    'get',
+    'post',
+    'delete'
+]
 
 class WebApplication(object):
     """Web application classes should extend this class, rather than
     using the ``redfox.meta.WebApplication`` metaclass. The following
     example is a Hello World application::
     
-        from redfox.routing import get
+        from redfox import WebApplication, get
         from werkzeug import Response
         
         class Example(WebApplication):
