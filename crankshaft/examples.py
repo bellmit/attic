@@ -7,6 +7,7 @@ class Example(WebApplication):
         self.message = message
     
     @get('/')
+    @get('/index.html')
     def index(self, request):
         return Response(self.message)
     

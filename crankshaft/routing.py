@@ -1,21 +1,21 @@
 from functools import partial
 
-def is_routable(endpoint):
-    return all((
-        hasattr(endpoint, '__rule_args__'),
-        hasattr(endpoint, '__rule_kwargs__')
-    ))
+def make_routable(endpoint):
+    if not is_routable(endpoint):
+        endpoint.__rule_args__ = []
 
-def to_rule(name, endpoint):
-    return (
-        endpoint.__rule_args__,
-        dict(endpoint.__rule_kwargs__, endpoint=name)
-    )
+def is_routable(endpoint):
+    return hasattr(endpoint, '__rule_args__')
+
+def to_rules(name, endpoint):
+    print "%s has rules %r" % (name, endpoint.__rule_args__)
+    for args, kwargs in endpoint.__rule_args__:
+        yield args, dict(kwargs, endpoint=name)
 
 def route(*args, **kwargs):
     def decorate_endpoint(endpoint):
-        endpoint.__rule_args__ = args
-        endpoint.__rule_kwargs__ = kwargs
+        make_routable(endpoint)
+        endpoint.__rule_args__.append((args, kwargs))
         return endpoint
     return decorate_endpoint
 
