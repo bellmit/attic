@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='crankshaft',
+    name='redfox',
     version='0.dev',
     
     packages=find_packages(),
@@ -12,8 +12,8 @@ setup(
     
     entry_points = {
         'paste.app_factory': [
-            'example=crankshaft.examples:Example',
-            'inherited=crankshaft.examples:InheritanceExample',
+            'example=redfox.examples:Example',
+            'inherited=redfox.examples:InheritanceExample',
         ]
     },
 )

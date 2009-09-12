@@ -2,7 +2,7 @@ from itertools import chain
 from werkzeug.routing import Map, Rule, RuleFactory
 from werkzeug import Request, ClosingIterator
 from werkzeug.exceptions import HTTPException
-from crankshaft.routing import routes
+from redfox.routing import routes
 
 # Define a real, honest-to-Zod function named __call__ so that
 # webapp-derived types look as normal as possible.
