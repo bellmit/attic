@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='redfox',
-    version='0.dev',
+    version='1.0',
     author='Owen Jacobson',
     author_email='owen.jacobson@grimoire.ca',
     
@@ -39,7 +39,7 @@ Features
 """,
     
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Framework :: Paste',
         'Intended Audience :: Developers',
