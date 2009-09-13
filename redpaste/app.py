@@ -25,6 +25,24 @@ shared_data = SharedDataMiddleware(NotFound(), {
     '/styles': ('redpaste', 'styles')
 })
 
+class UrlLookup(object):
+    def __init__(self, adapter):
+        self.adapter = adapter
+    
+    def __call__(
+        self,
+        endpoint,
+        method=None,
+        force_external=False,
+        **kwargs
+    ):
+        return self.adapter.build(
+            endpoint,
+            values=kwargs,
+            method=method,
+            force_external=force_external
+        )
+
 def template(name):
     """Returns a decorator that replaces the return value of a function.
     The decorated function is expected to return a dict, which is converted
@@ -32,11 +50,13 @@ def template(name):
     wrapped up in a Response."""
     def template_decorator(f):
         @wraps(f)
-        def template_responder(*args, **kwargs):
-            response = f(*args, **kwargs)
+        def template_responder(self, request, *args, **kwargs):
+            response = f(self, request, *args, **kwargs)
             template = template_lookup.get_template(name)
-            print "Rendering %s with %r" % (name, response)
-            body = template.render(**response)
+            body = template.render(**dict(
+                url_for=UrlLookup(request.url_adapter),
+                **response
+            ))
             return Response(body, mimetype='text/html')
         return template_responder
     return template_decorator
@@ -63,7 +83,14 @@ class Pastebin(WebApplication):
         syntax = request.form['syntax']
         
         paste = self.paste_store.new(author, body, syntax)
-        return redirect('/%s' % paste.id, code=303)
+        return redirect(
+            request.url_adapter.build(
+                'paste',
+                values=dict(id=paste.id),
+                method='GET'
+            ),
+            code=303
+        )
     
     @get('/<id>')
     @template('paste.mako')

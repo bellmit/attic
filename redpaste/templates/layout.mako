@@ -23,7 +23,7 @@
     <h2>Recent Pastes</h2>
     <ul>
         % for paste in pastes:
-            <li><a href="${paste.id |u}">${paste.author |h}</a><br>
+            <li><a href="${url_for('paste', id=paste.id)}">${paste.author |h}</a><br>
                 ${format_datetime(paste.timestamp) |h}</li>
         % endfor
     </ul>
