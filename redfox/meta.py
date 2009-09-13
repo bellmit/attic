@@ -4,9 +4,24 @@ app class instances into WSGI applications lives.
 
 from itertools import chain
 from werkzeug.routing import Map, Rule, RuleFactory
-from werkzeug import Request, ClosingIterator
+from werkzeug import Request as WerkzeugRequest, ClosingIterator
 from werkzeug.exceptions import HTTPException
 from redfox.routing import routes
+
+class Request(WerkzeugRequest):
+    """Extends the Werkzeug Request type by adding two new fields:
+    
+    ``environ``
+        The original WSGI environment used to create the request.
+    
+    ``url_adapter``
+        The Werkzeug MapAdapter used to route the request (useful for
+        constructing URLs).
+    """
+    def __init__(self, environ, url_adapter):
+        WerkzeugRequest.__init__(self, environ)
+        self.environ = environ
+        self.url_adapter = url_adapter
 
 # Define a real, honest-to-Zod function named __call__ so that
 # webapp-derived types look as normal as possible. This function
@@ -17,11 +32,13 @@ def __call__(self, environ, start_response):
     and friends, then chains to the WSGI application (normally a
     ``werkzeug.Response``) returned by the endpoint method.
     
-    The WSGI request environment is encapsulated in a ``werkzeug.Request``
-    object, for convenience.
+    The WSGI request environment is encapsulated in a ``Request`` object,
+    for convenience. The original WSGI environment and the URL adapter
+    used to dispatch the request are both attached to the request, for use
+    in application-level handler methods.
     """
-    request = Request(environ)
     adapter = self.__rule_map__.bind_to_environ(environ)
+    request = Request(environ, adapter)
     try:
         endpoint, values = adapter.match()
         handler = getattr(self, endpoint)
