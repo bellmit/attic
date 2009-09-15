@@ -46,14 +46,13 @@ class WebApplication(type):
         A WSGI entry point method that uses ``__rule_map__`` to route requests.
     """
     def __new__(meta, name, bases, dict):
-        dict['__rule_defs__'] = rule_defs = list(meta.extract_rule_defs(dict))
+        rule_defs = list(meta.extract_rule_defs(dict))
         rules = [Rule(*args, **kwargs) for args, kwargs in rule_defs]
         
-        inherited_rule_defs = chain(*[
-            base.__rule_defs__ for base in bases if hasattr(base, '__rule_defs__')
-        ])
-        inherited_rules = [Rule(*args, **kwargs) for args, kwargs in inherited_rule_defs]
-        dict['__rule_map__'] = Map(rules + inherited_rules)
+        parent_maps = [
+            MapRuleFactory(base.__rule_map__) for base in bases if hasattr(base, '__rule_map__')
+        ]
+        dict['__rule_map__'] = Map(rules + parent_maps)
         dict['__call__'] = __call__
         
         return type.__new__(meta, name, bases, dict)
@@ -77,3 +76,12 @@ class WebApplication(type):
         # than the parent's. See __call__ for the other half of the
         # equation.
         return routes(method, endpoint=name)
+
+class MapRuleFactory(RuleFactory):
+    """A Werkzeug RuleFactory backed by an existing Map."""
+    def __init__(self, source_map):
+        self.source_map = source_map
+    
+    def get_rules(self, map):
+        for rule in self.source_map.iter_rules():
+            yield rule.empty()

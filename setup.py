@@ -59,6 +59,7 @@ Features
         'paste.app_factory': [
             'example=redfox.examples:Example',
             'inherited=redfox.examples:InheritanceExample',
+            'redirecty=redfox.examples:RedirectyExample',
         ]
     },
 )
