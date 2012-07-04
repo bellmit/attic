@@ -25,6 +25,12 @@ You'll need to add Jenkins-related configuration to your repository's
     git config jenkins.job my-project
     git config jenkins.token SECRET_TOKEN
 
+### Multiple repositories
+
+If you share the same Jenkins server across several projects (not unusual),
+you can put the Jenkins URL in a shared config file (such as `~/.gitconfig`)
+instead of configuring it for each project.
+
 ## Build-on-push
 
 To configure a repository to automatically submit build requests on push,
