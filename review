@@ -9,8 +9,11 @@ while [ $# -ge 1 ]; do
         echo "=== $sample ==="
         cat $sample
         
-        echo "--- Output ---"
-        cat ${sample/.sample/.output}
+        echo "--- Parser ---"
+        cat ${sample/.sample/.parser}
+        
+        echo "--- Compiler ---"
+        cat ${sample/.sample/.compiler}
         
         echo
     done

@@ -1,6 +1,7 @@
 *.tokens
 *.pyc
-samples/*.output
+samples/*.parser
+samples/*.compiler
 *Lexer.py
 *Parser.py
 compiler.py
