@@ -20,6 +20,8 @@ program
 statement
     :   expression ';'
         -> ^(STATEMENT expression)
+    |   RETURN expression? ';'
+        -> ^(RETURN expression?)
     |   ';'
         ->
     ;

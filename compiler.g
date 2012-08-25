@@ -17,6 +17,8 @@ tokens {
     OP_NUM;
     OP_POP;
     OP_PUSH_LITERAL;
+    OP_RETURN0;
+    OP_RETURN;
 }
 
 program
@@ -27,6 +29,10 @@ program
 statement
     :   ^(STATEMENT expression)
         -> expression OP_POP
+    |   RETURN
+        -> OP_RETURN0
+    |   ^(RETURN expression)
+        -> expression OP_RETURN
     ;
 
 expression
