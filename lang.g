@@ -18,6 +18,8 @@ program
 statement
     :   expression ';'
         -> ^(STATEMENT expression)
+    |   ';'
+        ->
     ;
 
 expression
@@ -34,7 +36,7 @@ literal
     ;
 
 list_literal
-    : '{' list_body '}'
+    :   '{' list_body '}'
         -> ^(LIST list_body?)
     ;
 
