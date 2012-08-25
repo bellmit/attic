@@ -40,15 +40,15 @@ literal
 
 immediate_value
     :   INT
-        -> OP_NUM INT
+        -> ^(OP_NUM INT)
     |   FLOAT
-        -> OP_PUSH_LITERAL FLOAT
+        -> ^(OP_PUSH_LITERAL FLOAT)
     |   STRING
-        -> OP_PUSH_LITERAL STRING
+        -> ^(OP_PUSH_LITERAL STRING)
     |   OBJECT_NUM
-        -> OP_PUSH_LITERAL OBJECT_NUM
+        -> ^(OP_PUSH_LITERAL OBJECT_NUM)
     |   ERROR
-        -> OP_PUSH_LITERAL ERROR
+        -> ^(OP_PUSH_LITERAL ERROR)
     ;
 
 list_literal
