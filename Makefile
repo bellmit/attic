@@ -1,7 +1,11 @@
 SAMPLES=$(wildcard samples/*.sample)
 SAMPLE_OUTPUTS=$(SAMPLES:.sample=.output)
 
-samples: $(SAMPLE_OUTPUTS)
+language: compiler.py langParser.py langLexer.py
+samples: language $(SAMPLE_OUTPUTS)
+
+compiler.py: compiler.g lang.tokens
+	java -jar ~/Downloads/antlr-3.1.3.jar $<
 
 %Parser.py %Lexer.py %.tokens: %.g
 	java -jar ~/Downloads/antlr-3.1.3.jar $<
@@ -13,8 +17,10 @@ samples: $(SAMPLE_OUTPUTS)
 
 clean:
 	$(RM) samples/*.output
+	$(RM) compiler.py compiler.tokens
 	$(RM) langParser.py langLexer.py lang.tokens
 	find . -name '*.pyc' -delete
 
+.PHONY: language
 .PHONY: samples
 .PHONY: clean

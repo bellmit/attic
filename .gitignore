@@ -3,3 +3,4 @@
 samples/*.output
 *Lexer.py
 *Parser.py
+compiler.py
