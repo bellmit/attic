@@ -76,19 +76,18 @@ fragment STRING_ESCAPE
 STRING: '"' (STRING_CHAR | STRING_ESCAPE) * '"';
 
 fragment DIGIT: '0'..'9';
+fragment SIGN: '-'?;
 
-INT: '-'? DIGIT+;
-
-fragment FLOAT_FRACTIONAL
-    :   '.' DIGIT*
-    ;
+INT: SIGN DIGIT+;
 
 fragment FLOAT_EXPONENT
     :   'e' ('+'|'-')? DIGIT+
     ;
 
 FLOAT
-    :   INT (FLOAT_FRACTIONAL FLOAT_EXPONENT? | FLOAT_EXPONENT)
+    :   SIGN DIGIT+ FLOAT_EXPONENT
+    |   SIGN DIGIT+ '.' DIGIT* FLOAT_EXPONENT?
+    |   SIGN '.' DIGIT+ FLOAT_EXPONENT?
     ;
 
 OBJECT_NUM
