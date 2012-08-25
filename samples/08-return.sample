@@ -4,3 +4,4 @@ return #-1;
 return e_perm;
 return {2, 3, 3};
 return 1e60;
+return;
