@@ -20,7 +20,7 @@ tokens {
 }
 
 program
-    :   statement* EOF
+    :   ^(PROGRAM statement*)
         -> statement* OP_DONE
     ;
 

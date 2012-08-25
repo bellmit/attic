@@ -8,11 +8,13 @@ options {
 
 tokens {
     LIST;
+    PROGRAM;
     STATEMENT;
 }
 
 program
-    : statement* EOF!
+    : statement* EOF
+        -> ^(PROGRAM statement*)
     ;
 
 statement
