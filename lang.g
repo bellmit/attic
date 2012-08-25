@@ -7,6 +7,7 @@ options {
 }
 
 tokens {
+    LIST;
     STATEMENT;
 }
 
@@ -29,6 +30,27 @@ literal
     |   STRING
     |   OBJECT_NUM
     |   ERROR
+    |   list_literal
+    ;
+
+list_literal
+    : '{' list_body '}'
+        -> ^(LIST list_body?)
+    ;
+
+list_body
+    :   (list_element (',' list_element)*)?
+        -> list_element*
+    ;
+
+list_element
+    :   expression
+    |   list_splice
+    ;
+
+list_splice
+    :   '@' expression
+        -> ^('@' expression)
     ;
 
 // --------------------
@@ -88,7 +110,7 @@ fragment FLOAT_EXPONENT
     ;
 
 FLOAT
-    :   INT (FLOAT_FRACTIONAL FLOAT_EXPONENT? | FLOAT_EXPONENT)
+    :   INT ((FLOAT_FRACTIONAL FLOAT_EXPONENT?) | FLOAT_EXPONENT)
     ;
 
 OBJECT_NUM
