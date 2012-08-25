@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+if [ $# -eq 0 ]; then
+    set -- '*'
+fi
+
+while [ $# -ge 1 ]; do
+    for sample in samples/$1.sample; do
+        echo "=== $sample ==="
+        cat $sample
+        
+        echo "--- Output ---"
+        cat ${sample/.sample/.output}
+        
+        echo
+    done
+    
+    shift
+done

@@ -1,0 +1,16 @@
+e_range;
+e_recmove;
+e_none;
+e_propnf;
+e_quota;
+e_div;
+e_args;
+e_varnf;
+e_verbnf;
+e_perm;
+e_invind;
+e_nacc;
+e_type;
+e_float;
+e_invarg;
+e_maxrec;
