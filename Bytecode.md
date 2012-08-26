@@ -61,6 +61,9 @@ allows the decompiler to reliably determine which statement to emit.
 <table>
 <thead>
     <tr>
+        <th colspan="4">Control Flow</th>
+    </tr>
+    <tr>
         <th>Encoding</th>
         <th>Name</th>
         <th>Ticks</th>
@@ -105,6 +108,30 @@ allows the decompiler to reliably determine which statement to emit.
         <td>1</td>
         <td>As with <kbd>FORK</kbd>. The new process task's <var>taskid</var>
             is stored in <var>var</var>.</td>
+    </tr>
+    <tr>
+        <td><kbd>05 <var>var</var> <var>label</var></kbd></td>
+        <td><kbd>FOR_LIST</kbd></td>
+        <td>1</td>
+        <td><var>index</var> = POP(), <var>list</var> = POP(), if
+            <var>index</var> is a valid index in <var>list</var> then
+            <kbd><var>list</var>[<var>index</var>]</kbd> is stored in
+            <var>var</var>, <var>list</var> is pushed back onto the stack, and
+            <kbd><var>index</var> + 1</kbd> is pushed onto the stack.
+            Otherwise, execution continues at <var>label</var> instead of the
+            next instruction.</td>
+    </tr>
+    <tr>
+        <td><kbd>06 <var>var</var> <var>label</var></kbd></td>
+        <td><kbd>FOR_RANGE</kbd></td>
+        <td>1</td>
+        <td><var>upper</var> = POP(), <var>lower</var> = POP(), if
+            <var>lower</var> is no greater than <var>upper</var> then
+            <var>lower</var> is stored in <var>var</var>,
+            <kbd><var>lower</var> + 1</kbd> is pushed onto the stack, and
+            <var>upper</var> is pushed back onto the stack. Otherwise,
+            execution continues at <var>label</var> instead of the next
+            instruction.</td>
     </tr>
 </tbody>
 </table>
