@@ -22,6 +22,8 @@ statement
     :   simple_statement ';'
         -> simple_statement
     |   if_statement
+    |   ';'
+        ->
     ;
 
 simple_statement
@@ -29,8 +31,6 @@ simple_statement
         -> ^(STATEMENT expression)
     |   RETURN expression?
         -> ^(RETURN expression?)
-    |   ';'
-        ->
     ;
 
 // This writes out the branches if the IF statement *BACKWARDS*. Be careful!
