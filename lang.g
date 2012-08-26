@@ -89,12 +89,12 @@ literal
     ;
 
 list_literal
-    :   '{' list_body '}'
+    :   '{' list_body? '}'
         -> ^(LIST list_body?)
     ;
 
 list_body
-    :   (list_element (',' list_element)*)?
+    :   list_element (',' list_element)*
         -> list_element*
     ;
 
