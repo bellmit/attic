@@ -7,6 +7,7 @@ options {
 }
 
 tokens {
+    BLOCK;
     LIST;
     PROGRAM;
     STATEMENT;
@@ -18,12 +19,46 @@ program
     ;
 
 statement
-    :   expression ';'
+    :   simple_statement ';'
+        -> simple_statement
+    |   if_statement
+    ;
+
+simple_statement
+    :   expression
         -> ^(STATEMENT expression)
-    |   RETURN expression? ';'
+    |   RETURN expression?
         -> ^(RETURN expression?)
     |   ';'
         ->
+    ;
+
+// This writes out the branches if the IF statement *BACKWARDS*. Be careful!
+// Doing it the "wrong" way around makes generating jump targets in compile.g
+// way easier.
+if_statement
+    :   if_part elseif_parts? else_part? ENDIF
+        -> ^(ENDIF else_part? elseif_parts? if_part)
+    ;
+
+if_part
+    :   IF condition statement*
+        -> ^(IF condition statement*)
+    ;
+
+elseif_parts
+    :   ELSEIF condition statement* elseif_parts?
+        -> elseif_parts? ^(ELSEIF condition statement*)
+    ;
+
+else_part
+    :   ELSE statement*
+        -> ^(ELSE statement*)
+    ;
+
+condition
+    :   '(' expression ')'
+        -> expression
     ;
 
 expression
@@ -83,6 +118,10 @@ ERROR
     ;
 
 ANY: 'any';
+IF: 'if';
+ELSEIF: 'elseif';
+ELSE: 'else';
+ENDIF: 'endif';
 
 RETURN: 'return';
 
