@@ -1,0 +1,14 @@
+while ("empty while")
+endwhile
+
+while ("non-empty while")
+    return "non-empty while body";
+endwhile
+
+while example ("identified while")
+    return "identified while body";
+endwhile
+
+while identifier_while (identifier_condition)
+    identifier_body;
+endwhile

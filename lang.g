@@ -11,6 +11,7 @@ tokens {
     LIST;
     PROGRAM;
     STATEMENT;
+    LOOP_TAG;
 }
 
 program
@@ -22,6 +23,7 @@ statement
     :   simple_statement ';'
         -> simple_statement
     |   if_statement
+    |   while_statement
     ;
 
 simple_statement
@@ -56,13 +58,25 @@ else_part
         -> ^(ELSE statement*)
     ;
 
+while_statement
+    :   WHILE condition statement* ENDWHILE
+        -> ^(ENDWHILE condition statement*)
+    |   WHILE IDENTIFIER condition statement* ENDWHILE
+        -> ^(ENDWHILE ^(LOOP_TAG IDENTIFIER) condition statement*)
+    ;
+
 condition
     :   '(' expression ')'
         -> expression
     ;
 
 expression
+    :   root_expression
+    ;
+
+root_expression
     :   literal
+    |   IDENTIFIER
     ;
 
 literal
@@ -122,7 +136,8 @@ IF: 'if';
 ELSEIF: 'elseif';
 ELSE: 'else';
 ENDIF: 'endif';
-
+WHILE: 'while';
+ENDWHILE: 'endwhile';
 RETURN: 'return';
 
 // -----------------------

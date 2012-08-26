@@ -1,0 +1,11 @@
+/*
+ * A subtle one. Both the exit jump for the IF and the loop jump for the WHILE
+ * should go to the *start* of the WHILE condition.
+ */
+if ("if condition")
+    "if body";
+endif
+
+while ("while condition")
+    "while body";
+endwhile

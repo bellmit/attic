@@ -20,9 +20,12 @@ tokens {
     OP_MAKE_SINGLETON_LIST;
     OP_NUM;
     OP_POP;
+    OP_PUSH;
     OP_PUSH_LITERAL;
     OP_RETURN0;
     OP_RETURN;
+    OP_WHILE;
+    OP_WHILE_ID;
 }
 
 
@@ -35,6 +38,7 @@ statement
     :   simple_statement
     |   return_statement
     |   if_statement
+    |   while_statement
     ;
 
 simple_statement
@@ -96,8 +100,32 @@ else_part
         -> LABEL[str($ELSE.token.index)] statement*
     ;
 
+while_statement
+    :   ^(ENDWHILE expression statement*)
+        ->  LABEL[str($expression.start.token.index)]
+            expression
+            ^(OP_WHILE LABEL[str($ENDWHILE.token.index)])
+            statement*
+            ^(OP_JUMP LABEL[str($expression.start.token.index)])
+            LABEL[str($ENDWHILE.token.index)]
+    |   ^(ENDWHILE ^(LOOP_TAG IDENTIFIER) expression statement*)
+        ->  LABEL[str($expression.start.token.index)]
+            expression
+            LABEL[str($expression.start.token.index)]
+            ^(OP_WHILE_ID IDENTIFIER LABEL[str($ENDWHILE.token.index)])
+            statement*
+            ^(OP_JUMP LABEL[str($expression.start.token.index)])
+            LABEL[str($ENDWHILE.token.index)]
+    ;
+
 expression
+    :   root_expression
+    ;
+
+root_expression
     :   literal
+    |   IDENTIFIER
+        -> ^(OP_PUSH IDENTIFIER)
     ;
 
 literal
