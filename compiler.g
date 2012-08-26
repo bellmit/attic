@@ -56,15 +56,19 @@ if_statement
 
 // Un-reverse reversed IF sequences, stitching together jump targets as we go.
 if_sequence[next_node, exit_node]
-    :   if_part[next_node, exit_node]
-    |   elseif_part[next_node, exit_node] if_sequence[$elseif_part.start, $exit_node]
-        ->  if_sequence
-            ^(LABEL[str($elseif_part.start.token.index)])
-            elseif_part
-    |   else_part if_sequence[$else_part.start, $exit_node]
-        ->  if_sequence
+    :   elseif_sequence[$next_node, $exit_node]
+    |   else_part elseif_sequence[$else_part.start, $exit_node]
+        ->  elseif_sequence
             ^(LABEL[str($else_part.start.token.index)])
             else_part
+    ;
+
+elseif_sequence[next_node, exit_node]
+    :   if_part[next_node, exit_node]
+    |   elseif_part[next_node, exit_node] elseif_sequence[$elseif_part.start, $exit_node]
+        ->  elseif_sequence
+            ^(LABEL[str($elseif_part.start.token.index)])
+            elseif_part
     ;
 
 if_part[next_node, exit_node]
