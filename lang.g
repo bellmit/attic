@@ -24,6 +24,7 @@ statement
         -> simple_statement
     |   if_statement
     |   while_statement
+    |   for_statement
     |   ';'
         ->
     ;
@@ -63,6 +64,15 @@ while_statement
         -> ^(ENDWHILE condition statement*)
     |   WHILE IDENTIFIER condition statement* ENDWHILE
         -> ^(ENDWHILE ^(LOOP_TAG IDENTIFIER) condition statement*)
+    ;
+
+for_statement
+    :   for_list_statement
+    ;
+
+for_list_statement
+    :   FOR IDENTIFIER IN '(' expression ')' statement* ENDFOR
+        -> ^(ENDFOR ^(LOOP_TAG IDENTIFIER) expression statement*)
     ;
 
 condition
@@ -138,6 +148,9 @@ ELSE: 'else';
 ENDIF: 'endif';
 WHILE: 'while';
 ENDWHILE: 'endwhile';
+FOR: 'for';
+IN: 'in';
+ENDFOR: 'endfor';
 RETURN: 'return';
 
 // -----------------------

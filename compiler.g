@@ -12,6 +12,7 @@ tokens {
     OP_CHECK_LIST_FOR_SPLICE;
     OP_DONE;
     OP_EIF;
+    OP_FOR_LIST;
     OP_IF;
     OP_JUMP;
     OP_LIST_ADD_TAIL;
@@ -39,6 +40,7 @@ statement
     |   return_statement
     |   if_statement
     |   while_statement
+    |   for_statement
     ;
 
 simple_statement
@@ -116,6 +118,21 @@ while_statement
             statement*
             ^(OP_JUMP LABEL[str($expression.start.token.index)])
             LABEL[str($ENDWHILE.token.index)]
+    ;
+
+for_statement
+    :   for_list_statement
+    ;
+
+for_list_statement
+    :   ^(ENDFOR ^(LOOP_TAG IDENTIFIER) expression statement*)
+        ->  expression
+            ^(OP_NUM INT['1'])
+            LABEL[str($expression.start.token.index)]
+            ^(OP_FOR_LIST IDENTIFIER LABEL[str($ENDFOR.token.index)])
+            statement*
+            ^(OP_JUMP LABEL[str($expression.start.token.index)])
+            LABEL[str($ENDFOR.token.index)]
     ;
 
 expression
