@@ -8,7 +8,6 @@ options {
 
 tokens {
     BLOCK;
-    LIST;
     PROGRAM;
     STATEMENT;
     LOOP_TAG;
@@ -99,8 +98,8 @@ literal
     ;
 
 list_literal
-    :   '{' list_body? '}'
-        -> ^(LIST list_body?)
+    :   LIST_START list_body? LIST_END
+        -> ^(LIST_START list_body?)
     ;
 
 list_body
@@ -152,6 +151,9 @@ FOR: 'for';
 IN: 'in';
 ENDFOR: 'endfor';
 RETURN: 'return';
+
+LIST_START: '{';
+LIST_END: '}';
 
 // -----------------------
 // Variable-content tokens
