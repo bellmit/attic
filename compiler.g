@@ -55,7 +55,7 @@ list_literal
     :   LIST
         -> OP_MAKE_EMPTY_LIST
     |   ^(LIST list_head list_tail*)
-        -> list_head list_tail?
+        -> list_head list_tail*
     ;
 
 list_head
