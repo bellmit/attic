@@ -25,6 +25,7 @@ statement
     |   while_statement
     |   for_statement
     |   fork_statement
+    |   try_statement
     |   ';'
         ->
     ;
@@ -88,6 +89,34 @@ fork_statement
         -> ^(FORK ^(LOOP_TAG IDENTIFIER) expression statement*)
     ;
 
+try_statement
+    :   try_except_statement
+    ;
+
+try_except_statement
+    :   TRY statement* except_block+ ENDTRY
+        -> ^(ENDTRY except_block+ statement*)
+    ;
+
+except_block
+    :   EXCEPT error_list statement*
+        -> ^(EXCEPT error_list statement*)
+    |   EXCEPT IDENTIFIER error_list statement*
+        -> ^(EXCEPT error_list ^(LOOP_TAG IDENTIFIER) statement*)
+    ;
+
+error_list
+    :   open_paren='(' error_list_body ')'
+        -> ^(LIST_START[$open_paren] error_list_body)
+    ;
+
+error_list_body
+    :   ANY
+        -> ANY
+    |   list_body
+        -> list_body
+    ;
+
 range
     :   RANGE_START start=expression TO end=expression RANGE_END
         -> ^(RANGE_START $start $end)
@@ -123,7 +152,7 @@ list_literal
 
 list_body
     :   list_element (',' list_element)*
-        -> list_element*
+        -> list_element+
     ;
 
 list_element
@@ -171,6 +200,9 @@ IN: 'in';
 ENDFOR: 'endfor';
 FORK: 'fork';
 ENDFORK: 'endfork';
+TRY: 'try';
+EXCEPT: 'except';
+ENDTRY: 'endtry';
 RETURN: 'return';
 
 LIST_START: '{';

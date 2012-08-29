@@ -13,6 +13,7 @@ tokens {
     OP_CHECK_LIST_FOR_SPLICE;
     OP_DONE;
     OP_EIF;
+    OP_END_EXCEPT;
     OP_FOR_LIST;
     OP_FOR_RANGE;
     OP_FORK;
@@ -26,13 +27,15 @@ tokens {
     OP_NUM;
     OP_POP;
     OP_PUSH;
+    OP_PUSH_LABEL;
     OP_PUSH_LITERAL;
+    OP_PUT;
     OP_RETURN0;
     OP_RETURN;
+    OP_TRY_EXCEPT;
     OP_WHILE;
     OP_WHILE_ID;
 }
-
 
 program 
     :   ^(PROGRAM statement*)
@@ -46,6 +49,7 @@ statement
     |   while_statement
     |   for_statement
     |   fork_statement
+    |   try_statement
     ;
 
 simple_statement
@@ -167,6 +171,107 @@ fork_statement
             ^(FORK_VECTOR[str($FORK.token.index)] statement*)
     ;
 
+try_statement
+scope {
+    excepts; // presuppose the first one, since it's required.
+}
+    :   ^(ENDTRY
+            ^(first_except=EXCEPT
+                except_conditions[$first_except]
+                first_except_handler[$first_except]
+            ) { excepts = 1; }
+            (
+                ^(next_except=EXCEPT
+                    except_conditions[$next_except]
+                    except_handler[$next_except, $ENDTRY]
+                ) { excepts += 1; }
+            )*
+            statement*
+        )
+        ->  except_conditions+
+            ^(OP_TRY_EXCEPT INT[str(excepts)])
+            statement*
+            ^(OP_END_EXCEPT LABEL[str($ENDTRY.token.index)])
+            first_except_handler
+            except_handler*
+            LABEL[str($ENDTRY.token.index)]
+    ;
+
+except_conditions[except_node]
+    :   expression
+        ->  expression
+            ^(OP_PUSH_LABEL LABEL[str($except_node.token.index)])
+    ;
+
+/*
+ * The emitted bytecode for all but the final except handler ends with an
+ * unconditional jump out of the try/except chain:
+ *
+ *  ; block for except1
+ *  handler1: POP
+ *            <statements1>
+ *            JUMP done
+ *  ; end of except1
+ *  ; block for except2
+ *  handler2: POP
+ *            <statemments2>
+ *            JUMP done
+ *  ; end of except2
+ *  ; block for except3
+ *  handler3: POP
+ *            <statemments3>
+ *  ; end of except3
+ *  done:     <rest of program
+ *
+ * However, because the unconditional jumps are all identical, you can look at
+ * this as generating the *first* except block without a *leading* jump:
+ *
+ *  ; block for except1
+ *  handler1: POP
+ *            <statements1>
+ *  ; end of except1
+ *  ; block for except2
+ *            JUMP done
+ *  handler2: POP
+ *            <statemments2>
+ *  ; end of except2
+ *  ; block for except3
+ *            JUMP done
+ *  handler3: POP
+ *            <statemments3>
+ *  ; end of except3
+ *  done:     <rest of program
+ * 
+ * The following rules apply this stunt to the parse tree for an except block.
+ */
+
+first_except_handler[except_node]
+    :   statement*
+        ->  LABEL[str($except_node.token.index)]
+            OP_POP
+            statement*
+    |   ^(LOOP_TAG IDENTIFIER) statement*
+        ->  // No jump here.
+            LABEL[str($except_node.token.index)]
+            ^(OP_PUT IDENTIFIER)
+            OP_POP
+            statement*
+    ;
+
+except_handler[except_node, exit_node]
+    :   statement*
+        ->  ^(OP_JUMP LABEL[str($exit_node.token.index)])
+            LABEL[str($except_node.token.index)]
+            OP_POP
+            statement*
+    |   ^(LOOP_TAG IDENTIFIER) statement*
+        ->  ^(OP_JUMP LABEL[str($exit_node.token.index)])
+            LABEL[str($except_node.token.index)]
+            ^(OP_PUT IDENTIFIER)
+            OP_POP
+            statement*
+    ;
+
 expression
     :   root_expression
     ;
@@ -193,6 +298,8 @@ immediate_value
         -> ^(OP_PUSH_LITERAL OBJECT_NUM)
     |   ERROR
         -> ^(OP_PUSH_LITERAL ERROR)
+    |   ANY
+        -> ^(OP_PUSH_LITERAL ANY)
     ;
 
 list_literal
