@@ -8,7 +8,6 @@ options {
 
 tokens {
     BLOCK;
-    LIST;
     PROGRAM;
     STATEMENT;
     LOOP_TAG;
@@ -24,6 +23,7 @@ statement
         -> simple_statement
     |   if_statement
     |   while_statement
+    |   for_statement
     |   ';'
         ->
     ;
@@ -65,6 +65,26 @@ while_statement
         -> ^(ENDWHILE ^(LOOP_TAG IDENTIFIER) condition statement*)
     ;
 
+for_statement
+    :   for_list_statement
+    |   for_range_statement
+    ;
+
+for_list_statement
+    :   FOR IDENTIFIER IN '(' expression ')' statement* ENDFOR
+        -> ^(ENDFOR ^(LOOP_TAG IDENTIFIER) expression statement*)
+    ;
+
+for_range_statement
+    :   FOR IDENTIFIER IN range statement* ENDFOR
+        -> ^(ENDFOR ^(LOOP_TAG IDENTIFIER) range statement*)
+    ;
+
+range
+    :   RANGE_START start=expression TO end=expression RANGE_END
+        -> ^(RANGE_START $start $end)
+    ;
+
 condition
     :   '(' expression ')'
         -> expression
@@ -89,8 +109,8 @@ literal
     ;
 
 list_literal
-    :   '{' list_body? '}'
-        -> ^(LIST list_body?)
+    :   LIST_START list_body? LIST_END
+        -> ^(LIST_START list_body?)
     ;
 
 list_body
@@ -138,7 +158,22 @@ ELSE: 'else';
 ENDIF: 'endif';
 WHILE: 'while';
 ENDWHILE: 'endwhile';
+FOR: 'for';
+IN: 'in';
+ENDFOR: 'endfor';
 RETURN: 'return';
+
+LIST_START: '{';
+LIST_END: '}';
+RANGE_START: '[';
+RANGE_END: ']';
+
+// Matching for DOT tokens is handled in FLOAT, below.
+// Notionally: DOT: '.';
+fragment DOT: ;
+// Matching for TO tokens is handled in FLOAT, below.
+// Notionally: TO: '..';
+fragment TO: ;
 
 // -----------------------
 // Variable-content tokens
@@ -160,16 +195,37 @@ STRING: '"' (STRING_CHAR | STRING_ESCAPE) * '"';
 fragment DIGIT: '0'..'9';
 fragment SIGN: '-'?;
 
-INT: SIGN DIGIT+;
+// Matching for INT tokens is handled in FLOAT, below.
+// Notionally: INT: SIGN DIGIT+;
+fragment INT: ;
 
 fragment FLOAT_EXPONENT
     :   'e' ('+'|'-')? DIGIT+
     ;
 
+// Complex rule tree deciding several logical lexer rules: INT, FLOAT, DOT,
+// and TO. See http://www.antlr.org/wiki/display/ANTLR3/Lexer+grammar+for+floating+point%2C+dot%2C+range%2C+time+specs
+// for the origin of the idea. This is required because of the ambiguity of
+// inputs like "1..3" -- in some contexts, it can be a range; in others, it's
+// two floats. We always parse it as a range, which is consistent with the C
+// implementation.
 FLOAT
-    :   SIGN DIGIT+ FLOAT_EXPONENT
-    |   SIGN DIGIT+ '.' DIGIT* FLOAT_EXPONENT?
-    |   SIGN '.' DIGIT+ FLOAT_EXPONENT?
+    :   SIGN DIGIT+ ( // Leading sign and digits: might be FLOAT, might be INT.
+            // Two dots means an INT followed by a TO.
+            { self.input.LA(2) != ord('.') }?=> '.' (
+                DIGIT* FLOAT_EXPONENT? { $type = FLOAT; }
+            )
+            | FLOAT_EXPONENT { $type = FLOAT; }
+            | { $type = INT; }
+        )
+        | '-' '.' ( // Leading sign and dot, must be float.
+            DIGIT+ FLOAT_EXPONENT? { $type = FLOAT; }
+        )
+        | '.' ( // Leading dot: might be FLOAT, DOT, or TO.
+            '.' { $type = TO; }
+            | DIGIT+ FLOAT_EXPONENT? { $type = FLOAT; }
+            | { $type = DOT; }
+        )
     ;
 
 OBJECT_NUM

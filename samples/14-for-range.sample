@@ -1,0 +1,14 @@
+for x in [1..5]
+endfor
+
+/* This should parse identically to the above. */
+for x in [1 .. 5]
+endfor
+
+for y in [6..10]
+    "Non-empty.";
+endfor
+
+for z in [1...3]
+    "Should be from 1, to .3. Runtime E_TYPE, not compile error.";
+endfor

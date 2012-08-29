@@ -1,0 +1,6 @@
+for var in ({})
+endfor
+
+for var in ({1, 2, 3})
+    "Non-empty.";
+endfor
