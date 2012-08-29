@@ -13,6 +13,7 @@ tokens {
     OP_DONE;
     OP_EIF;
     OP_FOR_LIST;
+    OP_FOR_RANGE;
     OP_IF;
     OP_JUMP;
     OP_LIST_ADD_TAIL;
@@ -122,6 +123,7 @@ while_statement
 
 for_statement
     :   for_list_statement
+    |   for_range_statement
     ;
 
 for_list_statement
@@ -132,6 +134,21 @@ for_list_statement
             ^(OP_FOR_LIST IDENTIFIER LABEL[str($ENDFOR.token.index)])
             statement*
             ^(OP_JUMP LABEL[str($expression.start.token.index)])
+            LABEL[str($ENDFOR.token.index)]
+    ;
+
+for_range_statement
+    :   ^(ENDFOR
+            ^(LOOP_TAG IDENTIFIER)
+            ^(RANGE_START start=expression end=expression)
+            statement*
+        )
+        ->  $start
+            $end
+            LABEL[str($RANGE_START.token.index)]
+            ^(OP_FOR_RANGE IDENTIFIER LABEL[str($ENDFOR.token.index)])
+            statement*
+            ^(OP_JUMP LABEL[str($RANGE_START.token.index)])
             LABEL[str($ENDFOR.token.index)]
     ;
 
