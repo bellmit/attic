@@ -1,0 +1,13 @@
+fork (5)
+endfork
+
+fork (8)
+    "Non-empty.";
+endfork
+
+fork var (5)
+endfork
+
+fork var (8)
+    "Non-empty";
+endfork

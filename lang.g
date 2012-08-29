@@ -24,6 +24,7 @@ statement
     |   if_statement
     |   while_statement
     |   for_statement
+    |   fork_statement
     |   ';'
         ->
     ;
@@ -78,6 +79,13 @@ for_list_statement
 for_range_statement
     :   FOR IDENTIFIER IN range statement* ENDFOR
         -> ^(ENDFOR ^(LOOP_TAG IDENTIFIER) range statement*)
+    ;
+
+fork_statement
+    :   FORK '(' expression ')' statement* ENDFORK
+        -> ^(FORK expression statement*)
+    |   FORK IDENTIFIER '(' expression ')' statement* ENDFORK
+        -> ^(FORK ^(LOOP_TAG IDENTIFIER) expression statement*)
     ;
 
 range
@@ -161,6 +169,8 @@ ENDWHILE: 'endwhile';
 FOR: 'for';
 IN: 'in';
 ENDFOR: 'endfor';
+FORK: 'fork';
+ENDFORK: 'endfork';
 RETURN: 'return';
 
 LIST_START: '{';

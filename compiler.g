@@ -8,12 +8,15 @@ options {
 }
 
 tokens {
+    FORK_VECTOR;
     LABEL;
     OP_CHECK_LIST_FOR_SPLICE;
     OP_DONE;
     OP_EIF;
     OP_FOR_LIST;
     OP_FOR_RANGE;
+    OP_FORK;
+    OP_FORK_WITH_ID;
     OP_IF;
     OP_JUMP;
     OP_LIST_ADD_TAIL;
@@ -42,6 +45,7 @@ statement
     |   if_statement
     |   while_statement
     |   for_statement
+    |   fork_statement
     ;
 
 simple_statement
@@ -150,6 +154,17 @@ for_range_statement
             statement*
             ^(OP_JUMP LABEL[str($RANGE_START.token.index)])
             LABEL[str($ENDFOR.token.index)]
+    ;
+
+fork_statement
+    :   ^(FORK expression statement*)
+        ->  expression
+            ^(OP_FORK FORK_VECTOR[str($FORK.token.index)])
+            ^(FORK_VECTOR[str($FORK.token.index)] statement*)
+    |   ^(FORK ^(LOOP_TAG IDENTIFIER) expression statement*)
+        ->  expression
+            ^(OP_FORK_WITH_ID FORK_VECTOR[str($FORK.token.index)] IDENTIFIER)
+            ^(FORK_VECTOR[str($FORK.token.index)] statement*)
     ;
 
 expression
