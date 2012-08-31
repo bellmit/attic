@@ -111,7 +111,6 @@ while_statement
     |   ^(ENDWHILE ^(LOOP_TAG IDENTIFIER) expression statement*)
         ->  LABEL[str($expression.start.token.index)]
             expression
-            LABEL[str($expression.start.token.index)]
             ^(OP_WHILE_ID IDENTIFIER LABEL[str($ENDWHILE.token.index)])
             statement*
             ^(OP_JUMP LABEL[str($expression.start.token.index)])
