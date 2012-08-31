@@ -90,12 +90,12 @@ fork_statement
     ;
 
 try_statement
-    :   try_except_statement
-    ;
-
-try_except_statement
-    :   TRY statement* except_block+ ENDTRY
-        -> ^(ENDTRY except_block+ statement*)
+    :   TRY try_body=statement* (
+            except_block+ ENDTRY
+                -> ^(ENDTRY except_block+ $try_body*)
+            | finally_block ENDTRY
+                -> ^(ENDTRY finally_block $try_body*)
+        ) 
     ;
 
 except_block
@@ -103,6 +103,11 @@ except_block
         -> ^(EXCEPT error_list statement*)
     |   EXCEPT IDENTIFIER error_list statement*
         -> ^(EXCEPT error_list ^(LOOP_TAG IDENTIFIER) statement*)
+    ;
+
+finally_block
+    :   FINALLY statement*
+        -> ^(FINALLY statement*)
     ;
 
 error_list
@@ -202,6 +207,7 @@ FORK: 'fork';
 ENDFORK: 'endfork';
 TRY: 'try';
 EXCEPT: 'except';
+FINALLY: 'finally';
 ENDTRY: 'endtry';
 RETURN: 'return';
 

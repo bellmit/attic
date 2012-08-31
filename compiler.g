@@ -11,9 +11,11 @@ tokens {
     FORK_VECTOR;
     LABEL;
     OP_CHECK_LIST_FOR_SPLICE;
+    OP_CONTINUE;
     OP_DONE;
     OP_EIF;
     OP_END_EXCEPT;
+    OP_END_FINALLY;
     OP_FOR_LIST;
     OP_FOR_RANGE;
     OP_FORK;
@@ -33,6 +35,7 @@ tokens {
     OP_RETURN0;
     OP_RETURN;
     OP_TRY_EXCEPT;
+    OP_TRY_FINALLY;
     OP_WHILE;
     OP_WHILE_ID;
 }
@@ -50,6 +53,7 @@ statement
     |   for_statement
     |   fork_statement
     |   try_statement
+    |   try_finally_statement
     ;
 
 simple_statement
@@ -270,6 +274,16 @@ except_handler[except_node, exit_node]
             ^(OP_PUT IDENTIFIER)
             OP_POP
             statement*
+    ;
+
+try_finally_statement
+    :   ^(ENDTRY ^(FINALLY finally_body=statement*) try_body=statement*)
+        ->  ^(OP_TRY_FINALLY LABEL[str($ENDTRY.token.index)])
+            $try_body*
+            OP_END_FINALLY
+            LABEL[str($ENDTRY.token.index)]
+            $finally_body*
+            OP_CONTINUE
     ;
 
 expression
