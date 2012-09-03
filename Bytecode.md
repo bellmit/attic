@@ -61,9 +61,6 @@ allows the decompiler to reliably determine which statement to emit.
 <table>
 <thead>
     <tr>
-        <th colspan="4">Control Flow</th>
-    </tr>
-    <tr>
         <th>Encoding</th>
         <th>Name</th>
         <th>Ticks</th>
@@ -71,6 +68,9 @@ allows the decompiler to reliably determine which statement to emit.
     </tr>
 </thead>
 <tbody>
+    <tr>
+        <th colspan="4">Control Flow</th>
+    </tr>
     <tr>
         <td><kbd>00 <var>label</var></kbd></td>
         <td><kbd>IF</kbd></td>
