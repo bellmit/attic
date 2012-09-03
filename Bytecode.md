@@ -20,7 +20,7 @@ controlled by the largest value of a given kind that could possibly appear:
 * Up to 65536: all values of this kind are two bytes long.
 * Larger: all values of this kind are four bytes long.
 
-## Forks
+### Forks
 
 Every program contains a "main" vector, containing the program to run when a
 verb is invoked (either directly or by another verb). Programs can also
@@ -30,7 +30,7 @@ manipulate fork vectors and execution.
 
 Fork identifiers are usually immediate values, encoded as above.
 
-## Labels
+### Labels
 
 Labels are addresses used for jumps and references to other locations in the
 code stream. Each label encodes a number: the label encoding 0 represents the
@@ -39,13 +39,19 @@ and so on.
 
 Labels are immediate values, encoded as above.
 
-## Local variables
+### Local variables
 
 Each program has a table of local variables, initialized with known values for
 each execution before evaluating instructions. Local variables are initially
 unset, otherwise.
 
 Local variables are identified using immediate values, encoded as above.
+
+## Built-in Functions
+
+Built-in functions are stored in a table with a one-byte (unsigned) index. The
+`BI_FUNC_CALL` instruction requires a function ID (<var>funcid</var>)
+immediate operand.
 
 ## Equivalent instructions
 
@@ -55,6 +61,13 @@ language frequently provides several opcodes with identical semantics: for
 example, the MOO-language 'if', 'elseif', and 'while' statements all emit
 conditional jump opcodes; emitting distinct opcodes for each kind of statement
 allows the decompiler to reliably determine which statement to emit.
+
+## Implementation leaks
+
+Several instructions (notably `REF` and `RANGE_REF`) were implemented using a
+copy-on-write/reference-counting implementation in the original LambdaMOO, and
+this has leaked into the opcode names. The reference-ness of the results of
+these expressions is not visible in the semantics of the operations.
 
 ## Opcodes
 
@@ -69,7 +82,7 @@ allows the decompiler to reliably determine which statement to emit.
 </thead>
 <tbody>
     <tr>
-        <th colspan="4">Control Flow</th>
+        <th colspan="4">Control Flow (Blocks)</th>
     </tr>
     <tr>
         <td><kbd>00 <var>label</var></kbd></td>
@@ -132,6 +145,95 @@ allows the decompiler to reliably determine which statement to emit.
             <var>upper</var> is pushed back onto the stack. Otherwise,
             execution continues at <var>label</var> instead of the next
             instruction.</td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="4">Elemental Expressions</th>
+    </tr>
+    <tr>
+        <td><kbd>07</kbd></td>
+        <td><kbd>INDEXSET</kbd></td>
+        <td>1</td>
+        <td><p><var>value</var> = POP(); <var>index</var> = POP();
+            <var>list</var> = POP(); Stores <var>value</var> in
+            <var>list</var> at <var>index</var>. Pushes the modified value of
+            <var>list</var> back onto the stack.</p>
+            <p>If <var>list</var> is a string, then <var>value</var> must be
+            a one-character string (<kbd>E_INVARG</kbd>).</p>
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>08</kbd></td>
+        <td><kbd>PUSH_GET_PROP</kbd></td>
+        <td>1</td>
+        <td><var>name</var> = STACK[top]; <var>object</var> = STACK[top - 1];
+            Pushes <kbd><var>object</var>.<var>name</var></kbd> onto the
+            stack. (<var>name</var> and <var>object</var> will be left on the
+            stack.)
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>09</kbd></td>
+        <td><kbd>GET_PROP</kbd></td>
+        <td>1</td>
+        <td><var>name</var> = POP(), <var>object</var> = POP(); Pushes
+            <kbd><var>object</var>.<var>name</var></kbd> onto the stack.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>0A</kbd></td>
+        <td><kbd>CALL_VERB</kbd></td>
+        <td>1</td>
+        <td><var>args</var> = POP(), <var>verb</var> = POP(), <var>obj</var>
+            = POP(); invokes <kbd><var>obj</var>:<var>verb</var>(@<var>args)</kbd>
+            and pushes its return value onto the stack.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>0B</kbd></td>
+        <td><kbd>PUT_PROP</kbd></td>
+        <td>1</td>
+        <td><var>value</var> = POP(), <var>name</var> = POP(), <var>obj</var>
+            = POP(); Stores <var>value</var> in
+            <kbd><var>obj</var>.<var>name</var></kbd>. Pushes <var>value</var>
+            back onto the stack.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>0C</kbd> <var>funcid</var></td>
+        <td><kbd>BI_FUNC_CALL</kbd></td>
+        <td>1</td>
+        <td><var>args</var> = POP; call built-in function
+            <kbd><var>funcid</var>(<var>args</var>)</kbd> and push the return
+            value onto the stack.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>0D</kbd> <var>label</var></td>
+        <td><kbd>IF_QUES</kbd></td>
+        <td>1</td>
+        <td>Identical to <kbd>IF</kbd>; represents <kbd>cond ? expr1 |
+            expr2</kbd> constructs.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>0E</kbd></td>
+        <td><kbd>REF</kbd></td>
+        <td>1</td>
+        <td><var>index</var> = POP(), <var>list</var> = POP(); pushes
+            <kbd><var>list</var>[<var>index</var>]</kbd> onto the stack.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>0F</kbd></td>
+        <td><kbd>RANGE_REF</kbd></td>
+        <td>1</td>
+        <td><var>end</var> = POP(), <var>start</var> = POP(), <var>list</var>
+            = POP(); pushes
+            <kbd><var>list</var>[<var>start</var>..<var>end</var>]</kbd> onto
+            the stack.
+        </td>
     </tr>
 </tbody>
 </table>
