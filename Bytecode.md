@@ -201,7 +201,7 @@ these expressions is not visible in the semantics of the operations.
         </td>
     </tr>
     <tr>
-        <td><kbd>0C</kbd> <var>funcid</var></td>
+        <td><kbd>0C <var>funcid</var></kbd></td>
         <td><kbd>BI_FUNC_CALL</kbd></td>
         <td>1</td>
         <td><var>args</var> = POP; call built-in function
@@ -210,7 +210,7 @@ these expressions is not visible in the semantics of the operations.
         </td>
     </tr>
     <tr>
-        <td><kbd>0D</kbd> <var>label</var></td>
+        <td><kbd>0D <var>label</var></kbd></td>
         <td><kbd>IF_QUES</kbd></td>
         <td>1</td>
         <td>Identical to <kbd>IF</kbd>; represents <kbd>cond ? expr1 |
