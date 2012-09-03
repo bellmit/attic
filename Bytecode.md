@@ -7,6 +7,53 @@ encoded sequence of instructions, stored as a sequence of bytes (eight-bit
 unsigned numbers). In this document, bytecode sequences are represented in
 hexadecimal, unless otherwise noted.
 
+## The Stack
+
+Each activation maintains a stack of values, initially empty and manipulated
+by most instructions. This stack can contain primitive MOO values (ints, 
+floats, object numbers, strings, lists, and errors) as well as a number of
+"book-keeping" values such as labels and exception handler lists.
+
+### Control flow and the stack
+
+Control flow constructs related to error handling (try/catch, backtick
+expressions) or guaranteed execution (try/finally) set up guards on the stack.
+Other control flow constructs, as well as verb and built-in function calls
+and any instruction that raises an exception, can "unwind" the stack. The
+exact behaviour of stack unwinding depends on the scenario:
+
+(Note that a bare `JUMP` out is not covered by these cases. The compiler does
+not generate this case; all stack exits are via stack-unwinding instructions.)
+
+#### Normal return
+
+* Executes finally handlers, then continues returning. Finally handlers that
+  return replace the original return value; finally handlers that raise an
+  exception replace the return value with an exception; finally handlers that
+  break or continue force control to continue at the break/continue target
+  after any further unwinding.
+* Cleans up exception handlers, but does not enter them.
+
+#### Raised exception
+
+* Executes finally handlers, then continues raising the original exception.
+  Finally handlers behave as under the "normal return" case.
+* Compares exception handlers against the raised exception. If one matches,
+  control enters the handler and exception information is placed on the stack
+  for the handler to user. Unmatched handlers "above" the receiving handler
+  are cleaned up. The receiving handler is also removed from the stack.
+
+#### Break/continue
+
+* Executes finally handlers, then continues the break/continue process.
+  Finally handlers behave as under the "normal return" case.
+* Cleans up exception handlers, but does not enter them.
+
+#### Abort
+
+* Does not execute finally handlers.
+* Does not execute exception handlers.
+
 ## Temporary Values
 
 The runtime has a single `temp` register capable of holding any MOO value. The
@@ -911,7 +958,9 @@ These instructions had the same structure and semantics as `PUSH_n` and
         </td>
         <td>n/a</td>
         <td>0</td>
-        <td>Execution terminates; verb returns <var>value</var> to caller.</td>
+        <td>Terminates execution and unwinds the stack; verb returns
+            <var>value</var> to caller.
+        </td>
     </tr>
     <tr>
         <td><kbd>6C</kbd></td>
@@ -920,7 +969,9 @@ These instructions had the same structure and semantics as `PUSH_n` and
         </td>
         <td>n/a</td>
         <td>0</td>
-        <td>Execution terminates; verb returns <kbd>0</kbd> to caller.</td>
+        <td>Terminates execution and unwinds the stack; verb returns
+            <kbd>0</kbd> to caller.
+        </td>
     </tr>
     <tr>
         <td><kbd>6D</kbd></td>
