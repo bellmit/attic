@@ -377,4 +377,300 @@ these expressions is not visible in the semantics of the operations.
         </td>
     </tr>
 </tbody>
+<tbody>
+    <tr>
+        <th colspan="6">List Creation</th>
+    </tr>
+    <tr>
+        <td><kbd>10</kbd></td>
+        <td><kbd>MAKE_SINGLETON_LIST</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            {<var>value</var>}<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Replaces <var>value</var> with a list whose only element is
+            <var>value</var>.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>11</kbd></td>
+        <td><kbd>CHECK_LIST_FOR_SPLICE</kbd></td>
+        <td>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            <var>list</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td>Raises <kbd>E_TYPE</kbd> if the top of the stack is not a list.
+        </td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="6">Arithmetic</th>
+    </tr>
+    <tr>
+        <td><kbd>12</kbd></td>
+        <td><kbd>MULT</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> * <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Multiply the top two stack entries.</td>
+    </tr>
+    <tr>
+        <td><kbd>13</kbd></td>
+        <td><kbd>DIV</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> / <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Divide the top two stack entries.</td>
+    </tr>
+    <tr>
+        <td><kbd>14</kbd></td>
+        <td><kbd>MOD</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> % <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Take remainder of <kbd><var>a</var> / <var>b</var></kbd>.</td>
+    </tr>
+    <tr>
+        <td><kbd>15</kbd></td>
+        <td><kbd>ADD</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> + <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Add the top two stack entries.</td>
+    </tr>
+    <tr>
+        <td><kbd>15</kbd></td>
+        <td><kbd>MINUS</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> - <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Take the difference of the top two stack entries.</td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="6">Comparisons</th>
+    </tr>
+    <tr>
+        <td><kbd>16</kbd></td>
+        <td><kbd>EQ</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> == <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Compare the top two stack entries for equality.</td>
+    </tr>
+    <tr>
+        <td><kbd>17</kbd></td>
+        <td><kbd>NE</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> != <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Compare the top two stack entries for inequality.</td>
+    </tr>
+    <tr>
+        <td><kbd>18</kbd></td>
+        <td><kbd>LT</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> &lt; <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Compare the top two stack entries for ordering.</td>
+    </tr>
+    <tr>
+        <td><kbd>19</kbd></td>
+        <td><kbd>LE</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> &lt;= <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Compare the top two stack entries for ordering.</td>
+    </tr>
+    <tr>
+        <td><kbd>1A</kbd></td>
+        <td><kbd>GT</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> &gt; <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Compare the top two stack entries for ordering.</td>
+    </tr>
+    <tr>
+        <td><kbd>1B</kbd></td>
+        <td><kbd>GE</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> &gt;= <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Compare the top two stack entries for ordering.</td>
+    </tr>
+    <tr>
+        <td><kbd>1C</kbd></td>
+        <td><kbd>IN</kbd></td>
+        <td>
+            <var>value</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            <var>index</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td>Pushes first index of <var>value</var> in <var>list</var>, or 0 if
+            <var>value</var> is not in <var>list</var>.
+        </td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="6">Boolean Logic</th>
+    </tr>
+    <tr>
+        <td><kbd>1D</kbd></td>
+        <td><kbd>AND</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> AND <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Boolean-AND of the top two stack entries.</td>
+    </tr>
+    <tr>
+        <td><kbd>1E</kbd></td>
+        <td><kbd>OR</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> OR <var>b</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Boolean-OR of the top two stack entries.</td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="6">Unary Operators</th>
+    </tr>
+    <tr>
+        <td><kbd>1F</kbd></td>
+        <td><kbd>UNARY_MINUS</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            -<var>value</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td>Negates top of stack.</td>
+    </tr>
+    <tr>
+        <td><kbd>20</kbd></td>
+        <td><kbd>NOT</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            !<var>value</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td>Boolean-NOT of top of stack.</td>
+    </tr>
+</tbody>
 </table>
