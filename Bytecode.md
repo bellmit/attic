@@ -845,7 +845,7 @@ These instructions had the same structure and semantics as `PUSH_n` and
             …
         </td>
         <td>
-            (<var>list</var>[<var>index</var>])</br>
+            (<var>list</var>[<var>index</var>])<br>
             <var>index</var><br>
             <var>list</var><br>
             …
@@ -884,6 +884,396 @@ These instructions had the same structure and semantics as `PUSH_n` and
         <td>0</td>
         <td>Pushes the <var>value</var> in the runtime's <kbd>temp</kbd>
             register onto the stack.
+        </td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="6">Unconditional Flow Control</th>
+    </tr>
+    <tr>
+        <td><kbd>6A <var>label</var></kbd></td>
+        <td><kbd>JUMP</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            …
+        </td>
+        <td>0</td>
+        <td>Execution continues at <var>label</var>.</td>
+    </tr>
+    <tr>
+        <td><kbd>6B</kbd></td>
+        <td><kbd>RETURN</kbd></td>
+        <td>
+            <var>value</var><br>
+        </td>
+        <td>n/a</td>
+        <td>0</td>
+        <td>Execution terminates; verb returns <var>value</var> to caller.</td>
+    </tr>
+    <tr>
+        <td><kbd>6C</kbd></td>
+        <td><kbd>RETURN0</kbd></td>
+        <td>
+        </td>
+        <td>n/a</td>
+        <td>0</td>
+        <td>Execution terminates; verb returns <kbd>0</kbd> to caller.</td>
+    </tr>
+    <tr>
+        <td><kbd>6D</kbd></td>
+        <td><kbd>DONE</kbd></td>
+        <td>
+        </td>
+        <td>n/a</td>
+        <td>0</td>
+        <td>Identical to <kbd>RETURN0</kbd>. Represents end of program (no
+            syntax).</td>
+    </tr>
+    <tr>
+        <td><kbd>6E</kbd></td>
+        <td><kbd>POP</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            …
+        </td>
+        <td>0</td>
+        <td>Top value on stack is popped and thrown away.</td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="6">Extended Opcodes</th>
+    </tr>
+    <tr>
+        <td><kbd>6F 00</kbd></td>
+        <td><kbd>RANGESET</kbd></td>
+        <td>
+            <var>value</var><br>
+            <var>end</var><br>
+            <var>start</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            <var>list</var> (modified)<br>
+            …
+        </td>
+        <td>0</td>
+        <td>Modifies the range <kbd>[<var>start</var>..<var>end</var>]</kbd>
+            in a list or string. The modified value is pushed back onto the
+            stack.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 01 <var>offset</var></kbd></td>
+        <td><kbd>LENGTH</kbd></td>
+        <td>
+            … (rest of stack) …<br>
+            <var>list</var><br>
+            … (<var>offset - 1</var> entries) …<br>
+        </td>
+        <td>
+            <var>length</var><br>
+            … (rest of stack) …<br>
+            <var>list</var><br>
+            … (<var>offset - 1</var> entries) …<br>
+        </td>
+        <td>0</td>
+        <td>Pushes a list's length onto the stack. The list is taken from some
+            known location on the stack, indexed from the bottom of the stack.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 02 <var>label</var></kbd></td>
+        <td><kbd>PUSH_LABEL</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            <var>label</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Pushes a label onto the stack.</td>
+    </tr>
+    <tr>
+        <td><kbd>6F 03 <label></kbd></td>
+        <td><kbd>END_CATCH</kbd></td>
+        <td>
+            <var>value</var><br>
+            <var>handler_table</var> (1 handler)<br>
+            <var>handler</var><br>
+            <var>errors</var><br>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Cleans up single-exception-handler infrastructure. Execution
+            continues at <var>label</var>.</td>
+    </tr>
+    <tr>
+        <td><kbd>6F 04 <label></kbd></td>
+        <td><kbd>END_EXCEPT</kbd></td>
+        <td>
+            <var>handler_table</var> (n handlers)<br>
+            <var>handler_n</var><br>
+            <var>errors_n</var><br>
+            … total of n handler pairs …
+            <var>handler_1</var><br>
+            <var>errors_1</var><br>
+            …
+        </td>
+        <td>
+            …
+        </td>
+        <td>0</td>
+        <td>Cleans up single-exception-handler infrastructure. Execution
+            continues at <var>label</var>.</td>
+    </tr>
+    <tr>
+        <td><kbd>6F 05</kbd></td>
+        <td><kbd>END_FINALLY</kbd></td>
+        <td>
+            (Finally marker: any label)<br>
+            …
+        </td>
+        <td>
+            0<br>
+            (Fall-through flag)<br>
+            …
+        </td>
+        <td>0</td>
+        <td><p>Replaces a finally marker on the stack with a non-exceptional
+                continuation. See <kbd>CONTINUE</kbd> below for details.
+                (Despite the name, this ends the <kbd>try</kbd> part of
+                a try/finally statement, not the <kbd>finally</kbd> part.)
+            </p>
+            <p>Exceptions occurring while a <var>finally_marker</var> is on
+                the stack will set up a similar structure on the stack,
+                replacing the pushed 0 with the exception info and the
+                fall-through flag with an exception flag.</p>
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 06</kbd></td>
+        <td><kbd>CONTINUE</kbd></td>
+        <td>
+            <var>value</var><br>
+            (Entrance flag)<br>
+            …
+        </td>
+        <td><p>Execution continues:<br>
+                …
+            </p>
+            <p>Otherwise:
+                <var>value</var><br>
+                (Entrance flag)<br>
+                …
+            </p>
+        </td>
+        <td>0</td>
+        <td>Resumes control flow after entering a finally block. If the
+            entrance flag is a fall-through flag, then execution continues.
+            Otherwise, stack unwinding for exceptions or return continues.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 07</kbd></td>
+        <td><kbd>CATCH</kbd></td>
+        <td>
+            <var>handler</var><br>
+            <var>errors</var><br>
+            …
+        </td>
+        <td>
+            <var>handler_table</var> (1 handler)<br>
+            <var>handler</var><br>
+            <var>errors</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td>Prepares the stack for exception handling. See <kbd>END_CATCH</kbd>
+            for cleanup.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 08</kbd></td>
+        <td><kbd>TRY_EXCEPT</kbd></td>
+        <td>
+            <var>handler_n</var><br>
+            <var>errors_n</var><br>
+            … total of n handler pairs …
+            <var>handler_1</var><br>
+            <var>errors_1</var><br>
+            …
+        </td>
+        <td>
+            <var>handler_table</var> (n handlers)<br>
+            <var>handler_n</var><br>
+            <var>errors_n</var><br>
+            … total of n handler pairs …
+            <var>handler_1</var><br>
+            <var>errors_1</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td>Prepares the stack for exception handling. See <kbd>END_EXCEPT</kbd>
+            for cleanup.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 09 <var>label</var></kbd></td>
+        <td><kbd>TRY_FINALLY</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            (Finally marker: <var>label</var>)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Prepares the stack for finally handling. See <kbd>END_FINALLY</kbd>
+            and <kbd>CONTINUE</kbd> for cleanup.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 0A <var>var</var> <var>label</var></kbd></td>
+        <td><kbd>WHILE_ID</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            …
+        </td>
+        <td>1</td>
+        <td>Stores <var>value</var> in <var>var</var>. Otherwise identical to
+            <kbd>IF</kbd>; represents <kbd>while</kbd> constructs with labels.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 0B <var>depth</var> <var>label</var></kbd></td>
+        <td><kbd>EXIT</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            …
+        </td>
+        <td>1</td>
+        <td>Unwinds the stack until it is <var>depth</var> entries deep.
+            Execution continues at <var>label</var>. Represents unlabelled
+            break/continue statements.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 0C <var>var</var> <var>depth</var> <var>label</var></kbd></td>
+        <td><kbd>EXIT_ID</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            …
+        </td>
+        <td>1</td>
+        <td>Unwinds the stack until it is <var>depth</var> entries deep.
+            Execution continues at <var>label</var>. <var>var</var> is unchanged.
+            Represents labelled break/continue statements.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 0D <var>entries</var> <var>required</var> <var>splice_index</var> <var>scatter_items</var> <var>label</var></kbd></td>
+        <td><kbd>SCATTER</kbd></td>
+        <td>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            <var>list</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td><p>Pure Fucking Magic: performs scattering assignment.</p>
+            <p>The first three immediate values are single-byte values
+                describing the scatter. <var>entries</var> is the number of
+                scatter items. <var>required</var> is the number of
+                non-optional scatter items. <var>splice_index</var> is the
+                1-based index of the scatter item receiving the "unassigned"
+                elements of <var>list</var>, or 0 if there is no such item.
+            </p>
+            <p><var>scatter_items</var> is a list of alternating
+                <var>var</var>/<var>label</var> pairs, with the special case
+                that a "label" of 0 means the item is required and that a
+                "label" of 1 means that the item is optional. (The
+                <var>splice_index</var>th item should be required but is not
+                counted in the <var>required</var> count.) Otherwise, the
+                labels identify jump targets for assigning default values.
+            </p>
+            <p>Elements from the left of <var>list</var> are assigned to the
+                <var>var</var>s in the scatter list one at a time, starting at
+                the left and stopping one before the <var>splice_index</var>th
+                element. Elements from the right of <var>list</var> are
+                assigned to the rightmost scatter targets, stopping to the
+                right of the <var>splice_index</var>th target. The remaining
+                elements are gathered into a list and assigned to the
+                <var>splice_index</var>th target.
+            </p>
+            <p>Optional scatter targets with no corresponding element are left
+                unchanged.</p>
+            <p>If there are any scatter targets with default value labels that
+                have not been assigned by the above rules, execution continues
+                at the default value label of the first such scatter target.
+                Otherwise, execution continues as normal.
+            </p>
+            <p>(This is the single most complex instruction in the MOO
+                instruction set.)
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>6F 0E</td>
+        <td><kbd>EXP</kbd></td>
+        <td>
+            <var>b</var><br>
+            <var>a</var><br>
+            …
+        </td>
+        <td>
+            (<var>a</var> raised to the <var>b</var>th power)<br>
+            …
+        </td>
+        <td>1</td>
+        <td>Performs exponentiation on the top two stack entries.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>70</kbd><br>
+            <kbd>71</kbd><br>
+            …<br>
+            <kbd>71 + <var>n</var></kbd><br>
+            …<br>
+            <kbd>FF</kbd><br>
+        </td>
+        <td><kbd>IMM_<var>n</var></kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            <var>n</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Pushes (-10 + <var>n</var>) (0 &lt;= <var>n</var> &lt; 144) onto
+            the stack.
         </td>
     </tr>
 </tbody>
