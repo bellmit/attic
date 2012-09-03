@@ -173,7 +173,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>
-            <p><kbd><var>index</var> &lt;= length(<var>list</var>)<kbd>:<br>
+            <p>Loop continues:<br>
                 <var>index</var> + 1<br>
                 <var>list</var><br>
                 …
@@ -199,7 +199,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>
-            <p><kbd><var>lower</var> &lt;= <var>upper</var><kbd>:<br>
+            <p>Loop continues:<br>
                 <var>upper</var><br>
                 <var>lower</var> + 1<br>
                 …
