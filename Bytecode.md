@@ -137,8 +137,9 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>
-            <p>On original task:</p>
-            <p>…</p>
+            <p>On original task:<br>
+                …
+            </p>
             <p>Empty on new task.</p>
         </td>
         <td>1</td>
@@ -149,6 +150,16 @@ these expressions is not visible in the semantics of the operations.
     <tr>
         <td><kbd>04 <var>fork</var> <var>var</var></kbd></td>
         <td><kbd>FORK_WITH_ID</kbd></td>
+        <td>
+            <var>delay</var><br>
+            …
+        </td>
+        <td>
+            <p>On original task:<br>
+                …
+            </p>
+            <p>Empty on new task.</p>
+        </td>
         <td>1</td>
         <td>As with <kbd>FORK</kbd>. The new process task's <var>taskid</var>
             is stored in <var>var</var>.</td>
@@ -156,26 +167,53 @@ these expressions is not visible in the semantics of the operations.
     <tr>
         <td><kbd>05 <var>var</var> <var>label</var></kbd></td>
         <td><kbd>FOR_LIST</kbd></td>
+        <td>
+            <var>index</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            <p><kbd><var>index</var> &lt;= length(<var>list</var>)<kbd>:<br>
+                <var>index</var> + 1<br>
+                <var>list</var><br>
+                …
+            </p>
+            <p>Otherwise:<br>
+                …
+            </p>
+        </td>
         <td>1</td>
-        <td><var>index</var> = POP(), <var>list</var> = POP(), if
-            <var>index</var> is a valid index in <var>list</var> then
+        <td>if <var>index</var> is a valid index in <var>list</var> then
             <kbd><var>list</var>[<var>index</var>]</kbd> is stored in
-            <var>var</var>, <var>list</var> is pushed back onto the stack, and
-            <kbd><var>index</var> + 1</kbd> is pushed onto the stack.
+            <var>var</var> and the index on the stack is incremented.
             Otherwise, execution continues at <var>label</var> instead of the
-            next instruction.</td>
+            next instruction.
+        </td>
     </tr>
     <tr>
         <td><kbd>06 <var>var</var> <var>label</var></kbd></td>
         <td><kbd>FOR_RANGE</kbd></td>
+        <td>
+            <var>upper</var><br>
+            <var>lower</var><br>
+            …
+        </td>
+        <td>
+            <p><kbd><var>lower</var> &lt;= <var>upper</var><kbd>:<br>
+                <var>upper</var><br>
+                <var>lower</var> + 1<br>
+                …
+            </p>
+            <p>Otherwise:<br>
+                …
+            </p>
+        </td>
         <td>1</td>
-        <td><var>upper</var> = POP(), <var>lower</var> = POP(), if
-            <var>lower</var> is no greater than <var>upper</var> then
-            <var>lower</var> is stored in <var>var</var>,
-            <kbd><var>lower</var> + 1</kbd> is pushed onto the stack, and
-            <var>upper</var> is pushed back onto the stack. Otherwise,
-            execution continues at <var>label</var> instead of the next
-            instruction.</td>
+        <td>If <var>lower</var> is no greater than <var>upper</var> then
+            <var>lower</var> is stored in <var>var</var>, and the lower bound
+            on the stack is updated as described. Otherwise, execution
+            continues at <var>label</var> instead of the next instruction.
+        </td>
     </tr>
 </tbody>
 <tbody>
@@ -185,64 +223,119 @@ these expressions is not visible in the semantics of the operations.
     <tr>
         <td><kbd>07</kbd></td>
         <td><kbd>INDEXSET</kbd></td>
+        <td>
+            <var>value</var><br>
+            <var>index</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            <var>list</var> (modified)<br>
+            …
+        </td>
         <td>1</td>
-        <td><p><var>value</var> = POP(); <var>index</var> = POP();
-            <var>list</var> = POP(); Stores <var>value</var> in
-            <var>list</var> at <var>index</var>. Pushes the modified value of
-            <var>list</var> back onto the stack.</p>
-            <p>If <var>list</var> is a string, then <var>value</var> must be
-            a one-character string (<kbd>E_INVARG</kbd>).</p>
+        <td>Stores <var>value</var> in <var>list</var> at <var>index</var>.
+            Pushes the modified value of <var>list</var> back onto the stack.
         </td>
     </tr>
     <tr>
         <td><kbd>08</kbd></td>
         <td><kbd>PUSH_GET_PROP</kbd></td>
+        <td>
+            <var>name</var><br>
+            <var>obj</var><br>
+            …
+        </td>
+        <td>
+            (<var>obj</var>.<var>name</var>)<br>
+            <var>name</var><br>
+            <var>obj</var><br>
+            …
+        </td>
         <td>1</td>
-        <td><var>name</var> = STACK[top]; <var>object</var> = STACK[top - 1];
-            Pushes <kbd><var>object</var>.<var>name</var></kbd> onto the
-            stack. (<var>name</var> and <var>object</var> will be left on the
+        <td>Pushes <kbd><var>obj</var>.<var>name</var></kbd> onto the
+            stack. (<var>name</var> and <var>obj</var> will be left on the
             stack.)
         </td>
     </tr>
     <tr>
         <td><kbd>09</kbd></td>
         <td><kbd>GET_PROP</kbd></td>
+        <td>
+            <var>name</var><br>
+            <var>obj</var><br>
+            …
+        </td>
+        <td>
+            (<var>obj</var>.<var>name</var>)<br>
+            …
+        </td>
         <td>1</td>
-        <td><var>name</var> = POP(), <var>object</var> = POP(); Pushes
-            <kbd><var>object</var>.<var>name</var></kbd> onto the stack.
+        <td>Pushes <kbd><var>object</var>.<var>name</var></kbd> onto the stack.
         </td>
     </tr>
     <tr>
         <td><kbd>0A</kbd></td>
         <td><kbd>CALL_VERB</kbd></td>
+        <td>
+            <var>args</var><br>
+            <var>name</var><br>
+            <var>obj</var><br>
+            …
+        </td>
+        <td>
+            Returned value<br>
+            …
+        </td>
         <td>1</td>
-        <td><var>args</var> = POP(), <var>verb</var> = POP(), <var>obj</var>
-            = POP(); invokes <kbd><var>obj</var>:<var>verb</var>(@<var>args)</kbd>
-            and pushes its return value onto the stack.
+        <td>Invokes <kbd><var>obj</var>:<var>verb</var>(@<var>args)</kbd> and
+            pushes its return value onto the stack.
         </td>
     </tr>
     <tr>
         <td><kbd>0B</kbd></td>
         <td><kbd>PUT_PROP</kbd></td>
+        <td>
+            <var>value</var><br>
+            <var>name</var><br>
+            <var>obj</var><br>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
         <td>1</td>
-        <td><var>value</var> = POP(), <var>name</var> = POP(), <var>obj</var>
-            = POP(); Stores <var>value</var> in
-            <kbd><var>obj</var>.<var>name</var></kbd>. Pushes <var>value</var>
-            back onto the stack.
+        <td>Stores <var>value</var> in <kbd><var>obj</var>.<var>name</var></kbd>.
+            Pushes <var>value</var> back onto the stack.
         </td>
     </tr>
     <tr>
         <td><kbd>0C <var>funcid</var></kbd></td>
         <td><kbd>BI_FUNC_CALL</kbd></td>
+        <td>
+            <var>args</var><br>
+            …
+        </td>
+        <td>
+            Returned value<br>
+            …
+        </td>
         <td>1</td>
-        <td><var>args</var> = POP; call built-in function
-            <kbd><var>funcid</var>(<var>args</var>)</kbd> and push the return
-            value onto the stack.
+        <td>Calls built-in function <kbd><var>funcid</var>(<var>args</var>)</kbd>
+            and pushes the return value onto the stack.
         </td>
     </tr>
     <tr>
         <td><kbd>0D <var>label</var></kbd></td>
         <td><kbd>IF_QUES</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            …
+        </td>
         <td>1</td>
         <td>Identical to <kbd>IF</kbd>; represents <kbd>cond ? expr1 |
             expr2</kbd> constructs.
@@ -251,17 +344,34 @@ these expressions is not visible in the semantics of the operations.
     <tr>
         <td><kbd>0E</kbd></td>
         <td><kbd>REF</kbd></td>
+        <td>
+            <var>index</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            (<var>list</var>[<var>index</var>])<br>
+            …
+        </td>
         <td>1</td>
-        <td><var>index</var> = POP(), <var>list</var> = POP(); pushes
-            <kbd><var>list</var>[<var>index</var>]</kbd> onto the stack.
+        <td>Pushes <kbd><var>list</var>[<var>index</var>]</kbd> onto the stack.
         </td>
     </tr>
     <tr>
         <td><kbd>0F</kbd></td>
         <td><kbd>RANGE_REF</kbd></td>
+        <td>
+            <var>end</var><br>
+            <var>start</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            (<var>list</var>[<var>start</var>..<var>end</var>])<br>
+            …
+        </td>
         <td>1</td>
-        <td><var>end</var> = POP(), <var>start</var> = POP(), <var>list</var>
-            = POP(); pushes
+        <td>Pushes
             <kbd><var>list</var>[<var>start</var>..<var>end</var>]</kbd> onto
             the stack.
         </td>
