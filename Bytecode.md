@@ -69,6 +69,24 @@ copy-on-write/reference-counting implementation in the original LambdaMOO, and
 this has leaked into the opcode names. The reference-ness of the results of
 these expressions is not visible in the semantics of the operations.
 
+## "Short" instructions
+
+Variable store and load instructions have 32 "short" versions (`PUT_0` through
+`PUT_31` and `PUSH_0` through `PUSH_31` respectively). These have the same
+semantics as the `PUT` and `PUSH` instructions, but bake the immediate value
+into the instruction byte.
+
+## `BYTECODE_REDUCE_REF`
+
+I've left out the opcodes introduced by LambdaMOO's `BYTECODE_REDUCE_REF`
+build configuration. Operations from `IMM` onwards have different numbers if
+this build option is enabled, but correctly emitting these instructions during
+compilation is problematic.
+
+These instructions had the same structure and semantics as `PUSH_n` and
+`PUSH`, but also unset the referenced variable to free up some memory
+(especially relevant in the case of large or complex lists and long strings).
+
 ## Opcodes
 
 <table>
@@ -430,7 +448,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Multiply the top two stack entries.</td>
+        <td>Multiplies the top two stack entries.</td>
     </tr>
     <tr>
         <td><kbd>13</kbd></td>
@@ -445,7 +463,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Divide the top two stack entries.</td>
+        <td>Divides the top two stack entries.</td>
     </tr>
     <tr>
         <td><kbd>14</kbd></td>
@@ -460,7 +478,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Take remainder of <kbd><var>a</var> / <var>b</var></kbd>.</td>
+        <td>Takes remainder of <kbd><var>a</var> / <var>b</var></kbd>.</td>
     </tr>
     <tr>
         <td><kbd>15</kbd></td>
@@ -475,7 +493,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Add the top two stack entries.</td>
+        <td>Adds the top two stack entries.</td>
     </tr>
     <tr>
         <td><kbd>15</kbd></td>
@@ -490,7 +508,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Take the difference of the top two stack entries.</td>
+        <td>Takes the difference of the top two stack entries.</td>
     </tr>
 </tbody>
 <tbody>
@@ -510,7 +528,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Compare the top two stack entries for equality.</td>
+        <td>Compares the top two stack entries for equality.</td>
     </tr>
     <tr>
         <td><kbd>17</kbd></td>
@@ -525,7 +543,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Compare the top two stack entries for inequality.</td>
+        <td>Compares the top two stack entries for inequality.</td>
     </tr>
     <tr>
         <td><kbd>18</kbd></td>
@@ -540,7 +558,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Compare the top two stack entries for ordering.</td>
+        <td>Compares the top two stack entries for ordering.</td>
     </tr>
     <tr>
         <td><kbd>19</kbd></td>
@@ -555,7 +573,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Compare the top two stack entries for ordering.</td>
+        <td>Compares the top two stack entries for ordering.</td>
     </tr>
     <tr>
         <td><kbd>1A</kbd></td>
@@ -570,7 +588,7 @@ these expressions is not visible in the semantics of the operations.
             …
         </td>
         <td>1</td>
-        <td>Compare the top two stack entries for ordering.</td>
+        <td>Compares the top two stack entries for ordering.</td>
     </tr>
     <tr>
         <td><kbd>1B</kbd></td>
@@ -671,6 +689,79 @@ these expressions is not visible in the semantics of the operations.
         </td>
         <td>1</td>
         <td>Boolean-NOT of top of stack.</td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="6">Variables</th>
+    </tr>
+    <tr>
+        <td><kbd>21</kbd><br>
+            <kbd>22</kbd><br>
+            …<br>
+            <kbd>21 + <var>var</var></kbd><br>
+            …<br>
+            <kbd>40</kbd><br>
+        </td>
+        <td><kbd>PUT_<var>var</var></kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td>Stores top of stack in <var>var</var> (0 &lt;= <var>var</var>
+            &lt; 32).</td>
+    </tr>
+    <tr>
+        <td><kbd>41 <var>var</var></kbd></td>
+        <td><kbd>PUT</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>1</td>
+        <td>Stores top of stack in <var>var</var>.</td>
+    </tr>
+    <tr>
+        <td><kbd>42</kbd><br>
+            <kbd>43</kbd><br>
+            …<br>
+            <kbd>42 + <var>var</var></kbd><br>
+            …<br>
+            <kbd>61</kbd><br>
+        </td>
+        <td><kbd>PUSH_<var>var</var></kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Pushes value of <var>var</var> (0 &lt;= <var>var</var>
+            &lt; 32) onto the stack.</td>
+    </tr>
+    <tr>
+        <td><kbd>62</kbd></td>
+        <td><kbd>PUSH</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Pushes value of <var>var</var> onto the stack.</td>
     </tr>
 </tbody>
 </table>
