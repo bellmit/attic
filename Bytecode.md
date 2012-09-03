@@ -7,6 +7,11 @@ encoded sequence of instructions, stored as a sequence of bytes (eight-bit
 unsigned numbers). In this document, bytecode sequences are represented in
 hexadecimal, unless otherwise noted.
 
+## Temporary Values
+
+The runtime has a single `temp` register capable of holding any MOO value. The
+`OP_PUT_TEMP` and `OP_PUSH_TEMP` instructions manipulate this value.
+
 ## Variable-length immediate values
 
 Several kinds of immediate value in the MOO bytecode language have variable
@@ -46,6 +51,13 @@ each execution before evaluating instructions. Local variables are initially
 unset, otherwise.
 
 Local variables are identified using immediate values, encoded as above.
+
+### Literals
+
+Each program has a table of literal values used in the program, initialized
+by the compiler.
+
+Literals are identified using immediate values, encoded as above.
 
 ## Built-in Functions
 
@@ -762,6 +774,117 @@ These instructions had the same structure and semantics as `PUSH_n` and
         </td>
         <td>0</td>
         <td>Pushes value of <var>var</var> onto the stack.</td>
+    </tr>
+</tbody>
+<tbody>
+    <tr>
+        <th colspan="6">Immediate Values</th>
+    </tr>
+    <tr>
+        <td><kbd>63 <var>literal</var></kbd></td>
+        <td><kbd>IMM</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Pushes value of <var>literal</var> onto the stack.</td>
+    </tr>
+    <tr>
+        <td><kbd>64</kbd></td>
+        <td><kbd>MAKE_EMPTY_LIST</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            {}<br>
+            …
+        </td>
+        <td>0</td>
+        <td>Pushes an empty lsit onto the stack.</td>
+    </tr>
+    <tr>
+        <td><kbd>65</kbd></td>
+        <td><kbd>LIST_ADD_TAIL</kbd></td>
+        <td>
+            <var>value</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            {@<var>list</var>, <var>value</var>}<br>
+            …
+        </td>
+        <td>0</td>
+        <td>Appends <var>value</var> onto the end of <var>list</var>.</td>
+    </tr>
+    <tr>
+        <td><kbd>66</kbd></td>
+        <td><kbd>LIST_APPEND</kbd></td>
+        <td>
+            <var>tail</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            {@<var>list</var>, @<var>tail</var>}<br>
+            …
+        </td>
+        <td>0</td>
+        <td>Concatenates <var>list</var> and <var>tail</var>.</td>
+    </tr>
+    <tr>
+        <td><kbd>67</kbd></td>
+        <td><kbd>PUSH_REF</kbd></td>
+        <td>
+            <var>index</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>
+            (<var>list</var>[<var>index</var>])</br>
+            <var>index</var><br>
+            <var>list</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Pushes <kbd><var>list</var>[<var>index</var>]</kbd> onto the
+            stack. (<var>index</var> and <var>list</var> will be left on the
+            stack.)
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>68</kbd></td>
+        <td><kbd>PUT_TEMP</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Stores <var>value</var> in the runtime's <kbd>temp</kbd> register.
+        </td>
+    </tr>
+    <tr>
+        <td><kbd>69</kbd></td>
+        <td><kbd>PUSH_TEMP</kbd></td>
+        <td>
+            …
+        </td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>0</td>
+        <td>Pushes the <var>value</var> in the runtime's <kbd>temp</kbd>
+            register onto the stack.
+        </td>
     </tr>
 </tbody>
 </table>
