@@ -76,24 +76,41 @@ these expressions is not visible in the semantics of the operations.
     <tr>
         <th>Encoding</th>
         <th>Name</th>
+        <th>Stack Before</th>
+        <th>Stack After</th>
         <th>Ticks</th>
         <th>Summary</th>
     </tr>
 </thead>
 <tbody>
     <tr>
-        <th colspan="4">Control Flow (Blocks)</th>
+        <th colspan="6">Control Flow (Blocks)</th>
     </tr>
     <tr>
         <td><kbd>00 <var>label</var></kbd></td>
         <td><kbd>IF</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            …
+        </td>
         <td>1</td>
-        <td>POP(); if false, execution continues at <var>label</var> instead
-            of next instruction. Represents <kbd>if</kbd> constructs.</td>
+        <td>If <var>value</var> is false, execution continues at <var>label</var>
+            instead of next instruction. Represents <kbd>if</kbd> constructs.
+        </td>
     </tr>
     <tr>
         <td><kbd>01 <var>label</var></kbd></td>
         <td><kbd>WHILE</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            …
+        </td>
         <td>1</td>
         <td>Identical to <kbd>IF</kbd>; represents <kbd>while</kbd>
             constructs.</td>
@@ -101,6 +118,13 @@ these expressions is not visible in the semantics of the operations.
     <tr>
         <td><kbd>02 <var>label</var></kbd></td>
         <td><kbd>EIF</kbd></td>
+        <td>
+            <var>value</var><br>
+            …
+        </td>
+        <td>
+            …
+        </td>
         <td>1</td>
         <td>Identical to <kbd>IF</kbd>; represents <kbd>elseif</kbd>
             constructs.</td>
@@ -108,12 +132,19 @@ these expressions is not visible in the semantics of the operations.
     <tr>
         <td><kbd>03 <var>fork</var></kbd></td>
         <td><kbd>FORK</kbd></td>
+        <td>
+            <var>delay</var><br>
+            …
+        </td>
+        <td>
+            <p>On original task:</p>
+            <p>…</p>
+            <p>Empty on new task.</p>
+        </td>
         <td>1</td>
-        <td><var>delay</var> = POP(); <var>delay</var> must be an integer
-            (<kbd>E_TYPE</kbd>); <var>delay</var> must be >= <kbd>0</kbd>
-            (<kbd>E_INVARG</kbd>). Schedules a new task to start after
-            <var>delay</var> seconds using code from fork vector
-            <var>fork</var>.</td>
+        <td>Schedules a new task to start after <var>delay</var> seconds using
+            code from fork vector <var>fork</var>.
+        </td>
     </tr>
     <tr>
         <td><kbd>04 <var>fork</var> <var>var</var></kbd></td>
@@ -149,7 +180,7 @@ these expressions is not visible in the semantics of the operations.
 </tbody>
 <tbody>
     <tr>
-        <th colspan="4">Elemental Expressions</th>
+        <th colspan="6">Elemental Expressions</th>
     </tr>
     <tr>
         <td><kbd>07</kbd></td>
