@@ -116,17 +116,17 @@ immediate operand.
 
 The MOO runtime requires that bytecode programs be deterministically
 convertable back into MOO-language source code. To aid this, the bytecode
-language frequently provides several opcodes with identical semantics: for
-example, the MOO-language 'if', 'elseif', and 'while' statements all emit
-conditional jump opcodes; emitting distinct opcodes for each kind of statement
-allows the decompiler to reliably determine which statement to emit.
+language frequently provides several instructions with identical semantics:
+for example, the MOO-language 'if', 'elseif', and 'while' statements all emit
+conditional jump instructions; emitting distinct instructions for each kind of
+statement allows the decompiler to reliably determine which statement to emit.
 
 ## Implementation leaks
 
 Several instructions (notably `REF` and `RANGE_REF`) were implemented using a
 copy-on-write/reference-counting implementation in the original LambdaMOO, and
-this has leaked into the opcode names. The reference-ness of the results of
-these expressions is not visible in the semantics of the operations.
+this has leaked into the instructions names. The reference-ness of the results
+of these expressions is not visible in the semantics of the instructions.
 
 ## "Short" instructions
 
@@ -137,8 +137,8 @@ into the instruction byte.
 
 ## `BYTECODE_REDUCE_REF`
 
-I've left out the opcodes introduced by LambdaMOO's `BYTECODE_REDUCE_REF`
-build configuration. Operations from `IMM` onwards have different numbers if
+I've left out the instructions introduced by LambdaMOO's `BYTECODE_REDUCE_REF`
+build configuration. Instructions from `IMM` onwards have different numbers if
 this build option is enabled, but correctly emitting these instructions during
 compilation is problematic.
 
@@ -146,7 +146,7 @@ These instructions had the same structure and semantics as `PUSH_n` and
 `PUSH`, but also unset the referenced variable to free up some memory
 (especially relevant in the case of large or complex lists and long strings).
 
-## Opcodes
+## Instructions
 
 <table>
 <thead>
@@ -999,7 +999,7 @@ These instructions had the same structure and semantics as `PUSH_n` and
 </tbody>
 <tbody>
     <tr>
-        <th colspan="6">Extended Opcodes</th>
+        <th colspan="6">Extended Instructions</th>
     </tr>
     <tr>
         <td><kbd>6F 00</kbd></td>
