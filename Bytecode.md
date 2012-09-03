@@ -1310,7 +1310,7 @@ These instructions had the same structure and semantics as `PUSH_n` and
         <td><kbd>70</kbd><br>
             <kbd>71</kbd><br>
             …<br>
-            <kbd>71 + <var>n</var></kbd><br>
+            <kbd>70 + <var>n</var></kbd><br>
             …<br>
             <kbd>FF</kbd><br>
         </td>
