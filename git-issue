@@ -9,7 +9,7 @@ import re
 import os
 import errno
 
-REDMINE = 'https://redmine.2ndsiteinc.com%s'
+REDMINE = 'https://redmine.example.com%s'
 REMOTE = 'origin'
 UPSTREAM = '%s/master' % (REMOTE,)
 
@@ -96,7 +96,7 @@ def branch_issue(branch):
         return None
 
 def branches():
-    branch_list = git('branch', '--list')
+    branch_list = git('branch')
     assert branch_list[-1] == "\n"
     lines = branch_list[:-1].split("\n")
     return [line[2:] for line in lines] # strip leading '  ' or '* '
