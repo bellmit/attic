@@ -1,0 +1,114 @@
+#!/usr/bin/env python
+
+import sys
+import subprocess as s
+import optparse as o
+import urllib2 as u
+import json as j
+import re
+
+REDMINE = 'https://redmine.2ndsiteinc.com%s'
+REMOTE = 'origin'
+UPSTREAM = '%s/master' % (REMOTE,)
+
+SUBJECT_MANGLES = [
+    (re.compile(r"'"), ''),
+    (re.compile(r'[^a-zA-Z0-9]+'), '-'),
+]
+
+def parse_args():
+    p = o.OptionParser(
+        usage="%prog [options] NUMBER [DESCRIPTION]",
+        description="streamline management of local issue branches"
+    )
+    options, args = p.parse_args()
+    if len(args) < 1:
+        p.print_help()
+        p.exit(1)
+    elif len(args) == 1:
+        return options, args[0], None
+    return options, args[0], ' '.join(args[1:])
+
+def git(*args):
+    return s.check_output(('git',) + args)
+
+def current_branch():
+    try:
+        return git('symbolic-ref', 'HEAD')
+    except s.CalledProcessError, e:
+        # "Not on a branch" (and also possibly "not in a git repo" :-\ )
+        if e.returncode == 128:
+            return None
+
+def fetch_issue(issue):
+    issue_path = '/issues/%s.json' % (issue,)
+    response = u.urlopen(REDMINE % issue_path)
+    return j.load(response)
+
+def name_issue_branch(issue, description):
+    summary = description
+    for pattern, replacement in SUBJECT_MANGLES:
+        summary = re.sub(pattern, replacement, summary)
+    assert ' ' not in summary
+    summary = summary.strip('-')
+    summary = summary.lower()
+    return 'issue-{issue}-{summary}'.format(summary=summary, issue=issue)
+
+def is_issue_branch(branch, issue):
+    if branch is None:
+        return False
+    if branch.startswith('refs/heads/'):
+        branch = branch[len('refs/heads/'):]
+    issue_prefix = 'issue-%s' % (issue,)
+    if branch == issue_prefix:
+        return True
+    if branch.startswith(issue_prefix):
+        assert len(branch) > len(issue_prefix)
+        # 'issue-12321' is not an issue branch for issue '1232'.
+        return not branch[len(issue_prefix)].isdigit()
+
+def branches():
+    branch_list = git('branch', '--list')
+    assert branch_list[-1] == "\n"
+    lines = branch_list[:-1].split("\n")
+    return [line[2:] for line in lines] # strip leading '  ' or '* '
+
+def summarize(**issue_json):
+    return "Working on [{issue[project][name]}] #{issue[id]}: {issue[subject]}".format(**issue_json)
+
+def become_issue_branch(issue, description):
+    if git('status', '--porcelain') != '':
+        print >>sys.stderr, "Uncommitted changes found in working tree"
+        return 2
+    
+    branch = current_branch()
+    if is_issue_branch(branch, issue):
+        # Already on the correct issue branch. Do nothing; don't even validate
+        # that the issue exists in Redmine.
+        return 0
+    
+    # Retrieve issue metadata from Redmine
+    issue_json = fetch_issue(issue)
+        
+    for branch in branches():
+        if is_issue_branch(branch, issue):
+            git('checkout', branch)
+            print summarize(**issue_json)
+            return 0
+
+    if description is None:
+        name = name_issue_branch(issue_json['issue']['id'], issue_json['issue']['subject'])
+    else:
+        name = name_issue_branch(issue, description)
+    
+    git('fetch', REMOTE)
+    git('checkout', UPSTREAM, '-b', name)
+    print summarize(**issue_json)
+    return 0
+
+def main():
+    options, issue, description = parse_args()
+    return become_issue_branch(issue, description)
+
+if __name__ == '__main__':
+    sys.exit(main())
