@@ -35,4 +35,25 @@ create a branch:
 already exist:
 
     $ git branch issue-12321-disputed-status-on-update origin/master
-    
+    $ git issue 12321
+    Switched to branch 'issue-12321-disputed-status-on-update'
+    Working on [API] #12321: [invoice.update] change the status from paid->disputed doesn't result in error
+
+## Commit message hooks
+
+`git-issue` can automatically populate your commit messages with Redmine
+linking phrases. This operates through a `prepare-commit-msg` hook. You can
+install the hook by running
+
+    $ git issue --install
+
+This will check whether you already have a `prepare-commit-msg` hook, and
+rename it if necessary to `prepare-commit-msg.git-issue-chain`. The new
+`prepare-commit-msg` hook will call the original hook after adding issue
+links to the commit message.
+
+If you prefer to manage hooks manually, you can add
+
+    /Path/To/git-issue --prepare-commit-msg "$@"
+
+to your existing hook.
