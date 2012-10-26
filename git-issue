@@ -114,7 +114,7 @@ def install_hooks():
             if lines[:2] == PREPARE_COMMITMSG_HOOK[:2]:
                 return # hook already installed
         os.rename(prepare_commit_msg, prepare_commit_msg + ".git-issue-chain")
-        chain = prepare_commit_msg + ".git-issue-chain"
+        chain = prepare_commit_msg + '.git-issue-chain "$@"'
     except IOError, e:
         # Not found is fine, we're about to create it.
         if e.errno != errno.ENOENT:
