@@ -7,6 +7,7 @@ import urllib2 as u
 import json as j
 import re
 import os
+import errno
 
 REDMINE = 'https://redmine.2ndsiteinc.com%s'
 REMOTE = 'origin'
@@ -15,6 +16,13 @@ UPSTREAM = '%s/master' % (REMOTE,)
 SUBJECT_MANGLES = [
     (re.compile(r"'"), ''),
     (re.compile(r'[^a-zA-Z0-9]+'), '-'),
+]
+
+PREPARE_COMMITMSG_HOOK=[
+    '#!/bin/bash -e\n',
+    '### git-issue hook\n',
+    '{self} --prepare-commit-msg "$@"\n',
+    '{chain}\n',
 ]
 
 def parse_args():
@@ -88,7 +96,31 @@ def branches():
 def summarize(**issue_json):
     return "Working on [{issue[project][name]}] #{issue[id]}: {issue[subject]}".format(**issue_json)
 
+def install_hook():
+    git_dir = git('rev-parse', '--git-dir')[:-1]
+    hooks = os.path.join(git_dir, 'hooks')
+    prepare_commit_msg = os.path.join(hooks, 'prepare-commit-msg')
+    try:
+        with open(prepare_commit_msg, 'r') as input:
+            lines = input.readlines()
+            if lines[:2] == PREPARE_COMMITMSG_HOOK[:2]:
+                return # hook already installed
+        os.rename(prepare_commit_msg, prepare_commit_msg + ".git-issue-chain")
+        chain = prepare_commit_msg + ".git-issue-chain"
+    except IOError, e:
+        # Not found is fine, we're about to create it.
+        if e.errno != errno.ENOENT:
+            raise
+        else:
+            chain = ""
+    with open(prepare_commit_msg, 'w') as output:
+        for line in PREPARE_COMMITMSG_HOOK:
+            output.write(line.format(self=os.path.abspath(sys.argv[0]), chain=chain))
+    os.chmod(prepare_commit_msg, 0755)
+
 def become_issue_branch(issue, description):
+    install_hook()
+    
     if git('status', '--porcelain') != '':
         print >>sys.stderr, "Uncommitted changes found in working tree"
         return 2
