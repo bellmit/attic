@@ -31,13 +31,21 @@ def parse_args():
         description="streamline management of local issue branches"
     )
     p.add_option(
+        '--install',
+        action='store_true',
+        default=False,
+        help='Install hooks.',
+    )
+    p.add_option(
         '--prepare-commit-msg',
         action='store_true',
         default=False,
         help='Act as a prepare-commit-msg hook and insert "See #1234: " at the start of the commit message.',
     )
     options, args = p.parse_args()
-    if len(args) < 1:
+    if options.install:
+        return options, None, None
+    elif len(args) < 1:
         p.print_help()
         p.exit(1)
     elif len(args) == 1:
@@ -96,7 +104,7 @@ def branches():
 def summarize(**issue_json):
     return "Working on [{issue[project][name]}] #{issue[id]}: {issue[subject]}".format(**issue_json)
 
-def install_hook():
+def install_hooks():
     git_dir = git('rev-parse', '--git-dir')[:-1]
     hooks = os.path.join(git_dir, 'hooks')
     prepare_commit_msg = os.path.join(hooks, 'prepare-commit-msg')
@@ -115,12 +123,11 @@ def install_hook():
             chain = ""
     with open(prepare_commit_msg, 'w') as output:
         for line in PREPARE_COMMITMSG_HOOK:
-            output.write(line.format(self=os.path.abspath(sys.argv[0]), chain=chain))
+            self = os.path.abspath(sys.argv[0])
+            output.write(line.format(self=self, chain=chain))
     os.chmod(prepare_commit_msg, 0755)
 
 def become_issue_branch(issue, description):
-    install_hook()
-    
     if git('status', '--porcelain') != '':
         print >>sys.stderr, "Uncommitted changes found in working tree"
         return 2
@@ -166,6 +173,8 @@ def prepare_commit_msg_hook(filename):
 
 def main():
     options, issue, description = parse_args()
+    if options.install:
+        return install_hooks()
     if options.prepare_commit_msg:
         return prepare_commit_msg_hook(issue)
     return become_issue_branch(issue, description)
