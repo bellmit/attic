@@ -6,6 +6,7 @@ import optparse as o
 import urllib2 as u
 import json as j
 import re
+import os
 
 REDMINE = 'https://redmine.2ndsiteinc.com%s'
 REMOTE = 'origin'
@@ -20,6 +21,12 @@ def parse_args():
     p = o.OptionParser(
         usage="%prog [options] NUMBER [DESCRIPTION]",
         description="streamline management of local issue branches"
+    )
+    p.add_option(
+        '--prepare-commit-msg',
+        action='store_true',
+        default=False,
+        help='Act as a prepare-commit-msg hook and insert "See #1234: " at the start of the commit message.',
     )
     options, args = p.parse_args()
     if len(args) < 1:
@@ -55,17 +62,22 @@ def name_issue_branch(issue, description):
     return 'issue-{issue}-{summary}'.format(summary=summary, issue=issue)
 
 def is_issue_branch(branch, issue):
+    return branch_issue(branch) == issue
+
+def branch_issue(branch):
     if branch is None:
-        return False
+        return None
     if branch.startswith('refs/heads/'):
         branch = branch[len('refs/heads/'):]
-    issue_prefix = 'issue-%s' % (issue,)
-    if branch == issue_prefix:
-        return True
-    if branch.startswith(issue_prefix):
-        assert len(branch) > len(issue_prefix)
-        # 'issue-12321' is not an issue branch for issue '1232'.
-        return not branch[len(issue_prefix)].isdigit()
+    if branch.startswith('issue-'):
+        issue = ''
+        for char in branch[len('issue-'):]:
+            if char == '-':
+                break
+            issue += char
+        return issue
+    else:
+        return None
 
 def branches():
     branch_list = git('branch', '--list')
@@ -106,8 +118,24 @@ def become_issue_branch(issue, description):
     print summarize(**issue_json)
     return 0
 
+def prepare_commit_msg_hook(filename):
+    branch = current_branch()
+    issue = branch_issue(branch)
+    if issue is None:
+        return 0
+    temp = filename + '.git-issue-tmp'
+    with open(filename, 'r') as input:
+        with open(temp, 'w') as output:
+            print >>output, "See #%s: " % (issue,)
+            for line in input:
+                output.write(line)
+    os.rename(temp, filename)
+    return 0
+
 def main():
     options, issue, description = parse_args()
+    if options.prepare_commit_msg:
+        return prepare_commit_msg_hook(issue)
     return become_issue_branch(issue, description)
 
 if __name__ == '__main__':
