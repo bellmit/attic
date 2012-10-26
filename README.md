@@ -19,5 +19,20 @@ directory that's already in your `$PATH`.
 
 To create a new issue branch or to switch back to an existing issue branch:
 
-    $ git-issue 12321
+    $ git issue 12321
+    Switched to a new branch 'issue-12321-invoice-update-change-the-status-from-paid-disputed-doesnt-result-in-error'
+    Working on [API] #12321: [invoice.update] change the status from paid->disputed doesn't result in error
+
+The automatically generated description is based on the Redmine ticket
+subject. To override the description, supply it when running `git issue` to
+create a branch:
+
+    $ git issue 12321 disputed-status-on-update
+    Switched to a new branch 'issue-12321-disputed-status-on-update'
+    Working on [API] #12321: [invoice.update] change the status from paid->disputed doesn't result in error
+
+`git issue` will detect existing issue branches and check them out, if they
+already exist:
+
+    $ git branch issue-12321-disputed-status-on-update origin/master
     
