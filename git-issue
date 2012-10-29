@@ -139,7 +139,10 @@ def branches():
     lines = branch_list[:-1].split("\n")
     return [line[2:] for line in lines] # strip leading '  ' or '* '
 
-def summarize(**issue_json):
+def summarize(issue_json):
+    # Turn first-level keys (only; not values or nested keys) into ASCII for compat with
+    # Python < 2.6.5.
+    issue_json = dict((k.encode('US-ASCII'), v) for k, v in issue_json.iteritems())
     return "Working on [{issue[project][name]}] #{issue[id]}: {issue[subject]}".format(**issue_json)
 
 def install_hooks():
@@ -182,7 +185,7 @@ def become_issue_branch(issue, description):
     for branch in branches():
         if is_issue_branch(branch, issue):
             git('checkout', branch)
-            print summarize(**issue_json)
+            print summarize(issue_json)
             return 0
 
     if description is None:
@@ -192,7 +195,7 @@ def become_issue_branch(issue, description):
     
     git('fetch', REMOTE)
     git('checkout', UPSTREAM, '-b', name)
-    print summarize(**issue_json)
+    print summarize(issue_json)
     return 0
 
 def prepare_commit_msg_hook(filename):
