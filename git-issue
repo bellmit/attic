@@ -9,7 +9,7 @@ import re
 import os
 import errno
 
-REDMINE = 'https://redmine.example.com%s'
+REDMINE = 'https://redmine.2ndsiteinc.com%s'
 REMOTE = 'origin'
 UPSTREAM = '%s/master' % (REMOTE,)
 
