@@ -1,0 +1,89 @@
+#!/usr/bin/env python
+
+import logging as l
+import contextlib as c
+import os
+import sys
+import subprocess as s
+import urllib as u
+import urllib2 as u2
+
+log = l.getLogger(os.path.basename(sys.argv[0]).lstrip('0123456789-'))
+
+def read_config(key):
+    # prune trailing whitespace
+    try:
+        return s.check_output([
+            "git",
+            "config",
+            "-z",
+            key
+        ])[:-1]
+    except s.CalledProcessError as e:
+        if e.returncode == 1:
+            return None
+        raise
+
+def configure_logging():
+    level = l.WARN
+    if read_config('hooks.debug'):
+        level = l.DEBUG
+    l.basicConfig(
+        level=level,
+        format="%(name)s: [%(levelname)s] %(message)s"
+    )
+
+def strip_repo_root(path, repo_root):
+    if not repo_root.endswith(os.path.sep):
+        repo_root = repo_root + os.path.sep
+    
+    if path.startswith(repo_root):
+        path = path[len(repo_root):]
+    else:
+        log.warn(
+            "Repository path (%s) did not begin with repository root (%r). The generated repository URL is likely to be wrong." % (
+                path,
+                repo_root
+            )
+        )
+    return path
+
+def join_base_url(path, base_url):
+    return base_url + u.pathname2url(path)
+
+JENKINS_GIT_NOTIFY = '%(jenkins_url)s/git/notifyCommit?url=%(repo)s'
+
+def build_notify_url(path, jenkins_url):
+    if jenkins_url.endswith('/'):
+        jenkins_url = jenkins_url[:-1]
+    return JENKINS_GIT_NOTIFY % dict(
+        jenkins_url=jenkins_url,
+        repo=u.quote(path)
+    )
+
+def notify(url):
+    try:
+        log.debug("Notifying Jenkins at %r" % (url,))
+        with c.closing(u2.urlopen(url)) as response:
+            sys.stdout.write(response.read())
+            return True
+    except u2.URLError as e:
+        log.exception("Failed notifying Jenkins at %r" % (url,))
+        return False
+
+def build_notify_hook():
+    configure_logging()
+    jenkins_url = read_config('hooks.jenkins-url')
+    if jenkins_url is not None:
+        repo_path = os.getcwd()
+        repo_root = read_config('hooks.repository-root')
+        base_url = read_config('hooks.base-url')
+        if repo_root is not None:
+            repo_path = strip_repo_root(repo_path, repo_root)
+        if base_url is not None:
+            repo_path = join_base_url(repo_path, base_url)
+        notify_url = build_notify_url(repo_path, jenkins_url)
+        return 0 if notify(notify_url) else 1
+
+if __name__ == '__main__':
+    sys.exit(build_notify_hook())
