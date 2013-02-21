@@ -55,7 +55,10 @@ def parse_args():
 def check_output(*popenargs, **kwargs):
     Popen = s.Popen
     PIPE = s.PIPE
-    CalledProcessError = s.CalledProcessError
+    if sys.version_info >= (2, 7):
+        CalledProcessError = s.CalledProcessError
+    else:
+        CalledProcessError = lambda retcode, cmd, output: s.CalledProcessError(retcode, cmd)
     # Code below cribbed verbatim from Python 2.7's subprocess module for use
     # on Python 2.6.
     r"""Run command with arguments and return its output as a byte string.
