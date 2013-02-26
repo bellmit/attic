@@ -16,7 +16,6 @@ Puppet::Type.newtype(:rabbitmq_user) do
     end
     
     def insync?(is)
-      Puppet.warning "Should is nil: #{should.nil?}"
       should.nil?
     end
   end

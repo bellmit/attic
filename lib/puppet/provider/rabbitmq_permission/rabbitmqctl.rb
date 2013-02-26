@@ -4,7 +4,7 @@ Puppet::Type.type(:rabbitmq_permission).provide(
   :rabbitmqctl,
   :parent => Puppet::Provider::Rabbitmqctl
 ) do
-  commands :rabbitmqctl => '/usr/sbin/rabbitmqctl'
+  commands :rabbitmqctl => 'rabbitmqctl'
   
   mk_resource_methods
   

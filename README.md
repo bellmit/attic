@@ -4,8 +4,7 @@ Wotcha. This module provides some basic management tools for configuring
 RabbitMQ, via `rabbitmqctl` and package management. It's been tested on
 CentOS, and should work as-is on Debian and Ubuntu too.
 
-For a completeish example of how to use this class, see `example.pp` in this
-directory.
+For a completeish example of how to use this class, see `tests/site.pp`.
 
 ## The `rabbitmq` Class
 
