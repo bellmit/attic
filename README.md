@@ -37,7 +37,7 @@ See the types' respective sources for valid parameters.
 
 ## See Also
 
-You may also be interested in [Lars Tobi's
+You may also be interested in [Lars Tobias Skjong-Børsting's
 implementation](https://github.com/larstobi/puppet-glassfish). (I'd be using
 his code too, but the GPL made it impractical for me to do so.)
 
