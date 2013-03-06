@@ -68,3 +68,21 @@ glassfish_network_listener { 'ajp-listener':
   passwordfile => '/tmp/example',
   require      => Glassfish_domain['example'],
 }
+
+glassfish_iiop_listener { 'SSL_MUTUALAUTH':
+  ensure   => absent,
+  passwordfile => '/tmp/example',
+  require      => Glassfish_domain['example'],
+}
+
+glassfish_iiop_listener { 'SSL':
+  ensure   => absent,
+  passwordfile => '/tmp/example',
+  require      => Glassfish_domain['example'],
+}
+
+glassfish_iiop_listener { 'orb-listener-1':
+  ensure   => absent,
+  passwordfile => '/tmp/example',
+  require      => Glassfish_domain['example'],
+}

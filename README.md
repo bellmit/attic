@@ -18,6 +18,8 @@ Finally, this module provides the following new types for managing Glassfish:
   network endpoints.
 * `glassfish_http` for creating, configuring, and destroying HTTP
   configurations in protocol configurations.
+* `glassfish_iiop_listener` for creating, configuring, and destroying IIOP
+  network endpoints. (I mostly use this to turn them off.)
 
 See the types' respective sources for valid parameters.
 
