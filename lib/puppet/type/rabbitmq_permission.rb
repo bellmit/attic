@@ -31,6 +31,6 @@ Puppet::Type.newtype(:rabbitmq_permission) do
   end
   
   autorequire(:service) { ['rabbitmq-server'] }
-  autorequire(:rabbitmq_user) { [@parameters[:user]] }
-  autorequire(:rabbitmq_vhost) { [@parameters[:vhost]] }
+  autorequire(:rabbitmq_user) { self[:user] if self[:ensure] == :present }
+  autorequire(:rabbitmq_vhost) { self[:vhost] if self[:ensure] == :present }
 end
