@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+cd "$(dirname "${0}")"
+
+HOSTKEYS=modules/ssh/files/hostkeys
+
+rm -f \
+    "${HOSTKEYS}"/*/ssh_host_*_key* \
+    "${HOSTKEYS}"/ssh_known_hosts \
+    modules/postgresql/files/ssh/id_*
