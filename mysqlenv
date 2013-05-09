@@ -1,0 +1,174 @@
+#!/bin/bash -e
+
+verbose() {
+    if [ "${VERBOSE}" ]; then
+        error "$*"
+    fi
+}
+
+error() {
+    echo "$*" >&2
+}
+
+usage() {
+    error usage: $(basename "$0") "[OPTIONS]" PATH
+    error
+    error "options:"
+    error "  -m MYSQL_BASE the location of the base MySQL installation"
+    error "  -c FILE       a custom my.cnf to use for both server and clients"
+    error "  -p PORT       a non-random port number"
+    error "  -i SERVER_ID  a non-random server ID number for replication"
+    error "  -v            enable verbose debug output"
+    exit 1
+}
+
+die() {
+    error $(basename "$0"): "$*"
+    exit 2
+}
+
+require() {
+    if ! which "$1"; then
+        verbose "MYSQL_BASE: ${MYSQL_BASE}"
+        verbose "PATH:       ${PATH}"
+        die "required program '$1' not found - set MYSQL_BASE, or modify your PATH"
+    fi
+}
+
+abspath() {
+    case "$1" in
+        /*)
+            printf "%s\n" "$1"
+            ;;
+        *)
+            printf "%s\n" "${PWD}/$1"
+            ;;
+    esac
+}
+
+template() {
+    sed \
+        -e "s,@@ENV_BASE@@,${ENV_BASE},g" \
+        -e "s,@@MYSQLD_SAFE@@,${MYSQLD_SAFE},g" \
+        -e "s,@@MYSQL_PORT@@,${MYSQL_PORT},g" \
+        "$1"
+}
+
+make_file() {
+    template "$(dirname "$0")/templates/$1" > "${ENV_BASE}/$1"
+}
+
+make_bin() {
+    make_file "$1"
+    chmod +x "${ENV_BASE}/$1"
+}
+
+make_bin_wrapper() {
+    cat > "${ENV_BASE}/bin/$1" <<WRAPPER
+#!/bin/bash -e
+
+exec "$(require "$1")" \\
+    --defaults-file="${ENV_BASE}/conf/my.cnf" \\
+    "\$@"
+WRAPPER
+    chmod +x "${ENV_BASE}/bin/$1"
+}
+
+MYSQL_BASE="${MYSQL_BASE:-$(dirname $(dirname "$(require mysqld)"))}"
+MYSQL_CONFIG="$(dirname "$0")/conf/default.cf"
+MYSQL_PORT=$(( $RANDOM + 10000 ))
+MYSQL_SERVER_ID=$(( $RANDOM + 1 ))
+VERBOSE=
+while getopts ':m:c:p:i:v' opt; do
+    case $opt in
+        m)
+            MYSQL_BASE="${OPTARG}"
+            ;;
+        c)
+            MYSQL_CONFIG="${OPTARG}"
+            ;;
+        p)
+            MYSQL_PORT="${OPTARG}"
+            ;;
+        i)
+            MYSQL_SERVER_ID="${OPTARG}"
+            ;;
+        v)
+            VERBOSE=1
+            ;;
+        *)
+            usage
+    esac
+done
+
+shift $((OPTIND - 1))
+[ $# -ge 1 ] || usage
+
+ENV_BASE="$1"
+shift
+
+if [ ! -z "${MYSQL_BASE}" ]; then
+    export PATH="${MYSQL_BASE}/bin:${MYSQL_BASE}/scripts:${PATH}"
+fi
+
+require mysql_install_db > /dev/null
+MYSQLD_SAFE="$(require mysqld_safe)"
+
+[ -e "${ENV_BASE}" ] && die "refusing to overwrite existing file or directory: ${ENV_BASE}"
+
+ENV_BASE="$(abspath "${ENV_BASE}")"
+
+verbose "Creating environment"
+
+mkdir "${ENV_BASE}"
+mkdir "${ENV_BASE}/bin"
+mkdir "${ENV_BASE}/conf"
+mkdir "${ENV_BASE}/run"
+mkdir "${ENV_BASE}/data"
+
+verbose "Creating config files"
+
+cp "${MYSQL_CONFIG}" "${ENV_BASE}/conf/my.cnf"
+cat >>"${ENV_BASE}/conf/my.cnf" <<ENV_CONFIG
+[mysqld]
+basedir      = ${MYSQL_BASE}
+datadir      = ${ENV_BASE}/data
+pid-file     = ${ENV_BASE}/run/mysqld.pid
+bind-address = 127.0.0.1
+port         = ${MYSQL_PORT}
+socket       = ${ENV_BASE}/run/socket
+server-id    = ${MYSQL_SERVER_ID}
+
+[client]
+user         = root
+port         = ${MYSQL_PORT}
+socket       = ${ENV_BASE}/run/socket
+ENV_CONFIG
+
+verbose "Creating scripts"
+
+make_file bin/activate
+make_bin bin/start-mysql
+make_bin bin/stop-mysql
+
+verbose "Creating program wrappers"
+
+make_bin_wrapper mysql
+make_bin_wrapper mysqladmin
+make_bin_wrapper mysqldump
+
+verbose "Initializing database contents"
+
+mysql_install_db \
+    --basedir="${MYSQL_BASE}" \
+    --defaults-file="${ENV_BASE}/conf/my.cnf" \
+    --cross-bootstrap
+
+echo "MySQL environment created in $(basename "$ENV_BASE")"
+echo
+echo "To use this environment, source $(basename "$ENV_BASE")/bin/activate to start the server"
+echo "and set up the mysql(1) client. Other applications can access the server on"
+echo "port ${MYSQL_PORT}."
+echo
+echo "To stop the server, run stop-server, or use deactivate-mysql to clean up the"
+echo "MySQL environment as well."

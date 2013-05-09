@@ -1,0 +1,30 @@
+if [ ! -z "${MYSQL_ENV_BASE}" ]; then
+    deactivate-mysql
+fi
+
+MYSQL_ENV_BASE=@@ENV_BASE@@
+
+MYSQL_ENV_ORIG_PATH="${PATH}"
+MYSQL_ENV_ORIG_PS1="${PS1}"
+MYSQL_ENV_ORIG_EXIT_TRAP="$(trap -p EXIT)"
+
+export PATH="${MYSQL_ENV_BASE}/bin:${PATH}"
+
+PS1="(mysql:$(basename "$MYSQL_ENV_BASE"))${PS1}"
+
+start-mysql
+trap stop-mysql EXIT
+
+deactivate-mysql() {
+    stop-mysql
+    trap - EXIT
+
+    export PATH="${MYSQL_ENV_ORIG_PATH}"
+    unset MYSQL_ENV_ORIG_PATH
+
+    PS1="${MYSQL_ENV_ORIG_PS1}"
+    unset MYSQL_ENV_ORIG_PS1
+
+    unset MYSQL_ENV_BASE
+    unset -f deactivate-mysql
+}
