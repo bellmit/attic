@@ -40,3 +40,8 @@ the following options:
 * `-c FILE` lets you provide an alternate `my.cnf` file.
 * `-p PORT` lets you control the port number MySQL starts on.
 * `-i NUMBER` sets the server ID, for replication.
+
+## Bash, dude?
+
+Look, have you ever written anything that was 90% calls to other programs in
+Python or Perl? It's uglier and worse than bash.
