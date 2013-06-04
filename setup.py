@@ -6,7 +6,7 @@ with open(p.join(p.dirname(__file__), 'requirements.txt'), 'r') as r:
 
 setup(
     name="alicorn",
-    version="0",
+    version="1",
     packages=find_packages(),
     install_requires=requirements,
     scripts=['scripts/alicorn'],
