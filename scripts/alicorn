@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+import alicorn.run as ar
+import sys
+
+sys.exit(ar.main())
