@@ -1,8 +1,11 @@
+<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Bootstrap</title>
-    <link href="css/site.css" rel="stylesheet">
+    <c:url var="cssUrl" value="/css/site.css" />
+    <link href="${cssUrl}" rel="stylesheet">
   </head>
 
   <body>
@@ -38,6 +41,7 @@
 
     </div>
 
-    <script data-main="js/site" src="js/require.js"></script>
+    <c:url var="scriptUrl" value="/js/require.js" />
+    <script data-main="js/site" src="${scriptUrl}"></script>
   </body>
 </html>
