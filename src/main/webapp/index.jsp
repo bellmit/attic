@@ -1,47 +1,11 @@
 <%@ page session="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Bootstrap</title>
-    <c:url var="cssUrl" value="/css/site.css" />
-    <link href="${cssUrl}" rel="stylesheet">
-  </head>
+<%@ taglib tagdir="/WEB-INF/tags/layout" prefix="layout" %>
+<layout:page title="Bootstrap">
+    <h1>Bootstrap starter template</h1>
+    <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
 
-  <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="#">Project name</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-
-      <h1>Bootstrap starter template</h1>
-      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
-
-      <a class="btn btn-primary"
-        id="hello-world"
-        title="Mangle the page title"
-        data-placement="bottom">Hello, World</a>
-
-    </div>
-
-    <c:url var="scriptUrl" value="/js/require.js" />
-    <script data-main="js/site" src="${scriptUrl}"></script>
-  </body>
-</html>
+    <a class="btn btn-primary"
+      id="hello-world"
+      title="Mangle the page title"
+      data-placement="bottom">Hello, World</a>
+</layout:page>
