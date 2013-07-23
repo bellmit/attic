@@ -4,24 +4,15 @@ require.config({
 			deps: ['jquery'],
 			exports: 'jQuery.fn.tooltip'
 		},
-		'underscore': {
-			exports: '_'
-		},
-		'backbone': {
-			deps: ['jquery', 'underscore'],
-			exports: 'Backbone'
+		'angular': {
+			deps: ['jquery'],
+			exports: 'angular'
 		}
 	}
-//	urlArgs: "bust=" +  (new Date()).getTime() // TODO remove before takeoff
+	// urlArgs: "bust=" +  (new Date()).getTime() // TODO remove before takeoff
 });
 
-define(['jquery', 'collection/lobby', 'view/lobby', 'domReady!'],
-function(      $,    LobbyCollection,    LobbyView) {
-	var lobbyGames = new LobbyCollection();
-	var lobby = new LobbyView({
-		el: $('#lobby'),
-		model: lobbyGames
-	});
-	
-	lobbyGames.fetch();
+define(['angular', 'redshift', 'domReady!'],
+function( angular) {
+	angular.bootstrap(document, ['redshift']);
 });
