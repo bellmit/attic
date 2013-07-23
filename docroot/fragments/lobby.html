@@ -1,0 +1,17 @@
+<h1>hello</h1>
+
+<table id="lobby" class="table">
+  <tbody>
+    <tr ng-repeat="game in games">
+      <td>{{game.name}}</td>
+      <td>??</td>
+      <td>??</td>
+      <td>Unknown</td>
+      <td>Unknown</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li ng-repeat="game in games"><input ng-model="game.name"></li>
+</ul>
