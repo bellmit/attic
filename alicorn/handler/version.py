@@ -28,7 +28,7 @@ class IRCHandler(object):
             return
 
         url = self.environments[environment]['url']
-        version_response = r.head(url)
+        version_response = r.head(url, allow_redirects=True)
         version = version_response.headers.get('X-Version', 'unknown')
         git_version = version_response.headers.get('X-Git-Version', 'unknown')
 
