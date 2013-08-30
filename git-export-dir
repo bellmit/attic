@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+TO="$1"
+DIR="$2"
+
+HEAD="$(git rev-parse HEAD)"
+git clone "$(git rev-parse --git-dir)" "${TO}"
+
+cd "${TO}"
+git remote rm origin || true
+git checkout "${HEAD}" -B master
+git filter-branch \
+	--subdirectory-filter "${DIR}" \
+	--tree-filter "
+		mkdir -p '${DIR}'
+		git mv -k \$(git ls-files | sed -e s,/.*,, | sort | uniq) '${DIR}'
+	" \
+	--prune-empty \
+	HEAD

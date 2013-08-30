@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+SOURCE="$1"
+shift
+
+git fetch "${SOURCE}" HEAD
+git merge --no-ff FETCH_HEAD "$@"
