@@ -168,3 +168,36 @@ If you break into a debugger, you can discover (eventually) that the returned
 pool is from the `jdbc/__default` binding; the `org.apache.derby` references
 in the stack trace are an artifact of `DerbyPool`, to which `jdbc/__default`
 points.
+
+## Workaround
+
+Explicitly binding the `jdbc/example` `resource-ref-name` using
+`glassfish-web.xml` causes Glassfish to use the specified JNDI name:
+
+    cat > glassfish-web.xml <<'GLASSFISH_WEB_XML'
+    <glassfish-web-app>
+        <context-root>/</context-root>
+        <resource-ref>
+            <res-ref-name>jdbc/example</res-ref-name>
+            <jndi-name>jdbc/example</jndi-name>
+        </resource-ref>
+    </glassfish-web-app>
+    GLASSFISH_WEB_XML
+    asadmin undeploy jndi-jdbc-bug
+    asadmin deploy \
+        --runtimealtdd glassfish-web.xml \
+        target/jndi-jdbc-bug-1.0-SNAPSHOT.war
+
+However, this is ineffective with `--upload` as `asadmin` does not upload the
+passed alternate deployment descriptor.
+
+You can also package the runtime deployment descriptor in a deployment plan:
+
+    jar cf target/deployment-plan.jar glassfish-web.xml
+    asadmin undeploy jndi-jdbc-bug
+    asadmin deploy \
+        --upload \
+        --deploymentplan target/deployment-plan.jar \
+        target/jndi-jdbc-bug-1.0-SNAPSHOT.war
+
+This is compatible with `--upload`, but requires more packaging.
