@@ -172,7 +172,26 @@ points.
 ## Workaround
 
 Explicitly binding the `jdbc/example` `resource-ref-name` using
-`glassfish-web.xml` causes Glassfish to use the specified JNDI name:
+`glassfish-web.xml` causes Glassfish to use the specified JNDI name. The
+easiest way to do this is with the `lookup-name` subattribute in `web.xml`:
+
+    <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://java.sun.com/xml/ns/javaee
+                http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0">
+        <module-name>jndi-jdbc-bug</module-name>
+
+        <resource-ref>
+            <res-ref-name>jdbc/example</res-ref-name>
+            <res-type>javax.sql.DataSource</res-type>
+            <res-auth>Container</res-auth>
+            <lookup-name>jdbc/example</lookup-name>
+        </resource-ref>
+    </web-app>
+
+Alternately, you can specify it using Glassfish's own deployment descriptor,
+and pass it along to `asadmin` at deploy time:
 
     cat > glassfish-web.xml <<'GLASSFISH_WEB_XML'
     <glassfish-web-app>
