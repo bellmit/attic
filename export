@@ -1,0 +1,145 @@
+#!/usr/bin/env python
+
+import argparse as ap
+import email.message as em
+import email.generator as eg
+import getpass as gp
+import os
+import os.path as p
+import requests as r
+import shutil as sh
+import subprocess as sub
+
+def parse_args():
+    parser = ap.ArgumentParser(description="Github exporter.")
+    parser.add_argument(
+        '-u', '--username',
+        default=os.environ.get('USER', None),
+        help='GitHub user to export [%(default)s]'
+    )
+    return parser.parse_args()
+
+class GitHub(object):
+    def __init__(self, username, password):
+        self.auth = (username, password)
+
+    def get(self, url):
+        resp = r.get(
+            url,
+            auth=self.auth,
+            headers={
+                'User-Agent': 'Abandon-Github/1.0 (Specious Legal Threats edition)'
+            }
+        )
+        resp.raise_for_status()
+        return resp.json()
+
+def git(*args):
+    sub.check_call(('git',) + args)
+
+def mirror_repo(base, full_name, ssh_url):
+    group = p.dirname(full_name)
+    group_dir = p.join(base, group)
+    repo_dir = p.join(base, full_name + '.git')
+
+    if p.exists(repo_dir):
+        sh.rmtree(repo_dir)
+    git('clone', '--mirror', ssh_url, repo_dir)
+
+def dump_repo(full_name, ssh_url, **repo):
+    mirror_repo('repos', full_name, ssh_url)
+
+def dump_gist(id, git_pull_url, **gist):
+    mirror_repo('gists', id, git_pull_url)
+
+def dump_mime_blobs(path, *blobs):
+    with open(path, 'w') as mime_file:
+        generator = eg.Generator(mime_file, True)
+        for blob in blobs:
+            generator.flatten(blob, True)
+
+def dump_comment(issue_dir, **comment):
+    comment_blob = make_comment_blob(**comment)
+    dump_mime_blob(p.join(issue_dir, 'summary'), issue_blob)
+
+def make_issue_blob(**issue):
+    issue_blob = em.Message()
+    issue_blob.set_unixfrom("From {user[login]}".format(**issue))
+    issue_blob.add_header('Subject', issue['title'])
+    issue_blob.add_header('Date', issue['created_at'])
+    if issue['assignee']:
+        issue_blob.add_header('Assigned-To', issue['assignee']['login'])
+    issue_blob.add_header('Issue-State', issue['state'])
+    if issue['closed_at']:
+        issue_blob.add_header('Closed-Date', issue['closed_at'])
+    if issue['milestone']:
+        issue_blob.add_header('Milestone', issue['milestone']['title'])
+    if issue['labels']:
+        for label in issue['labels']:
+            issue_blob.add_header('Label', label['name'])
+    issue_blob.set_payload(issue['body'])
+    return issue_blob
+
+def make_comment_blob(**comment):
+    comment_blob = em.Message()
+    comment_blob.set_unixfrom("From {user[login]}".format(**comment))
+    comment_blob.add_header('Date', comment['created_at'])
+    comment_blob.set_payload(comment['body'])
+    return comment_blob
+
+def make_event_blob(**event):
+    event_blob = em.Message()
+    event_blob.set_unixfrom("From {actor[login]}".format(**event))
+    event_blob.add_header('Date', event['created_at'])
+    event_blob.add_header('Event', event['event'])
+    if event['commit_id']:
+        event_blob.add_header('Commit', event['commit_id'])
+
+    return event_blob
+
+def dump_issue(github, **issue):
+    repo = issue['repository']['full_name']
+    issue_dir = p.join('issues', repo, str(issue['number']))
+    if p.exists(issue_dir):
+        sh.rmtree(issue_dir)
+    os.makedirs(issue_dir)
+
+    issue_blob = make_issue_blob(**issue)
+    dump_mime_blobs(p.join(issue_dir, 'summary'), issue_blob)
+
+    comments = github.get(issue['comments_url'])
+    comment_blobs = [make_comment_blob(**comment) for comment in comments]
+    dump_mime_blobs(p.join(issue_dir, 'comments'), *comment_blobs)
+
+    events = github.get(issue['events_url'])
+    event_blobs = [make_event_blob(**event) for event in events]
+    dump_mime_blobs(p.join(issue_dir, 'events'), *event_blobs)
+
+def dump_repos(github):
+    repos = github.get('https://api.github.com/user/repos')
+    for repo in repos:
+        dump_repo(**repo)
+
+def dump_gists(github):
+    gists = github.get('https://api.github.com/gists')
+    for gist in gists:
+        dump_gist(**gist)
+
+def dump_issues(github):
+    issues = github.get('https://api.github.com/user/issues')
+    for issue in issues:
+        dump_issue(github, **issue)
+    issues = github.get('https://api.github.com/user/issues?state=closed')
+    for issue in issues:
+        dump_issue(github, **issue)
+
+def main():
+    args = parse_args()
+    password = gp.getpass()
+    github = GitHub(args.username, password)
+    dump_repos(github)
+    dump_gists(github)
+    dump_issues(github)
+
+if __name__ == '__main__':
+    main()
