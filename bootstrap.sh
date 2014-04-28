@@ -42,4 +42,4 @@ echo "PermitRootLogin no" >> /etc/ssh/sshd_config
 echo "AllowGroups ssh" >> /etc/ssh/sshd_config
 echo "PasswordAuthentication no" >> /etc/ssh/sshd_config
 
-#service ssh restart
+service ssh restart
