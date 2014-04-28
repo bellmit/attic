@@ -19,6 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.landrush.enable
   # config.landrush.tld = 'example.com'
 
+  # This will install the key in keys/ansible.pub for the "ansible" user. You may
+  # want to replace this.
   config.vm.provision "shell",
     path: "bootstrap.sh",
     args: [config.vm.hostname]
