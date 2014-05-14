@@ -1,0 +1,15 @@
+description "Atlassian Bamboo"
+author "Owen Jacobson <owen.jacobson@grimoire.ca>"
+console log
+
+start on started networking
+stop on deconfiguring-networking
+respawn
+respawn limit 5 60
+
+setuid bamboo
+setgid bamboo
+umask 0022
+chdir /var/lib/bamboo
+
+exec /opt/bamboo/current/bin/start-bamboo.sh -fg
