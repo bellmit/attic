@@ -1,5 +1,15 @@
 #!/bin/bash -e
 
+if [ $# -ne 3 ]; then
+  prog=$(basename $0)
+  echo "$prog: transplant a subdirectory from one git repo to another"
+  echo "Usage: $prog /path/to/source-repo /path/to/target-repo path-inside-repo"
+  echo
+  echo "Note: after transplanting, the subdirectory is not removed from the"
+  echo "      source repo; do that yourself after verifying the transplant"
+  echo "      succeeded." 
+fi
+
 cd "$(dirname "$0")"
 BIN="${PWD}"
 cd -
@@ -12,7 +22,7 @@ while [ $# -gt 0 ]; do
 	DIR="$1"
 	shift
 
-	EPHEMERAL_REPO="$(mktemp -d -t git-transplant)"
+	EPHEMERAL_REPO="$(mktemp -d -t git-transplant.XXXXX)"
 
 	cd "${SOURCE_REPO}"
 	"${BIN}/git-export-dir" "${EPHEMERAL_REPO}" "${DIR}"
