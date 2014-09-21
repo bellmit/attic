@@ -1,7 +1,7 @@
 {
   "description": "A small testing sample for Express servers",
   "scripts": {
-    "test": "jasmine-node test/server",
+    "test": "jasmine-node --autoTest --watchFolders server.js server test/server",
     "start": "node server.js"
   },
   "dependencies": {
