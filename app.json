@@ -1,0 +1,12 @@
+{
+  "name": "Login Box",
+  "description": "An easy-to-deploy login server for your applications.",
+  "keywords": [
+    "productivity",
+    "HTML5",
+    "scalpel"
+  ],
+  "website": "https://github.com/login-box/login-box",
+  "repository": "https://github.com/login-box/login-box.git",
+  "success_url": "/"
+}

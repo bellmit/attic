@@ -5,6 +5,10 @@ process
     .on('SIGINT', function() {
         console.log('login-box.shutdown');
         server.close();
+    })
+    .on('SIGTERM', function() {
+        console.log('login-box.shutdown');
+        server.close();
     });
 
 var express = require('express');
@@ -12,7 +16,7 @@ var http = require('http');
 var program = require('commander');
 
 program
-    .option('-p, --port [PORT]', 'Server listen port', 5000)
+    .option('-p, --port [PORT]', 'Server listen port', process.env['PORT'] || 5000)
     .parse(process.argv);
 
 var app = express();

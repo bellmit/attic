@@ -1,5 +1,7 @@
 # Login Box
 
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 An easy-to-deploy login server for your applications.
 
 Login Box is designed to handle logins (and single sign-on) for your application.
@@ -25,3 +27,7 @@ Got a copy of the code? Want to tinker with it? Great.
 3. Visit http://localhost:5000/ to open the app.
 
 To shut down the server, hit Ctrl-C (Ctrl-Break on Windows).
+
+Alternately, you can start the server with [Foreman](https://github.com/ddollar/foreman):
+
+    foreman start
