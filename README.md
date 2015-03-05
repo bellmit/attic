@@ -25,3 +25,7 @@ Got a copy of the code? Want to tinker with it? Great.
 3. Visit http://localhost:5000/ to open the app.
 
 To shut down the server, hit Ctrl-C (Ctrl-Break on Windows).
+
+Alternately, you can start the server with [Foreman](https://github.com/ddollar/foreman):
+
+    foreman start
