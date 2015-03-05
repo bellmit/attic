@@ -2,9 +2,7 @@
   "name": "Login Box",
   "description": "An easy-to-deploy login server for your applications.",
   "keywords": [
-    "productivity",
-    "HTML5",
-    "scalpel"
+    "authentication"
   ],
   "website": "https://github.com/login-box/login-box",
   "repository": "https://github.com/login-box/login-box.git",
