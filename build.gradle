@@ -1,3 +1,6 @@
+import com.wiredforcode.gradle.spawn.SpawnProcessTask
+import com.wiredforcode.gradle.spawn.KillProcessTask
+
 buildscript {
     repositories {
         jcenter()
@@ -5,6 +8,7 @@ buildscript {
 
     dependencies {
         classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '1.2.1'
+        classpath group: 'com.wiredforcode', name: 'gradle-spawn-plugin', version: '0.6.0'
     }
 }
 
@@ -21,6 +25,15 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    acceptanceTest
+}
+
+configurations {
+    acceptanceTestCompile.extendsFrom compile, testCompile
+    acceptanceTestRuntime.extendsFrom runtime, acceptanceTestCompile, testRuntime
+}
+
 dependencies {
     ext {
         dropwizardVersion = '0.8.0'
@@ -30,9 +43,14 @@ dependencies {
         jerseyVersion = '2.16'
 
         // End of Dropwizard-related versions. The following versions can vary independently of Dropwizard.
+        seleniumVersion = '2.45.0'
     }
 
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+
+    acceptanceTestCompile group: 'com.lewisd', name: 'simple-dsl', version: '0.2'
+    acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
+    acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
 }
 
 shadowJar {
@@ -40,6 +58,16 @@ shadowJar {
     exclude 'META-INF/*.DSA'
     exclude 'META-INF/*.RSA'
     mergeServiceFiles()
+}
+
+idea {
+    module {
+        testSourceDirs += sourceSets.acceptanceTest.allJava.srcDirs
+        scopes.TEST.plus += [
+                configurations.acceptanceTestCompile,
+                configurations.acceptanceTestRuntime
+        ]
+    }
 }
 
 tasks.withType(JavaCompile) {
@@ -51,10 +79,41 @@ tasks.assemble {
     dependsOn 'shadowJar'
 }
 
+task startTestServer(type: SpawnProcessTask) {
+    dependsOn 'shadowJar'
+    finalizedBy 'stopTestServer'
+
+    command "java -jar ${shadowJar.archivePath} server"
+    ready "org.eclipse.jetty.server.Server: Started"
+}
+
+task acceptanceTest(type: Test) {
+    description 'Run acceptance tests.'
+    group 'verification'
+
+    dependsOn 'acceptanceTestClasses'
+    dependsOn 'startTestServer'
+    shouldRunAfter 'test'
+
+    inputs.dir sourceSets.main.output.dirs
+    inputs.dir sourceSets.acceptanceTest.output.dirs
+
+    testClassesDir = sourceSets.acceptanceTest.output.classesDir
+    classpath = sourceSets.acceptanceTest.runtimeClasspath
+}
+
+task stopTestServer(type: KillProcessTask) {
+    mustRunAfter 'acceptanceTest'
+}
+
 task stage {
     dependsOn 'shadowJar'
 }
 
 tasks.run {
     args = ['server']
+}
+
+tasks.check {
+    dependsOn 'acceptanceTest'
 }
