@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '1.2.1'
+    }
+}
+
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'idea'
+
+group = 'com.loginbox.app'
+mainClassName = 'com.loginbox.app.LoginBox'
+
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    ext {
+        dropwizardVersion = '0.8.0'
+
+        // The following versions have to track dropwizardVersion but are not equal to it. You
+        // can obtain the correct version numbers from the published dropwizard-parent POM.
+        jerseyVersion = '2.16'
+
+        // End of Dropwizard-related versions. The following versions can vary independently of Dropwizard.
+    }
+
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+}
+
+shadowJar {
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    mergeServiceFiles()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:all'
+}
+
+tasks.assemble {
+    dependsOn 'shadowJar'
+}
+
+task stage {
+    dependsOn 'shadowJar'
+}
+
+tasks.run {
+    args = ['server']
+}

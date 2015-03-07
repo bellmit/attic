@@ -16,15 +16,15 @@ Login Box is designed to handle logins (and single sign-on) for your application
 
 Got a copy of the code? Want to tinker with it? Great.
 
-1. Install dependencies. You'll need to re-run this after merging upstream changes, to ensure that the correct versions of various libs and tools are installed:
+1. Build the code:
 
-        npm install
+        ./gradlew stage
 
-2. Start the server. By default, it runs on port 5000, but you can change the port with the `--port` option:
+2. Start the server. By default, it runs on port 6000, but you can change the port with the `PORT` environment variable:
 
-        node server.js --port 5000
+        java -jar build/libs/login-box-all.jar server
 
-3. Visit http://localhost:5000/ to open the app.
+3. Visit http://localhost:6000/ to open the app.
 
 To shut down the server, hit Ctrl-C (Ctrl-Break on Windows).
 
