@@ -22,11 +22,11 @@ Got a copy of the code? Want to tinker with it? Great.
 
         ./gradlew stage
 
-2. Start the server. By default, it runs on port 6000, but you can change the port with the `PORT` environment variable:
+2. Start the server. By default, it runs on port 5000, but you can change the port with the `PORT` environment variable:
 
         java -jar build/libs/login-box-all.jar server
 
-3. Visit http://localhost:6000/ to open the app.
+3. Visit http://localhost:5000/ to open the app.
 
 To shut down the server, hit Ctrl-C (Ctrl-Break on Windows).
 

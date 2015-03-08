@@ -37,7 +37,7 @@ public class HerokuConnectorFactory extends HttpConnectorFactory {
     /**
      * The default HTTP port, used if
      */
-    public static final int DEFAULT_PORT = 6000;
+    public static final int DEFAULT_PORT = 5000;
 
     private static final Logger LOG = LoggerFactory.getLogger(HerokuConnectorFactory.class);
 
