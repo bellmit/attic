@@ -2,7 +2,7 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
-[![Build Status](https://travis-ci.org/login-box/login-box.svg)](https://travis-ci.org/login-box/login-box)
+[![Build Status](https://circleci.com/gh/login-box/login-box.svg)](https://circleci.com/gh/login-box/login-box)
 
 An easy-to-deploy login server for your applications.
 
