@@ -1,0 +1,7 @@
+dependencies:
+    override:
+        - bin/build
+
+test:
+    override:
+        - bin/test
