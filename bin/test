@@ -1,3 +1,26 @@
 #!/bin/bash -e
 
-true
+RM=${RM:---rm}
+
+docker run -i ${RM} loginbox/ubuntu-java <<'TEST_SCRIPT'
+set -ex
+java -version
+javac -version
+TEST_SCRIPT
+
+docker run -i ${RM} loginbox/ubuntu-java <<'TEST_SCRIPT'
+set -ex
+mkdir -p /tests/hello
+cd /tests/hello
+
+cat > Hello.java <<'HELLO_JAVA'
+class Hello {
+    public static void main(String... args) {
+        System.out.println("Hello, world!");
+    }
+}
+HELLO_JAVA
+
+javac Hello.java
+java Hello
+TEST_SCRIPT

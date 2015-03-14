@@ -1,3 +1,4 @@
 #!/bin/bash -e
 
-true
+cd "$(dirname "$0")/.."
+exec docker build -t loginbox/ubuntu-java .
