@@ -1,12 +1,14 @@
 #!/bin/bash -e
 
-docker run --rm -i login-box/ubuntu-java <<'TEST_SCRIPT'
+RM=${RM:---rm}
+
+docker run -i ${RM} loginbox/ubuntu-java <<'TEST_SCRIPT'
 set -ex
 java -version
 javac -version
 TEST_SCRIPT
 
-docker run --rm -i login-box/ubuntu-java <<'TEST_SCRIPT'
+docker run -i ${RM} loginbox/ubuntu-java <<'TEST_SCRIPT'
 set -ex
 mkdir -p /tests/hello
 cd /tests/hello

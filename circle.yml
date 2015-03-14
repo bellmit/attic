@@ -1,7 +1,11 @@
+machine:
+    services:
+        - docker
+
 dependencies:
     override:
         - bin/build
 
 test:
     override:
-        - bin/test
+        - RM=-- bin/test
