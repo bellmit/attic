@@ -2,6 +2,8 @@ package com.loginbox.app.acceptance.framework.driver;
 
 
 import com.loginbox.app.acceptance.framework.Lazily;
+import org.junit.rules.ExternalResource;
+import org.junit.rules.TestRule;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -63,5 +65,16 @@ public class SystemDriver {
 
     public String baseUrl() {
         return BASE_URL;
+    }
+
+    public TestRule rules() {
+        return new SeleniumShutdownRule();
+    }
+
+    private class SeleniumShutdownRule extends ExternalResource {
+        @Override
+        protected void after() {
+            shutdown();
+        }
     }
 }
