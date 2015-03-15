@@ -4,6 +4,7 @@ package com.loginbox.app.acceptance.framework.driver;
 import com.loginbox.app.LoginBox;
 import com.loginbox.app.LoginBoxConfiguration;
 import com.loginbox.app.acceptance.framework.Lazily;
+import io.dropwizard.testing.ConfigOverride;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.rules.ExternalResource;
 import org.junit.rules.RuleChain;
@@ -16,8 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 public class SystemDriver {
     private static final int SELENIUM_WAIT_SECONDS = Integer.getInteger("selenium.timeout", 2);
+    private static final ConfigOverride LOG_THRESHOLD = ConfigOverride.config("logging.appenders[0].threshold", System.getProperty("app.logging.threshold", "WARN"));
 
-    private final DropwizardAppRule<LoginBoxConfiguration> appRule = new DropwizardAppRule<>(LoginBox.class, null);
+    private final DropwizardAppRule<LoginBoxConfiguration> appRule = new DropwizardAppRule<>(LoginBox.class, null, LOG_THRESHOLD);
 
     private String baseUrl = null;
     private WebDriver webDriver = null;
