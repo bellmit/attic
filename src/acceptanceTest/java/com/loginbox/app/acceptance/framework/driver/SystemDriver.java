@@ -1,8 +1,12 @@
 package com.loginbox.app.acceptance.framework.driver;
 
 
+import com.loginbox.app.LoginBox;
+import com.loginbox.app.LoginBoxConfiguration;
 import com.loginbox.app.acceptance.framework.Lazily;
+import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.rules.ExternalResource;
+import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -11,11 +15,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 public class SystemDriver {
-    private static final String BASE_URL = System.getProperty(
-            "application.base.url",
-            "http://localhost:5000/");
     private static final int SELENIUM_WAIT_SECONDS = Integer.getInteger("selenium.timeout", 2);
 
+    private final DropwizardAppRule<LoginBoxConfiguration> appRule = new DropwizardAppRule<>(LoginBox.class, null);
+
+    private String baseUrl = null;
     private WebDriver webDriver = null;
     private WebUiDriver webUiDriver = null;
 
@@ -64,11 +68,13 @@ public class SystemDriver {
     }
 
     public String baseUrl() {
-        return BASE_URL;
+        return baseUrl = Lazily.create(baseUrl, () -> String.format("http://localhost:%d/", appRule.getLocalPort()));
     }
 
     public TestRule rules() {
-        return new SeleniumShutdownRule();
+        return RuleChain
+                .outerRule(appRule)
+                .around(new SeleniumShutdownRule());
     }
 
     private class SeleniumShutdownRule extends ExternalResource {
