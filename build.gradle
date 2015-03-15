@@ -1,6 +1,3 @@
-import com.wiredforcode.gradle.spawn.SpawnProcessTask
-import com.wiredforcode.gradle.spawn.KillProcessTask
-
 buildscript {
     repositories {
         jcenter()
@@ -8,7 +5,6 @@ buildscript {
 
     dependencies {
         classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '1.2.1'
-        classpath group: 'com.wiredforcode', name: 'gradle-spawn-plugin', version: '0.6.0'
     }
 }
 
@@ -26,12 +22,15 @@ repositories {
 }
 
 sourceSets {
-    acceptanceTest
+    acceptanceTest {
+        compileClasspath = files(sourceSets.main.output, configurations.acceptanceTestCompile)
+        runtimeClasspath = files(output, sourceSets.main.output, configurations.acceptanceTestRuntime)
+    }
 }
 
 configurations {
     acceptanceTestCompile.extendsFrom compile, testCompile
-    acceptanceTestRuntime.extendsFrom runtime, acceptanceTestCompile, testRuntime
+    acceptanceTestRuntime.extendsFrom runtime, testRuntime, acceptanceTestCompile
 }
 
 dependencies {
@@ -54,6 +53,7 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: hamcrestVersion
 
     acceptanceTestCompile group: 'com.lewisd', name: 'simple-dsl', version: '0.2'
+    acceptanceTestCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
 }
@@ -84,20 +84,11 @@ tasks.assemble {
     dependsOn 'shadowJar'
 }
 
-task startTestServer(type: SpawnProcessTask) {
-    dependsOn 'shadowJar'
-    finalizedBy 'stopTestServer'
-
-    command "java -jar ${shadowJar.archivePath} server"
-    ready "org.eclipse.jetty.server.Server: Started"
-}
-
 task acceptanceTest(type: Test) {
     description 'Run acceptance tests.'
     group 'verification'
 
     dependsOn 'acceptanceTestClasses'
-    dependsOn 'startTestServer'
     shouldRunAfter 'test'
 
     inputs.dir sourceSets.main.output.dirs
@@ -105,10 +96,6 @@ task acceptanceTest(type: Test) {
 
     testClassesDir = sourceSets.acceptanceTest.output.classesDir
     classpath = sourceSets.acceptanceTest.runtimeClasspath
-}
-
-task stopTestServer(type: KillProcessTask) {
-    mustRunAfter 'acceptanceTest'
 }
 
 task stage {
