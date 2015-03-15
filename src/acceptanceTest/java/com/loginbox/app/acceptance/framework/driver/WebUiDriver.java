@@ -18,13 +18,4 @@ public class WebUiDriver extends SeleniumDriver {
         // concerns.
         systemDriver.shutdown();
     }
-
-    public String getDemoMessage() {
-        return findDemoMessage()
-                .getText();
-    }
-
-    WebElement findDemoMessage() {
-        return findElement(By.tagName("h1"));
-    }
 }

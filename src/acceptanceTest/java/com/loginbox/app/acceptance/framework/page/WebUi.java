@@ -23,7 +23,4 @@ public class WebUi extends Dsl<WebUiDriver> {
         driver().open();
     }
 
-    public void ensureDemoMessageShown() {
-        assertThat(driver().getDemoMessage(), is("Hello, world!"));
-    }
 }
