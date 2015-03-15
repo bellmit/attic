@@ -58,6 +58,10 @@ public class SystemDriver {
     }
 
     public WebUiDriver webUiDriver() {
-        return webUiDriver = Lazily.create(webUiDriver, () -> new WebUiDriver(this, BASE_URL));
+        return webUiDriver = Lazily.create(webUiDriver, () -> new WebUiDriver(this));
+    }
+
+    public String baseUrl() {
+        return BASE_URL;
     }
 }

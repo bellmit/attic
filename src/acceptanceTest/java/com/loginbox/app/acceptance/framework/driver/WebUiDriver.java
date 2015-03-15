@@ -4,15 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class WebUiDriver extends SeleniumDriver {
-    private final String baseUrl;
-
-    public WebUiDriver(SystemDriver systemDriver, String baseUrl) {
+    public WebUiDriver(SystemDriver systemDriver) {
         super(systemDriver);
-        this.baseUrl = baseUrl;
     }
 
     public void open() {
-        webDriver().get(baseUrl);
+        webDriver().get(systemDriver.baseUrl());
     }
 
     public void close() {
