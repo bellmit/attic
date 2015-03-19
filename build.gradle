@@ -1,0 +1,23 @@
+import org.ajoberstar.grgit.Grgit
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath group: 'org.ajoberstar', name: 'gradle-git', version: '0.13.0-milestone.1'
+    }
+}
+
+def p = project
+
+allprojects {
+    apply plugin: 'org.ajoberstar.release-opinion'
+
+    group = 'com.login-box'
+
+    release {
+        grgit = Grgit.open(p.projectDir)
+    }
+}
