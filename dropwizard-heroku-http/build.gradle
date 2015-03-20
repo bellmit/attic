@@ -1,7 +1,3 @@
-apply plugin: 'java'
-
-sourceCompatibility = '1.8'
-
 dependencies {
     ext {
         hamcrestVersion = '1.3'
