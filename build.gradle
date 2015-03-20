@@ -20,7 +20,7 @@ release {
 allprojects {
     apply plugin: 'idea'
 
-    group = 'com.login-box'
+    group = 'com.login-box.heroku'
 
     repositories {
         mavenCentral()
