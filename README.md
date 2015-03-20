@@ -23,7 +23,7 @@ To add to Gradle:
 
     repositories {
         maven {
-            url 'http://dl.bintray.com/login-box/releases'
+            url 'https://dl.bintray.com/login-box/releases'
         }
     }
 
