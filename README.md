@@ -5,6 +5,37 @@
 Using [Dropwizard](https://dropwizard.io/) on Heroku? This module takes care of
 some common cases automatically.
 
+## Installing
+
+All modules are hosted on Bintray, in a private Maven repository at https://dl.bintray.com/login-box/releases.
+
+To add to Maven:
+
+    <repositories>
+        <!-- ... -->
+        <repository>
+            <id>login-box-releases</id>
+            <url>https://dl.bintray.com/login-box/releases</url>
+        </repository>
+    </repository>
+
+To add to Gradle:
+
+    repositories {
+        maven {
+            url 'http://dl.bintray.com/login-box/releases'
+        }
+    }
+
+There is no snapshot repository.
+
+You can also download the JARs by hand from
+[Bintray](https://bintray.com/login-box/releases/dropwizard-heroku/view#files),
+but you'll need Dropwizard and its dependencies, too. Really, use a dependency
+manager. You'll be happier.
+
+**JCenter releases are coming soon.**
+
 ## Logging
 
 Heroku expects applications to log to standard output, and provides its own log
