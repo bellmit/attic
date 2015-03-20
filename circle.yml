@@ -11,3 +11,4 @@ dependencies:
 test:
     post:
         - ./gradlew javadoc
+        - bin/collate-test-results "$CIRCLE_TEST_REPORTS"
