@@ -3,6 +3,11 @@ machine:
     java:
         version: oraclejdk8
 
+dependencies:
+    override:
+        - ./gradlew classes
+        - ./gradlew testClasses
+
 test:
     post:
         - ./gradlew javadoc
