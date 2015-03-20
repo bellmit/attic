@@ -9,7 +9,7 @@ This is an example contributor agreement. To sign the agreement:
 3. Fix up the `BLANKS`:
 
         # or use emacs/vim/textmate/sublime/et cetera
-        sed -i \
+        sed -i '' \
             -e 's,FULLNAME,My Name,g' \
             -e 's,GITHUBNAME,my-github-username,g' \
             -e 's,YEAR,2015,g' \
@@ -19,7 +19,7 @@ This is an example contributor agreement. To sign the agreement:
 
 5. Sign the agreement with your GPG public key:
 
-        gpg --armor --sign CONTRIBUTORS/My-Name.md
+        gpg --armor --detach-sign CONTRIBUTORS/My-Name.md
 
 6. Submit the new agreement and your GPG sigature in a pull request:
 
@@ -35,11 +35,11 @@ Remove all of the above, this line, and the following line.
 -----
 # Login Box Contributor Agreement
 
-I, FULLNAME, also known as GITHUBNAME, agree that my contributions to this project may be distributed under the MIT licence, as follows:
+I, FULLNAME, also known as GITHUBNAME, agree that my contributions to the "login-box" project may be distributed under the MIT licence, as follows:
 
 >The MIT License (MIT)
 >
->Copyright (c) YEAR FULLNAME
+>Contributions copyright (c) YEAR FULLNAME
 >
 >Permission is hereby granted, free of charge, to any person obtaining a copy
 >of this software and associated documentation files (the "Software"), to deal

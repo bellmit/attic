@@ -1,10 +1,10 @@
 # Login Box Contributor Agreement
 
-I, FULLNAME, agree that my contributions to this project may be distributed under the MIT licence, as follows:
+I, Owen Jacobson, also known as ojacobson, agree that my contributions to the "login-box" project may be distributed under the MIT licence, as follows:
 
 >The MIT License (MIT)
 >
->Copyright (c) YEAR FULLNAME
+>Contributions copyright (c) 2015 Owen Jacobson
 >
 >Permission is hereby granted, free of charge, to any person obtaining a copy
 >of this software and associated documentation files (the "Software"), to deal
