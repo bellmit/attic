@@ -7,6 +7,7 @@ buildscript {
 
     dependencies {
         classpath group: 'org.ajoberstar', name: 'gradle-git', version: '0.13.0-milestone.1'
+        classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.0'
     }
 }
 
@@ -38,6 +39,8 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.jfrog.bintray'
 
     version = rootProject.version
 
@@ -56,5 +59,37 @@ subprojects {
     artifacts {
         archives sourcesJar
         archives javadocJar
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+
+                artifact sourcesJar
+                artifact javadocJar
+            }
+        }
+    }
+
+    bintray {
+        user = bintrayUsername
+        key = bintrayApiKey
+
+        publications = ['mavenJava']
+
+        pkg {
+            userOrg = 'login-box'
+            repo = 'releases'
+            name = 'dropwizard-heroku'
+            websiteUrl = 'https://github.com/login-box/dropwizard-heroku'
+            issueTrackerUrl = 'https://github.com/login-box/dropwizard-heroku/issues'
+            vcsUrl = 'https://github.com/login-box/dropwizard-heroku'
+            licenses = ['MIT']
+            publicDownloadNumbers = true
+            version {
+                name = project.version
+            }
+        }
     }
 }
