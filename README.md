@@ -36,6 +36,26 @@ manager. You'll be happier.
 
 **JCenter releases are coming soon.**
 
+## Easy Mode
+
+The `dropwizard-heroku-config` module provides a configuration base class that
+automatically applies the [Logging](#logging) and [HTTP](#http) configurations
+below, without requiring any additional config file entries.
+
+To use, add `com.loginbox.heroku:dropwizard-heroku-config:+` to your
+dependencies, then subclass `com.loginbox.heroku.config.HerokuConfiguration` in
+your application config:
+
+```java
+import com.loginbox.heroku.config.HerokuConfiguration;
+
+public class ExampleConfiguration extends HerokuConfiguration {
+    /* your configuration fields here */
+}
+```
+
+If you prefer more control, read on…
+
 ## Logging
 
 Heroku expects applications to log to standard output, and provides its own log
@@ -89,20 +109,3 @@ re/apidocs/io/dropwizard/server/SimpleServerFactory.html), and behaves much the
 same way. Both the application context (at `/`) and the admin context (at
 `/!/admin/`) are served on the same listener. The port _automatically_ defaults
 to `$PORT`, if set, or to `5000` otherwise.
-
-## Easy Mode
-
-The `dropwizard-heroku-config` module provides a configuration base class that
-automatically does all of the above, without requiring config file entries.
-
-To use, add `com.loginbox.heroku:dropwizard-heroku-config:+` to your
-dependencies, then subclass `com.loginbox.heroku.config.HerokuConfiguration` in
-your application config:
-
-```java
-import com.loginbox.heroku.config.HerokuConfiguration;
-
-public class ExampleConfiguration extends HerokuConfiguration {
-    /* your configuration fields here */
-}
-```
