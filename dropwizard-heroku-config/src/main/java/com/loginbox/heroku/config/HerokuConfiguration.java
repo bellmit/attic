@@ -10,7 +10,7 @@ import io.dropwizard.Configuration;
  * A configuration with appropriate defaults for the Heroku platform. This automatically configures HTTP to respect
  * Heroku's environment variables, and configures logging to expect Heroku to handle timestamps and process names. As
  * with Configuration, subclasses can be loaded from JSON or YAML.
- * <p/>
+ * <p>
  * For further information on Dropwizard configuration and YAML, see {@link io.dropwizard.Configuration}'s
  * documentation.
  *
