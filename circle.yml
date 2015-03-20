@@ -6,5 +6,4 @@ machine:
 test:
     post:
         - ./gradlew javadoc
-        - mkdir -p "$CIRCLE_TEST_REPORTS/junit"
-        - find . -path '*/build/test-results/TEST-*.xml' -exec cp {} "$CIRCLE_TEST_REPORTS/junit" \;
+        - bin/collate-test-results "$CIRCLE_TEST_REPORTS"
