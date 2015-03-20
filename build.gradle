@@ -10,17 +10,17 @@ buildscript {
     }
 }
 
-def p = project
+apply plugin: 'org.ajoberstar.release-opinion'
+
+release {
+    grgit = Grgit.open(projectDir)
+}
 
 allprojects {
     apply plugin: 'idea'
-    apply plugin: 'org.ajoberstar.release-opinion'
 
     group = 'com.login-box'
-
-    release {
-        grgit = Grgit.open(p.projectDir)
-    }
+    version = rootProject.version
 
     repositories {
         mavenCentral()
