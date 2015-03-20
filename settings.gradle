@@ -1,4 +1,5 @@
 rootProject.name  = 'dropwizard-heroku'
 
 include 'dropwizard-heroku-http'
+include 'dropwizard-heroku-logging'
 include 'dropwizard-heroku-config'
