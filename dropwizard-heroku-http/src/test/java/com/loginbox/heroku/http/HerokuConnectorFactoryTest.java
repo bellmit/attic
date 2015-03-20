@@ -49,7 +49,8 @@ class ConnectorFactoryPortHarness {
                 .redirectOutput(ProcessBuilder.Redirect.PIPE);
 
         Process process = pb.start();
-        if (process.waitFor(1, TimeUnit.SECONDS))
+        /* Shockingly long, but sometimes CircleCI bogs down. */
+        if (process.waitFor(5, TimeUnit.SECONDS))
             // default platform encoding is actually correct here, shockingly.
             try (InputStreamReader r = new InputStreamReader(process.getInputStream())) {
                 String output = CharStreams.toString(r).trim();
