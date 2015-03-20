@@ -5,31 +5,73 @@
 Using [Dropwizard](https://dropwizard.io/) on Heroku? This module takes care of
 some common cases automatically.
 
-## Server Configuration
+## Logging
 
-The `dropwizard-heroku-config` module provides some baseline configuration for
-operating on Heroku:
+Heroku expects applications to log to standard output, and provides its own log
+handling to add things like source attribution and timestamps. The default
+Dropwizard logging is a bit overzealous, and adds a lot of the same
+information. The `dropwizard-heroku-logging` module provides a more Heroku-appropriate behaviour.
 
-* Automatic detection of the `$PORT` environment variable. **The admin context will also be served on this port, under `/!/admin`.**
-* A log format appropriate to PaaS systems such as Heroku.
+To use, add `com.loginbox.heroku:dropwizard-heroku-logging:+` to your
+dependencies, then add
 
-To use it in your app, add the appropriate dependencies, and extend
-`com.loginbox.heroku.HerokuConfiguration` in your configuration class:
+```yaml
+logging:
+    appenders:
+        - type: heroku
+```
 
-    package com.example;
-    
-    import com.loginbox.heroku.config.HerokuConfiguration;
-    
-    public class ExampleConfiguration extends HerokuConfiguration {
-        // ... your configuration fields here ...
-    }
+to your Dropwizard application config.
 
-Alternately, if you already have a configuration class, elements can be included using Dropwizard's YAML parser:
+Logs using the Heroku appender will include the severity, logger name, message,
+and (for exceptions) the exception and stack trace. For example:
 
-    server:
-        # ...type, etc...
-        connectors:
-            - type: heroku
-    logging:
-        appenders:
-            - type: heroku
+    INFO  org.eclipse.jetty.server.Server: Started @2775ms
+
+In combination with Heroku's own log decorations, this becomes
+
+    2015-03-20T02:22:14.921851+00:00 app[web.1]: INFO  org.eclipse.jetty.server.Server: Started @4471ms
+
+Note that Heroku occasionally reorders log messages, which can mangle
+multi-line messages such as stack traces. It will also interleave logs from
+multiple dynos.
+
+## HTTP
+
+Heroku passes HTTP configuration to your app via the `HTTP` environment
+variable. Dropwizard, normally, expects the HTTP port to be set via a config
+file, or using an awkward `-Ddw.…` system property. The
+`dropwizard-heroku-http` module automates the process, providing some sane
+defaults.
+
+To use, add `com.loginbox.heroku:dropwizard-heroku-http:+` to your
+dependencies, then add
+
+```yaml
+server:
+    - type: heroku
+```
+
+The `heroku` server factory is a subclass of Dropwizard's own
+[SimpleServerFactory](http://dropwizard.github.io/dropwizard/0.8.0/dropwizard-co
+re/apidocs/io/dropwizard/server/SimpleServerFactory.html), and behaves much the
+same way. Both the application context (at `/`) and the admin context (at
+`/!/admin/`) are served on the same listener. The port _automatically_ defaults
+to `$PORT`, if set, or to `5000` otherwise.
+
+## Easy Mode
+
+The `dropwizard-heroku-config` module provides a configuration base class that
+automatically does all of the above, without requiring config file entries.
+
+To use, add `com.loginbox.heroku:dropwizard-heroku-config:+` to your
+dependencies, then subclass `com.loginbox.heroku.config.HerokuConfiguration` in
+your application config:
+
+```java
+import com.loginbox.heroku.config.HerokuConfiguration;
+
+public class ExampleConfiguration extends HerokuConfiguration {
+    /* your configuration fields here */
+}
+```
