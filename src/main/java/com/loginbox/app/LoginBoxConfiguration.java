@@ -1,6 +1,6 @@
 package com.loginbox.app;
 
-import com.loginbox.heroku.HerokuConfiguration;
+import com.loginbox.heroku.config.HerokuConfiguration;
 
 public class LoginBoxConfiguration extends HerokuConfiguration {
 
