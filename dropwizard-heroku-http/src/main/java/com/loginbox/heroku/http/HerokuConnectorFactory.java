@@ -20,7 +20,6 @@ import org.slf4j.LoggerFactory;
  *         - type: heroku
  * </pre>
  *
- * @see com.loginbox.heroku.config.HerokuConfiguration
  * @see HerokuServerFactory
  * @see io.dropwizard.jetty.ConnectorFactory
  * @see io.dropwizard.jetty.HttpConnectorFactory

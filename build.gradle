@@ -20,7 +20,6 @@ allprojects {
     apply plugin: 'idea'
 
     group = 'com.login-box'
-    version = rootProject.version
 
     repositories {
         mavenCentral()
@@ -34,5 +33,22 @@ allprojects {
             // can obtain the correct version numbers from the published dropwizard-parent POM.
 
         }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    version = rootProject.version
+
+    sourceCompatibility = '1.8'
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives javadocJar
     }
 }

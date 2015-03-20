@@ -13,7 +13,6 @@ import java.util.List;
  * are silently destroyed whenever a server exits or restarts. Heroku also provides some basic logging infrastructure,
  * such as timestamps.
  *
- * @see com.loginbox.heroku.config.HerokuConfiguration
  * @see HerokuConsoleAppenderFactory
  */
 public class HerokuLoggingFactory extends LoggingFactory {

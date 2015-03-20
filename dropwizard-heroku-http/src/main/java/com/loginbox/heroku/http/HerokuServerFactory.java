@@ -11,6 +11,7 @@ import io.dropwizard.server.SimpleServerFactory;
  * <p>
  * As with {@link io.dropwizard.server.SimpleServerFactory}, this server factory serves both the application and the admin endpoints on the same connector, at the following prefixes:
  * <table>
+ *     <caption>Context Paths</caption>
  *     <thead>
  *         <tr>
  *             <th>Component</th>
@@ -31,7 +32,7 @@ import io.dropwizard.server.SimpleServerFactory;
  * The <code>{@value #RESERVED_PREFIX}</code> URL namespace is reserved for use by Dropwizard components, and should not
  * be used by application resources.
  * <p>
- * This server factory is provided by {@link com.loginbox.heroku.config.HerokuConfiguration} by default, but can be used in
+ * This server factory is provided by {@code com.loginbox.heroku.config.HerokuConfiguration} by default, but can be used in
  * other applications' YAML files without inheriting HerokuConfiguration:
  * <pre>
  * server:
@@ -39,7 +40,6 @@ import io.dropwizard.server.SimpleServerFactory;
  * </pre>
  * Other parameters, as documented for {@link io.dropwizard.server.SimpleServerFactory}, may be applied.
  *
- * @see com.loginbox.heroku.config.HerokuConfiguration
  * @see HerokuConnectorFactory
  * @see io.dropwizard.server.ServerFactory
  * @see io.dropwizard.server.SimpleServerFactory
