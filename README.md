@@ -7,34 +7,28 @@ some common cases automatically.
 
 ## Installing
 
-All modules are hosted on Bintray, in a private Maven repository at https://dl.bintray.com/login-box/releases.
+All modules are hosted on Bintray's JCenter repository.
 
 To add to Maven:
 
     <repositories>
         <!-- ... -->
         <repository>
-            <id>login-box-releases</id>
-            <url>https://dl.bintray.com/login-box/releases</url>
+            <id>jcenter</id>
+            <url>https://jcenter.bintray.com/</url>
         </repository>
     </repository>
 
 To add to Gradle:
 
     repositories {
-        maven {
-            url 'https://dl.bintray.com/login-box/releases'
-        }
+        jcenter()
     }
-
-There is no snapshot repository.
 
 You can also download the JARs by hand from
 [Bintray](https://bintray.com/login-box/releases/dropwizard-heroku/view#files),
 but you'll need Dropwizard and its dependencies, too. Really, use a dependency
 manager. You'll be happier.
-
-**JCenter releases are coming soon.**
 
 ## Easy Mode
 
