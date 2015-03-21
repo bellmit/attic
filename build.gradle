@@ -21,6 +21,11 @@ allprojects {
     apply plugin: 'idea'
 
     group = 'com.loginbox.heroku'
+    version = rootProject.version
+
+    ext {
+        isSnapshot = version.toString().contains("-dev")
+    }
 
     repositories {
         mavenCentral()
@@ -42,7 +47,6 @@ subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'com.jfrog.bintray'
 
-    version = rootProject.version
 
     sourceCompatibility = '1.8'
 
@@ -80,7 +84,7 @@ subprojects {
 
         pkg {
             userOrg = 'login-box'
-            repo = 'releases'
+            repo = isSnapshot ? 'snapshots' : 'releases'
             name = 'dropwizard-heroku'
             websiteUrl = 'https://github.com/login-box/dropwizard-heroku'
             issueTrackerUrl = 'https://github.com/login-box/dropwizard-heroku/issues'
