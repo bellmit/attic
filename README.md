@@ -56,6 +56,32 @@ public class ExampleConfiguration extends HerokuConfiguration {
 
 If you prefer more control, read on…
 
+## PostgreSQL Databases
+
+The `dropwizard-heroku-db` module provides automatic detection of databases
+configured using Heroku's PostgreSQL add-ons.
+
+To use, add `com.loginbox.heroku:dropwizard-heroku-db:+` to your dependencies,
+then add a `com.loginbox.heroku.db.HerokuDataSourceFactory` to your application
+config class:
+
+```java
+import io.dropwizard.Configuration;
+import com.loginbox.heroku.db.HerokuDataSourceFactory;
+
+public class ExampleConfiguration extends Configuration {
+    private HerokuDataSourceFactory dataSourceFactory = new HerokuDataSourceFactory();
+    
+    @JsonProperty("database")
+    public HerokuDataSourceFactory getDataSourceFactory() {
+        return dataSourceFactory;
+    }
+}
+```
+
+The resulting configuration can be used with Dropwizard's usual database access
+layers.
+
 ## Logging
 
 Heroku expects applications to log to standard output, and provides its own log
