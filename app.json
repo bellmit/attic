@@ -7,6 +7,9 @@
   "website": "https://github.com/login-box/login-box",
   "repository": "https://github.com/login-box/login-box.git",
   "success_url": "/",
+  "scripts": {
+    "postdeploy": "bin/run db migrate"
+  },
   "env": {
     "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-gradle"
   },

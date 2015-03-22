@@ -26,14 +26,14 @@ Got a copy of the code? Want to tinker with it? Great.
         # Adjust the URL as appropriate.
         export DATABASE_URL=postgres://me@localhost/login-box
 
+3. Run migrations.
+
+        foreman start migrate
+
 3. Start the server. By default, it runs on port 5000, but you can change the port with the `PORT` environment variable:
 
-        java -jar build/libs/login-box-all.jar server
+        foreman start web
 
 4. Visit http://localhost:5000/ to open the app.
 
 To shut down the server, hit Ctrl-C (Ctrl-Break on Windows).
-
-Alternately, you can start the server with [Foreman](https://github.com/ddollar/foreman):
-
-    foreman start
