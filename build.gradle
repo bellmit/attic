@@ -5,11 +5,13 @@ buildscript {
 
     dependencies {
         classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '1.2.1'
+        classpath group: 'com.moowork.gradle', name: 'gradle-node-plugin', version: '0.8'
     }
 }
 
 apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.moowork.node'
 apply plugin: 'idea'
 
 group = 'com.loginbox.app'
@@ -58,6 +60,11 @@ dependencies {
     acceptanceTestCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
+}
+
+node {
+    download = true
+    version = '0.10.35'
 }
 
 shadowJar {
