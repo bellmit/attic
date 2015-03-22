@@ -67,6 +67,8 @@ public class HerokuDataSourceFactory extends DataSourceFactory {
 
     private void applyCredentials(URI databaseUri) {
         String userInfo = databaseUri.getUserInfo();
+        if (userInfo == null)
+            return;
         String[] userInfoParts = userInfo.split(Pattern.quote(":"), 2);
 
         if (userInfoParts.length >= 1)
