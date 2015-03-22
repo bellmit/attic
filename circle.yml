@@ -5,8 +5,8 @@ machine:
 
 dependencies:
     post:
-        - gradle stage
+        - ./gradlew stage
 
 test:
     override:
-        - gradle check
+        - ./gradlew check
