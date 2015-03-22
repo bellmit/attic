@@ -1,6 +1,6 @@
 # Dropwizard Heroku Support
 
-[![Build Status](https://circleci.com/gh/login-box/dropwizard-heroku.svg)](https://circleci.com/gh/login-box/dropwizard-heroku)
+[![Build Status](https://circleci.com/gh/login-box/dropwizard-heroku.svg)](https://circleci.com/gh/login-box/dropwizard-heroku) [ ![Download](https://api.bintray.com/packages/login-box/releases/dropwizard-heroku/images/download.svg) ](https://bintray.com/login-box/releases/dropwizard-heroku/_latestVersion)
 
 Using [Dropwizard](https://dropwizard.io/) on Heroku? This module takes care of
 some common cases automatically.
