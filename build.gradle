@@ -5,11 +5,15 @@ buildscript {
 
     dependencies {
         classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '1.2.1'
+        classpath group: 'com.moowork.gradle', name: 'gradle-node-plugin', version: '0.8'
+        classpath group: 'com.moowork.gradle', name: 'gradle-gulp-plugin', version: '0.9'
     }
 }
 
 apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.moowork.node'
+apply plugin: 'com.moowork.gulp'
 apply plugin: 'idea'
 
 group = 'com.loginbox.app'
@@ -48,16 +52,23 @@ dependencies {
     }
 
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-assets', version: dropwizardVersion
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: '0.1.0'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: hamcrestVersion
     testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: hamcrestVersion
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
 
     acceptanceTestCompile group: 'com.lewisd', name: 'simple-dsl', version: '0.2'
     acceptanceTestCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
+}
+
+node {
+    download = true
+    version = '0.10.35'
 }
 
 shadowJar {
@@ -80,6 +91,14 @@ idea {
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
     options.compilerArgs << '-Xlint:all'
+}
+
+tasks.gulp_assets {
+    dependsOn 'npmInstall'
+}
+
+tasks.processResources {
+    dependsOn 'gulp_assets'
 }
 
 tasks.assemble {

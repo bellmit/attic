@@ -1,6 +1,7 @@
 package com.loginbox.app;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -11,7 +12,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
 
     @Override
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
-
+        bootstrap.addBundle(new AssetsBundle());
     }
 
     @Override
