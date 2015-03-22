@@ -47,13 +47,17 @@ dependencies {
         jerseyVersion = '2.16'
 
         // End of Dropwizard-related versions. The following versions can vary independently of Dropwizard.
+        dropwizardHerokuVersion = '0.1.2'
+
         hamcrestVersion = '1.3'
         seleniumVersion = '2.45.0'
     }
 
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
     compile group: 'io.dropwizard', name: 'dropwizard-assets', version: dropwizardVersion
-    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: '0.1.2'
+
+    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: dropwizardHerokuVersion
+    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-db', version: dropwizardHerokuVersion
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: hamcrestVersion

@@ -17,6 +17,5 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
 
     @Override
     public void run(LoginBoxConfiguration configuration, Environment environment) throws Exception {
-
     }
 }
