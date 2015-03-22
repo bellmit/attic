@@ -19,4 +19,9 @@ public class HerokuServerFactoryTest {
         assertThat(factory.getApplicationContextPath(), is("/"));
         assertThat(factory.getAdminContextPath(), is("/!/admin/"));
     }
+
+    @Test
+    public void configuresLogging() {
+        assertThat(factory.getRequestLogFactory(), is(instanceOf(HerokuRequestLogFactory.class)));
+    }
 }
