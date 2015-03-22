@@ -19,18 +19,22 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
-    maven {
-        url 'https://dl.bintray.com/login-box/releases'
-    }
+    jcenter()
 }
 
 dependencies {
     ext {
         dropwizardVersion = '0.8.0'
+        hibernateVersion = '4.3.8.Final'
     }
 
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-hibernate', version: dropwizardVersion
+    compile group: 'org.hibernate', name: 'hibernate-core', version: hibernateVersion
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-migrations', version: dropwizardVersion
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: '0.0.1'
+    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-db', version: '0.1.0'
 }
 
 shadowJar {
