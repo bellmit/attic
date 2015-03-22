@@ -67,5 +67,6 @@ public class HerokuServerFactory extends SimpleServerFactory {
         setConnector(new HerokuConnectorFactory());
         setApplicationContextPath(APP_CONTEXT_PATH);
         setAdminContextPath(ADMIN_CONTEXT_PATH);
+        setRequestLogFactory(new HerokuRequestLogFactory());
     }
 }

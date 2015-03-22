@@ -129,3 +129,6 @@ re/apidocs/io/dropwizard/server/SimpleServerFactory.html), and behaves much the
 same way. Both the application context (at `/`) and the admin context (at
 `/!/admin/`) are served on the same listener. The port _automatically_ defaults
 to `$PORT`, if set, or to `5000` otherwise.
+
+This also disables Dropwizard's default request logging. Heroku's routing stack
+logs the same information.
