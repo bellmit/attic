@@ -61,7 +61,7 @@ public class HerokuServerFactory extends SimpleServerFactory {
     /**
      * The default root path for the Dropwizard admin application, when served out of this server factory.
      */
-    public static final String ADMIN_CONTEXT_PATH = RESERVED_PREFIX + "admin/";
+    public static final String ADMIN_CONTEXT_PATH = RESERVED_PREFIX + "admin";
 
     {
         setConnector(new HerokuConnectorFactory());

@@ -17,7 +17,7 @@ public class HerokuServerFactoryTest {
     @Test
     public void configuresContextPaths() {
         assertThat(factory.getApplicationContextPath(), is("/"));
-        assertThat(factory.getAdminContextPath(), is("/!/admin/"));
+        assertThat(factory.getAdminContextPath(), is("/!/admin"));
     }
 
     @Test
