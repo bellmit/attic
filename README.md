@@ -109,7 +109,7 @@ multiple dynos.
 
 ## HTTP
 
-Heroku passes HTTP configuration to your app via the `HTTP` environment
+Heroku passes HTTP configuration to your app via the `PORT` environment
 variable. Dropwizard, normally, expects the HTTP port to be set via a config
 file, or using an awkward `-Ddw.…` system property. The
 `dropwizard-heroku-http` module automates the process, providing some sane
