@@ -64,8 +64,10 @@ import io.dropwizard.Configuration;
 import com.loginbox.heroku.db.HerokuDataSourceFactory;
 
 public class ExampleConfiguration extends Configuration {
+    @NotNull
+    @Valid
     private HerokuDataSourceFactory dataSourceFactory = new HerokuDataSourceFactory();
-    
+
     @JsonProperty("database")
     public HerokuDataSourceFactory getDataSourceFactory() {
         return dataSourceFactory;
