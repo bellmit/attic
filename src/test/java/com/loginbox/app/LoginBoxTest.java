@@ -1,6 +1,7 @@
 package com.loginbox.app;
 
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import org.junit.Test;
 
@@ -16,5 +17,6 @@ public class LoginBoxTest {
         application.initialize(bootstrap);
 
         verify(bootstrap).addBundle(isA(AssetsBundle.class));
+        verify(bootstrap).addBundle(isA(MigrationsBundle.class));
     }
 }

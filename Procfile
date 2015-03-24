@@ -1,1 +1,3 @@
-web: bin/web
+web: bin/run server
+
+migrate: bin/run db migrate

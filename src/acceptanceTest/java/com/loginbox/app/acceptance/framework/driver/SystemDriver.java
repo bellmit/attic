@@ -4,6 +4,7 @@ package com.loginbox.app.acceptance.framework.driver;
 import com.loginbox.app.LoginBox;
 import com.loginbox.app.LoginBoxConfiguration;
 import com.loginbox.app.acceptance.framework.Lazily;
+import com.loginbox.app.acceptance.framework.database.DatabaseContext;
 import io.dropwizard.testing.ConfigOverride;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import org.junit.rules.ExternalResource;
@@ -17,9 +18,20 @@ import java.util.concurrent.TimeUnit;
 
 public class SystemDriver {
     private static final int SELENIUM_WAIT_SECONDS = Integer.getInteger("selenium.timeout", 2);
+    private static final String DATABASE_ADMIN_URL = System.getProperty("database.adminUrl", "jdbc:postgresql://localhost/postgres");
+    private static final String DATABASE_USERNAME = System.getProperty("database.username", "postgres");
+    private static final String DATABASE_PASSWORD = System.getProperty("database.password");
+
     private static final ConfigOverride LOG_THRESHOLD = ConfigOverride.config("logging.appenders[0].threshold", System.getProperty("app.logging.threshold", "WARN"));
 
-    private final DropwizardAppRule<LoginBoxConfiguration> appRule = new DropwizardAppRule<>(LoginBox.class, null, LOG_THRESHOLD);
+    private final DatabaseContext databaseContext = new DatabaseContext(DATABASE_ADMIN_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
+
+    private final DropwizardAppRule<LoginBoxConfiguration> appRule = new DropwizardAppRule<>(LoginBox.class, null,
+            LOG_THRESHOLD,
+            databaseContext.databaseUrl(),
+            databaseContext.user(),
+            databaseContext.password());
+    private final SeleniumShutdownRule seleniumShutdownRule = new SeleniumShutdownRule();
 
     private String baseUrl = null;
     private WebDriver webDriver = null;
@@ -75,8 +87,9 @@ public class SystemDriver {
 
     public TestRule rules() {
         return RuleChain
-                .outerRule(appRule)
-                .around(new SeleniumShutdownRule());
+                .outerRule(databaseContext.rules())
+                .around(appRule)
+                .around(seleniumShutdownRule);
     }
 
     private class SeleniumShutdownRule extends ExternalResource {
