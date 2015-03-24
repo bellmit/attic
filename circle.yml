@@ -10,3 +10,4 @@ dependencies:
 test:
     override:
         - ./gradlew check
+        - cp -a build/test-results "${CIRCLE_TEST_REPORTS}/junit"
