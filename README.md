@@ -1,8 +1,6 @@
-# Login Box
+# Login Box [![Build Status](https://circleci.com/gh/login-box/login-box.svg)](https://circleci.com/gh/login-box/login-box)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-[![Build Status](https://circleci.com/gh/login-box/login-box.svg)](https://circleci.com/gh/login-box/login-box)
 
 An easy-to-deploy login server for your applications.
 
