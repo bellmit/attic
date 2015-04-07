@@ -1,0 +1,22 @@
+import org.ajoberstar.grgit.Grgit
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath group: 'org.ajoberstar', name: 'gradle-git', version: '0.13.0-milestone.1'
+    }
+}
+
+apply plugin: 'org.ajoberstar.release-opinion'
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'com.loginbox.mybatis'
+sourceCompatibility = '1.8'
+
+release {
+    grgit = Grgit.open(projectDir)
+}
