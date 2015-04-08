@@ -3,6 +3,10 @@ machine:
     java:
         version: oraclejdk8
 
+checkout:
+    post:
+        - bin/use-pull-request-merge
+
 dependencies:
     post:
         - ./gradlew stage
