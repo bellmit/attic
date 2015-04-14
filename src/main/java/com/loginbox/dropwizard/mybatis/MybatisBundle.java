@@ -2,6 +2,7 @@ package com.loginbox.dropwizard.mybatis;
 
 import com.loginbox.dropwizard.mybatis.healthchecks.SqlSessionFactoryHealthCheck;
 import com.loginbox.dropwizard.mybatis.mappers.Ping;
+import com.loginbox.dropwizard.mybatis.types.GuavaOptionalTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.Java8OptionalTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.UuidTypeHandler;
 import io.dropwizard.ConfiguredBundle;
@@ -19,7 +20,6 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import javax.annotation.Nullable;
 import javax.sql.DataSource;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -214,7 +214,8 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
 
     private void registerTypeHandlers(TypeHandlerRegistry registry) {
         registry.register(UUID.class, new UuidTypeHandler());
-        registry.register(Optional.class, new Java8OptionalTypeHandler());
+        registry.register(java.util.Optional.class, new Java8OptionalTypeHandler());
+        registry.register(com.google.common.base.Optional.class, new GuavaOptionalTypeHandler());
     }
 
     private void registerClientMappers(Configuration configuration) {

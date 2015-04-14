@@ -201,3 +201,4 @@ registers support for the following types:
 
 * `java.util.UUID`
 * `java.util.Optional`
+* `com.google.common.base.Optional`

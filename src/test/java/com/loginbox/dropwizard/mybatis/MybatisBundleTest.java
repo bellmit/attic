@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.mockito.Matchers;
 
 import java.util.UUID;
-import java.util.Optional;
 
 import static com.loginbox.dropwizard.mybatis.matchers.ConfigurationMapperMatcher.hasMapper;
 import static com.loginbox.dropwizard.mybatis.matchers.ConfigurationTypeHandlerMatcher.hasTypeHandler;
@@ -150,7 +149,19 @@ public class MybatisBundleTest {
 
         Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
 
-        assertThat(configuration, hasTypeHandler(Optional.class));
+        assertThat(configuration, hasTypeHandler(java.util.Optional.class));
+    }
+
+    @Test
+    public void registersGuavaOptionalType() throws Exception {
+        MybatisBundle<io.dropwizard.Configuration> bundle
+                = new TestMybatisBundle<io.dropwizard.Configuration>();
+        bundle.initialize(bootstrap);
+        bundle.run(configuration, environment);
+
+        Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
+
+        assertThat(configuration, hasTypeHandler(com.google.common.base.Optional.class));
     }
 
     @Test
