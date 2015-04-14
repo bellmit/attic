@@ -2,6 +2,7 @@ package com.loginbox.dropwizard.mybatis;
 
 import com.loginbox.dropwizard.mybatis.healthchecks.SqlSessionFactoryHealthCheck;
 import com.loginbox.dropwizard.mybatis.mappers.Ping;
+import com.loginbox.dropwizard.mybatis.types.Java8OptionalTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.UuidTypeHandler;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.db.DataSourceFactory;
@@ -14,9 +15,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
+import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import javax.annotation.Nullable;
 import javax.sql.DataSource;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -77,8 +80,8 @@ import java.util.function.Consumer;
  * </pre>
  * <p>
  * There are three ways to configure MyBatis, depending on your needs: <ul> <li>The {@link #MybatisBundle(Class,
- * Class...)} constructor accepts an explicit list of mapper interfaces to configure. The corresponding SQL can be stored
- * in annotations on the mapper interfaces themselves, or in correspondingly-named {@code .xml} files in the same
+ * Class...)} constructor accepts an explicit list of mapper interfaces to configure. The corresponding SQL can be
+ * stored in annotations on the mapper interfaces themselves, or in correspondingly-named {@code .xml} files in the same
  * package. For example, {@code com.example.mappers.Users} would correspond with the file {@code
  * com/example/mappers/Users.xml}.</li> <li>The {@link #MybatisBundle(String, String...)} constructor accepts a list of
  * packages to scan. Any mapper interfaces defined in these packages <em>or subpackages of these packages</em> will be
@@ -159,9 +162,9 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
     /**
      * Does nothing on its own, but may be overridden to customize Mybatis configuration more flexibly.
      * <p>
-     * This will be called <em>after</em> <ol> <li>the bundle's own mappers and other objects have been registered in
-     * the configuration, and</li> <li>any mappers or packages from the constructor have been registered in the
-     * configuration.</li> </ol>
+     * This will be called <em>after</em> <ol> <li>the bundle's own suite of type mappers have been registered in the
+     * configuration</li> <li>the bundle's own mappers and other objects have been registered in the configuration,
+     * and</li> <li>any mappers or packages from the constructor have been registered in the configuration.</li> </ol>
      *
      * @param configuration
      *         the MyBatis configuration in flight.
@@ -202,15 +205,16 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
         Environment mybatisEnvironment = new Environment(name, transactionFactory, dataSource);
         Configuration configuration = new Configuration(mybatisEnvironment);
-        registerTypeHandlers(configuration);
+        registerTypeHandlers(configuration.getTypeHandlerRegistry());
         registerOwnMappers(configuration);
         registerClientMappers(configuration);
         configureMybatis(configuration);
         return configuration;
     }
 
-    private void registerTypeHandlers(Configuration configuration) {
-        configuration.getTypeHandlerRegistry().register(UUID.class, new UuidTypeHandler());
+    private void registerTypeHandlers(TypeHandlerRegistry registry) {
+        registry.register(UUID.class, new UuidTypeHandler());
+        registry.register(Optional.class, new Java8OptionalTypeHandler());
     }
 
     private void registerClientMappers(Configuration configuration) {
