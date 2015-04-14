@@ -200,3 +200,5 @@ In addition to MyBatis' suite of built-in types, this bundle automatically
 registers support for the following types:
 
 * `java.util.UUID`
+* `java.util.Optional`
+* `com.google.common.base.Optional`

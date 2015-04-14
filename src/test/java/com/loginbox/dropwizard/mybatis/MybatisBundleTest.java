@@ -141,6 +141,30 @@ public class MybatisBundleTest {
     }
 
     @Test
+    public void registersJava8OptionalType() throws Exception {
+        MybatisBundle<io.dropwizard.Configuration> bundle
+                = new TestMybatisBundle<io.dropwizard.Configuration>();
+        bundle.initialize(bootstrap);
+        bundle.run(configuration, environment);
+
+        Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
+
+        assertThat(configuration, hasTypeHandler(java.util.Optional.class));
+    }
+
+    @Test
+    public void registersGuavaOptionalType() throws Exception {
+        MybatisBundle<io.dropwizard.Configuration> bundle
+                = new TestMybatisBundle<io.dropwizard.Configuration>();
+        bundle.initialize(bootstrap);
+        bundle.run(configuration, environment);
+
+        Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
+
+        assertThat(configuration, hasTypeHandler(com.google.common.base.Optional.class));
+    }
+
+    @Test
     public void appliesCustomConfiguration() throws Exception {
         MybatisBundle<io.dropwizard.Configuration> bundle = new TestMybatisBundle<io.dropwizard.Configuration>(ExampleMapper.class) {
             @Override
