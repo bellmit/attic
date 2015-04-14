@@ -13,7 +13,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
 
+import java.util.UUID;
+
 import static com.loginbox.dropwizard.mybatis.matchers.ConfigurationMapperMatcher.hasMapper;
+import static com.loginbox.dropwizard.mybatis.matchers.ConfigurationTypeHandlerMatcher.hasTypeHandler;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.anyString;
@@ -123,6 +126,18 @@ public class MybatisBundleTest {
         Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
 
         assertThat(configuration, hasMapper(Ping.class));
+    }
+
+    @Test
+    public void registersUuidType() throws Exception {
+        MybatisBundle<io.dropwizard.Configuration> bundle
+                = new TestMybatisBundle<io.dropwizard.Configuration>();
+        bundle.initialize(bootstrap);
+        bundle.run(configuration, environment);
+
+        Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
+
+        assertThat(configuration, hasTypeHandler(UUID.class));
     }
 
     @Test

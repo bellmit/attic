@@ -193,3 +193,10 @@ public class ExampleResource {
 _At present_, `MybatisBundle` doesn't provide any kind of automated transaction
 management. Applications are responsible for demarcating their own transactions
 using the session's `commit()` and `rollback()` methods.
+
+## Supported Types
+
+In addition to MyBatis' suite of built-in types, this bundle automatically
+registers support for the following types:
+
+* `java.util.UUID`

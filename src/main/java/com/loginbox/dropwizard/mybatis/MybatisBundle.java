@@ -2,6 +2,7 @@ package com.loginbox.dropwizard.mybatis;
 
 import com.loginbox.dropwizard.mybatis.healthchecks.SqlSessionFactoryHealthCheck;
 import com.loginbox.dropwizard.mybatis.mappers.Ping;
+import com.loginbox.dropwizard.mybatis.types.UuidTypeHandler;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.db.DatabaseConfiguration;
@@ -16,6 +17,7 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import javax.annotation.Nullable;
 import javax.sql.DataSource;
+import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -200,10 +202,23 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
         Environment mybatisEnvironment = new Environment(name, transactionFactory, dataSource);
         Configuration configuration = new Configuration(mybatisEnvironment);
-        configuration.addMapper(Ping.class);
-        configureCallback.accept(configuration);
+        registerTypeHandlers(configuration);
+        registerOwnMappers(configuration);
+        registerClientMappers(configuration);
         configureMybatis(configuration);
         return configuration;
+    }
+
+    private void registerTypeHandlers(Configuration configuration) {
+        configuration.getTypeHandlerRegistry().register(UUID.class, new UuidTypeHandler());
+    }
+
+    private void registerClientMappers(Configuration configuration) {
+        configureCallback.accept(configuration);
+    }
+
+    private void registerOwnMappers(Configuration configuration) {
+        configuration.addMapper(Ping.class);
     }
 
     private ManagedDataSource buildDataSource(T configuration, io.dropwizard.setup.Environment environment) {
