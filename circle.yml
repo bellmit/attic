@@ -2,6 +2,9 @@
 machine:
     java:
         version: oraclejdk8
+    environment:
+        ORG_GRADLE_PROJECT_bintrayApiKey: NONE
+        ORG_GRADLE_PROJECT_bintrayUsername: NONE
 
 checkout:
     post:
