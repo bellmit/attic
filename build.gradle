@@ -72,6 +72,7 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
 
     acceptanceTestCompile group: 'com.lewisd', name: 'simple-dsl', version: '0.2'
+    acceptanceTestCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: jerseyVersion
     acceptanceTestCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
@@ -85,6 +86,7 @@ node {
 jar {
     manifest {
         attributes(
+            'Implementation-Vendor': project.group,
             'Implementation-Title': 'Login Box',
             'Implementation-Version': sourceVersion
         )

@@ -2,8 +2,8 @@ package com.loginbox.app.acceptance.framework;
 
 import com.loginbox.app.acceptance.framework.context.TestContext;
 import com.loginbox.app.acceptance.framework.driver.SystemDriver;
+import com.loginbox.app.acceptance.framework.page.PublicApi;
 import com.loginbox.app.acceptance.framework.page.WebUi;
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 
@@ -37,4 +37,9 @@ public class DslTestCase {
      * Web user interface DSL. See {@link WebUi the DSL class} for details.
      */
     protected final WebUi webUi = new WebUi(systemDriver, testContext);
+
+    /**
+     * Public (unauthenticated) API DSL. See {@link PublicApi the DSL class} for details.
+     */
+    protected final PublicApi publicApi = new PublicApi(systemDriver, testContext);
 }

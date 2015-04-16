@@ -16,6 +16,6 @@ public class WebUiDriver extends SeleniumDriver {
         webDriver().close();
         // This is technically a superset of webDriver().close(), but the repetition feels like it addresses different
         // concerns.
-        systemDriver.shutdown();
+        systemDriver.quitWebDriver();
     }
 }
