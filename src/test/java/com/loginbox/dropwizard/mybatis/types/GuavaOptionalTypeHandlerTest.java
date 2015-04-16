@@ -20,42 +20,6 @@ public class GuavaOptionalTypeHandlerTest {
     private final GuavaOptionalTypeHandler handler = new GuavaOptionalTypeHandler();
 
     @Test
-    public void setsValue() throws SQLException {
-        PreparedStatement ps = mock(PreparedStatement.class);
-        int index = 5;
-        Optional<Object> value = Optional.of("Hello");
-        JdbcType jdbcType = JdbcType.VARCHAR;
-
-        handler.setParameter(ps, index, value, jdbcType);
-
-        verify(ps).setObject(index, "Hello", Types.VARCHAR);
-    }
-
-    @Test
-    public void setsEmpty() throws SQLException {
-        PreparedStatement ps = mock(PreparedStatement.class);
-        int index = 5;
-        Optional<Object> value = Optional.absent();
-        JdbcType jdbcType = JdbcType.VARCHAR;
-
-        handler.setParameter(ps, index, value, jdbcType);
-
-        verify(ps).setNull(index, Types.VARCHAR);
-    }
-
-    @Test
-    public void setsNull() throws SQLException {
-        PreparedStatement ps = mock(PreparedStatement.class);
-        int index = 5;
-        Optional<Object> value = null;
-        JdbcType jdbcType = JdbcType.VARCHAR;
-
-        handler.setParameter(ps, index, value, jdbcType);
-
-        verify(ps).setNull(index, Types.VARCHAR);
-    }
-
-    @Test
     public void readsNonNullResultByIndex() throws SQLException {
         ResultSet rs = mock(ResultSet.class);
         int index = 5;

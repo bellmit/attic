@@ -8,6 +8,7 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 /**
  * Maps Optional-like types to JDBC.
@@ -29,20 +30,23 @@ import java.sql.SQLException;
  */
 public abstract class OptionalTypeHandler<T> implements TypeHandler<T> {
     @Override
-    public void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
+    public void setParameter(
+            PreparedStatement ps, int i, @Nullable T parameter, @Nullable JdbcType jdbcType) throws SQLException {
+        int typeCode = jdbcType == null ? Types.OTHER : jdbcType.TYPE_CODE;
+
         if (parameter == null) {
-            ps.setNull(i, jdbcType.TYPE_CODE);
+            ps.setNull(i, typeCode);
             return;
         }
 
         Object rawParameter = unpackOptional(parameter);
         if (rawParameter == null) {
-            ps.setNull(i, jdbcType.TYPE_CODE);
+            ps.setNull(i, typeCode);
             return;
         }
 
         assert rawParameter != null;
-        ps.setObject(i, rawParameter, jdbcType.TYPE_CODE);
+        ps.setObject(i, rawParameter, typeCode);
     }
 
     @Override
