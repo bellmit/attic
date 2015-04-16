@@ -19,6 +19,12 @@ apply plugin: 'idea'
 group = 'com.loginbox.app'
 mainClassName = 'com.loginbox.app.LoginBox'
 
+ext {
+    sourceVersion = System.getenv('SOURCE_VERSION') ?:
+                        "git rev-parse HEAD".execute().text.trim() ?:
+                        'UNKNOWN'
+}
+
 sourceCompatibility = '1.8'
 
 repositories {
@@ -74,6 +80,15 @@ dependencies {
 node {
     download = true
     version = '0.10.35'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Title': 'Login Box',
+            'Implementation-Version': sourceVersion
+        )
+    }
 }
 
 shadowJar {
