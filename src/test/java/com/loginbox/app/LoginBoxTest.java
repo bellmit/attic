@@ -1,5 +1,6 @@
 package com.loginbox.app;
 
+import com.loginbox.app.version.VersionBundle;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -16,6 +17,7 @@ public class LoginBoxTest {
         /* This is a dumb test: it more or less reiterates the body of the methods under test. However, it's better than nothing, I hope... */
         application.initialize(bootstrap);
 
+        verify(bootstrap).addBundle(isA(VersionBundle.class));
         verify(bootstrap).addBundle(isA(AssetsBundle.class));
         verify(bootstrap).addBundle(isA(MigrationsBundle.class));
     }

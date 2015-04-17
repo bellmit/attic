@@ -14,6 +14,8 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import java.util.concurrent.TimeUnit;
 
 public class SystemDriver {
@@ -31,11 +33,13 @@ public class SystemDriver {
             databaseContext.databaseUrl(),
             databaseContext.user(),
             databaseContext.password());
-    private final SeleniumShutdownRule seleniumShutdownRule = new SeleniumShutdownRule();
+    private final DriverShutdownRule driverShutdownRule = new DriverShutdownRule();
 
     private String baseUrl = null;
     private WebDriver webDriver = null;
+    private Client publicApiClient = null;
     private WebUiDriver webUiDriver = null;
+    private PublicApiDriver publicApiDriver = null;
 
     /**
      * Returns the current session's {@link org.openqa.selenium.WebDriver}, starting it if necessary. Callers
@@ -70,7 +74,23 @@ public class SystemDriver {
         });
     }
 
+    public Client publicApiClient() {
+        return publicApiClient = Lazily.create(publicApiClient, () -> ClientBuilder.newClient());
+    }
+
     public void shutdown() {
+        quitWebDriver();
+        quitPublicApiDriver();
+    }
+
+    public void quitPublicApiDriver() {
+        if (publicApiClient != null) {
+            publicApiClient.close();
+            publicApiClient = null;
+        }
+    }
+
+    public void quitWebDriver() {
         if (webDriver != null) {
             webDriver.quit();
             webDriver = null;
@@ -89,10 +109,14 @@ public class SystemDriver {
         return RuleChain
                 .outerRule(databaseContext.rules())
                 .around(appRule)
-                .around(seleniumShutdownRule);
+                .around(driverShutdownRule);
     }
 
-    private class SeleniumShutdownRule extends ExternalResource {
+    public PublicApiDriver publicApiDriver() {
+        return publicApiDriver = Lazily.create(publicApiDriver, () -> new PublicApiDriver(this, baseUrl()));
+    }
+
+    private class DriverShutdownRule extends ExternalResource {
         @Override
         protected void after() {
             shutdown();

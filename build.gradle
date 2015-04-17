@@ -19,6 +19,12 @@ apply plugin: 'idea'
 group = 'com.loginbox.app'
 mainClassName = 'com.loginbox.app.LoginBox'
 
+ext {
+    sourceVersion = System.getenv('SOURCE_VERSION') ?:
+                        "git rev-parse HEAD".execute().text.trim() ?:
+                        'UNKNOWN'
+}
+
 sourceCompatibility = '1.8'
 
 repositories {
@@ -66,6 +72,7 @@ dependencies {
     testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
 
     acceptanceTestCompile group: 'com.lewisd', name: 'simple-dsl', version: '0.2'
+    acceptanceTestCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: jerseyVersion
     acceptanceTestCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
     acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
@@ -74,6 +81,16 @@ dependencies {
 node {
     download = true
     version = '0.10.35'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Vendor': project.group,
+            'Implementation-Title': 'Login Box',
+            'Implementation-Version': sourceVersion
+        )
+    }
 }
 
 shadowJar {
