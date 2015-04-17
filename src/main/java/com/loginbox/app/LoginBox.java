@@ -1,5 +1,6 @@
 package com.loginbox.app;
 
+import com.loginbox.app.version.VersionBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
@@ -13,6 +14,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
         new LoginBox().run(args);
     }
 
+    private final VersionBundle versionBundle = new VersionBundle("com.loginbox.app", "Login Box");
     private final AssetsBundle assetsBundle
             = new AssetsBundle();
     private final MigrationsBundle<LoginBoxConfiguration> migrationsBundle
@@ -25,6 +27,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
 
     @Override
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
+        bootstrap.addBundle(versionBundle);
         bootstrap.addBundle(assetsBundle);
         bootstrap.addBundle(migrationsBundle);
     }
