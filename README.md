@@ -2,6 +2,35 @@
 
 [![Build Status](https://circleci.com/gh/login-box/dropwizard-mybatis.svg)](https://circleci.com/gh/login-box/dropwizard-mybatis)
 
+## Installing
+
+All modules are hosted on Bintray, in a private repository.
+
+To add to Maven:
+
+    <repositories>
+        <!-- ... -->
+        <repository>
+            <id>jcenter</id>
+            <url>https://dl.bintray.com/login-box/releases/</url>
+        </repository>
+    </repository>
+
+To add to Gradle:
+
+    repositories {
+        maven {
+            url "https://dl.bintray.com/login-box/releases/"
+        }
+    }
+
+You can also download the JARs by hand from
+[Bintray](https://bintray.com/login-box/releases/dropwizard-mybatis/view#files),
+but you'll need Dropwizard and its dependencies, too. Really, use a dependency
+manager. You'll be happier.
+
+JCenter coming soon!
+
 ## Defining Mapper Interfaces
 
 A mapper interface defines methods that map to SQL queries or procedure calls.
