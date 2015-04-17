@@ -1,12 +1,15 @@
 package com.loginbox.app;
 
 import com.loginbox.app.version.VersionBundle;
+import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import org.junit.Test;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class LoginBoxTest {
     private final Bootstrap<LoginBoxConfiguration> bootstrap = mock(Bootstrap.class);
@@ -20,5 +23,6 @@ public class LoginBoxTest {
         verify(bootstrap).addBundle(isA(VersionBundle.class));
         verify(bootstrap).addBundle(isA(AssetsBundle.class));
         verify(bootstrap).addBundle(isA(MigrationsBundle.class));
+        verify(bootstrap).addBundle(isA(MybatisBundle.class));
     }
 }

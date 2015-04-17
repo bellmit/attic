@@ -1,6 +1,7 @@
 package com.loginbox.app;
 
 import com.loginbox.app.version.VersionBundle;
+import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
@@ -24,12 +25,20 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
             return configuration.getDataSourceFactory();
         }
     };
+    private final MybatisBundle<LoginBoxConfiguration> mybatisBundle
+            = new MybatisBundle<LoginBoxConfiguration>("com.loginbox.app") {
+        @Override
+        public DataSourceFactory getDataSourceFactory(LoginBoxConfiguration configuration) {
+            return configuration.getDataSourceFactory();
+        }
+    };
 
     @Override
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
         bootstrap.addBundle(versionBundle);
         bootstrap.addBundle(assetsBundle);
         bootstrap.addBundle(migrationsBundle);
+        bootstrap.addBundle(mybatisBundle);
     }
 
     @Override
