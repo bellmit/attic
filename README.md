@@ -223,6 +223,30 @@ _At present_, `MybatisBundle` doesn't provide any kind of automated transaction
 management. Applications are responsible for demarcating their own transactions
 using the session's `commit()` and `rollback()` methods.
 
+## Dependency Injection
+
+This bundle includes an injection provider for `SqlSession`, scoped to the
+current HTTP request:
+
+```java
+package com.example.helloworld.resources;
+
+@Path("/user/{username}")
+public class InjectionExampleResource {
+    @GET
+    public User getUser(
+        @PathParam("username") String username,
+        @Context SqlSession sqlSession) {
+
+        UsersMapper users = session.getMapper(UsersMapper.class);
+        return users.findByUsername(username);
+    }
+}
+```
+
+The session will be automatically closed at the end of the request. This does
+not provide automatic transaction management.
+
 ## Supported Types
 
 In addition to MyBatis' suite of built-in types, this bundle automatically

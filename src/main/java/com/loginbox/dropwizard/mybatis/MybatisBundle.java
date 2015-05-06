@@ -2,6 +2,7 @@ package com.loginbox.dropwizard.mybatis;
 
 import com.loginbox.dropwizard.mybatis.healthchecks.SqlSessionFactoryHealthCheck;
 import com.loginbox.dropwizard.mybatis.mappers.Ping;
+import com.loginbox.dropwizard.mybatis.providers.SqlSessionProvider;
 import com.loginbox.dropwizard.mybatis.types.GuavaOptionalTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.Java8OptionalTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.UuidTypeHandler;
@@ -194,6 +195,7 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
         sqlSessionFactory = createSqlSessionFactory(dataSource);
 
         environment.healthChecks().register(name, new SqlSessionFactoryHealthCheck(sqlSessionFactory));
+        environment.jersey().register(SqlSessionProvider.binder(sqlSessionFactory));
     }
 
     private SqlSessionFactory createSqlSessionFactory(DataSource dataSource) throws Exception {
