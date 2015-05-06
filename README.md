@@ -226,7 +226,8 @@ using the session's `commit()` and `rollback()` methods.
 ## Dependency Injection
 
 This bundle includes an injection provider for `SqlSession`, scoped to the
-current HTTP request:
+current HTTP request. Multiple injection targets within the same request will
+receive the same `SqlSession` object, allowing them to share a database context:
 
 ```java
 package com.example.helloworld.resources;
@@ -244,8 +245,9 @@ public class InjectionExampleResource {
 }
 ```
 
-The session will be automatically closed at the end of the request. This does
-not provide automatic transaction management.
+The session will be automatically closed at the end of the request. As with
+manual session management, this does not provide automatic transaction
+management.
 
 ## Supported Types
 
