@@ -3,9 +3,11 @@ package com.loginbox.dropwizard.mybatis;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import com.loginbox.dropwizard.mybatis.healthchecks.SqlSessionFactoryHealthCheck;
 import com.loginbox.dropwizard.mybatis.mappers.Ping;
+import com.loginbox.dropwizard.mybatis.providers.SqlSessionProvider;
 import com.loginbox.dropwizard.mybatis.testMappers.ExampleMapper;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.db.ManagedDataSource;
+import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.lifecycle.setup.LifecycleEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import org.apache.ibatis.session.Configuration;
@@ -33,6 +35,7 @@ public class MybatisBundleTest {
     private final ManagedDataSource dataSource = mock(ManagedDataSource.class);
     private final LifecycleEnvironment lifecycle = mock(LifecycleEnvironment.class);
     private final HealthCheckRegistry healthChecks = mock(HealthCheckRegistry.class);
+    private final JerseyEnvironment jersey = mock(JerseyEnvironment.class);
 
     private class TestMybatisBundle<T extends io.dropwizard.Configuration>
             extends MybatisBundle<T> {
@@ -58,6 +61,7 @@ public class MybatisBundleTest {
     public void wireMocks() {
         when(environment.lifecycle()).thenReturn(lifecycle);
         when(environment.healthChecks()).thenReturn(healthChecks);
+        when(environment.jersey()).thenReturn(jersey);
 
         when(dataSourceFactory.build(Matchers.any(), Matchers.any())).thenReturn(dataSource);
     }
@@ -90,6 +94,16 @@ public class MybatisBundleTest {
         bundle.run(configuration, environment);
 
         verify(healthChecks).register(anyString(), isA(SqlSessionFactoryHealthCheck.class));
+    }
+
+    @Test
+    public void registersProviders() throws Exception {
+        MybatisBundle<io.dropwizard.Configuration> bundle
+                = new TestMybatisBundle<io.dropwizard.Configuration>();
+        bundle.initialize(bootstrap);
+        bundle.run(configuration, environment);
+
+        verify(jersey).register(isA(SqlSessionProvider.Binder.class));
     }
 
     @Test
