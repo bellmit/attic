@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loginbox.app.csrf.storage.CsrfRepository">
+    <!-- Using #{param1}-style notations here to avoid embedding mybatis annotations in the sources. We might want to
+        release the CSRF module as a standalone thing at some point. -->
+    <insert id="insertCsrfToken"><![CDATA[
+        insert into csrf.token
+            (session, secret, issued_at)
+        values
+            (#{param1}, #{param2.secret}, now())
+    ]]></insert>
+
+    <delete id="consumeToken"><![CDATA[
+        delete from csrf.token
+        where
+            session = #{param1}
+            and secret = #{param2.secret}
+    ]]></delete>
+
+    <delete id="expireTokens"><![CDATA[
+        delete from csrf.token
+        where
+            issued_at < now() - interval '1 hour'
+    ]]></delete>
+</mapper>
