@@ -10,8 +10,10 @@ import javax.ws.rs.core.Response;
 @SuppressWarnings("serial")
 public class InvalidCsrfTokenException extends WebApplicationException {
 
+    private static final String MESSAGE = "Missing, invalid, or duplicate CSRF token";
+
     public InvalidCsrfTokenException() {
-        super(invalidCsrfTokenResponse());
+        super(MESSAGE, invalidCsrfTokenResponse());
     }
 
     private static Response invalidCsrfTokenResponse() {
