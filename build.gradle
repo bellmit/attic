@@ -65,10 +65,13 @@ dependencies {
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
     compile group: 'io.dropwizard', name: 'dropwizard-assets', version: dropwizardVersion
     compile group: 'io.dropwizard', name: 'dropwizard-migrations', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-views-freemarker', version: dropwizardVersion
 
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: dropwizardHerokuVersion
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-db', version: dropwizardHerokuVersion
     compile group: 'com.loginbox.mybatis', name: 'dropwizard-mybatis', version: '0.0.0'
+
+    compile group: 'org.glassfish.jersey.ext', name: 'jersey-declarative-linking', version: jerseyVersion
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: hamcrestVersion

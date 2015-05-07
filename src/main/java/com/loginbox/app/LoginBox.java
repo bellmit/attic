@@ -2,6 +2,7 @@ package com.loginbox.app;
 
 import com.loginbox.app.version.VersionBundle;
 import com.loginbox.dropwizard.mybatis.MybatisBundle;
+import com.loginbox.app.views.ViewBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
@@ -18,6 +19,8 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
     private final VersionBundle versionBundle = new VersionBundle("com.loginbox.app", "Login Box");
     private final AssetsBundle assetsBundle
             = new AssetsBundle();
+    private final ViewBundle viewBundle
+            = new ViewBundle();
     private final MigrationsBundle<LoginBoxConfiguration> migrationsBundle
             = new MigrationsBundle<LoginBoxConfiguration>() {
         @Override
@@ -37,6 +40,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
         bootstrap.addBundle(versionBundle);
         bootstrap.addBundle(assetsBundle);
+        bootstrap.addBundle(viewBundle);
         bootstrap.addBundle(migrationsBundle);
         bootstrap.addBundle(mybatisBundle);
     }
