@@ -1,8 +1,9 @@
 package com.loginbox.app;
 
+import com.loginbox.app.csrf.CsrfBundle;
 import com.loginbox.app.version.VersionBundle;
-import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import com.loginbox.app.views.ViewBundle;
+import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
@@ -35,6 +36,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
             return configuration.getDataSourceFactory();
         }
     };
+    private final CsrfBundle csrfBundle = new CsrfBundle();
 
     @Override
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
@@ -43,6 +45,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
         bootstrap.addBundle(viewBundle);
         bootstrap.addBundle(migrationsBundle);
         bootstrap.addBundle(mybatisBundle);
+        bootstrap.addBundle(csrfBundle);
     }
 
     @Override
