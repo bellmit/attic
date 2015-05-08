@@ -1,6 +1,7 @@
 package com.loginbox.app;
 
 import com.loginbox.app.version.VersionBundle;
+import com.loginbox.app.views.ViewBundle;
 import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -22,6 +23,7 @@ public class LoginBoxTest {
 
         verify(bootstrap).addBundle(isA(VersionBundle.class));
         verify(bootstrap).addBundle(isA(AssetsBundle.class));
+        verify(bootstrap).addBundle(isA(ViewBundle.class));
         verify(bootstrap).addBundle(isA(MigrationsBundle.class));
         verify(bootstrap).addBundle(isA(MybatisBundle.class));
     }
