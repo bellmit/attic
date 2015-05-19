@@ -11,6 +11,20 @@ package com.loginbox.transactor.transactable;
 @FunctionalInterface
 public interface Action<C> {
     /**
+     * Lifts a Runnable task into an action over some context. The context will be ignored by the resulting action. This
+     * can be used to inject procedural steps such as logging into transactable sequences.
+     *
+     * @param task
+     *         the task to lift to an Action.
+     * @param <C>
+     *         the context type of the resulting action.
+     * @return an Action wrapping <var>task</var>.
+     */
+    public static <C> Action<C> lift(Runnable task) {
+        return context -> task.run();
+    }
+
+    /**
      * Apply the action to a context.
      *
      * @param context
