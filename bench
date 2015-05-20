@@ -1,0 +1,38 @@
+#!/bin/bash -e
+# bench <url>
+#    generates scalability statistics for <url>.
+
+function trunc() {
+  printf "%.0f" "$1"
+}
+
+URL=$1 && shift
+: ${MIN_CONC:=1}
+: ${MAX_CONC:=250}
+: ${STEP_CONC:=2}
+: ${REQUESTS:=1000}
+: ${PERCENTILE:=75}
+
+rm -rf results
+mkdir results
+
+for conc in 1 $(seq ${MIN_CONC} ${STEP_CONC} ${MAX_CONC}); do
+  [ $conc -le $REQUESTS ] || break
+
+  ab >&2 \
+    -c $conc \
+    -n $REQUESTS \
+    -H 'Accept-Encoding: gzip' \
+    -e "results/${conc}" \
+      "$URL"
+done
+
+# Do this separately, to avoid interleaving the useful info with the output of
+# ab without also suppressing ab's output.
+cd results
+for result in 1 $(seq ${MIN_CONC} ${STEP_CONC} ${MAX_CONC}); do
+  [ $result -le $REQUESTS ] || break
+
+  echo -n $result,
+  grep "^${PERCENTILE}," $result | cut -d , -f 2
+done
