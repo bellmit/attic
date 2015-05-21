@@ -118,3 +118,19 @@ exception will be reported to the transactor's caller, instead of the normal
 result of the passed operation. Transactors make no effort to determine whether
 a failure during cleanup has actually reversed the transaction's side effects,
 and will not call `abort(context)` once `finish(context)` has been called.
+
+## Lifts
+
+Non-transactable functions can be embedded in transactor sequences using
+`lift`s for each transactable type. Every `lift` method produces a transactable
+which ignores its context and applies the lifted operation to the remaining
+arguments. This mechanism allows computation steps to be interleaved with
+transacted steps cleanly, without exiting the transaction context.
+
+The following types can be lifted:
+
+* `Runnable` can be lifted to `Action`.
+* `Consumer` can be lifted to `Sink`.
+* `Supplier` can be lifted to `Query`.
+* `Function` can be lifted to `Transform`.
+* `BiFunction` can be lifted to `Merge`.
