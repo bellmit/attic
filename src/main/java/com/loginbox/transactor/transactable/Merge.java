@@ -52,4 +52,39 @@ public interface Merge<C, M, N, O> {
      *         if the merge cannot be completed.
      */
     public O merge(C context, M left, N right) throws Exception;
+
+    /**
+     * Sequence this merge before an action.
+     *
+     * @param next
+     *         the action to evaluate next.
+     * @return a new composite merge that applies this merge to obtain the result, and then executes the
+     * <var>next</var> action before returning it.
+     */
+    public default Merge<C, M, N, O> andThen(Action<? super C> next) {
+        return (context, left, right) -> {
+            O result = this.merge(context, left, right);
+            next.execute(context);
+            return result;
+        };
+    }
+
+    /**
+     * Appends a transform to this merge. The resulting merge is effectively the composition of this and
+     * <var>next</var>, applied to the same context.
+     *
+     * @param next
+     *         the transform to append to this merge.
+     * @param <P>
+     *         the result type of <var>next</var>, and the resulting composite merge.
+     * @return a composite merge that obtains an interim result from this, and a final result by transforming the
+     * interim result through <var>next</var>.
+     */
+    public default <P> Merge<C, M, N, P> transformedBy(Transform<? super C, ? super O, ? extends P> next) {
+        return (context, left, right) -> {
+            O interim = this.merge(context, left, right);
+            P result = next.apply(context, interim);
+            return result;
+        };
+    }
 }

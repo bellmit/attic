@@ -119,6 +119,81 @@ result of the passed operation. Transactors make no effort to determine whether
 a failure during cleanup has actually reversed the transaction's side effects,
 and will not call `abort(context)` once `finish(context)` has been called.
 
+## Composition Operators
+
+Transactables can be composed, so long as the result would accept no more than
+two values, and would return no more than one value. The generic sequencing
+operators are named depending on the types of their downstream argument:
+
+* `andThen(Action)` appends an Action to any void transactable, producing a new
+    void transactable with the same number of inputs, executing the action as
+    its last step.
+
+* `before(Query)` appends a Query to any void transactable, producing a new
+    non-void transactable with the same number of inputs, executing the query as
+    its last step to produce the final output.
+
+* `transformedBy(Transform)` appends a Transform to any non-void transactable,
+    producing a new non-void transactable with the same number of inputs,
+    executing the transform as its last step to produce the final output.
+
+* `consumedBy(Sink)` appends a Sink to any non-void transactable, producing a
+    new void transactable with the same number of inputs, executing the sink as
+    its last step. (This cannot be applied to Merges directly; one of the
+    `intoLeft` or `intoRight` operators must be applied first, to turn the
+    Merge into another kind of non-void transactable.)
+
+Actions provide a unique operator, which appends the action to a transactable
+without changing its result:
+
+* `andThen(Action)` appends an Action to any _non-void_ transactable, producing
+    a new _non-void_ transactable with the same number of inputs, executing the
+    action as its last step. The result of the initial transactable will be
+    used as the result of the combined transactable.
+
+This allows actions to be sequenced inline with other transactables.
+
+Merges provide two unique operators, which combine other transactables:
+
+* `intoLeft` appends a Merge to any non-void transactable _other than a Merge_,
+    passing the result of the transactable into the left argument of the Merge.
+
+* `intoRight` appends a Merge to any non-void transactable _other than a Merge_,
+    passing the result of the transactable into the right argument of the Merge.
+
+These operators allow multiple transactable sequences to be combined pairwise.
+
+### Ordering
+
+All transaction operators force the ordering of their operands to sequence
+directly. For example, combining an action with a query using
+
+    Action<Transaction> a = ...;
+    Query<Transaction, String> b = ...;
+    
+    Query<Transaction, String> combined = a.andThen(b);
+
+produces a Query that performs `a`, and then immediately performs `b`. No
+further operator will insert steps between `a` and `b`.
+
+For most sequences, this behaviour should be intuitive. However, Merge steps
+can be sequenced in multiple ways, and this library provides only limited tools
+for controlling that sequence. For example:
+
+    Query<Transaction, String> a = ...;
+    Query<Transaction, String> b = ...;
+    Merge<Transaction, String, String, String> c = ...;
+
+    Query<Transaction, String> combined =
+        a.transformedBy(b.intoLeft(c));
+
+This will perform `a`, then `b`, and then finally `c`, while the following:
+
+    Query<Transaction, String> combined =
+        b.transformedBy(a.intoRight(c));
+
+evaluates `b`, then `a`, and then finally `c`.
+
 ## Lifts
 
 Non-transactable functions can be embedded in transactor sequences using
