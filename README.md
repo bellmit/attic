@@ -271,5 +271,5 @@ Finally, a client, whose job is to provide the demarcation point for
 transactions:
 
     /* ... */
-    transactor.conusme(userReposiory.createUser(), "ojacobson");
+    transactor.consume(userReposiory.createUser(), "ojacobson");
     /* ... */
