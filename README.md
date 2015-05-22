@@ -194,6 +194,18 @@ This will perform `a`, then `b`, and then finally `c`, while the following:
 
 evaluates `b`, then `a`, and then finally `c`.
 
+## Context Adapters
+
+Transactors can be shifted to other contexts. An `Adapter` is a function for
+replacing one context with another. Given an Adapter from context Outer to
+context Inner, and any transactable in context Inner, you can compose them into
+a new transactable in context Outer using
+
+    transactableInOuter = adapter.around(transactableInInner);
+
+If the inner context is `AutoCloseable`, using `ClosingAdapter` will close the
+inner context before returning.
+
 ## Lifts
 
 Non-transactable functions can be embedded in transactor sequences using
