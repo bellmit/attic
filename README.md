@@ -221,3 +221,55 @@ The following types can be lifted:
 * `Supplier` can be lifted to `Query`.
 * `Function` can be lifted to `Transform`.
 * `BiFunction` can be lifted to `Merge`.
+
+## A Small Example
+
+An example, for basic JDBC. First, we define a transactor. This might be
+provided via (and created using) a dependency injection framework, such as
+Guice or Spring.
+
+    public class ConnectionTransactor extends Transactor<Connection> {
+        private final DataSource dataSource; /* constructor omitted for brevity */
+        
+        @Override
+        protected Connection createContext() throws SQLException {
+            return dataSource.getConnection();
+        }
+        
+        @Override
+        protected void finish(Connection connection) throws SQLException {
+            connection.commit();
+        }
+        
+        @Override
+        protected void abort(Connection connection) throws SQLException {
+            connection.rollback();
+        }
+    }
+
+Then a transactable action. Note that the `createUser()` method below _returns
+a transactable_ rather than performing a transaction.
+
+    public class UserRepository {
+        private ClosingAdapter<Connection, PreparedStatement> preparing(String query) {
+            return connection -> connection.prepare(statement);
+        }
+        
+        public Sink<Connection, String> createUser() {
+            return preparing("insert into users values (?)")
+                .around((statement, username) -> {
+                    statement.setString(1, username);
+                    statement.execute();
+                });
+        }
+    }
+
+In a larger system, the `preparing` helper could easily be extracted to a
+static helper class.
+
+Finally, a client, whose job is to provide the demarcation point for
+transactions:
+
+    /* ... */
+    transactor.conusme(userReposiory.createUser(), "ojacobson");
+    /* ... */
