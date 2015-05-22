@@ -40,5 +40,93 @@ public interface Query<C, R> {
      */
     public R fetch(C context) throws Exception;
 
+    /**
+     * Sequence this query before an action.
+     *
+     * @param next
+     *         the action to evaluate next.
+     * @return a new composite query that fetches this query to obtain the result, and then executes the
+     * <var>next</var> action before returning it.
+     */
+    public default Query<C, R> andThen(Action<? super C> next) {
+        return context -> {
+            R result = this.fetch(context);
+            next.execute(context);
+            return result;
+        };
+    }
 
+    /**
+     * Appends a transform to this query. The resulting query is effectively the composition of this and
+     * <var>next</var>, applied to the same context.
+     *
+     * @param next
+     *         the transform to append to this query.
+     * @param <S>
+     *         the result type of <var>next</var>, and the resulting composite query.
+     * @return a composite query that obtains an interim result from this, and a final result by transforming the
+     * interim result through <var>next</var>.
+     */
+    public default <S> Query<C, S> transformedBy(Transform<? super C, ? super R, ? extends S> next) {
+        return context -> {
+            R interim = this.fetch(context);
+            S result = next.apply(context, interim);
+            return result;
+        };
+    }
+
+    /**
+     * Consumes the result of this query using a sink. The resulting sink first obtains a value through this query, then
+     * passes the result to <var>sink</var>.
+     *
+     * @param sink
+     *         the sink to consume the result of this transform.
+     * @return a composite action that obtains a value using this, then consumes it with <var>sink</var>.
+     */
+    public default Action<C> consumedBy(Sink<? super C, ? super R> sink) {
+        return context -> {
+            R interim = this.fetch(context);
+            sink.consume(context, interim);
+        };
+    }
+
+    /**
+     * Combines this query with a merge, using the query result as the left argument to the merge. The result is a
+     * transform whose <var>value</var> will be the right argument to the merge.
+     *
+     * @param merge
+     *         the merge to combine this query with.
+     * @param <N>
+     *         the type of the merge's right argument.
+     * @param <O>
+     *         the merge's result type.
+     * @return the resulting transform.
+     */
+    public default <N, O> Transform<C, N, O> intoLeft(Merge<C, ? super R, ? super N, ? extends O> merge) {
+        return (context, value) -> {
+            R intermediateResult = this.fetch(context);
+            O result = merge.merge(context, intermediateResult, value);
+            return result;
+        };
+    }
+
+    /**
+     * Combines this query with a merge, using the query result as the right argument to the merge. The result is a
+     * transform whose <var>value</var> will be the left argument to the merge.
+     *
+     * @param merge
+     *         the merge to combine this query with.
+     * @param <M>
+     *         the type of the merge's second argument.
+     * @param <O>
+     *         the merge's result type.
+     * @return the resulting transform.
+     */
+    public default <M, O> Transform<C, M, O> intoRight(Merge<C, ? super M, ? super R, ? extends O> merge) {
+        return (context, value) -> {
+            R intermediateResult = this.fetch(context);
+            O result = merge.merge(context, value, intermediateResult);
+            return result;
+        };
+    }
 }
