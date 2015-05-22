@@ -46,6 +46,8 @@ public interface Adapter<O, I> {
      *
      * @param sink
      *         the sink over <var>I</var>
+     * @param <V>
+     *         the type of value consumed by the sink.
      * @return a sink over <var>O</var>
      */
     public default <V> Sink<O, V> around(Sink<? super I, ? super V> sink) {
