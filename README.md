@@ -1,4 +1,4 @@
-# Transactor [![Build Status](https://circleci.com/gh/login-box/transactor.svg)](https://circleci.com/gh/login-box/transactor)
+# Transactor [![Build Status](https://circleci.com/gh/login-box/transactor.svg)](https://circleci.com/gh/login-box/transactor) [ ![Download](https://api.bintray.com/packages/login-box/releases/transactor/images/download.svg) ](https://bintray.com/login-box/releases/transactor/_latestVersion)
 
 This library provides a quasi-monadic interface to transactable resources. This
 is very much unlike traditional Java transaction management; instead of binding
@@ -15,6 +15,44 @@ independent of the underlying framework. Traditional Java dynamically-scoped
 transaction enlistment and demarcation gives applications poor visibility into
 the state of a transaction, and sharply limits the guarantees applications can
 provide in response to underlying transaction failures.
+
+## Installation
+
+This library can be obtained from JCenter. In Gradle:
+
+```
+repositories {
+    jcenter()
+}
+
+// …
+
+dependencies {
+    compile 'com.loginbox.transactor:transactor:+'
+}
+```
+
+In Maven:
+
+```
+<repositories>
+    <repository>
+        <url>http://jcenter.bintray.com/</url>
+    </repository>
+</repositories>
+<!-- ... -->
+<dependencies>
+    <dependency>
+        <groupId>com.loginbox.transactor</groupId>
+        <artifactId>transactor</artifactId>
+        <version>${transactor.version}</version>
+    </dependency>
+</dependencies>
+```
+
+You can also download this library
+[directly](https://bintray.com/login-box/releases/transactor/_latestVersion)
+and use it; it has no dependencies.
 
 ## Operating Theory
 
