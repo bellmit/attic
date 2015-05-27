@@ -29,8 +29,9 @@ public abstract class Transactor<C extends AutoCloseable> {
     protected abstract C createContext() throws Exception;
 
     /**
-     * Invoked at the end of an execution to clean up the context if and only if the execution raises an exception. For
-     * example, a database Transactor would use this to roll back failed transactions.
+     * Invoked at the end of an execution to clean up the context if and only if the execution raises an exception. The
+     * default implementation is to do nothing when a transaction fails. Most applications will want to override this to
+     * perform cleanup actions, such as rolling back transactions.
      *
      * @param context
      *         the context for the execution. This will be the context previously obtained from {@link
@@ -41,11 +42,14 @@ public abstract class Transactor<C extends AutoCloseable> {
      *         {@link java.lang.AutoCloseable#close() close it}. This exception will be {@link Throwable#getSuppressed()
      *         suppressed} by the exception that caused the operation to abort in the first place.
      */
-    protected abstract void abort(C context) throws Exception;
+    protected void abort(C context) throws Exception {
+        /* by default, do nothing */
+    }
 
     /**
-     * Invoked at the end of an execution to clean up the context if and only if the execution completes normally. For
-     * example, a database Transactor would use this to commit successful transactions.
+     * Invoked at the end of an execution to clean up the context if and only if the execution completes normally. The
+     * default implementation is to do nothing when a transaction fails. Most applications will want to override this to
+     * perform post-success actions, such as committing transactions.
      *
      * @param context
      *         the context for the execution. This will be the context previously obtained from {@link
@@ -55,7 +59,9 @@ public abstract class Transactor<C extends AutoCloseable> {
      *         method as-is. Transactor itself makes no assumptions about whether the transaction is valid, but will
      *         still attempt to {@link java.lang.AutoCloseable#close() close it}.
      */
-    protected abstract void finish(C context) throws Exception;
+    protected void finish(C context) throws Exception {
+        /* by default, do nothing */
+    }
 
     /**
      * Runs an {@link com.loginbox.transactor.transactable.Action} in a new context.

@@ -46,7 +46,7 @@ from the rest of your program.
 A `Transactor<C>` manages contexts (objects of type `C`, which must implement
 `AutoCloseable`) for transactions, opening and closing them around each unit of
 work. Code using this library must subclass `Transactor` to specialize it for a
-specific kind of transaction. Subclasses provide three methods:
+specific kind of transaction. Subclasses one mandatory method:
 
 * `C createContext()` opens new transaction contexts. For example, a JDBC
     transactor might implement this as
@@ -55,6 +55,9 @@ specific kind of transaction. Subclasses provide three methods:
         public Connection createContext() throws SQLException {
             return dataSource.createConnection();
         }
+
+Subclasses may also provide either, both, or none of the two optional
+completion methods:
 
 * `void finish(C context)` handles finishing a successful transaction. For
     example, a JDBC transactor might implement this as
@@ -73,8 +76,8 @@ specific kind of transaction. Subclasses provide three methods:
             context.rollback();
         }
 
-Given these three methods, and an `AutoCloseable` context type, `Transactor`
-can manage units of work around "transactable" objects.
+Given these methods, `Transactor` can manage units of work around
+"transactable" processes.
 
 ## Transactables
 
