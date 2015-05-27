@@ -1,14 +1,18 @@
 package com.loginbox.app;
 
+import com.loginbox.app.csrf.CsrfBundle;
+import com.loginbox.app.csrf.mybatis.MybatisCsrfBundle;
+import com.loginbox.app.csrf.ui.CsrfUiBundle;
 import com.loginbox.app.version.VersionBundle;
-import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import com.loginbox.app.views.ViewBundle;
+import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 public class LoginBox extends Application<LoginBoxConfiguration> {
 
@@ -35,6 +39,14 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
             return configuration.getDataSourceFactory();
         }
     };
+    private final CsrfBundle csrfBundle = new CsrfBundle();
+    private final MybatisCsrfBundle mybatisCsrfBundle = new MybatisCsrfBundle() {
+        @Override
+        public SqlSessionFactory getSqlSessionFactory() {
+            return mybatisBundle.getSqlSessionFactory();
+        }
+    };
+    private final CsrfUiBundle csrfUiBundle = new CsrfUiBundle();
 
     @Override
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
@@ -43,6 +55,9 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
         bootstrap.addBundle(viewBundle);
         bootstrap.addBundle(migrationsBundle);
         bootstrap.addBundle(mybatisBundle);
+        bootstrap.addBundle(csrfBundle);
+        bootstrap.addBundle(mybatisCsrfBundle);
+        bootstrap.addBundle(csrfUiBundle);
     }
 
     @Override

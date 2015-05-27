@@ -69,7 +69,9 @@ dependencies {
 
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: dropwizardHerokuVersion
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-db', version: dropwizardHerokuVersion
-    compile group: 'com.loginbox.mybatis', name: 'dropwizard-mybatis', version: '0.0.0'
+    compile group: 'com.loginbox.mybatis', name: 'dropwizard-mybatis', version: '0.1.0'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
 
     compile group: 'org.glassfish.jersey.ext', name: 'jersey-declarative-linking', version: jerseyVersion
 
