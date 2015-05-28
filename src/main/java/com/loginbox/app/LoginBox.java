@@ -1,5 +1,6 @@
 package com.loginbox.app;
 
+import com.loginbox.app.admin.AdminBundle;
 import com.loginbox.app.csrf.CsrfBundle;
 import com.loginbox.app.csrf.mybatis.MybatisCsrfBundle;
 import com.loginbox.app.csrf.ui.CsrfUiBundle;
@@ -49,6 +50,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
     };
     private final CsrfUiBundle csrfUiBundle = new CsrfUiBundle();
     private final LandingBundle landingBundle = new LandingBundle();
+    private final AdminBundle adminBundle = new AdminBundle();
 
     @Override
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
@@ -61,6 +63,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
         bootstrap.addBundle(mybatisCsrfBundle);
         bootstrap.addBundle(csrfUiBundle);
         bootstrap.addBundle(landingBundle);
+        bootstrap.addBundle(adminBundle);
     }
 
     @Override
