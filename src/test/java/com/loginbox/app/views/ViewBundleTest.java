@@ -1,6 +1,7 @@
 package com.loginbox.app.views;
 
 import com.loginbox.app.LoginBoxConfiguration;
+import com.loginbox.app.dropwizard.BundleTestCase;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -13,18 +14,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ViewBundleTest {
-    private final Bootstrap<LoginBoxConfiguration> bootstrap = mock(Bootstrap.class);
-    private final JerseyEnvironment jersey = mock(JerseyEnvironment.class);
-    private final Environment environment = mock(Environment.class);
+public class ViewBundleTest extends BundleTestCase {
     private final ViewBundle bundle = new ViewBundle();
 
-    @Before
-    public void wireMocks() {
-        when(environment.jersey()).thenReturn(jersey);
-    }
-
     @Test
+    /* This _should_ be catching the warning from the ViewBundle expectation. */
+    @SuppressWarnings("unchecked")
     public void configuresBundles() {
         bundle.initialize(bootstrap);
 
