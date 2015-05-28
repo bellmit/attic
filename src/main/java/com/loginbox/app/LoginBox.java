@@ -3,6 +3,7 @@ package com.loginbox.app;
 import com.loginbox.app.csrf.CsrfBundle;
 import com.loginbox.app.csrf.mybatis.MybatisCsrfBundle;
 import com.loginbox.app.csrf.ui.CsrfUiBundle;
+import com.loginbox.app.landing.LandingBundle;
 import com.loginbox.app.version.VersionBundle;
 import com.loginbox.app.views.ViewBundle;
 import com.loginbox.dropwizard.mybatis.MybatisBundle;
@@ -47,6 +48,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
         }
     };
     private final CsrfUiBundle csrfUiBundle = new CsrfUiBundle();
+    private final LandingBundle landingBundle = new LandingBundle();
 
     @Override
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
@@ -58,6 +60,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
         bootstrap.addBundle(csrfBundle);
         bootstrap.addBundle(mybatisCsrfBundle);
         bootstrap.addBundle(csrfUiBundle);
+        bootstrap.addBundle(landingBundle);
     }
 
     @Override
