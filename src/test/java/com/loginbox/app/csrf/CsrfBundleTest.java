@@ -2,6 +2,7 @@ package com.loginbox.app.csrf;
 
 import com.loginbox.app.csrf.context.CsrfCookies;
 import com.loginbox.app.csrf.context.CsrfValidator;
+import com.loginbox.app.dropwizard.BundleTestCase;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Environment;
 import org.junit.Before;
@@ -12,16 +13,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class CsrfBundleTest {
+public class CsrfBundleTest extends BundleTestCase {
     private final CsrfBundle bundle = new CsrfBundle();
-
-    private final Environment environment = mock(Environment.class);
-    private final JerseyEnvironment jersey = mock(JerseyEnvironment.class);
-
-    @Before
-    public void wireMocks() {
-        when(environment.jersey()).thenReturn(jersey);
-    }
 
     @Test
     public void bindsValidator() {
