@@ -4,16 +4,15 @@ import com.loginbox.app.csrf.CsrfBundle;
 import com.loginbox.app.csrf.mybatis.MybatisCsrfBundle;
 import com.loginbox.app.csrf.ui.CsrfUiBundle;
 import com.loginbox.app.dropwizard.BundleTestCase;
+import com.loginbox.app.landing.LandingBundle;
 import com.loginbox.app.version.VersionBundle;
 import com.loginbox.app.views.ViewBundle;
 import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.migrations.MigrationsBundle;
-import io.dropwizard.setup.Bootstrap;
 import org.junit.Test;
 
 import static org.mockito.Mockito.isA;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class LoginBoxTest extends BundleTestCase {
@@ -34,5 +33,6 @@ public class LoginBoxTest extends BundleTestCase {
         verify(bootstrap).addBundle(isA(CsrfBundle.class));
         verify(bootstrap).addBundle(isA(MybatisCsrfBundle.class));
         verify(bootstrap).addBundle(isA(CsrfUiBundle.class));
+        verify(bootstrap).addBundle(isA(LandingBundle.class));
     }
 }
