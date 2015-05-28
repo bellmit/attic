@@ -1,5 +1,6 @@
 package com.loginbox.app;
 
+import com.loginbox.app.admin.AdminBundle;
 import com.loginbox.app.csrf.CsrfBundle;
 import com.loginbox.app.csrf.mybatis.MybatisCsrfBundle;
 import com.loginbox.app.csrf.ui.CsrfUiBundle;
@@ -34,5 +35,6 @@ public class LoginBoxTest extends BundleTestCase {
         verify(bootstrap).addBundle(isA(MybatisCsrfBundle.class));
         verify(bootstrap).addBundle(isA(CsrfUiBundle.class));
         verify(bootstrap).addBundle(isA(LandingBundle.class));
+        verify(bootstrap).addBundle(isA(AdminBundle.class));
     }
 }
