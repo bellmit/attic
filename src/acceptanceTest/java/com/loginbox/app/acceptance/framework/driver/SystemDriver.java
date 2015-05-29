@@ -1,6 +1,5 @@
 package com.loginbox.app.acceptance.framework.driver;
 
-
 import com.loginbox.app.LoginBox;
 import com.loginbox.app.LoginBoxConfiguration;
 import com.loginbox.app.acceptance.framework.Lazily;
@@ -40,6 +39,8 @@ public class SystemDriver {
     private Client publicApiClient = null;
     private WebUiDriver webUiDriver = null;
     private PublicApiDriver publicApiDriver = null;
+    private AdminPageDriver adminPageDriver = null;
+    private LandingPageDriver landingPageDriver = null;
 
     /**
      * Returns the current session's {@link org.openqa.selenium.WebDriver}, starting it if necessary. Callers
@@ -103,6 +104,14 @@ public class SystemDriver {
 
     public String baseUrl() {
         return baseUrl = Lazily.create(baseUrl, () -> String.format("http://localhost:%d/", appRule.getLocalPort()));
+    }
+
+    public AdminPageDriver adminPageDriver() {
+        return adminPageDriver = Lazily.create(adminPageDriver, () -> new AdminPageDriver(this));
+    }
+
+    public LandingPageDriver landingPageDriver() {
+        return landingPageDriver = Lazily.create(landingPageDriver, () -> new LandingPageDriver(this));
     }
 
     public TestRule rules() {
