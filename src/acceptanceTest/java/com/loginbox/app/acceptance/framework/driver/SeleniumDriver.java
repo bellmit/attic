@@ -37,4 +37,14 @@ public abstract class SeleniumDriver {
         return webDriver()
                 .findElement(by);
     }
+
+    /**
+     * Shorthand for <code>findElement(By.tagName("h1"))</code>. This is a common case for inspecting the page's title
+     * heading.
+     *
+     * @see #findElement(org.openqa.selenium.By)
+     */
+    protected WebElement findPageHeading() {
+        return findElement(By.tagName("h1"));
+    }
 }
