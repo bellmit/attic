@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require './lib/s3rve/cli'
+require './lib/s3rve'
+
+opts = S3rve::Cli.options
+site_configs = opts.args
+
+publications = site_configs.map do |site_config|
+  S3rve.publish! site_config
+end
+
+puts publications.to_json
