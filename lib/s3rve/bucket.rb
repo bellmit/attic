@@ -19,6 +19,10 @@ module S3rve
       @bucket = bucket
     end
 
+    def name
+      @bucket.name
+    end
+
     def url
       "http://#{@bucket.name}.s3-website-#{region}.amazonaws.com"
     end

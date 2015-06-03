@@ -8,6 +8,7 @@ module S3rve
     bucket.upload site.document_root
     {
       :site => site_config,
+      :bucket => bucket.name,
       :url => bucket.url,
     }
   end
