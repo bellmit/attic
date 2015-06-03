@@ -1,15 +1,11 @@
 package com.loginbox.app.csrf.matchers;
 
 import com.loginbox.app.csrf.context.CsrfCookies;
-import org.hamcrest.Description;
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-import javax.annotation.Nullable;
 import javax.servlet.http.Cookie;
-import java.util.Objects;
 
 import static com.loginbox.app.csrf.matchers.CookieIsHttpOnlyMatcher.cookieIsHttpOnly;
 import static com.loginbox.app.csrf.matchers.CookieIsSecureMatcher.cookieIsNotSecure;

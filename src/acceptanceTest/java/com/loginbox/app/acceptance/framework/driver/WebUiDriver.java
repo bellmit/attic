@@ -1,8 +1,5 @@
 package com.loginbox.app.acceptance.framework.driver;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
 public class WebUiDriver extends SeleniumDriver {
     public WebUiDriver(SystemDriver systemDriver) {
         super(systemDriver);

@@ -3,7 +3,6 @@ package com.loginbox.app.csrf.mybatis.providers;
 import com.loginbox.app.csrf.CsrfToken;
 import com.loginbox.app.csrf.storage.CsrfRepository;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 
 /**
  * Transactable repository for CSRF tokens, backed by an SqlSession.
