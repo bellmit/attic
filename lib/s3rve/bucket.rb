@@ -23,6 +23,7 @@ module S3rve
       @bucket.website.put website_configuration: website_configuration
 
       upload site
+      install_redirects site
     end
 
     def name
@@ -50,6 +51,18 @@ module S3rve
             )
           end
         end
+      end
+    end
+
+    def install_redirects(site)
+      site.redirects.each do |url, redirect|
+        url = path_to_key(url)
+
+        @bucket.put_object(
+          key: url,
+          website_redirect_location: redirect.url,
+          acl: 'public-read',
+        )
       end
     end
 
@@ -83,6 +96,13 @@ module S3rve
       else
         {}
       end
+    end
+
+    def path_to_key(path)
+      while path[0] == '/'
+        path = path[1..-1]
+      end
+      path
     end
 
     def region

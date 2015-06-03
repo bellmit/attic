@@ -2,15 +2,29 @@ require 'json'
 require 'pathname'
 
 module S3rve
+  class Redirect
+    def initialize(config)
+      @config = config
+    end
+
+    def url
+      @config['url']
+    end
+
+    def status
+      @config['status'] || 301
+    end
+  end
+  
   class Site
     def self.load(file)
-      file = Pathname.new file
+      file = Pathname.new(file)
       directory = file.dirname
 
-      config_json = File.read file
-      config = JSON.load config_json
+      config_json = File.read(file)
+      config = JSON.load(config_json)
       
-      return self.new directory, config
+      return self.new(directory, config)
     end
 
     def initialize(basedir, config)
@@ -29,6 +43,11 @@ module S3rve
 
     def clean_urls
       @config['clean_urls'] || false
+    end
+
+    def redirects
+      redirect_configs = @config['redirects'] || {}
+      Hash[redirect_configs.map {|url, redirect| [url, Redirect.new(redirect)] }]
     end
 
     def clean_path(path)
