@@ -60,11 +60,29 @@ module S3rve
     end
 
     def site_configuration(site)
+      config = index_configuration(site)
+      config.merge! error_configuration(site)
+      config
+    end
+
+    def index_configuration(site)
       {
         index_document: {
           suffix: site.clean_path("index.html"),
         },
       }
+    end
+
+    def error_configuration(site)
+      if site.error_page
+        {
+          error_document: {
+            key: site.error_page
+          }
+        }
+      else
+        {}
+      end
     end
 
     def region

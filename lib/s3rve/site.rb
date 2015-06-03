@@ -23,16 +23,20 @@ module S3rve
       @basedir.join path
     end
 
+    def error_page
+      @config['error_page']
+    end
+
+    def clean_urls
+      @config['clean_urls'] || false
+    end
+
     def clean_path(path)
       if clean_urls
         path.gsub /[.]html?$/, ''
       else
         path
       end
-    end
-
-    def clean_urls
-      @config['clean_urls'] || false
     end
   end
 end
