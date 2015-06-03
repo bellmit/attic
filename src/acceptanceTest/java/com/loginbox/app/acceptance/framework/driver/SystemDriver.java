@@ -39,8 +39,10 @@ public class SystemDriver {
     private Client publicApiClient = null;
     private WebUiDriver webUiDriver = null;
     private PublicApiDriver publicApiDriver = null;
+    private SetupPageDriver setupPageDriver = null;
     private AdminPageDriver adminPageDriver = null;
     private LandingPageDriver landingPageDriver = null;
+    private ErrorPageDriver errorPageDriver = null;
 
     /**
      * Returns the current session's {@link org.openqa.selenium.WebDriver}, starting it if necessary. Callers
@@ -106,12 +108,20 @@ public class SystemDriver {
         return baseUrl = Lazily.create(baseUrl, () -> String.format("http://localhost:%d/", appRule.getLocalPort()));
     }
 
+    public SetupPageDriver setupPageDriver() {
+        return setupPageDriver = Lazily.create(setupPageDriver, () -> new SetupPageDriver(this));
+    }
+
     public AdminPageDriver adminPageDriver() {
         return adminPageDriver = Lazily.create(adminPageDriver, () -> new AdminPageDriver(this));
     }
 
     public LandingPageDriver landingPageDriver() {
         return landingPageDriver = Lazily.create(landingPageDriver, () -> new LandingPageDriver(this));
+    }
+
+    public ErrorPageDriver errorPageDriver() {
+        return errorPageDriver = Lazily.create(errorPageDriver, () -> new ErrorPageDriver(this));
     }
 
     public TestRule rules() {
