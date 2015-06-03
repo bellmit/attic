@@ -10,13 +10,19 @@ module S3rve
       bucket_name = new_bucket_name
 
       bucket = S3.create_bucket bucket: bucket_name
-      bucket.website.put website_configuration: website_config
 
       return new bucket
     end
 
     def initialize(bucket)
       @bucket = bucket
+    end
+
+    def publish(site)
+      website_configuration = site_configuration site
+      @bucket.website.put website_configuration: website_configuration
+
+      upload site
     end
 
     def name
@@ -27,12 +33,13 @@ module S3rve
       "http://#{@bucket.name}.s3-website-#{region}.amazonaws.com"
     end
 
-    def upload(source_path)
-      walk source_path do |path|
+    def upload(site)
+      walk site.document_root do |path|
         if path.file?
-          relative_path = path.relative_path_from source_path
-          name = relative_path.to_s
-          mime_type = guess_mime path
+          mime_type = guess_mime(path)
+
+          relative_path = path.relative_path_from(site.document_root)
+          name = site.clean_path(relative_path.to_s)
 
           File.open(path, 'rb') do |file|
             @bucket.put_object(
@@ -52,10 +59,10 @@ module S3rve
       "s3rve-#{SecureRandom.uuid}"
     end
 
-    def self.website_config
+    def site_configuration(site)
       {
         index_document: {
-          suffix: "index.html",
+          suffix: site.clean_path("index.html"),
         },
       }
     end

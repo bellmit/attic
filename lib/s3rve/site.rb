@@ -22,5 +22,17 @@ module S3rve
       path = @config['root'] || 'public_html'
       @basedir.join path
     end
+
+    def clean_path(path)
+      if clean_urls
+        path.gsub /[.]html?$/, ''
+      else
+        path
+      end
+    end
+
+    def clean_urls
+      @config['clean_urls'] || false
+    end
   end
 end

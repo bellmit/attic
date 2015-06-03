@@ -5,7 +5,7 @@ module S3rve
   def self.publish!(site_config)
     site = Site.load site_config
     bucket = Bucket.create!
-    bucket.upload site.document_root
+    bucket.publish site
     {
       :site => site_config,
       :bucket => bucket.name,
