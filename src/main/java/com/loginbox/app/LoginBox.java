@@ -5,6 +5,7 @@ import com.loginbox.app.csrf.CsrfBundle;
 import com.loginbox.app.csrf.mybatis.MybatisCsrfBundle;
 import com.loginbox.app.csrf.ui.CsrfUiBundle;
 import com.loginbox.app.landing.LandingBundle;
+import com.loginbox.app.setup.SetupBundle;
 import com.loginbox.app.version.VersionBundle;
 import com.loginbox.app.views.ViewBundle;
 import com.loginbox.dropwizard.mybatis.MybatisBundle;
@@ -51,6 +52,12 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
     private final CsrfUiBundle csrfUiBundle = new CsrfUiBundle();
     private final LandingBundle landingBundle = new LandingBundle();
     private final AdminBundle adminBundle = new AdminBundle();
+    private final SetupBundle setupBundle = new SetupBundle() {
+        @Override
+        public SqlSessionFactory getSqlSessionFactory() {
+            return mybatisBundle.getSqlSessionFactory();
+        }
+    };
 
     @Override
     public void initialize(Bootstrap<LoginBoxConfiguration> bootstrap) {
@@ -64,6 +71,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
         bootstrap.addBundle(csrfUiBundle);
         bootstrap.addBundle(landingBundle);
         bootstrap.addBundle(adminBundle);
+        bootstrap.addBundle(setupBundle);
     }
 
     @Override
