@@ -15,6 +15,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.UUID;
 
 import static com.loginbox.dropwizard.mybatis.matchers.ConfigurationMapperMatcher.hasMapper;
@@ -152,6 +154,30 @@ public class MybatisBundleTest {
         Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
 
         assertThat(configuration, hasTypeHandler(UUID.class));
+    }
+
+    @Test
+    public void registersUriType() throws Exception {
+        MybatisBundle<io.dropwizard.Configuration> bundle
+                = new TestMybatisBundle<io.dropwizard.Configuration>();
+        bundle.initialize(bootstrap);
+        bundle.run(configuration, environment);
+
+        Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
+
+        assertThat(configuration, hasTypeHandler(URI.class));
+    }
+
+    @Test
+    public void registersUrlType() throws Exception {
+        MybatisBundle<io.dropwizard.Configuration> bundle
+                = new TestMybatisBundle<io.dropwizard.Configuration>();
+        bundle.initialize(bootstrap);
+        bundle.run(configuration, environment);
+
+        Configuration configuration = bundle.getSqlSessionFactory().getConfiguration();
+
+        assertThat(configuration, hasTypeHandler(URL.class));
     }
 
     @Test

@@ -5,6 +5,8 @@ import com.loginbox.dropwizard.mybatis.mappers.Ping;
 import com.loginbox.dropwizard.mybatis.providers.SqlSessionProvider;
 import com.loginbox.dropwizard.mybatis.types.GuavaOptionalTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.Java8OptionalTypeHandler;
+import com.loginbox.dropwizard.mybatis.types.UriTypeHandler;
+import com.loginbox.dropwizard.mybatis.types.UrlTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.UuidTypeHandler;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.db.DataSourceFactory;
@@ -21,6 +23,8 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 
 import javax.annotation.Nullable;
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URL;
 import java.util.UUID;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -218,6 +222,8 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
         registry.register(UUID.class, new UuidTypeHandler());
         registry.register(java.util.Optional.class, new Java8OptionalTypeHandler());
         registry.register(com.google.common.base.Optional.class, new GuavaOptionalTypeHandler());
+        registry.register(URL.class, new UrlTypeHandler());
+        registry.register(URI.class, new UriTypeHandler());
     }
 
     private void registerClientMappers(Configuration configuration) {
