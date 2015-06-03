@@ -5,10 +5,11 @@ require './lib/s3rve/cli'
 require './lib/s3rve'
 
 opts = S3rve::Cli.options
-site_configs = opts.args
-
-publications = site_configs.map do |site_config|
-  S3rve.publish! site_config
+if opts.args.length != 1
+  S3rve::Cli.usage opts
 end
+site_config = opts.args.first
 
-puts publications.to_json
+publication = S3rve.publish! site_config
+
+puts JSON.pretty_generate publication
