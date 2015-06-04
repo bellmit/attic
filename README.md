@@ -253,6 +253,8 @@ management.
 In addition to MyBatis' suite of built-in types, this bundle automatically
 registers support for the following types:
 
+* `java.net.URL`
+* `java.net.URI`
 * `java.util.UUID`
 * `java.util.Optional`
 * `com.google.common.base.Optional`

@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -62,14 +63,13 @@ public class UuidTypeHandlerTest {
     public void readsNullResultByIndex() throws SQLException {
         ResultSet rs = mock(ResultSet.class);
         int index = 5;
-        UUID expected = null;
 
-        when(rs.getObject(index)).thenReturn(expected);
+        when(rs.getObject(index)).thenReturn(null);
         when(rs.wasNull()).thenReturn(true);
 
         UUID result = handler.getResult(rs, index);
 
-        assertThat(result, is(expected));
+        assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -89,14 +89,13 @@ public class UuidTypeHandlerTest {
     public void readsNullResultByName() throws SQLException {
         ResultSet rs = mock(ResultSet.class);
         String column = "column name";
-        UUID expected = null;
 
-        when(rs.getObject(column)).thenReturn(expected);
+        when(rs.getObject(column)).thenReturn(null);
         when(rs.wasNull()).thenReturn(true);
 
         UUID result = handler.getResult(rs, column);
 
-        assertThat(result, is(expected));
+        assertThat(result, is(nullValue()));
     }
 
     @Test
@@ -116,13 +115,12 @@ public class UuidTypeHandlerTest {
     public void readsNullCallableResult() throws SQLException {
         CallableStatement cs = mock(CallableStatement.class);
         int index = 5;
-        UUID expected = null;
 
         when(cs.getObject(index)).thenReturn(null);
         when(cs.wasNull()).thenReturn(true);
 
         UUID result = handler.getResult(cs, index);
 
-        assertThat(result, is(expected));
+        assertThat(result, is(nullValue()));
     }
 }
