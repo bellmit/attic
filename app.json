@@ -10,10 +10,12 @@
   "scripts": {
     "postdeploy": "bin/run db migrate"
   },
-  "env": {
-    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-gradle"
-  },
   "addons": [
     "heroku-postgresql:dev"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-gradle"
+    }
   ]
 }
