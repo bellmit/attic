@@ -3,6 +3,7 @@ FROM gliderlabs/alpine
 
 RUN apk-install autoconf automake gettext-dev \
     g++ make openssl-dev pkgconfig zlib-dev \
+    bash tzdata \
   && mkdir /src \
   && cd /src \
   && wget http://znc.in/releases/znc-1.6.0.tar.gz \
