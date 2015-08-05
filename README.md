@@ -78,6 +78,17 @@ public class ExampleConfiguration extends Configuration {
 The resulting configuration can be used with Dropwizard's usual database access
 layers.
 
+In addition to supporting Heroku's `DATABASE_URL` convention, this module also
+supports passing URL parameters through to the PostgreSQL JDBC driver. This can,
+for example, be used to access a Heroku database from outside of Heroku, by
+adding [Heroku's recommended SSL configuration](https://devcenter.heroku.com/articles/connecting-to-relational-databases-on-heroku-with-java#connecting-to-a-database-remotely)
+to `DATABASE_URL`:
+
+```
+DATABASE_URL=postgres://demo@db.example.com/hello-world?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory \
+    java -jar your-app.jar
+```
+
 ## Logging
 
 Heroku expects applications to log to standard output, and provides its own log
