@@ -53,13 +53,35 @@ public class HerokuDataSourceFactory extends DataSourceFactory {
         String host = databaseUri.getHost();
         int port = databaseUri.getPort();
         String path = databaseUri.getPath();
+        /*
+         * <rant>
+         *     There doesn't seem to be a way to safely decompose a URI into its component pieces and reassemble it. In
+         *     particular, there's no way to avoid mangling the query part in some way: `getQuery()` -- used below --
+         *     will un-quote quoted characters, which can change the semantics of the URL by, for example, turning
+         *     `foo=%26&bar=bar` into `foo=&&bar=bar`, while `getRawQuery()` -- which returns the already-escaped form
+         *     -- can't be passed to any of URI's constructors without re-escaping the query and turning
+         *     `foo=%26&bar=bar` into `foo=%2526&bar=bar`.
+         *
+         *     I've opted for the former. There aren't many PostgreSQL JDBC client options that could plausibly contain
+         *     a percent sign, a question mark, or an ampersand. Looking at the 9.4 client docs, I only see these
+         *     likely suspects:
+         *
+         *     * sslfactoryarg, which is only set when users supply their own SSL socket factory -- rare
+         *     * ApplicationName, which almost never contains punctuation in practice
+         *
+         *     User bug reports will invariably tell me I've missed a case, I'm sure, but the bottom line here is that
+         *     java.net.URI is a terribly-designed class. That it's the SECOND attempt at creating a standard URI class
+         *     is damning.
+         * </rant>
+         */
+        String query = databaseUri.getQuery();
         URI connectionUri = new URI(
                 "jdbc:postgresql",
                 null,
                 host,
                 port,
                 path,
-                null,
+                query,
                 null);
 
         setUrl(connectionUri.toString());

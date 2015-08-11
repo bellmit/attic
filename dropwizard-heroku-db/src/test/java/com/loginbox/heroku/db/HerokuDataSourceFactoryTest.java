@@ -14,10 +14,12 @@ public class HerokuDataSourceFactoryTest {
     public void parsesDatabaseUrl() throws IOException, InterruptedException {
         HerokuDataSourceFactory f = run(
                 HerokuDataSourceFactory.class,
-                set("DATABASE_URL", "postgres://user:pass@db.example.com/database")
+                // Trailing %26 is an escaped & to verify that escaped characters are handled sanely.
+                // Spoiler alert: they aren't. Thanks, java.net.URI!
+                set("DATABASE_URL", "postgres://user:pass@db.example.com/database?query=%26")
         );
         assertThat(f.getDriverClass(), is("org.postgresql.Driver"));
-        assertThat(f.getUrl(), is("jdbc:postgresql://db.example.com/database"));
+        assertThat(f.getUrl(), is("jdbc:postgresql://db.example.com/database?query=&"));
         assertThat(f.getUser(), is("user"));
         assertThat(f.getPassword(), is("pass"));
     }
