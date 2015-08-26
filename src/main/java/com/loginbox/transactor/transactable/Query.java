@@ -30,6 +30,22 @@ public interface Query<C, R> {
     }
 
     /**
+     * Creates a Query that returns a constant. This can be composed with other transactables, such as {@link Merge}s,
+     * to inject external values into a complex transactor at the appropriate point.
+     *
+     * @param result
+     *         the constant value to return.
+     * @param <C>
+     *         the context type of the resulting Query.
+     * @param <R>
+     *         the result type of the resulting Query.
+     * @return a query which returns exactly <var>result</var> regardless of context.
+     */
+    public static <C, R> Query<C, R> constant(R result) {
+        return context -> result;
+    }
+
+    /**
      * Fetches a value from a context.
      *
      * @param context
@@ -45,8 +61,8 @@ public interface Query<C, R> {
      *
      * @param next
      *         the action to evaluate next.
-     * @return a new composite query that fetches this query to obtain the result, and then executes the
-     * <var>next</var> action before returning it.
+     * @return a new composite query that fetches this query to obtain the result, and then executes the <var>next</var>
+     * action before returning it.
      */
     public default Query<C, R> andThen(Action<? super C> next) {
         return context -> {

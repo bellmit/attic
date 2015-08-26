@@ -194,6 +194,12 @@ without changing its result:
 
 This allows actions to be sequenced inline with other transactables.
 
+Queries provide a unique operator, which returns a constant value when fetched:
+
+* `constant(value)` creates a new Query which always fetches `value`, regardless
+    of context. This can be used to compose external context into complex
+    transactables, such as Merges.
+
 Merges provide two unique operators, which combine other transactables:
 
 * `intoLeft` appends a Merge to any non-void transactable _other than a Merge_,
