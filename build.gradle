@@ -59,7 +59,7 @@ dependencies {
         dropwizardHerokuVersion = '0.1.2'
 
         hamcrestVersion = '1.3'
-        seleniumVersion = '2.45.0'
+        seleniumVersion = '2.47.1'
     }
 
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
