@@ -1,5 +1,12 @@
 # Login Box [![Build Status](https://circleci.com/gh/login-box/login-box.svg)](https://circleci.com/gh/login-box/login-box)
 
+The following is largely a statement of ambition, not of fact.
+**This project is not yet ready for use.**
+In particular, key features like "logging in" aren't implemented.
+If you install it right now, I will not support you except to say 'burn your database and start over' if you want to run a production version later.
+
+-----
+
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 An easy-to-deploy login server for your applications.
