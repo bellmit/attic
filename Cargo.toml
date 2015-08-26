@@ -1,0 +1,4 @@
+[package]
+name = "toot"
+version = "0.1.0"
+authors = ["Owen Jacobson <owen.jacobson@grimoire.ca>"]
