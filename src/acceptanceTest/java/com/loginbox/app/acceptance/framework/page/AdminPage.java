@@ -23,6 +23,12 @@ public class AdminPage extends Dsl<AdminPageDriver> {
         assertThat(driver().getAdminHeading(), is("Administer Login Box"));
     }
 
+    /**
+     * Directly open the admin user interface.
+     *
+     * @deprecated This is only possible because there's no access control on the admin user interface. This method will
+     * disappear once it's possible to navigate to the admin UI as a non-admin user.
+     */
     @Deprecated
     public void open() {
         driver().open();
