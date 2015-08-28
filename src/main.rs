@@ -1,26 +1,27 @@
+extern crate iron;
 #[macro_use]
-extern crate nickel;
+extern crate router;
 
-use nickel::Nickel;
-use nickel::router::router::Router;
 use std::env;
+use iron::prelude::{
+    Iron, IronResult, Request, Response
+};
+use router::Router;
+
+fn hello_world(_: &mut Request) -> IronResult<Response> {
+    Ok(Response::with((iron::status::Ok, "Hello World")))
+}
 
 fn main() {
     let port = env_port(5000);
 
-    let mut server = Nickel::new();
+    let router = router!(
+        get "/" => hello_world
+    );
 
-    server.utilize(routes());
-
-    server.listen(("0.0.0.0", port));
-}
-
-fn routes() -> Router {
-    router! {
-        get "**" => |_req, _res| {
-            "Hello world!"
-        }
-    }
+    Iron::new(router)
+        .http(("0.0.0.0", port))
+        .unwrap();
 }
 
 // Surely this should have a better error type.
