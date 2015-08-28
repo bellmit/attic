@@ -3,5 +3,8 @@ name = "toot"
 version = "0.1.0"
 authors = ["Owen Jacobson <owen.jacobson@grimoire.ca>"]
 
-[dependencies.nickel]
-git = "https://github.com/nickel-org/nickel.rs"
+[dependencies.iron]
+version = "*"
+
+[dependencies.router]
+version = "*"
