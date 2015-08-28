@@ -1,25 +1,54 @@
 extern crate iron;
+extern crate logger;
+extern crate mustache;
 #[macro_use]
 extern crate router;
+extern crate rustc_serialize;
 
 use std::env;
+use std::io::Cursor;
 use iron::prelude::{
-    Iron, IronResult, Request, Response
+    Chain, Iron, IronResult, Request, Response
 };
+use iron::mime::Mime;
+use logger::Logger;
 use router::Router;
 
-fn hello_world(_: &mut Request) -> IronResult<Response> {
-    Ok(Response::with((iron::status::Ok, "Hello World")))
+#[derive(RustcEncodable)]
+struct Timeline {
+    user: String
+}
+
+fn timeline(request: &mut Request) -> IronResult<Response> {
+    let html: Mime = "text/html; charset=UTF-8".parse().unwrap();
+
+    let router = request.extensions.get::<Router>().unwrap();
+    let user = router.find("user").unwrap();
+    let template = mustache::compile_path("templates/timeline.html").unwrap();
+
+    let timeline = Timeline {
+        user: String::from(user)
+    };
+
+    let mut rendered_timeline = Cursor::new(Vec::<u8>::new());
+    template.render(&mut rendered_timeline, &timeline).unwrap();
+    Ok(Response::with((
+        iron::status::Ok,
+        html,
+        rendered_timeline.into_inner()
+    )))
 }
 
 fn main() {
     let port = env_port(5000);
 
     let router = router!(
-        get "/" => hello_world
+        get "/:user" => timeline
     );
+    let mut chain = Chain::new(router);
+    chain.link(Logger::new(None));
 
-    Iron::new(router)
+    Iron::new(chain)
         .http(("0.0.0.0", port))
         .unwrap();
 }
