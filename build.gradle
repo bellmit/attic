@@ -1,20 +1,10 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '1.2.1'
-        classpath group: 'com.moowork.gradle', name: 'gradle-node-plugin', version: '0.8'
-        classpath group: 'com.moowork.gradle', name: 'gradle-gulp-plugin', version: '0.9'
-    }
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
+    id 'com.moowork.node' version '0.8'
+    id 'com.moowork.gulp' version '0.9'
+    id 'idea'
 }
-
-apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'com.moowork.node'
-apply plugin: 'com.moowork.gulp'
-apply plugin: 'idea'
 
 group = 'com.loginbox.app'
 mainClassName = 'com.loginbox.app.LoginBox'
