@@ -7,5 +7,7 @@ package com.loginbox.app.acceptance.framework.context;
  * @see com.loginbox.app.acceptance.framework.page.Dsl
  */
 public class TestContext {
-
+    public final AliasStore usernames = new AliasStore(UsernameGenerator::generate);
+    public final AliasStore emailAddresses = new AliasStore(EmailAddressGenerator::generate);
+    public final AliasStore passwords = new AliasStore(PasswordGenerator::generate);
 }

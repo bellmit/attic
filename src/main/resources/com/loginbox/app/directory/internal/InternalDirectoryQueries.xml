@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loginbox.app.directory.internal.InternalDirectoryQueries">
+    <select id="insertUser" resultMap="User"><![CDATA[
+        insert into directory.user
+            (id, directory_id, username, contact_email, password)
+        values
+            (uuid_generate_v4(), #{directory.id}, #{userInfo.username}, #{userInfo.contactEmail}, #{userInfo.password})
+        returning
+            id,
+            username,
+            contact_email,
+            password
+    ]]></select>
+
+    <resultMap id="User"
+               type="com.loginbox.app.identity.User">
+        <constructor>
+            <idArg column="id" javaType="java.util.UUID"/>
+            <arg column="username" javaType="string"/>
+            <arg column="contact_email" javaType="string"/>
+            <arg column="password" javaType="string"/>
+        </constructor>
+    </resultMap>
+</mapper>

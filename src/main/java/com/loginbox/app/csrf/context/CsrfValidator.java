@@ -62,8 +62,8 @@ public class CsrfValidator {
 
     /**
      * Validates and consumes a token for the requestor's browser session. If the token is valid, it will be consumed
-     * (and will not be valid on future requests). Otherwise, this will raise a {@link
-     * InvalidCsrfTokenException}. This exception is itself a valid response.
+     * (and will not be valid on future requests). Otherwise, this will raise a {@link InvalidCsrfTokenException}. This
+     * exception is itself a valid response.
      *
      * @param csrfToken
      *         the token to consume. As a convenience, callers may pass <code>null</code>, which is never valid.

@@ -4,8 +4,6 @@ import com.loginbox.app.acceptance.framework.context.TestContext;
 import com.loginbox.app.acceptance.framework.driver.PublicApiDriver;
 import com.loginbox.app.acceptance.framework.driver.SystemDriver;
 
-import java.util.function.Supplier;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;

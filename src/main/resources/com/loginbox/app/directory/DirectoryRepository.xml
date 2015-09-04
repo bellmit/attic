@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.loginbox.app.directory.DirectoryRepository">
+    <select id="insertInternalDirectory" resultMap="InternalDirectoryConfiguration"><![CDATA[
+        with insert_directory as (
+            insert into config.directory
+                (id, type)
+            values
+                (uuid_generate_v4(), 'internal')
+            returning
+                id
+        ), insert_internal_directory as (
+            insert into config.internal_directory
+                (id)
+            select
+                id
+            from
+                insert_directory
+            returning
+                id
+        )
+        select
+            id
+        from insert_internal_directory
+    ]]></select>
+
+    <resultMap id="InternalDirectoryConfiguration"
+               type="com.loginbox.app.directory.internal.InternalDirectoryConfiguration">
+        <constructor>
+            <idArg column="id" javaType="java.util.UUID"/>
+        </constructor>
+    </resultMap>
+</mapper>

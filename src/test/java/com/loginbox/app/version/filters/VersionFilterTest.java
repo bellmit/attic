@@ -10,9 +10,9 @@ import javax.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.hamcrest.Matchers.contains;
 
 public class VersionFilterTest {
     private ContainerRequestContext requestContext = mock(ContainerRequestContext.class);

@@ -5,7 +5,6 @@ import org.hamcrest.Factory;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import javax.servlet.http.Cookie;
-import java.util.Objects;
 
 public class CookieIsHttpOnlyMatcher extends TypeSafeDiagnosingMatcher<Cookie> {
     @Factory

@@ -6,6 +6,7 @@ import com.loginbox.app.csrf.mybatis.MybatisCsrfBundle;
 import com.loginbox.app.csrf.ui.CsrfUiBundle;
 import com.loginbox.app.dropwizard.BundleTestCase;
 import com.loginbox.app.landing.LandingBundle;
+import com.loginbox.app.setup.SetupBundle;
 import com.loginbox.app.version.VersionBundle;
 import com.loginbox.app.views.ViewBundle;
 import com.loginbox.dropwizard.mybatis.MybatisBundle;
@@ -36,5 +37,6 @@ public class LoginBoxTest extends BundleTestCase {
         verify(bootstrap).addBundle(isA(CsrfUiBundle.class));
         verify(bootstrap).addBundle(isA(LandingBundle.class));
         verify(bootstrap).addBundle(isA(AdminBundle.class));
+        verify(bootstrap).addBundle(isA(SetupBundle.class));
     }
 }
