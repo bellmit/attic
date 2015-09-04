@@ -11,7 +11,7 @@
     "postdeploy": "bin/run db migrate"
   },
   "addons": [
-    "heroku-postgresql:dev"
+    "heroku-postgresql:hobby-dev"
   ],
   "buildpacks": [
     {
