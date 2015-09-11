@@ -1,0 +1,15 @@
+description "JIRA Issue Tracking Server"
+author "Owen Jacobson <owen.jacobson@grimoire.ca>"
+console none
+
+start on started networking
+stop on deconfiguring-networking
+
+setuid jira
+setgid jira
+umask 0027
+chdir <%= @jira_home %>
+env JIRA_HOME=<%= @jira_home %>
+env JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+
+exec <%= @jira_install %>/bin/start-jira.sh -fg
