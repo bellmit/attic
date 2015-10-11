@@ -15,40 +15,53 @@ import org.apache.ibatis.session.SqlSession;
 import static com.loginbox.app.transactor.mybatis.MybatisAdapters.mapper;
 
 public abstract class Bootstrap {
-    private final Directories directories;
     private final Gatekeeper setupGatekeeper;
 
-    public Bootstrap(
-            Directories directories, Gatekeeper setupGatekeeper) {
-        this.directories = directories;
+    public Bootstrap(Gatekeeper setupGatekeeper) {
         this.setupGatekeeper = setupGatekeeper;
     }
 
-    public Transform<SqlSession, UserInfo, User> setupAction() {
-        Query<SqlSession, InternalDirectory> createInternalDirectoryAction
-                = directories.createInternalDirectory();
+    private static <C, I, O> Transform<I, C, O> pivot(Transform<? super C, ? super I, ? extends O> t) {
+        return (context, input) -> t.apply(input, context);
+    }
 
+    public Transform<SqlSession, UserInfo, User> setupAction() {
         Query<SqlSession, PasswordValidator> passwordValidator
                 = Query.lift(this::getPasswordValidator);
-        Merge<SqlSession, UserInfo, PasswordValidator, UserInfo> passwordDigestWithValidator
-                = Merge.lift(UserInfo::withDigestedPassword);
-        Transform<SqlSession, UserInfo, UserInfo> passwordDigest
-                = passwordValidator.intoRight(passwordDigestWithValidator);
 
-        Merge<SqlSession, InternalDirectory, UserInfo, User> bootstrapUserAction
+        Merge<SqlSession, UserInfo, PasswordValidator, UserInfo> digestUserInfoAgainstValidator
+                = Merge.lift(UserInfo::withDigestedPassword);
+
+        Transform<SqlSession, Directories, InternalDirectory> createInternalDirectoryInDirectories
+                = pivot(Directories::createInternalDirectory);
+
+        Merge<SqlSession, InternalDirectory, UserInfo, User> addInitialUserToDirectory
                 = mapper(InternalDirectoryQueries.class)
                 .around(InternalDirectoryQueries::insertUser);
 
-        Merge<SqlSession, InternalDirectory, UserInfo, User> bootstrapUserWithDigestedPassword
-                = passwordDigest.intoRight(bootstrapUserAction);
+        Action<SqlSession> bootstrapCompletedAction = setupGatekeeper.bootstrapCompletedAction();
 
-        Action<SqlSession> bootstrapCompletedAction
-                = setupGatekeeper.bootstrapCompletedAction();
+        Query<SqlSession, Directories> directories = Query.lift(this::getDirectories);
 
-        return createInternalDirectoryAction
-                .intoLeft(bootstrapUserWithDigestedPassword)
+        Query<SqlSession, InternalDirectory> createInternalDirectory
+                = directories.transformedBy(createInternalDirectoryInDirectories);
+
+        Transform<SqlSession, UserInfo, User> addInitialUserToNewDirectory
+                = createInternalDirectory.intoLeft(addInitialUserToDirectory);
+
+        Transform<SqlSession, UserInfo, UserInfo> digestUserInfo
+                = passwordValidator.intoRight(digestUserInfoAgainstValidator);
+
+        Transform<SqlSession, UserInfo, User> addDigestedInitialUserToNewDirectory
+                = digestUserInfo.transformedBy(addInitialUserToNewDirectory);
+
+        Transform<SqlSession, UserInfo, User> bootstrap = addDigestedInitialUserToNewDirectory
                 .andThen(bootstrapCompletedAction);
+
+        return bootstrap;
     }
 
     protected abstract PasswordValidator getPasswordValidator();
+
+    protected abstract Directories getDirectories();
 }

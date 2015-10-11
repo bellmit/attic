@@ -24,9 +24,7 @@ public class DirectoriesTest extends TransactorTestCase {
         InternalDirectoryConfiguration directoryConfiguration = new InternalDirectoryConfiguration(id);
         when(directoryRepository.insertInternalDirectory()).thenReturn(directoryConfiguration);
 
-        Query<SqlSession, InternalDirectory> createQuery = directories.createInternalDirectory();
-
-        InternalDirectory directory = createQuery.fetch(sqlSession);
+        InternalDirectory directory = directories.createInternalDirectory(sqlSession);
 
         assertThat(directory.getId(), is(id));
     }

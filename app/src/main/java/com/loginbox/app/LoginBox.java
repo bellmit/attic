@@ -4,6 +4,8 @@ import com.loginbox.app.admin.AdminBundle;
 import com.loginbox.app.csrf.CsrfBundle;
 import com.loginbox.app.csrf.mybatis.MybatisCsrfBundle;
 import com.loginbox.app.csrf.ui.CsrfUiBundle;
+import com.loginbox.app.directory.Directories;
+import com.loginbox.app.directory.DirectoryBundle;
 import com.loginbox.app.landing.LandingBundle;
 import com.loginbox.app.password.PasswordBundle;
 import com.loginbox.app.password.PasswordValidator;
@@ -55,10 +57,16 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
     private final PasswordBundle passwordBundle = new PasswordBundle();
     private final LandingBundle landingBundle = new LandingBundle();
     private final AdminBundle adminBundle = new AdminBundle();
+    private final DirectoryBundle directoryBundle = new DirectoryBundle();
     private final SetupBundle setupBundle = new SetupBundle() {
         @Override
         public PasswordValidator getPasswordValidator() {
             return passwordBundle.getPasswordValidator();
+        }
+
+        @Override
+        public Directories getDirectories() {
+            return directoryBundle.getDirectories();
         }
 
         @Override
@@ -80,6 +88,7 @@ public class LoginBox extends Application<LoginBoxConfiguration> {
         bootstrap.addBundle(passwordBundle);
         bootstrap.addBundle(landingBundle);
         bootstrap.addBundle(adminBundle);
+        bootstrap.addBundle(directoryBundle);
         bootstrap.addBundle(setupBundle);
     }
 

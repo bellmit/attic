@@ -7,19 +7,13 @@ import com.loginbox.transactor.transactable.Transform;
 import org.apache.ibatis.session.SqlSession;
 
 import static com.loginbox.app.transactor.mybatis.MybatisAdapters.mapper;
-import static com.loginbox.transactor.transactable.Transform.lift;
 
 public class Directories {
-    public Query<SqlSession, InternalDirectory> createInternalDirectory() {
-        Query<SqlSession, InternalDirectoryConfiguration> insertStep
-                = mapper(DirectoryRepository.class)
-                .around(DirectoryRepository::insertInternalDirectory);
-
-        Transform<SqlSession, InternalDirectoryConfiguration, InternalDirectory> configureStep
-                = lift(this::configureInternalDirectory);
-
-        return insertStep
-                .transformedBy(configureStep);
+    public InternalDirectory createInternalDirectory(SqlSession sqlSession) {
+        DirectoryRepository repository = sqlSession.getMapper(DirectoryRepository.class);
+        InternalDirectoryConfiguration configuration = repository.insertInternalDirectory();
+        InternalDirectory directory = configureInternalDirectory(configuration);
+        return directory;
     }
 
     private InternalDirectory configureInternalDirectory(InternalDirectoryConfiguration configuration) {
