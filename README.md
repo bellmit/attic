@@ -269,6 +269,26 @@ The following types can be lifted:
 * `Function` can be lifted to `Transform`.
 * `BiFunction` can be lifted to `Merge`.
 
+## Pivots
+
+Transactables with at least one argument can be pivoted, swapping an argument
+for the context value. This can be useful when the nominal context is a
+positional argument of a lifted method. For example, suppose that the method
+handle `User::register` can be lifted to a `Sink<User, Database>`, whose
+context type is `User`. This `Sink` can then be pivoted to give a
+`Sink<Database, User>`, which is more likely to fit into a chain of
+transactables applied to a database.
+
+The following pivots are defined:
+
+* `Sink`s and `Transform`s can be `pivot()`ed to replace their sole input with
+    their context.
+
+* `Merge`s can be `pivotLeft()`ed to swap the left argument with the context,
+    `pivotRight()`ed to swap the right argument with the context, and
+    `transpose()`d to swap the two arguments in place without exchanging the
+    context.
+
 ## A Small Example
 
 An example, for basic JDBC. First, we define a transactor. This might be

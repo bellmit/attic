@@ -54,12 +54,51 @@ public interface Merge<C, M, N, O> {
     public O merge(C context, M left, N right) throws Exception;
 
     /**
+     * Pivots this merge's context with its left argument. Given a merge in context C and arguments M and N, returns a
+     * new merge in context M with arguments C and N.
+     *
+     * @return the left-pivoted merge.
+     */
+    public default Merge<M, C, N, O> pivotLeft() {
+        return (context, left, right) -> merge(left, context, right);
+    }
+
+    /**
+     * Pivots this merge's context with its right argument. Given a merge in context C and arguments M and N, returns a
+     * new merge in context N with arguments M and C.
+     *
+     * @return the left-pivoted merge.
+     */
+    public default Merge<N, M, C, O> pivotRight() {
+        return (context, left, right) -> merge(right, left, context);
+    }
+
+    /**
+     * Transposes the arguments of this merge. Given a merge in context C and arguments M and N, returns a new merge in
+     * the same context with arguments N and M. This is considerably more readable than constructing the transposition
+     * out of pivots.
+     *
+     * @return the transposition of this merge.
+     */
+    public default Merge<C, N, M, O> transpose() {
+        /*
+         * It's original       // C, L, R  or original        // C, L, R
+         *       .pivotLeft()  // L, C, R       .pivotRight() // R, L, C
+         *       .pivotRight() // R, C, L       .pivotLeft()  // L, R, C
+         *       .pivotLeft()  // C, R, L       .pivotRight() // C, R, L
+         * if you're really curious. Rotation (C, L, R -> R, C, L) and anti-rotation (C, L, R -> L, R, C) are also
+         * possible, but rare enough to leave out for now. If you want 'em, open a ticket!
+         */
+        return (context, left, right) -> merge(context, right, left);
+    }
+
+    /**
      * Sequence this merge before an action.
      *
      * @param next
      *         the action to evaluate next.
-     * @return a new composite merge that applies this merge to obtain the result, and then executes the
-     * <var>next</var> action before returning it.
+     * @return a new composite merge that applies this merge to obtain the result, and then executes the <var>next</var>
+     * action before returning it.
      */
     public default Merge<C, M, N, O> andThen(Action<? super C> next) {
         return (context, left, right) -> {
