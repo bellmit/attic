@@ -48,6 +48,16 @@ public interface Transform<C, I, O> {
     public O apply(C context, I value) throws Exception;
 
     /**
+     * Pivots this transform's context and argument. Given a transform in context C with argument I, produces a new
+     * transform in context I with argument C.
+     *
+     * @return the pivoted transform.
+     */
+    public default Transform<I, C, O> pivot() {
+        return (context, input) -> apply(input, context);
+    }
+
+    /**
      * Sequence this transform before another action.
      *
      * @param next

@@ -42,6 +42,16 @@ public interface Sink<C, V> {
     public void consume(C context, V value) throws Exception;
 
     /**
+     * Pivots this sink's context and argument. Given a sink with context C and argument V, returns a new sink with
+     * context V and argument C.
+     *
+     * @return the pivoted version of this sink.
+     */
+    public default Sink<V, C> pivot() {
+        return (context, value) -> consume(value, context);
+    }
+
+    /**
      * Sequence this sink before another action.
      *
      * @param next
@@ -62,7 +72,8 @@ public interface Sink<C, V> {
      *         the query to evaluate after this sink.
      * @param <R>
      *         the result type of the query, and the resulting transform.
-     * @return a new composite transform that executes this sink to consume the input value, and then fetches the resulting value using <var>query</var>.
+     * @return a new composite transform that executes this sink to consume the input value, and then fetches the
+     * resulting value using <var>query</var>.
      */
     public default <R> Transform<C, V, R> before(Query<? super C, ? extends R> query) {
         return (context, value) -> {
