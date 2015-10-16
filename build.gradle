@@ -1,10 +1,10 @@
 import org.ajoberstar.grgit.Grgit
 
 plugins {
-    id 'org.ajoberstar.release-opinion' version '0.13.0-milestone.1'
+    id 'org.ajoberstar.release-opinion' version '1.3.1'
     id 'java'
     id 'idea'
-    id 'com.jfrog.bintray' version '1.1'
+    id 'com.jfrog.bintray' version '1.3.1'
 }
 
 group = 'com.loginbox.transactor'
