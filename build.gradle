@@ -1,20 +1,11 @@
 import org.ajoberstar.grgit.Grgit
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath group: 'org.ajoberstar', name: 'gradle-git', version: '0.13.0-milestone.1'
-        classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.1'
-    }
+plugins {
+    id 'org.ajoberstar.release-opinion' version '0.13.0-milestone.1'
+    id 'java'
+    id 'idea'
+    id 'com.jfrog.bintray' version '1.1'
 }
-
-apply plugin: 'org.ajoberstar.release-opinion'
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'com.jfrog.bintray'
 
 group = 'com.loginbox.transactor'
 sourceCompatibility = '1.8'
