@@ -6,9 +6,9 @@ RUN apk-install autoconf automake gettext-dev \
     bash tzdata \
   && mkdir /src \
   && cd /src \
-  && wget http://znc.in/releases/znc-1.6.0.tar.gz \
-  && tar -xzvf znc-1.6.0.tar.gz \
-  && cd znc-1.6.0 \
+  && wget http://znc.in/releases/znc-1.6.1.tar.gz \
+  && tar -xzvf znc-1.6.1.tar.gz \
+  && cd znc-1.6.1 \
   && ./configure \
   && make \
   && make install \
