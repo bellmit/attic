@@ -14,8 +14,6 @@ release {
     grgit = Grgit.open(projectDir)
 }
 
-apply plugin: 'maven-publish'
-
 ext {
     isSnapshot = version.toString().contains("-dev")
 }
@@ -42,6 +40,10 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+
+// Must be configured late because of interactions with the release plugin above
+//    > Cannot configure the 'publishing' extension after it has been accessed.
+apply plugin: 'maven-publish'
 
 artifacts {
     archives sourcesJar
