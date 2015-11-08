@@ -1,0 +1,81 @@
+import org.ajoberstar.grgit.Grgit
+
+plugins {
+    id 'org.ajoberstar.release-opinion' version '1.3.2'
+    id 'java'
+    id 'idea'
+    id 'com.jfrog.bintray' version '1.4'
+}
+
+group = 'io.github.unacceptable'
+sourceCompatibility = '1.8'
+
+release {
+    grgit = Grgit.open(projectDir)
+}
+
+apply plugin: 'maven-publish'
+
+ext {
+    isSnapshot = version.toString().contains("-dev")
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    ext {
+        hamcrestVersion = '1.3'
+    }
+
+    testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: hamcrestVersion
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: hamcrestVersion
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+}
+
+bintray {
+    user = bintrayUsername
+    key = bintrayApiKey
+
+    publications = ['mavenJava']
+
+    pkg {
+        userOrg = 'unacceptable'
+        repo = isSnapshot ? 'snapshots' : 'releases'
+        name = 'unacceptable'
+        websiteUrl = 'https://github.com/unacceptable/unacceptable'
+        issueTrackerUrl = 'https://github.com/unacceptable/unacceptable/issues'
+        vcsUrl = 'https://github.com/unacceptable/unacceptable'
+        licenses = ['MIT']
+        publicDownloadNumbers = true
+        version {
+            name = project.version
+        }
+    }
+}
