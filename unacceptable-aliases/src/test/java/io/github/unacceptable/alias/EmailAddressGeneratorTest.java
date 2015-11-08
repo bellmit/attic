@@ -2,7 +2,7 @@ package io.github.unacceptable.alias;
 
 import org.junit.Test;
 
-import static io.github.unacceptable.matches.PatternMatcher.pattern;
+import static io.github.unacceptable.matchers.PatternMatcher.pattern;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class EmailAddressGeneratorTest {

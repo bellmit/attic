@@ -1,4 +1,4 @@
-package io.github.unacceptable.matches;
+package io.github.unacceptable.matchers;
 
 import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
@@ -7,12 +7,12 @@ import org.hamcrest.TypeSafeMatcher;
 import java.util.regex.Pattern;
 
 /**
- * Tests if the argument is a {@link CharSequence} that matches a regular expression.
+ * Tests if the argument is a {@link CharSequence} that matchers a regular expression.
  */
 public class PatternMatcher extends TypeSafeMatcher<CharSequence> {
 
     /**
-     * Creates a matcher that matches if the examined {@link CharSequence} matches the specified
+     * Creates a matcher that matchers if the examined {@link CharSequence} matchers the specified
      * regular expression.
      * <p/>
      * For example:
@@ -26,7 +26,7 @@ public class PatternMatcher extends TypeSafeMatcher<CharSequence> {
     }
 
     /**
-     * Creates a matcher that matches if the examined {@link CharSequence} matches the specified
+     * Creates a matcher that matchers if the examined {@link CharSequence} matchers the specified
      * {@link Pattern}.
      * <p/>
      * For example:
