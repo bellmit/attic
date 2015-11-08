@@ -1,83 +1,92 @@
 import org.ajoberstar.grgit.Grgit
 
-plugins {
-    id 'org.ajoberstar.release-opinion' version '1.3.2'
-    id 'java'
-    id 'idea'
-    id 'com.jfrog.bintray' version '1.4'
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath group: 'org.ajoberstar', name: 'gradle-git', version: '0.13.0-milestone.1'
+        classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.4'
+    }
 }
 
-group = 'io.github.unacceptable'
-sourceCompatibility = '1.8'
+plugins {
+    id 'org.ajoberstar.release-opinion' version '1.3.2'
+}
 
 release {
     grgit = Grgit.open(projectDir)
 }
 
-ext {
-    isSnapshot = version.toString().contains("-dev")
-}
+allprojects {
+    // No 'plugins {}' block permitted here. DSL limitation.
+    apply plugin: 'idea'
 
-repositories {
-    mavenCentral()
-}
+    group = 'io.github.unacceptable'
+    version = rootProject.version
 
-dependencies {
     ext {
-        hamcrestVersion = '1.3'
+        isSnapshot = version.toString().contains("-dev")
     }
 
-    testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: hamcrestVersion
-    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: hamcrestVersion
+    repositories {
+        mavenCentral()
+    }
 }
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
+subprojects {
+    // No 'plugins {}' block permitted here. DSL limitation.
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.jfrog.bintray'
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
+    sourceCompatibility = '1.8'
 
-// Must be configured late because of interactions with the release plugin above
-//    > Cannot configure the 'publishing' extension after it has been accessed.
-apply plugin: 'maven-publish'
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
 
-artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
 
-            artifact sourcesJar
-            artifact javadocJar
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+
+                artifact sourcesJar
+                artifact javadocJar
+            }
         }
     }
-}
 
-bintray {
-    user = bintrayUsername
-    key = bintrayApiKey
+    bintray {
+        user = bintrayUsername
+        key = bintrayApiKey
 
-    publications = ['mavenJava']
+        publications = ['mavenJava']
 
-    pkg {
-        userOrg = 'unacceptable'
-        repo = isSnapshot ? 'snapshots' : 'releases'
-        name = 'unacceptable'
-        websiteUrl = 'https://github.com/unacceptable/unacceptable'
-        issueTrackerUrl = 'https://github.com/unacceptable/unacceptable/issues'
-        vcsUrl = 'https://github.com/unacceptable/unacceptable'
-        licenses = ['MIT']
-        publicDownloadNumbers = true
-        version {
-            name = project.version
+        pkg {
+            userOrg = 'unacceptable'
+            repo = isSnapshot ? 'snapshots' : 'releases'
+            name = 'unacceptable'
+            websiteUrl = 'https://github.com/unacceptable/unacceptable'
+            issueTrackerUrl = 'https://github.com/unacceptable/unacceptable/issues'
+            vcsUrl = 'https://github.com/unacceptable/unacceptable'
+            licenses = ['MIT']
+            publicDownloadNumbers = true
+            version {
+                name = project.version
+            }
         }
     }
 }
