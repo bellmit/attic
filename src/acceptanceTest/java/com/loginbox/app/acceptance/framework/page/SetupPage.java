@@ -5,13 +5,14 @@ import com.lmax.simpledsl.DslParams;
 import com.lmax.simpledsl.OptionalParam;
 import com.loginbox.app.acceptance.framework.context.TestContext;
 import com.loginbox.app.acceptance.framework.driver.SetupPageDriver;
+import io.github.unacceptable.dsl.SimpleDsl;
 
 import java.util.function.Supplier;
 
 /**
  * Provides actions and assertions for the app setup process.
  */
-public class SetupPage extends Dsl<SetupPageDriver> {
+public class SetupPage extends SimpleDsl<SetupPageDriver, TestContext> {
     static DslParam usernameParam() {
         return new OptionalParam("username")
                 .setDefault("admin-user");

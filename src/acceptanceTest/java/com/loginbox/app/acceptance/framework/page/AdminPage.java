@@ -2,6 +2,7 @@ package com.loginbox.app.acceptance.framework.page;
 
 import com.loginbox.app.acceptance.framework.context.TestContext;
 import com.loginbox.app.acceptance.framework.driver.AdminPageDriver;
+import io.github.unacceptable.dsl.SimpleDsl;
 
 import java.util.function.Supplier;
 
@@ -11,7 +12,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * DSL pack for manipulating the app configuration via its administration panel.
  */
-public class AdminPage extends Dsl<AdminPageDriver> {
+public class AdminPage extends SimpleDsl<AdminPageDriver, TestContext> {
     public AdminPage(Supplier<AdminPageDriver> driverFactory, TestContext testContext) {
         super(driverFactory, testContext);
     }

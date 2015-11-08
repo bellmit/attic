@@ -31,7 +31,7 @@ public class DslTestCase {
      * Not part of the testing API. Public only because of JUnit limitations.
      */
     @Rule
-    public final TestRule systemDriveRules = systemDriver.rules();
+    public final TestRule systemDriverRules = systemDriver.rules();
 
     /**
      * Web user interface DSL. See {@link WebUi the DSL class} for details.

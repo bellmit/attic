@@ -3,8 +3,10 @@ package com.loginbox.app.acceptance.framework.driver;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.unacceptable.dropwizard.context.ApplicationContext;
+import io.github.unacceptable.dropwizard.driver.SeleniumDriver;
+import io.github.unacceptable.selenium.context.SeleniumContext;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
 
@@ -24,8 +26,8 @@ public class ErrorPageDriver extends SeleniumDriver {
         }
     }
 
-    public ErrorPageDriver(SystemDriver systemDriver) {
-        super(systemDriver);
+    public ErrorPageDriver(SeleniumContext selenium, ApplicationContext<?> app) {
+        super(selenium, app);
     }
 
     public Integer getCode() throws IOException {
