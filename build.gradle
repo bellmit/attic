@@ -78,6 +78,7 @@ subprojects {
         pkg {
             userOrg = 'unacceptable'
             repo = isSnapshot ? 'snapshots' : 'releases'
+            publish = isSnapshot
             name = 'unacceptable'
             websiteUrl = 'https://github.com/unacceptable/unacceptable'
             issueTrackerUrl = 'https://github.com/unacceptable/unacceptable/issues'
