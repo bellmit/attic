@@ -2,6 +2,7 @@ package io.github.unacceptable.alias;
 
 public class EmailAddressGenerator {
     private static final String DEFAULT_DOMAIN = "example.com";
+    private static final UsernameGenerator USERNAME_GENERATOR = new UsernameGenerator();
 
     private EmailAddressGenerator() {
         throw new UnsupportedOperationException();
@@ -24,7 +25,7 @@ public class EmailAddressGenerator {
         String localPartAlias = parts[0];
         String domain = parts.length > 1 ? parts[1] : DEFAULT_DOMAIN;
 
-        String localPart = UsernameGenerator.generate(localPartAlias);
+        String localPart = USERNAME_GENERATOR.generate(localPartAlias);
         return localPart + "@" + domain;
     }
 }
