@@ -4,19 +4,25 @@ import org.junit.Test;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.mockito.invocation.InvocationOnMock;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.mockito.Mockito.RETURNS_MOCKS;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 public class SeleniumContextTest {
     private Set<WebDriver> activeDrivers = new HashSet<>();
@@ -27,6 +33,10 @@ public class SeleniumContextTest {
 
         WebDriver driver = context.webDriver();
         assertThat(activeDrivers, contains(driver));
+        verify(driver.manage().timeouts())
+                .implicitlyWait(anyInt(), eq(TimeUnit.SECONDS));
+        verify(driver.manage().window())
+                .setSize(any(Dimension.class));
 
         WebDriver again = context.webDriver();
         assertThat(again, sameInstance(driver));
@@ -70,7 +80,7 @@ public class SeleniumContextTest {
     }
 
     private WebDriver makeNewDriver(InvocationOnMock invocation) {
-        WebDriver driver = mock(WebDriver.class, RETURNS_MOCKS);
+        WebDriver driver = mock(WebDriver.class, RETURNS_DEEP_STUBS);
         doAnswer(i -> driverClosed(driver))
                 .when(driver)
                 .quit();
