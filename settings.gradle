@@ -1,3 +1,5 @@
 rootProject.name = 'unacceptable'
 
 include 'unacceptable-aliases'
+include 'unacceptable-lazy'
+include 'unacceptable-selenium'
