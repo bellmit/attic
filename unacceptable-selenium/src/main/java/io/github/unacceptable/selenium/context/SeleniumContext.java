@@ -84,6 +84,12 @@ public class SeleniumContext {
 
     private WebDriver newDriver() {
         WebDriver webDriver = createDriver();
+        webDriver.manage()
+                .timeouts()
+                .implicitlyWait(TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        webDriver.manage()
+                .window()
+                .setSize(new Dimension(BROWSER_WIDTH, BROWSER_HEIGHT));
         return webDriver;
     }
 }
