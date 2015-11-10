@@ -8,15 +8,31 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class UsernameGeneratorTest {
     @Test
     public void generatedValueIncludesName() {
-        String generated = UsernameGenerator.generate("derek");
+        String generated = new UsernameGenerator().generate("derek");
 
         assertThat(generated, pattern("derek-[0-9a-f]{16}"));
     }
 
     @Test
     public void longAlias() {
-        String generated = UsernameGenerator.generate("a_very_long_alias");
+        String generated = new UsernameGenerator().generate("a_very_long_alias");
 
         assertThat(generated, pattern("a_very_long_ali-[0-9a-f]{16}"));
+    }
+
+    @Test
+    public void customLength() {
+        UsernameGenerator generator = new UsernameGenerator(21);
+        String generated = generator.generate("alias");
+
+        assertThat(generated, pattern("alia-[0-9a-f]{16}"));
+    }
+
+    @Test
+    public void customSeparator() {
+        UsernameGenerator generator = new UsernameGenerator(21, "/");
+        String generated = generator.generate("alias");
+
+        assertThat(generated, pattern("alia/[0-9a-f]{16}"));
     }
 }
