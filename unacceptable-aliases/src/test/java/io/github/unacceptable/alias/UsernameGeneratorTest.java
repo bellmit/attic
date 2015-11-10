@@ -19,4 +19,20 @@ public class UsernameGeneratorTest {
 
         assertThat(generated, pattern("a_very_long_ali-[0-9a-f]{16}"));
     }
+
+    @Test
+    public void customLength() {
+        UsernameGenerator generator = new UsernameGenerator(21);
+        String generated = generator.generate("alias");
+
+        assertThat(generated, pattern("alia-[0-9a-f]{16}"));
+    }
+
+    @Test
+    public void customSeparator() {
+        UsernameGenerator generator = new UsernameGenerator(21, "/");
+        String generated = generator.generate("alias");
+
+        assertThat(generated, pattern("alia/[0-9a-f]{16}"));
+    }
 }
