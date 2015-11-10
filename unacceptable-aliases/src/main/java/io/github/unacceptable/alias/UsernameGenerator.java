@@ -6,6 +6,19 @@ public class UsernameGenerator implements Generator {
     private static final Random RANDOM = new Random();
     private static final int DEFAULT_MAX_LENGTH = 32;
     private static final String DEFAULT_SEPARATOR = "-";
+    private static final UsernameGenerator GENERATOR = new UsernameGenerator();
+
+    /**
+     * Generate a username using sensible defaults.
+     *
+     * @param alias
+     *         the alias for the generated username.
+     * @return a username generated with appropriate default values.
+     * @see #generate(String)
+     */
+    public static String defaultGenerate(String alias) {
+        return GENERATOR.generate(alias);
+    }
 
     private final int maxLength;
     private final String separator;
@@ -28,8 +41,6 @@ public class UsernameGenerator implements Generator {
      * non-negative <code>long</code> and formatting it as lowercase hexadecimal, will be appended to the name. The
      * resulting name will be no longer than {@link #maxLength} characters or the length of the original alias,
      * whichever is longer.
-     * <p>
-     * This method is suitable for use in an {@link AliasStore}.
      *
      * @param alias
      *         a username alias, such as <code>"derek"</code>.
@@ -39,6 +50,7 @@ public class UsernameGenerator implements Generator {
         String unique = generateUniquePart();
         return concat(alias, unique);
     }
+
 
     private String concat(String alias, String unique) {
         int maxLengthOfAliasToUse = maxLength - separator.length()

@@ -1,11 +1,30 @@
 package io.github.unacceptable.alias;
 
-public class EmailAddressGenerator {
+public class EmailAddressGenerator implements Generator {
     private static final String DEFAULT_DOMAIN = "example.com";
-    private static final UsernameGenerator USERNAME_GENERATOR = new UsernameGenerator();
+    private static final UsernameGenerator DEFAULT_USERNAME_GENERATOR = new UsernameGenerator();
+    private static final EmailAddressGenerator GENERATOR = new EmailAddressGenerator();
 
-    private EmailAddressGenerator() {
-        throw new UnsupportedOperationException();
+    /**
+     * Generate an email address using a suitable default configuration.
+     *
+     * @param alias
+     *         an alias for the generated address.
+     * @return an email address generated using suitable defaults.
+     * @see #generate(String)
+     */
+    public static String defaultGenerate(String alias) {
+        return GENERATOR.generate(alias);
+    }
+
+    private final UsernameGenerator usernameGenerator;
+
+    public EmailAddressGenerator() {
+        this(DEFAULT_USERNAME_GENERATOR);
+    }
+
+    public EmailAddressGenerator(UsernameGenerator usernameGenerator) {
+        this.usernameGenerator = usernameGenerator;
     }
 
     /**
@@ -13,19 +32,17 @@ public class EmailAddressGenerator {
      * part ("bob"), in which case a random suffix will be attached and the domain will default to {@value
      * #DEFAULT_DOMAIN}, or a complete email address, in which case only the local part will be modified to make the
      * address unique. (The domain will be reused as-is.)
-     * <p>
-     * This method is suitable for use in an {@link AliasStore}.
      *
      * @param alias
      *         an email address alias such as <code>"alexandra"</code> or <code>"alexandra@example.com"</code>.
      * @return a randomly-modified email address.
      */
-    public static String generate(String alias) {
+    public String generate(String alias) {
         String[] parts = alias.split("@", 2);
         String localPartAlias = parts[0];
         String domain = parts.length > 1 ? parts[1] : DEFAULT_DOMAIN;
 
-        String localPart = USERNAME_GENERATOR.generate(localPartAlias);
+        String localPart = usernameGenerator.generate(localPartAlias);
         return localPart + "@" + domain;
     }
 }

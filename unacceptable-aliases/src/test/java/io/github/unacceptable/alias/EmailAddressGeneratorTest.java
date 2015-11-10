@@ -9,7 +9,7 @@ public class EmailAddressGeneratorTest {
     @Test
     public void generatesAddressesFromTemplate() {
         String template = "user@example.net";
-        String generated = EmailAddressGenerator.generate(template);
+        String generated = new EmailAddressGenerator().generate(template);
 
         assertThat(generated, pattern("user-[0-9a-f]+@example[.]net"));
     }
@@ -17,7 +17,7 @@ public class EmailAddressGeneratorTest {
     @Test
     public void addsMissingExampleDotComDomain() {
         String template = "user";
-        String generated = EmailAddressGenerator.generate(template);
+        String generated = new EmailAddressGenerator().generate(template);
 
         assertThat(generated, pattern("user-[0-9a-f]+@example[.]com"));
     }
