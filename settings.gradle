@@ -1,5 +1,6 @@
 rootProject.name = 'unacceptable'
 
 include 'unacceptable-aliases'
+include 'unacceptable-database'
 include 'unacceptable-lazy'
 include 'unacceptable-selenium'
