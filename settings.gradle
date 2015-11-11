@@ -2,5 +2,6 @@ rootProject.name = 'unacceptable'
 
 include 'unacceptable-aliases'
 include 'unacceptable-database'
+include 'unacceptable-dropwizard'
 include 'unacceptable-lazy'
 include 'unacceptable-selenium'
