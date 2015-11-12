@@ -44,7 +44,11 @@ public class DatabaseContext {
     public String adminUrl() {
         return adminUrl = Lazily.create(
                 adminUrl,
-                () -> System.getProperty("database.adminUrl", "jdbc:postgresql://localhost/postgresql"));
+                () -> System.getProperty("database.adminUrl", defaultAdminUrl()));
+    }
+
+    protected String defaultAdminUrl() {
+        return "jdbc:postgresql://localhost/postgresql";
     }
 
     /**
@@ -52,14 +56,22 @@ public class DatabaseContext {
      * databases.
      */
     public String username() {
-        return username = Lazily.create(username, () -> System.getProperty("database.username", "postgres"));
+        return username = Lazily.create(username, () -> System.getProperty("database.username", defaultUsername()));
+    }
+
+    protected String defaultUsername() {
+        return "postgres";
     }
 
     /**
      * @return the password to connect to the database server with, if any.
      */
     public String password() {
-        return password = Lazily.create(password, () -> System.getProperty("database.password", ""));
+        return password = Lazily.create(password, () -> System.getProperty("database.password", defaultPassword()));
+    }
+
+    protected String defaultPassword() {
+        return "";
     }
 
     /**
@@ -74,7 +86,11 @@ public class DatabaseContext {
      * @return the template to use when {@link #databaseName() computing the database name}.
      */
     public String templateDatabaseName() {
-        return template = Lazily.create(template, () -> System.getProperty("database.nameTemplate", "acceptance-test"));
+        return template = Lazily.create(template, () -> System.getProperty("database.nameTemplate", defaultTemplateDatabaseName()));
+    }
+
+    protected String defaultTemplateDatabaseName() {
+        return "acceptance-test";
     }
 
     /**
