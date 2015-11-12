@@ -145,6 +145,17 @@ public class DatabaseContext {
     }
 
     /**
+     * Creates a connection to the test database.
+     *
+     * @return a new Connection to the test database.
+     * @throws SQLException
+     *         if unable to connect to the testdatabase.
+     */
+    protected Connection openConnection() throws SQLException {
+        return DriverManager.getConnection(databaseUrl(), username(), password());
+    }
+
+    /**
      * Create the test database. By default, this {@link #runStatement(String) runs} {@code CREATE DATABASE "database
      * name"}.
      *
