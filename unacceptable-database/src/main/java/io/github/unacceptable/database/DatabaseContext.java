@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static io.github.unacceptable.lazy.Lazily.systemProperty;
+
 /**
  * Manages a temporary testing database during a test. This makes a few assumptions about the structure of your
  * database:
@@ -42,9 +44,7 @@ public class DatabaseContext {
      * @return the JDBC URL to use when making administrative connections to the database.
      */
     public String adminUrl() {
-        return adminUrl = Lazily.create(
-                adminUrl,
-                () -> System.getProperty("database.adminUrl", defaultAdminUrl()));
+        return adminUrl = systemProperty(adminUrl, "database.adminUrl", this::defaultAdminUrl);
     }
 
     protected String defaultAdminUrl() {
@@ -56,7 +56,7 @@ public class DatabaseContext {
      * databases.
      */
     public String username() {
-        return username = Lazily.create(username, () -> System.getProperty("database.username", defaultUsername()));
+        return username = systemProperty(username, "database.username", this::defaultUsername);
     }
 
     protected String defaultUsername() {
@@ -67,7 +67,7 @@ public class DatabaseContext {
      * @return the password to connect to the database server with, if any.
      */
     public String password() {
-        return password = Lazily.create(password, () -> System.getProperty("database.password", defaultPassword()));
+        return password = systemProperty(password, "database.password", this::defaultPassword);
     }
 
     protected String defaultPassword() {
@@ -86,7 +86,7 @@ public class DatabaseContext {
      * @return the template to use when {@link #databaseName() computing the database name}.
      */
     public String templateDatabaseName() {
-        return template = Lazily.create(template, () -> System.getProperty("database.nameTemplate", defaultTemplateDatabaseName()));
+        return template = systemProperty(template, "database.nameTemplate", this::defaultTemplateDatabaseName);
     }
 
     protected String defaultTemplateDatabaseName() {
