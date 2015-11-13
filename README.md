@@ -5,6 +5,11 @@
 Using [Dropwizard](https://dropwizard.io/) on Heroku? This module takes care of
 some common cases automatically.
 
+## Dropwizard Versions
+
+Versions up to `0.2.0` are compatible with Dropwizard 0.8.x.
+Versions from `1.0.0` upward are compatible with Dropwizard 0.9.x.
+
 ## Installing
 
 All modules are hosted on Bintray's JCenter repository.

@@ -3,6 +3,7 @@ package com.loginbox.heroku.logging;
 import com.google.common.collect.Lists;
 import io.dropwizard.logging.AppenderFactory;
 import io.dropwizard.logging.ConsoleAppenderFactory;
+import io.dropwizard.logging.DefaultLoggingFactory;
 import io.dropwizard.logging.LoggingFactory;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @see HerokuConsoleAppenderFactory
  */
-public class HerokuLoggingFactory extends LoggingFactory {
+public class HerokuLoggingFactory extends DefaultLoggingFactory {
     /**
      * Creates the default appenders for a Heroku application.
      *
