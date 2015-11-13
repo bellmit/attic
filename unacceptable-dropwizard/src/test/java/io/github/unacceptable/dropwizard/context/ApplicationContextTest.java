@@ -84,9 +84,6 @@ public class ApplicationContextTest {
                         new Statement() {
                             @Override
                             public void evaluate() throws Throwable {
-                                assertThat(
-                                        applicationContext.url(),
-                                        startsWith("http://localhost:"));
                                 get(applicationContext.url("/hello"))
                                         .then()
                                         .body(equalTo("Hello, world."));

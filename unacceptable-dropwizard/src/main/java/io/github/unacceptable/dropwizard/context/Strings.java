@@ -11,14 +11,14 @@ class Strings {
         return s.substring(0, i);
     }
 
-    public static int findLastNonSlash(String s) {
+    private static int findLastNonSlash(String s) {
         for (int i = s.length(); i > 0; --i)
             if (s.charAt(i - 1) != '/')
                 return i;
         return 0;
     }
 
-    public static int findFirstNonSlash(String s) {
+    private static int findFirstNonSlash(String s) {
         for (int i = 0; i < s.length(); ++i)
             if (s.charAt(i) != '/')
                 return i;

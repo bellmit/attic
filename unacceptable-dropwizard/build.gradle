@@ -5,6 +5,7 @@ dependencies {
     }
 
     compile project(':unacceptable-lazy')
+    compile project(':unacceptable-selenium')
     compile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
     compile group: 'junit', name: 'junit', version: '4.12'
 
