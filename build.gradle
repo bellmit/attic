@@ -69,24 +69,26 @@ subprojects {
         }
     }
 
-    bintray {
-        user = bintrayUsername
-        key = bintrayApiKey
+    if (hasProperty('bintrayUsername') && hasProperty('bintrayApiKey')) {
+        bintray {
+            user = bintrayUsername
+            key = bintrayApiKey
 
-        publications = ['mavenJava']
+            publications = ['mavenJava']
 
-        pkg {
-            userOrg = 'unacceptable'
-            repo = isSnapshot ? 'snapshots' : 'releases'
-            publish = isSnapshot
-            name = 'unacceptable'
-            websiteUrl = 'https://github.com/unacceptable/unacceptable'
-            issueTrackerUrl = 'https://github.com/unacceptable/unacceptable/issues'
-            vcsUrl = 'https://github.com/unacceptable/unacceptable'
-            licenses = ['MIT']
-            publicDownloadNumbers = true
-            version {
-                name = project.version
+            pkg {
+                userOrg = 'unacceptable'
+                repo = isSnapshot ? 'snapshots' : 'releases'
+                publish = isSnapshot
+                name = 'unacceptable'
+                websiteUrl = 'https://github.com/unacceptable/unacceptable'
+                issueTrackerUrl = 'https://github.com/unacceptable/unacceptable/issues'
+                vcsUrl = 'https://github.com/unacceptable/unacceptable'
+                licenses = ['MIT']
+                publicDownloadNumbers = true
+                version {
+                    name = project.version
+                }
             }
         }
     }
