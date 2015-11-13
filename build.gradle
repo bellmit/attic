@@ -33,7 +33,7 @@ allprojects {
 
     dependencies {
         ext {
-            dropwizardVersion = '0.8.0'
+            dropwizardVersion = '0.9.1'
 
             // The following versions have to track dropwizardVersion but are not equal to it. You
             // can obtain the correct version numbers from the published dropwizard-parent POM.
