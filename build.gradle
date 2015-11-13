@@ -35,7 +35,7 @@ repositories {
 
 dependencies {
     ext {
-        dropwizardVersion = '0.8.0'
+        dropwizardVersion = '0.9.1'
 
         mybatisVersion = '3.2.8'
 
