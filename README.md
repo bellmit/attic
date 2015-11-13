@@ -2,6 +2,11 @@
 
 [![Build Status](https://circleci.com/gh/login-box/dropwizard-mybatis.svg)](https://circleci.com/gh/login-box/dropwizard-mybatis)
 
+## Dropwizard Versions
+
+Versions up to `0.2.0` are compatible with Dropwizard 0.8.x.
+Versions from `1.0.0` upward are compatible with Dropwizard 0.9.x.
+
 ## Installing
 
 All modules are hosted on Bintray's JCenter repository.

@@ -9,9 +9,9 @@ import com.loginbox.dropwizard.mybatis.types.UriTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.UrlTypeHandler;
 import com.loginbox.dropwizard.mybatis.types.UuidTypeHandler;
 import io.dropwizard.ConfiguredBundle;
-import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.db.DatabaseConfiguration;
 import io.dropwizard.db.ManagedDataSource;
+import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -235,14 +235,16 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
     }
 
     private ManagedDataSource buildDataSource(T configuration, io.dropwizard.setup.Environment environment) {
-        DataSourceFactory dataSourceFactory = getDataSourceFactory(configuration);
+        PooledDataSourceFactory dataSourceFactory = getDataSourceFactory(configuration);
         return dataSourceFactory.build(environment.metrics(), name);
     }
 
-    private <T> Consumer<Configuration> configure(BiConsumer<Configuration, T> valueApplicator, T value, T... values) {
+    /* @SafeVarargs would be appropriate, but it's not permitted on private methods until Java 9. */
+    @SuppressWarnings("unchecked")
+    private <V> Consumer<Configuration> configure(BiConsumer<Configuration, V> valueApplicator, V value, V... values) {
         return (configuration) -> {
             valueApplicator.accept(configuration, value);
-            for (T v : values) {
+            for (V v : values) {
                 valueApplicator.accept(configuration, v);
             }
         };
