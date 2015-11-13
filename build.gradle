@@ -1,3 +1,5 @@
+import com.loginbox.build.Versions
+
 plugins {
     id 'application'
     id 'com.github.johnrengelman.shadow' version '1.2.2'
@@ -10,9 +12,7 @@ group = 'com.loginbox.app'
 mainClassName = 'com.loginbox.app.LoginBox'
 
 ext {
-    sourceVersion = System.getenv('SOURCE_VERSION') ?:
-                        "git rev-parse HEAD".execute().text.trim() ?:
-                        'UNKNOWN'
+    sourceVersion = Versions.detect()
 }
 
 sourceCompatibility = '1.8'
