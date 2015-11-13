@@ -48,7 +48,7 @@ public class DatabaseContext {
     }
 
     protected String defaultAdminUrl() {
-        return "jdbc:postgresql://localhost/postgresql";
+        return "jdbc:postgresql://localhost/postgres";
     }
 
     /**
