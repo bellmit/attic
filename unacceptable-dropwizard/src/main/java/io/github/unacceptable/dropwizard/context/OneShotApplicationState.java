@@ -1,14 +1,18 @@
 package io.github.unacceptable.dropwizard.context;
 
-import io.dropwizard.Application;
 import io.dropwizard.Configuration;
-import io.dropwizard.testing.ConfigOverride;
+import io.dropwizard.testing.DropwizardTestSupport;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 import io.github.unacceptable.lazy.Lazily;
 
-abstract class OneShotApplicationState<C extends Configuration> implements ApplicationState<C> {
+public class OneShotApplicationState<C extends Configuration> implements ApplicationState<C> {
     private DropwizardAppRule<C> rules = null;
     private String appUrl = null;
+    private final DropwizardTestSupport<C> testSupport;
+
+    public OneShotApplicationState(final DropwizardTestSupport<C> testSupport) {
+        this.testSupport = testSupport;
+    }
 
     @Override
     public String url() {
@@ -32,13 +36,7 @@ abstract class OneShotApplicationState<C extends Configuration> implements Appli
     }
 
     private DropwizardAppRule<C> newAppRule() {
-        Class<? extends Application<C>> mainClass = mainClass();
-        String configPath = null;
-        ConfigOverride[] overrides = overrides();
-        return new DropwizardAppRule<C>(mainClass, configPath, overrides);
+        return new DropwizardAppRule<C>(testSupport);
     }
 
-    protected abstract ConfigOverride[] overrides();
-
-    protected abstract Class<? extends Application<C>> mainClass();
 }

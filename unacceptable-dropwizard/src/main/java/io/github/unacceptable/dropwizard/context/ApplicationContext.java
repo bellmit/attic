@@ -1,11 +1,16 @@
 package io.github.unacceptable.dropwizard.context;
 
-import com.google.common.collect.ObjectArrays;
+import com.google.common.base.Optional;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.testing.ConfigOverride;
+import io.dropwizard.testing.DropwizardTestSupport;
 import io.github.unacceptable.lazy.Lazily;
 import org.junit.rules.TestRule;
+
+import javax.annotation.Nullable;
+
+import java.util.Arrays;
 
 import static io.github.unacceptable.lazy.Lazily.systemProperty;
 
@@ -14,16 +19,38 @@ import static io.github.unacceptable.lazy.Lazily.systemProperty;
  * provided.
  * <p>
  * To target tests to an existing app, set the {@code app.url} system property. If not set, this context will boot an
- * instance of {@link #mainClass() your application} for the duration of the test, then shut it down.
+ * instance of your application for the duration of the test, then shut it down.
  * <p>
- * When booting an application, the {@link #overrides() configuration overrides} will be applied. By default, the only
+ * When booting an application, the configuration overrides will be applied. By default, the only
  * override applied sets the logging level to {@link #logLevel()}, which will suppress the vast sea of bootup and
- * shutdown diagnostic messages. However, additional overrides can be supplied via the {@link #extraOverrides()} method,
- * or the complete overrides list can be customized by overriding {@link #overrides()} directly.
+ * shutdown diagnostic messages.
  */
-public abstract class ApplicationContext<C extends Configuration> {
+public class ApplicationContext<C extends Configuration> {
+
+    private final Class<? extends Application<C>> applicationClass;
+    private final String configPath;
+    private final Optional<String> customPropertyPrefix;
+    private final ConfigOverride[] configOverrides;
     private ApplicationState<C> applicationState = null;
     private String logLevel = null;
+
+    public ApplicationContext(Class<? extends Application<C>> applicationClass) {
+        this(applicationClass, (String) null);
+    }
+
+    public ApplicationContext(Class<? extends Application<C>> applicationClass,
+                              @Nullable String configPath,
+                              ConfigOverride... configOverrides) {
+        this(applicationClass, configPath, Optional.<String>absent(), configOverrides);
+    }
+
+    public ApplicationContext(Class<? extends Application<C>> applicationClass, String configPath,
+                              Optional<String> customPropertyPrefix, ConfigOverride... configOverrides) {
+        this.applicationClass = applicationClass;
+        this.configPath = configPath;
+        this.customPropertyPrefix = customPropertyPrefix;
+        this.configOverrides = configOverrides;
+    }
 
     private ApplicationState<C> applicationState() {
         return applicationState = Lazily.create(applicationState, this::detectApplicationState);
@@ -32,19 +59,14 @@ public abstract class ApplicationContext<C extends Configuration> {
     private ApplicationState<C> detectApplicationState() {
         String appUrl = System.getProperty("app.url");
         if (appUrl == null) {
-            return new OneShotApplicationState<C>() {
-                @Override
-                protected ConfigOverride[] overrides() {
-                    return ApplicationContext.this.overrides();
-                }
-
-                @Override
-                protected Class<? extends Application<C>> mainClass() {
-                    return ApplicationContext.this.mainClass();
-                }
-            };
+            return new OneShotApplicationState<>(dropwizardTestSupport());
         }
         return new ExternalApplicationState<>(appUrl);
+    }
+
+    protected DropwizardTestSupport<C> dropwizardTestSupport() {
+        return new DropwizardTestSupport<C>(applicationClass, configPath, customPropertyPrefix,
+                                     appendLogLevelOverride(configOverrides));
     }
 
     /**
@@ -56,8 +78,7 @@ public abstract class ApplicationContext<C extends Configuration> {
     }
 
     /**
-     * @param path
-     *         a path relative to the application root.
+     * @param path a path relative to the application root.
      * @return the absolute URL of the same path within the application.
      */
     public String url(String path) {
@@ -90,22 +111,10 @@ public abstract class ApplicationContext<C extends Configuration> {
                 .rules();
     }
 
-    protected ConfigOverride[] overrides() {
-        ConfigOverride[] defaultOverrides = defaultOverrides();
-        ConfigOverride[] extraOverrides = extraOverrides();
-
-        return ObjectArrays.concat(defaultOverrides, extraOverrides, ConfigOverride.class);
+    private ConfigOverride[] appendLogLevelOverride(final ConfigOverride[] configOverrides) {
+        final ConfigOverride[] merged = Arrays.copyOf(configOverrides, configOverrides.length+1);
+        merged[merged.length-1] = ConfigOverride.config("logging.level", logLevel());
+        return merged;
     }
 
-    private ConfigOverride[] defaultOverrides() {
-        return new ConfigOverride[]{
-                ConfigOverride.config("logging.level", logLevel()),
-        };
-    }
-
-    protected ConfigOverride[] extraOverrides() {
-        return new ConfigOverride[]{};
-    }
-
-    protected abstract Class<? extends Application<C>> mainClass();
 }
