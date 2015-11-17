@@ -34,16 +34,31 @@ public class ApplicationContext<C extends Configuration> {
     private ApplicationState<C> applicationState = null;
     private String logLevel = null;
 
+    /**
+     * Create a context by specifying only the dropwizard {@link Application} subclass.  This will use a null
+     * configuration path, and only the default configuration override for logging level.
+     * Effectively, this delegates to the similar {@link io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     */
     public ApplicationContext(Class<? extends Application<C>> applicationClass) {
         this(applicationClass, (String) null);
     }
 
+    /**
+     * Create a context by specifying the dropwizard {@link Application} subclass, a (nullable) configuration path,
+     * and an optional list of configuration overrides.  These config overrides will have the default log level
+     * override added to them, but can override it.
+     * Effectively, this delegates to the similar {@link io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     */
     public ApplicationContext(Class<? extends Application<C>> applicationClass,
                               @Nullable String configPath,
                               ConfigOverride... configOverrides) {
         this(applicationClass, configPath, Optional.<String>absent(), configOverrides);
     }
 
+    /**
+     * Create a context similarily to the previous constructor, but with a custom property prefix.
+     * Effectively, this delegates to the similar {@link io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     */
     public ApplicationContext(Class<? extends Application<C>> applicationClass, String configPath,
                               Optional<String> customPropertyPrefix, ConfigOverride... configOverrides) {
         this.applicationClass = applicationClass;
