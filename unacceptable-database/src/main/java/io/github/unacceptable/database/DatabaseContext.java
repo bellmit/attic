@@ -101,7 +101,7 @@ public class DatabaseContext {
      * @return a rule that manages the life of a testing database.
      */
     public TestRule rules() {
-        return Lazily.create(testRules, this::constructRules);
+        return testRules = Lazily.create(testRules, this::constructRules);
     }
 
     protected TestRule constructRules() {
@@ -112,10 +112,10 @@ public class DatabaseContext {
      * Can be used to inject rules (for example, rules for initializing the schema) which will run after the temporary
      * database is created, and before the temporary database is destroyed.
      */
-    public void injectInnerRule(TestRule innerRule) {
+    public void injectDatabaseTask(DatabaseTask task) {
         final TestRule existingRule = rules();
         testRules = RuleChain.outerRule(existingRule)
-                .around(innerRule);
+                .around(task.rules());
     }
 
     /**

@@ -41,7 +41,7 @@ public class LiquibaseEnhancer {
      * @return The same {@link DatabaseContext} as the param, but configured to run Liquibase migrations.
      */
     public <C extends DatabaseContext> C configure(C context) {
-        context.injectInnerRule(buildRules(context));
+        context.injectDatabaseTask(() -> buildRules(context));
         return context;
     }
 
