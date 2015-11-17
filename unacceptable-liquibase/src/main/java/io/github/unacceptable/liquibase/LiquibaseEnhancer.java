@@ -28,7 +28,10 @@ public class LiquibaseEnhancer {
     private String contexts;
 
     /**
-     * Static helper for {@link #configure}
+     * Static helper for {@link #configure}.  The standard way to use this within the system driver looks like this:
+     * <pre>
+     * DatabaseContext database = LiquibaseEnhancer.configureContext(new DatabaseContext());
+     * </pre>
      */
     public static <C extends DatabaseContext> C configureContext(C context) {
         return new LiquibaseEnhancer().configure(context);
