@@ -1,6 +1,7 @@
 package io.github.unacceptable.dropwizard.context;
 
 import com.google.common.base.Optional;
+import com.google.common.collect.ObjectArrays;
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
 import io.dropwizard.testing.ConfigOverride;
@@ -127,9 +128,9 @@ public class ApplicationContext<C extends Configuration> {
     }
 
     private ConfigOverride[] appendLogLevelOverride(final ConfigOverride[] configOverrides) {
-        final ConfigOverride[] merged = Arrays.copyOf(configOverrides, configOverrides.length+1);
-        merged[merged.length-1] = ConfigOverride.config("logging.level", logLevel());
-        return merged;
+        return ObjectArrays.concat(
+                ConfigOverride.config("logging.level", logLevel()),
+                configOverrides);
     }
 
 }
