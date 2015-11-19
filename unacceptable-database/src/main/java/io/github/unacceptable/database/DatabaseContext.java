@@ -3,6 +3,7 @@ package io.github.unacceptable.database;
 import io.github.unacceptable.alias.UsernameGenerator;
 import io.github.unacceptable.lazy.Lazily;
 import org.junit.rules.ExternalResource;
+import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 
 import java.net.URI;
@@ -32,6 +33,7 @@ public class DatabaseContext {
     private String username = null;
     private String password = null;
     private String databaseUrl = null;
+    private TestRule testRules = null;
 
     /**
      * @return the generated URL for the test database.
@@ -99,7 +101,21 @@ public class DatabaseContext {
      * @return a rule that manages the life of a testing database.
      */
     public TestRule rules() {
+        return testRules = Lazily.create(testRules, this::constructRules);
+    }
+
+    protected TestRule constructRules() {
         return new TemporaryDatabaseRule();
+    }
+
+    /**
+     * Can be used to inject rules (for example, rules for initializing the schema) which will run after the temporary
+     * database is created, and before the temporary database is destroyed.
+     */
+    public void injectDatabaseTask(DatabaseTask task) {
+        final TestRule existingRule = rules();
+        testRules = RuleChain.outerRule(existingRule)
+                .around(task.rules());
     }
 
     /**
@@ -145,13 +161,26 @@ public class DatabaseContext {
     }
 
     /**
+     * Creates a connection to the test database.
+     *
+     * @return a new Connection to the test database.
+     * @throws SQLException
+     *         if unable to connect to the testdatabase.
+     */
+    public Connection openConnection() throws SQLException {
+        return DriverManager.getConnection(databaseUrl(), username(), password());
+    }
+
+    /**
      * Create the test database. By default, this {@link #runStatement(String) runs} {@code CREATE DATABASE "database
      * name"}.
+     * <p>
+     * This will happen automatically for tests using the {@link #rules()}.
      *
      * @throws SQLException
      *         if creating the test database fails.
      */
-    protected void create() throws SQLException {
+    public void create() throws SQLException {
         String createQuery = String.format("CREATE DATABASE \"%s\"", databaseName());
         runStatement(createQuery);
     }
@@ -159,11 +188,13 @@ public class DatabaseContext {
     /**
      * Destroy the test database. By default, this {@link #runStatement(String) runs} {@code DROP DATABASE "database
      * name"}.
+     * <p>
+     * This will happen automatically for tests using the {@link #rules()}.
      *
      * @throws SQLException
      *         if destroying the test database fails.
      */
-    protected void destroy() throws SQLException {
+    public void destroy() throws SQLException {
         String dropQuery = String.format("DROP DATABASE \"%s\"", databaseName());
         runStatement(dropQuery);
     }
