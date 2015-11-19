@@ -75,26 +75,28 @@ subprojects {
         }
     }
 
-    if (hasProperty('bintrayUsername') && hasProperty('bintrayApiKey')) {
-        bintray {
-            user = bintrayUsername
-            key = bintrayApiKey
+    bintray {
+        user = rootProject.hasProperty('bintrayUsername') ?
+            rootProject.property('bintrayUsername') :
+            'Please set bintrayUsername in ~/.gradle/gradle.properties'
+        key = rootProject.hasProperty('bintrayApiKey') ?
+            rootProject.property('bintrayApiKey') :
+            'Please set bintrayApiKey in ~/.gradle/gradle.properties'
 
-            publications = ['mavenJava']
+        publications = ['mavenJava']
 
-            pkg {
-                userOrg = 'unacceptable'
-                repo = isSnapshot ? 'snapshots' : 'releases'
-                publish = isSnapshot
-                name = 'unacceptable'
-                websiteUrl = 'https://github.com/unacceptable/unacceptable'
-                issueTrackerUrl = 'https://github.com/unacceptable/unacceptable/issues'
-                vcsUrl = 'https://github.com/unacceptable/unacceptable'
-                licenses = ['MIT']
-                publicDownloadNumbers = true
-                version {
-                    name = project.version
-                }
+        pkg {
+            userOrg = 'unacceptable'
+            repo = isSnapshot ? 'snapshots' : 'releases'
+            publish = isSnapshot
+            name = 'unacceptable'
+            websiteUrl = 'https://github.com/unacceptable/unacceptable'
+            issueTrackerUrl = 'https://github.com/unacceptable/unacceptable/issues'
+            vcsUrl = 'https://github.com/unacceptable/unacceptable'
+            licenses = ['MIT']
+            publicDownloadNumbers = true
+            version {
+                name = project.version
             }
         }
     }
