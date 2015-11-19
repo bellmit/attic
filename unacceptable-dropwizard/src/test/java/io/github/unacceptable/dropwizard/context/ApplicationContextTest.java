@@ -47,12 +47,7 @@ public class ApplicationContextTest {
 
     @Test
     public void urlPaths() {
-        ApplicationContext<TestConfig> applicationContext = spy(new ApplicationContext<TestConfig>() {
-            @Override
-            protected Class<? extends Application<TestConfig>> mainClass() {
-                return TestApp.class;
-            }
-        });
+        ApplicationContext<TestConfig> applicationContext = spy(new ApplicationContext<>(TestApp.class));
         doReturn("https://app.example.com/").when(applicationContext).url();
 
         assertThat(
@@ -68,12 +63,7 @@ public class ApplicationContextTest {
 
     @Test
     public void detectsOneShotApp() throws Throwable {
-        ApplicationContext<TestConfig> applicationContext = new ApplicationContext<TestConfig>() {
-            @Override
-            protected Class<? extends Application<TestConfig>> mainClass() {
-                return TestApp.class;
-            }
-        };
+        ApplicationContext<TestConfig> applicationContext = new ApplicationContext<>(TestApp.class);
 
         assertThat(
                 applicationContext.rules(),
@@ -97,12 +87,7 @@ public class ApplicationContextTest {
     @Test
     public void detectsExistingApp() {
         System.setProperty("app.url", "https://example.com/");
-        ApplicationContext<TestConfig> applicationContext = new ApplicationContext<TestConfig>() {
-            @Override
-            protected Class<? extends Application<TestConfig>> mainClass() {
-                return TestApp.class;
-            }
-        };
+        ApplicationContext<TestConfig> applicationContext = new ApplicationContext<>(TestApp.class);
 
         assertThat(
                 applicationContext.rules(),
