@@ -26,17 +26,23 @@ public class ErrorPage extends Dsl<ErrorPageDriver> {
      *     <li><var>message</var>: the error message body shown in the center of the page</li>
      * </ul>
      */
-    public void ensure(String... args) {
+    public void ensure(String... args) throws Exception {
         DslParams params = new DslParams(
                 args,
-                new RequiredParam("error"),
+                new RequiredParam("code"),
                 new RequiredParam("message")
         );
 
-        String error = params.value("error");
+        Integer code = asInt(params.value("code"));
         String message = params.value("message");
 
-        assertThat(driver().getErrorHeading(), is(error));
+        assertThat(driver().getCode(), is(code));
         assertThat(driver().getMessage(), is(message));
+    }
+
+    private Integer asInt(String value) {
+        if (value == null)
+            return null;
+        return Integer.valueOf(value);
     }
 }

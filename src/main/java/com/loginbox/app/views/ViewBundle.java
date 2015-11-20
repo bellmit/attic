@@ -1,6 +1,5 @@
 package com.loginbox.app.views;
 
-import com.google.common.collect.ImmutableMap;
 import io.dropwizard.Bundle;
 import io.dropwizard.Configuration;
 import io.dropwizard.setup.Bootstrap;
@@ -17,12 +16,7 @@ import org.glassfish.jersey.linking.DeclarativeLinkingFeature;
 public class ViewBundle implements Bundle {
     @Override
     public void initialize(Bootstrap<?> bootstrap) {
-        bootstrap.addBundle(new io.dropwizard.views.ViewBundle<Configuration>() {
-            @Override
-            public ImmutableMap<String, ImmutableMap<String, String>> getViewConfiguration(Configuration configuration) {
-                return ImmutableMap.of();
-            }
-        });
+        bootstrap.addBundle(new io.dropwizard.views.ViewBundle<Configuration>());
     }
 
     @Override

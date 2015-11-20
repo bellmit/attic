@@ -22,47 +22,47 @@ public class SetupTest extends DslTestCase {
     }
 
     @Test
-    public void setupRequiresUsername() {
+    public void setupRequiresUsername() throws Exception {
         webUi.open();
         /* skip: webUi.setupPage.enterUsername(); */
         webUi.setupPage.enterContactEmail();
         webUi.setupPage.enterPassword();
         webUi.setupPage.confirmPassword();
         webUi.setupPage.clickCompleteSetup();
-        webUi.errorPage.ensure("error: HTTP ERROR 400", "message: Bad Request");
+        webUi.errorPage.ensure("code: 400", "message: HTTP 400 Bad Request");
     }
 
     @Test
-    public void setupRequiresContactEmail() {
+    public void setupRequiresContactEmail() throws Exception {
         webUi.open();
         webUi.setupPage.enterUsername();
         /* skip: webUi.setupPage.enterContactEmail(); */
         webUi.setupPage.enterPassword();
         webUi.setupPage.confirmPassword();
         webUi.setupPage.clickCompleteSetup();
-        webUi.errorPage.ensure("error: HTTP ERROR 400", "message: Bad Request");
+        webUi.errorPage.ensure("code: 400", "message: HTTP 400 Bad Request");
     }
 
     @Test
-    public void setupRequiresPassword() {
+    public void setupRequiresPassword() throws Exception {
         webUi.open();
         webUi.setupPage.enterUsername();
         webUi.setupPage.enterContactEmail();
         /* skip: webUi.setupPage.enterPassword(); */
         /* skip: webUi.setupPage.confirmPassword(); */
         webUi.setupPage.clickCompleteSetup();
-        webUi.errorPage.ensure("error: HTTP ERROR 400", "message: Bad Request");
+        webUi.errorPage.ensure("code: 400", "message: HTTP 400 Bad Request");
     }
 
     @Test
-    public void setupRequiresMatchingPasswords() {
+    public void setupRequiresMatchingPasswords() throws Exception {
         webUi.open();
         webUi.setupPage.enterUsername();
         webUi.setupPage.enterContactEmail();
         webUi.setupPage.enterPassword("password-a");
         webUi.setupPage.confirmPassword("password-b");
         webUi.setupPage.clickCompleteSetup();
-        webUi.errorPage.ensure("error: HTTP ERROR 400", "message: Bad Request");
+        webUi.errorPage.ensure("code: 400", "message: HTTP 400 Bad Request");
     }
 
     @Test
