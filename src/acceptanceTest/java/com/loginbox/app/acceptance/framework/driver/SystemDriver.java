@@ -23,7 +23,7 @@ public class SystemDriver {
     private static final String DATABASE_USERNAME = System.getProperty("database.username", "postgres");
     private static final String DATABASE_PASSWORD = System.getProperty("database.password");
 
-    private static final ConfigOverride LOG_THRESHOLD = ConfigOverride.config("logging.appenders[0].threshold", System.getProperty("app.logging.threshold", "WARN"));
+    private static final ConfigOverride LOG_THRESHOLD = ConfigOverride.config("logging.level", System.getProperty("app.logging.threshold", "WARN"));
 
     private final DatabaseContext databaseContext = new DatabaseContext(DATABASE_ADMIN_URL, DATABASE_USERNAME, DATABASE_PASSWORD);
 
