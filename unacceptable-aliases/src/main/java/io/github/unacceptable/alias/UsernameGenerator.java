@@ -35,7 +35,7 @@ public class UsernameGenerator implements Generator<String> {
     public UsernameGenerator(final int maxLength, final String separator) {
         this.maxLength = maxLength;
         this.separator = separator;
-        generator = new EmptyWrappingGenerator(new AbsentWrappingGenerator(new LiteralWrappingGenerator(this::generateUsername)));
+        this.generator = Generators.defaultStringGeneratorWrappers(this::generateUsername);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class EmailAddressGenerator implements Generator<String> {
 
     public EmailAddressGenerator(UsernameGenerator usernameGenerator) {
         this.usernameGenerator = usernameGenerator;
-        generator = new EmptyWrappingGenerator(new AbsentWrappingGenerator(new LiteralWrappingGenerator(this::generateEmailAddress)));
+        this.generator = Generators.defaultStringGeneratorWrappers(this::generateEmailAddress);
     }
 
     @Override

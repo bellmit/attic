@@ -44,7 +44,7 @@ public class PasswordGenerator implements Generator<String> {
     public PasswordGenerator(int length, String passwordChars) {
         this.length = length;
         this.passwordChars = passwordChars;
-        generator = new EmptyWrappingGenerator(new AbsentWrappingGenerator(new LiteralWrappingGenerator(this::generatePassword)));
+        this.generator = Generators.defaultStringGeneratorWrappers(this::generatePassword);
     }
 
     @Override
