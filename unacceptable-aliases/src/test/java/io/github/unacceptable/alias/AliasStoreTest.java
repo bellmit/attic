@@ -2,6 +2,8 @@ package io.github.unacceptable.alias;
 
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;
@@ -35,6 +37,15 @@ public class AliasStoreTest {
 
         aliases.store("alias", null);
         assertThat(aliases.resolve("alias"), nullValue());
+    }
+    
+    @Test
+    public void resolvesNonStrings() {
+        AliasStore<UUID> aliases = new AliasStore<>(alias -> UUID.randomUUID());
+
+        final UUID uuid1 = aliases.resolve("alias");
+        final UUID uuid2 = aliases.resolve("alias");
+        assertThat(uuid2, equalTo(uuid1));
     }
 
     private String failIfCalled(String alias) {
