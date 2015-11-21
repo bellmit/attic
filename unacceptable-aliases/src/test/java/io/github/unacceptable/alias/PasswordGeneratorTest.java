@@ -4,8 +4,7 @@ import org.junit.Test;
 
 import static io.github.unacceptable.matchers.PatternMatcher.pattern;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.*;
 
 public class PasswordGeneratorTest {
     @Test
@@ -33,4 +32,23 @@ public class PasswordGeneratorTest {
 
         assertThat(password, pattern("[ab]{5}"));
     }
+
+    @Test
+    public void literal() {
+        String password = new PasswordGenerator().generate("<alias>");
+        assertThat(password, equalTo("alias"));
+    }
+
+    @Test
+    public void empty() {
+        String password = new PasswordGenerator().generate("");
+        assertThat(password, equalTo(""));
+    }
+
+    @Test
+    public void absent() {
+        String password = new PasswordGenerator().generate("ABSENT");
+        assertThat(password, nullValue());
+    }
+
 }

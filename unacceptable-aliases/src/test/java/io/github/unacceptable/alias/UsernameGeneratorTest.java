@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static io.github.unacceptable.matchers.PatternMatcher.pattern;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
 
 public class UsernameGeneratorTest {
     @Test
@@ -35,4 +37,23 @@ public class UsernameGeneratorTest {
 
         assertThat(generated, pattern("alia/[0-9a-f]{16}"));
     }
+
+    @Test
+    public void literal() {
+        String password = new UsernameGenerator().generate("<alias>");
+        assertThat(password, equalTo("alias"));
+    }
+
+    @Test
+    public void empty() {
+        String password = new UsernameGenerator().generate("");
+        assertThat(password, equalTo(""));
+    }
+
+    @Test
+    public void absent() {
+        String password = new UsernameGenerator().generate("ABSENT");
+        assertThat(password, nullValue());
+    }
+
 }
