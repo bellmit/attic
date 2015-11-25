@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import static io.github.unacceptable.lazy.Lazily.systemProperty;
 
 /**
- * A utility for a database managed by Liquibase migrations. This will automatically apply migrations (by
- * default, from {@code migrations.xml}) when creating a test database.
+ * A utility for a database managed by Liquibase migrations. This will automatically apply migrations (by default, from
+ * {@code migrations.xml}) when creating a test database.
  * <p>
  * By default, this context will apply <em>all</em> migrations. However, the "migration.contexts" property can be set,
  * or the {@link #defaultContexts() default contexts} provided, to take advantage of Liquibase's migration contexts.
@@ -32,16 +32,26 @@ public class LiquibaseEnhancer {
      * <pre>
      * DatabaseContext database = LiquibaseEnhancer.configureContext(new DatabaseContext());
      * </pre>
+     *
+     * @param <C>
+     *         the database context type to enhance.
+     * @param context
+     *         the database context to enhance.
+     * @return The same {@link DatabaseContext} as {@code context}, but configured to run Liquibase migrations.
      */
     public static <C extends DatabaseContext> C configureContext(C context) {
         return new LiquibaseEnhancer().configure(context);
     }
 
     /**
-     * Configures a {@link DatabaseContext} to run the Liquibase migrations as part of the
-     * {@link DatabaseContext#rules} using {@link #migrate(DatabaseContext)}.
+     * Configures a {@link DatabaseContext} to run the Liquibase migrations as part of the {@link DatabaseContext#rules}
+     * using {@link #migrate(DatabaseContext)}.
      *
-     * @return The same {@link DatabaseContext} as the param, but configured to run Liquibase migrations.
+     * @param <C>
+     *         the database context type to enhance.
+     * @param context
+     *         the database context to enhance.
+     * @return The same {@link DatabaseContext} as {@code context}, but configured to run Liquibase migrations.
      */
     public <C extends DatabaseContext> C configure(C context) {
         context.injectDatabaseTask(() -> buildRules(context));
@@ -84,19 +94,27 @@ public class LiquibaseEnhancer {
     }
 
     /**
-     * @return a test rule that ensures a test database will be set up <em>and migrated</em> before the execution of the
-     * wrapped tests, and destroyed after each test.
+     * Creates JUnit rules that automatically apply migrations to a given database context.
+     *
+     * @param context
+     *         the context controlling the database to migrate.
+     * @return a test rule that applies database migrations to the target context. This rule must be applied after any
+     * rules that create the database; this normally happens using {@link #configure(DatabaseContext)}.
      */
     protected TestRule buildRules(DatabaseContext context) {
         return new MigrationRule(context);
     }
 
     /**
-     * Immediately migrate the database. This will be applied automatically during tests if
-     * {@link #configureContext(DatabaseContext)} is used.
+     * Immediately migrate the database associated with a database context. This will be applied automatically during
+     * tests if {@link #configureContext(DatabaseContext)} is used.
      *
-     * @throws SQLException       if the test database is unavailable.
-     * @throws LiquibaseException if the migration process fails.
+     * @param context
+     *         the database conext controlling the database to migrate.
+     * @throws SQLException
+     *         if the test database is unavailable.
+     * @throws LiquibaseException
+     *         if the migration process fails.
      */
     public void migrate(DatabaseContext context) throws SQLException, LiquibaseException {
         try (Connection connection = context.openConnection()) {
@@ -107,8 +125,10 @@ public class LiquibaseEnhancer {
     /**
      * Apply migrations to a specific connection.
      *
-     * @param connection the connection to apply migrations on.
-     * @throws LiquibaseException if the migration process fails.
+     * @param connection
+     *         the connection to apply migrations on.
+     * @throws LiquibaseException
+     *         if the migration process fails.
      */
     protected void migrate(Connection connection) throws LiquibaseException {
         Liquibase liquibase = makeLiquibase(connection);

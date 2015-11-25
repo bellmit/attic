@@ -18,13 +18,16 @@ import static io.github.unacceptable.lazy.Lazily.systemProperty;
 /**
  * Manages a temporary testing database during a test. This makes a few assumptions about the structure of your
  * database:
- * <p>
- * <ul> <li>To create a database, a client must connect using a privileged "admin" connection, then issue {@code CREATE
- * DATABASE "foo"} on that connection.</li> <li>To drop a database, the client must make a second privileged connection,
- * then issue {@code DROP DATABASE "foo"}.</li> <li>The database will respect SQL quoting standards (MySQL is known not
- * to support them by default).</li> </ul> <p> The accessor methods defined in this class default to picking up
- * configuration using {@link System#getProperty(String) system properties}, but may be overridden. They may be called
- * during construction, so must be safe to call before the constructor completes.
+ * <ul>
+ * <li>To create a database, a client must connect using a privileged "admin" connection, then issue {@code CREATE
+ * DATABASE "foo"} on that connection.</li>
+ * <li>To drop a database, the client must make a second privileged connection, then issue {@code DROP DATABASE
+ * "foo"}.</li>
+ * <li>The database will respect SQL quoting standards (MySQL is known not to support them by default).</li>
+ * </ul>
+ * <p>The accessor methods defined in this class default to picking up configuration using {@link
+ * System#getProperty(String) system properties}, but may be overridden. They may be called during construction, so
+ * must be safe to call before the constructor completes.
  */
 public class DatabaseContext {
     private String template = null;
@@ -111,6 +114,11 @@ public class DatabaseContext {
     /**
      * Can be used to inject rules (for example, rules for initializing the schema) which will run after the temporary
      * database is created, and before the temporary database is destroyed.
+     *
+     * @param task
+     *         the task whose rules will be injected into this context's rules chain. The task's rules will be run
+     *         <em>after</em> any existing rules, including the rule controlling database creation and any
+     *         previously-injected rules.
      */
     public void injectDatabaseTask(DatabaseTask task) {
         final TestRule existingRule = rules();
