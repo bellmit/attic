@@ -1,9 +1,10 @@
 package io.github.unacceptable.alias;
 
-public class EmailAddressGenerator implements Generator {
+public class EmailAddressGenerator implements Generator<String> {
     private static final String DEFAULT_DOMAIN = "example.com";
     private static final UsernameGenerator DEFAULT_USERNAME_GENERATOR = new UsernameGenerator();
     private static final EmailAddressGenerator GENERATOR = new EmailAddressGenerator();
+    private final Generator<String> generator;
 
     /**
      * Generate an email address using a suitable default configuration.
@@ -25,6 +26,12 @@ public class EmailAddressGenerator implements Generator {
 
     public EmailAddressGenerator(UsernameGenerator usernameGenerator) {
         this.usernameGenerator = usernameGenerator;
+        this.generator = Generators.defaultStringGeneratorWrappers(this::generateEmailAddress);
+    }
+
+    @Override
+    public String generate(final String alias) {
+        return generator.generate(alias);
     }
 
     /**
@@ -37,7 +44,7 @@ public class EmailAddressGenerator implements Generator {
      *         an email address alias such as <code>"alexandra"</code> or <code>"alexandra@example.com"</code>.
      * @return a randomly-modified email address.
      */
-    public String generate(String alias) {
+    public String generateEmailAddress(String alias) {
         String[] parts = alias.split("@", 2);
         String localPartAlias = parts[0];
         String domain = parts.length > 1 ? parts[1] : DEFAULT_DOMAIN;

@@ -2,11 +2,12 @@ package io.github.unacceptable.alias;
 
 import java.util.Random;
 
-public class UsernameGenerator implements Generator {
+public class UsernameGenerator implements Generator<String> {
     private static final Random RANDOM = new Random();
     private static final int DEFAULT_MAX_LENGTH = 32;
     private static final String DEFAULT_SEPARATOR = "-";
     private static final UsernameGenerator GENERATOR = new UsernameGenerator();
+    private final Generator<String> generator;
 
     /**
      * Generate a username using sensible defaults.
@@ -34,6 +35,12 @@ public class UsernameGenerator implements Generator {
     public UsernameGenerator(final int maxLength, final String separator) {
         this.maxLength = maxLength;
         this.separator = separator;
+        this.generator = Generators.defaultStringGeneratorWrappers(this::generateUsername);
+    }
+
+    @Override
+    public String generate(final String alias) {
+        return generator.generate(alias);
     }
 
     /**
@@ -46,7 +53,7 @@ public class UsernameGenerator implements Generator {
      *         a username alias, such as <code>"derek"</code>.
      * @return a randomly-generated username, such as <code>"derek-abad1dea"</code>.
      */
-    public String generate(String alias) {
+    public String generateUsername(String alias) {
         String unique = generateUniquePart();
         return concat(alias, unique);
     }

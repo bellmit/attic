@@ -3,7 +3,7 @@ package io.github.unacceptable.alias;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class PasswordGenerator implements Generator {
+public class PasswordGenerator implements Generator<String> {
     private static final Random RANDOM = new Random();
     private static final int DEFAULT_LENGTH = 16;
     private static final String DEFAULT_PASSWORD_CHARS =
@@ -12,6 +12,7 @@ public class PasswordGenerator implements Generator {
                     + "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
                     + " ";
     private static final PasswordGenerator GENERATOR = new PasswordGenerator();
+    private final Generator<String> generator;
 
     /**
      * Generate a password using suitable defaults.
@@ -43,6 +44,12 @@ public class PasswordGenerator implements Generator {
     public PasswordGenerator(int length, String passwordChars) {
         this.length = length;
         this.passwordChars = passwordChars;
+        this.generator = Generators.defaultStringGeneratorWrappers(this::generatePassword);
+    }
+
+    @Override
+    public String generate(final String alias) {
+        return generator.generate(alias);
     }
 
     /**
@@ -55,7 +62,7 @@ public class PasswordGenerator implements Generator {
      *         a password alias, such as <code>"derek"</code>.
      * @return a randomly-generated password, such as <code>"u;V4[:~7!_U-j.1="</code>.
      */
-    public String generate(String alias) {
+    public String generatePassword(String alias) {
         return RANDOM.ints(length, 0, passwordChars.length())
                 .map(passwordChars::charAt)
                 .mapToObj(c -> Character.toString((char) c))
