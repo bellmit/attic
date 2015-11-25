@@ -11,8 +11,6 @@ import org.junit.rules.TestRule;
 
 import javax.annotation.Nullable;
 
-import java.util.Arrays;
-
 import static io.github.unacceptable.lazy.Lazily.systemProperty;
 
 /**
@@ -22,9 +20,12 @@ import static io.github.unacceptable.lazy.Lazily.systemProperty;
  * To target tests to an existing app, set the {@code app.url} system property. If not set, this context will boot an
  * instance of your application for the duration of the test, then shut it down.
  * <p>
- * When booting an application, the configuration overrides will be applied. By default, the only
- * override applied sets the logging level to {@link #logLevel()}, which will suppress the vast sea of bootup and
- * shutdown diagnostic messages.
+ * When booting an application, the configuration overrides will be applied. By default, the only override applied sets
+ * the logging level to {@link #logLevel()}, which will suppress the vast sea of bootup and shutdown diagnostic
+ * messages.
+ *
+ * @param <C>
+ *         the configuration type of the target Dropwizard application.
  */
 public class ApplicationContext<C extends Configuration> {
 
@@ -37,18 +38,30 @@ public class ApplicationContext<C extends Configuration> {
 
     /**
      * Create a context by specifying only the dropwizard {@link Application} subclass.  This will use a null
-     * configuration path, and only the default configuration override for logging level.
-     * Effectively, this delegates to the similar {@link io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     * configuration path, and only the default configuration override for logging level. Effectively, this delegates to
+     * the similar {@link io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     *
+     * @param applicationClass
+     *         the Dropwizard application's main class, used to boot the application if needed.
      */
     public ApplicationContext(Class<? extends Application<C>> applicationClass) {
         this(applicationClass, (String) null);
     }
 
     /**
-     * Create a context by specifying the dropwizard {@link Application} subclass, a (nullable) configuration path,
-     * and an optional list of configuration overrides.  These config overrides will have the default log level
-     * override added to them, but can override it.
-     * Effectively, this delegates to the similar {@link io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     * Create a context by specifying the dropwizard {@link Application} subclass, a (nullable) configuration path, and
+     * an optional list of configuration overrides.  These config overrides will have the default log level override
+     * added to them, but can override it. Effectively, this delegates to the similar {@link
+     * io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     *
+     * @param applicationClass
+     *         the Dropwizard application's main class, used to boot the application if needed.
+     * @param configPath
+     *         the path to the application's config file (if any), or {@code null} if the default configuration is
+     *         sufficient to boot the app for testing.
+     * @param configOverrides
+     *         any configuration overrides needed to set the app up for testing. By default, an additional override
+     *         suppressing INFO log messages will be applied to the application.
      */
     public ApplicationContext(Class<? extends Application<C>> applicationClass,
                               @Nullable String configPath,
@@ -57,8 +70,20 @@ public class ApplicationContext<C extends Configuration> {
     }
 
     /**
-     * Create a context similarily to the previous constructor, but with a custom property prefix.
-     * Effectively, this delegates to the similar {@link io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     * Create a context similarily to the previous constructor, but with a custom property prefix. Effectively, this
+     * delegates to the similar {@link io.dropwizard.testing.junit.DropwizardAppRule} constructor.
+     *
+     * @param applicationClass
+     *         the Dropwizard application's main class, used to boot the application if needed.
+     * @param configPath
+     *         the path to the application's config file (if any), or {@code null} if the default configuration is
+     *         sufficient to boot the app for testing.
+     * @param customPropertyPrefix
+     *         the property prefix for configuration properties used in this app. For details, see {@link
+     *         DropwizardTestSupport}.
+     * @param configOverrides
+     *         any configuration overrides needed to set the app up for testing. By default, an additional override
+     *         suppressing INFO log messages will be applied to the application.
      */
     public ApplicationContext(Class<? extends Application<C>> applicationClass, String configPath,
                               Optional<String> customPropertyPrefix, ConfigOverride... configOverrides) {
@@ -82,7 +107,7 @@ public class ApplicationContext<C extends Configuration> {
 
     protected DropwizardTestSupport<C> dropwizardTestSupport() {
         return new DropwizardTestSupport<C>(applicationClass, configPath, customPropertyPrefix,
-                                     appendLogLevelOverride(configOverrides));
+                appendLogLevelOverride(configOverrides));
     }
 
     /**
@@ -94,7 +119,8 @@ public class ApplicationContext<C extends Configuration> {
     }
 
     /**
-     * @param path a path relative to the application root.
+     * @param path
+     *         a path relative to the application root.
      * @return the absolute URL of the same path within the application.
      */
     public String url(String path) {
