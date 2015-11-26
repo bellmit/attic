@@ -1,11 +1,14 @@
 package com.loginbox.app.acceptance.framework.driver;
 
+import io.github.unacceptable.dropwizard.context.ApplicationContext;
+import io.github.unacceptable.dropwizard.driver.SeleniumDriver;
+import io.github.unacceptable.selenium.context.SeleniumContext;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class SetupPageDriver extends SeleniumDriver {
-    public SetupPageDriver(SystemDriver systemDriver) {
-        super(systemDriver);
+    public SetupPageDriver(SeleniumContext selenium, ApplicationContext<?> app) {
+        super(selenium, app);
     }
 
     public void ensureWelcomeMessagePresent() {

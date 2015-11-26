@@ -49,7 +49,8 @@ dependencies {
         dropwizardHerokuVersion = '1.0.0'
 
         hamcrestVersion = '1.3'
-        seleniumVersion = '2.47.1'
+
+        unacceptableVersion = '0.1.0'
     }
 
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
@@ -74,8 +75,12 @@ dependencies {
     acceptanceTestCompile group: 'com.lewisd', name: 'simple-dsl', version: '0.2'
     acceptanceTestCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: jerseyVersion
     acceptanceTestCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
-    acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
-    acceptanceTestCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
+    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-aliases', version: unacceptableVersion
+    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-dropwizard', version: unacceptableVersion
+    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-dsl', version: unacceptableVersion
+    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-lazy', version: unacceptableVersion
+    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-liquibase', version: unacceptableVersion
+    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-selenium', version: unacceptableVersion
 }
 
 node {

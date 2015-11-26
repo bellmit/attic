@@ -4,12 +4,13 @@ import com.lmax.simpledsl.DslParams;
 import com.loginbox.app.acceptance.framework.context.TestContext;
 import com.loginbox.app.acceptance.framework.driver.SystemDriver;
 import com.loginbox.app.acceptance.framework.driver.WebUiDriver;
+import io.github.unacceptable.dsl.SimpleDsl;
 
 /**
  * DSL for manipulating the web UI as a whole. Provides actions and assertions that can be performed regardless of the
  * application's state, such as opening the application.
  */
-public class WebUi extends Dsl<WebUiDriver> {
+public class WebUi extends SimpleDsl<WebUiDriver, TestContext> {
     /**
      * Nested DSL for the setup UI.
      */
@@ -74,6 +75,6 @@ public class WebUi extends Dsl<WebUiDriver> {
      * credentials. A new session can be started using <code>webUi.open()</code>.
      */
     public void close() {
-        systemDriver.shutdown();
+        driver().close();
     }
 }
