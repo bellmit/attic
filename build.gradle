@@ -1,43 +1,8 @@
 import com.loginbox.build.Versions
 
-plugins {
-    id 'application'
-    id 'com.github.johnrengelman.shadow' version '1.2.2'
-    id 'com.moowork.node' version '0.8'
-    id 'com.moowork.gulp' version '0.9'
-    id 'idea'
-}
-
-group = 'com.loginbox.app'
-mainClassName = 'com.loginbox.app.LoginBox'
-
 ext {
     sourceVersion = Versions.detect()
-}
 
-sourceCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
-    jcenter()
-    maven {
-        url 'https://dl.bintray.com/login-box/releases/'
-    }
-}
-
-sourceSets {
-    acceptanceTest {
-        compileClasspath = files(sourceSets.main.output, configurations.acceptanceTestCompile)
-        runtimeClasspath = files(output, sourceSets.main.output, configurations.acceptanceTestRuntime)
-    }
-}
-
-configurations {
-    acceptanceTestCompile.extendsFrom compile, testCompile
-    acceptanceTestRuntime.extendsFrom runtime, testRuntime, acceptanceTestCompile
-}
-
-dependencies {
     ext {
         dropwizardVersion = '0.9.1'
 
@@ -49,111 +14,19 @@ dependencies {
         dropwizardHerokuVersion = '1.0.0'
 
         hamcrestVersion = '1.3'
-
-        unacceptableVersion = '0.1.0'
-    }
-
-    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
-    compile group: 'io.dropwizard', name: 'dropwizard-assets', version: dropwizardVersion
-    compile group: 'io.dropwizard', name: 'dropwizard-migrations', version: dropwizardVersion
-    compile group: 'io.dropwizard', name: 'dropwizard-views-freemarker', version: dropwizardVersion
-
-    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: dropwizardHerokuVersion
-    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-db', version: dropwizardHerokuVersion
-    compile group: 'com.loginbox.mybatis', name: 'dropwizard-mybatis', version: '1.0.0'
-    compile group: 'com.loginbox.transactor', name: 'transactor', version: '0.1.0'
-
-    compile group: 'org.glassfish.jersey.ext', name: 'jersey-declarative-linking', version: jerseyVersion
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
-    compile group: 'de.svenkubiak', name: 'jBCrypt', version: '0.4'
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: hamcrestVersion
-    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: hamcrestVersion
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
-
-    acceptanceTestCompile group: 'com.lewisd', name: 'simple-dsl', version: '0.2'
-    acceptanceTestCompile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: jerseyVersion
-    acceptanceTestCompile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
-    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-aliases', version: unacceptableVersion
-    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-dropwizard', version: unacceptableVersion
-    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-dsl', version: unacceptableVersion
-    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-lazy', version: unacceptableVersion
-    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-liquibase', version: unacceptableVersion
-    acceptanceTestCompile group: 'io.github.unacceptable', name: 'unacceptable-selenium', version: unacceptableVersion
-}
-
-node {
-    download = true
-    version = '0.10.35'
-}
-
-jar {
-    manifest {
-        attributes(
-            'Implementation-Vendor': project.group,
-            'Implementation-Title': 'Login Box',
-            'Implementation-Version': sourceVersion
-        )
     }
 }
 
-shadowJar {
-    exclude 'META-INF/*.SF'
-    exclude 'META-INF/*.DSA'
-    exclude 'META-INF/*.RSA'
-    mergeServiceFiles()
-}
+allprojects {
+    group = 'com.loginbox.app'
 
-idea {
-    module {
-        testSourceDirs += sourceSets.acceptanceTest.allJava.srcDirs
-        scopes.TEST.plus += [
-                configurations.acceptanceTestCompile,
-                configurations.acceptanceTestRuntime
-        ]
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        options.compilerArgs << '-Xlint:all'
+        options.compilerArgs << '-Werror'
     }
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-    options.compilerArgs << '-Xlint:all'
-}
-
-tasks.gulp_assets {
-    dependsOn 'npmInstall'
-}
-
-tasks.processResources {
-    dependsOn 'gulp_assets'
-}
-
-tasks.assemble {
-    dependsOn 'shadowJar'
-}
-
-task acceptanceTest(type: Test) {
-    description 'Run acceptance tests.'
-    group 'verification'
-
-    dependsOn 'acceptanceTestClasses'
-    shouldRunAfter 'test'
-
-    inputs.dir sourceSets.main.output.dirs
-    inputs.dir sourceSets.acceptanceTest.output.dirs
-
-    testClassesDir = sourceSets.acceptanceTest.output.classesDir
-    classpath = sourceSets.acceptanceTest.runtimeClasspath
 }
 
 task stage {
-    dependsOn 'shadowJar'
-}
-
-tasks.run {
-    args = ['server']
-}
-
-tasks.check {
-    dependsOn 'acceptanceTest'
+    dependsOn ':app:shadowJar'
 }

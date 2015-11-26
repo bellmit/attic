@@ -1,9 +1,2 @@
 /.gradle/
-/build/
-/login-box.iml
-/login-box.ipr
-/login-box.iws
-/out/
-/node_modules/
-/npm-debug.log
 /.env

@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+DIR="$1"
+
+mkdir -p "${DIR}/junit"
+find . \
+    -path '*/build/test-results/TEST-*.xml' \
+    -exec cp {} "${DIR}/junit/" ';'
