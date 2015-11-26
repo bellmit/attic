@@ -12,6 +12,5 @@ dependencies:
         - ./gradlew stage
 
 test:
-    override:
-        - ./gradlew check
-        - cp -a build/test-results "${CIRCLE_TEST_REPORTS}/junit"
+    post:
+        - bin/collate-test-results "${CIRCLE_TEST_REPORTS}"

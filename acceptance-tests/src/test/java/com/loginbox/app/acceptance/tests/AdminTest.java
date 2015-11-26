@@ -13,6 +13,7 @@ public class AdminTest extends DslTestCase {
     }
 
     @Test
+    @SuppressWarnings("deprecation")
     public void hasAdminPage() {
         webUi.adminPage.open();
         webUi.adminPage.ensureAdminShown();
