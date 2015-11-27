@@ -2,3 +2,4 @@ rootProject.name  = 'login-box'
 
 include 'app'
 include 'acceptance-tests'
+include 'collections'
