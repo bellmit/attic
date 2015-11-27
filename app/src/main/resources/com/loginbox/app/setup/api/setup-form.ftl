@@ -1,5 +1,6 @@
 <#ftl strip_whitespace=true>
 <#import '/ftl/ui.ftl' as ui>
+<#import '/ftl/csrf.ftl' as csrf>
 <#-- @ftlvariable name="" type="com.loginbox.app.setup.api.SetupForm" -->
 <#escape name as name?html>
 <@ui.html>
@@ -48,7 +49,7 @@
                                            name="confirmPassword"
                                            placeholder="Password">
                                 </div>
-                                <input type="hidden" name="csrfToken" value="${csrfToken.secret}">
+                                <@csrf.token />
                                 <button type="submit" class="btn btn-lg btn-default">Set It Up</button>
                             </form>
                         </div>
