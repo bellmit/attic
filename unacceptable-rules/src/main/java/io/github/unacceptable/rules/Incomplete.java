@@ -16,4 +16,12 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Documented
 public @interface Incomplete {
+    /**
+     * A free-text rationale describing why the test is considered incomplete. This will not be included in error
+     * messages related to the test, but will be available for inspection by reflection and code quality tools. Sensible
+     * values include a short description, or a bug tracker issue number, or a milestone name.
+     *
+     * @return the rationale for the test's incomplete status.
+     */
+    String value();
 }
