@@ -1,5 +1,6 @@
 package com.loginbox.app.setup;
 
+import com.loginbox.app.directory.Directories;
 import com.loginbox.app.dropwizard.BundleTestCase;
 import com.loginbox.app.password.PasswordValidator;
 import com.loginbox.app.setup.filters.RedirectToSetupFilter;
@@ -13,6 +14,7 @@ import static org.mockito.Mockito.verify;
 
 public class SetupBundleTest extends BundleTestCase {
 
+    private final Directories directories = mock(Directories.class);
     private final SqlSessionFactory sqlSessionFactory = mock(SqlSessionFactory.class);
     private final PasswordValidator passwordValidator = mock(PasswordValidator.class);
 
@@ -20,6 +22,11 @@ public class SetupBundleTest extends BundleTestCase {
         @Override
         public PasswordValidator getPasswordValidator() {
             return passwordValidator;
+        }
+
+        @Override
+        public Directories getDirectories() {
+            return directories;
         }
 
         @Override

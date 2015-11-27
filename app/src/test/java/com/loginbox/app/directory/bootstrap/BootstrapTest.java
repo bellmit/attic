@@ -33,10 +33,15 @@ public class BootstrapTest extends TransactorTestCase {
     private final Gatekeeper setupGatekeeper = new Gatekeeper(setupTransactor);
 
     private final Bootstrap bootstrap
-            = new Bootstrap(directories, setupGatekeeper) {
+            = new Bootstrap(setupGatekeeper) {
         @Override
         protected PasswordValidator getPasswordValidator() {
             return passwordValidator;
+        }
+
+        @Override
+        protected Directories getDirectories() {
+            return directories;
         }
     };
 
