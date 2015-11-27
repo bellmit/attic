@@ -7,12 +7,6 @@ plugins {
 
 mainClassName = 'com.loginbox.app.LoginBox'
 archivesBaseName = 'login-box'
-sourceCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
 
 dependencies {
     compile project(':collections')
