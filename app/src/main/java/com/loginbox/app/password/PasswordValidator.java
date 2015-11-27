@@ -3,6 +3,12 @@ package com.loginbox.app.password;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class PasswordValidator {
+    private final int workFactor;
+
+    public PasswordValidator(int workFactor) {
+        this.workFactor = workFactor;
+    }
+
     public String digest(String password) {
         String salt = newSalt();
         String digest = BCrypt.hashpw(password, salt);
@@ -14,6 +20,6 @@ public class PasswordValidator {
     }
 
     protected String newSalt() {
-        return BCrypt.gensalt();
+        return BCrypt.gensalt(workFactor);
     }
 }

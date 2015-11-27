@@ -37,10 +37,13 @@ public abstract class SetupBundle implements Bundle {
     public void run(Environment environment) {
         MybatisTransactor transactor = new MybatisTransactor(this::getSqlSessionFactory);
         Directories directories = new Directories();
-        PasswordValidator passwordValidator = new PasswordValidator();
         Gatekeeper setupGatekeeper = new Gatekeeper(transactor);
-        Bootstrap bootstrap = new Bootstrap(
-                directories, setupGatekeeper, passwordValidator);
+        Bootstrap bootstrap = new Bootstrap(directories, setupGatekeeper) {
+            @Override
+            protected PasswordValidator getPasswordValidator() {
+                return SetupBundle.this.getPasswordValidator();
+            }
+        };
         Validator validator = environment.getValidator();
 
         SetupResource setupResource = new SetupResource(
@@ -51,6 +54,8 @@ public abstract class SetupBundle implements Bundle {
         environment.jersey().register(setupResource);
         environment.jersey().register(redirectToSetupFilter);
     }
+
+    public abstract PasswordValidator getPasswordValidator();
 
     public abstract SqlSessionFactory getSqlSessionFactory();
 }

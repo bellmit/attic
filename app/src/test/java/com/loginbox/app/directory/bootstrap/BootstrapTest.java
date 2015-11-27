@@ -33,7 +33,12 @@ public class BootstrapTest extends TransactorTestCase {
     private final Gatekeeper setupGatekeeper = new Gatekeeper(setupTransactor);
 
     private final Bootstrap bootstrap
-            = new Bootstrap(directories, setupGatekeeper, passwordValidator);
+            = new Bootstrap(directories, setupGatekeeper) {
+        @Override
+        protected PasswordValidator getPasswordValidator() {
+            return passwordValidator;
+        }
+    };
 
     private final GatekeeperRepository gatekeeperRepository = mockMapper(GatekeeperRepository.class);
     private final InternalDirectoryQueries queries = mockMapper(InternalDirectoryQueries.class);
@@ -50,7 +55,6 @@ public class BootstrapTest extends TransactorTestCase {
     @Before
     public void wireMocks() {
         when(directoryRepository.insertInternalDirectory()).thenReturn(newDirectoryConfig);
-        when(newDirectoryConfig.getId()).thenReturn(directoryId);
 
         when(userInfo.withDigestedPassword(passwordValidator)).thenReturn(digestedUserInfo);
 
