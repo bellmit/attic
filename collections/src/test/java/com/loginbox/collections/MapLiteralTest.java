@@ -1,5 +1,7 @@
 package com.loginbox.collections;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -21,13 +23,13 @@ public class MapLiteralTest {
                 MapLiteral.entry("5", "five")
         );
 
-        assertThat(actual, is(equalTo(expected)));
+        MatcherAssert.assertThat(actual, Matchers.is(Matchers.equalTo(expected)));
     }
 
     @Test
     public void emptyMapLiteral() {
         HashMap<String, String> actual = MapLiteral.hashMap();
 
-        assertThat(actual.entrySet(), is(empty()));
+        MatcherAssert.assertThat(actual.entrySet(), Matchers.is(Matchers.empty()));
     }
 }
