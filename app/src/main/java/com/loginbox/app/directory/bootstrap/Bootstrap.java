@@ -13,19 +13,15 @@ import com.loginbox.transactor.transactable.Transform;
 import org.apache.ibatis.session.SqlSession;
 
 import static com.loginbox.app.transactor.mybatis.MybatisAdapters.mapper;
-import static com.loginbox.transactor.transactable.Merge.lift;
-import static com.loginbox.transactor.transactable.Query.constant;
 
-public class Bootstrap {
+public abstract class Bootstrap {
     private final Directories directories;
     private final Gatekeeper setupGatekeeper;
-    private final PasswordValidator passwordValidator;
 
     public Bootstrap(
-            Directories directories, Gatekeeper setupGatekeeper, PasswordValidator passwordValidator) {
+            Directories directories, Gatekeeper setupGatekeeper) {
         this.directories = directories;
         this.setupGatekeeper = setupGatekeeper;
-        this.passwordValidator = passwordValidator;
     }
 
     public Transform<SqlSession, UserInfo, User> setupAction() {
@@ -33,9 +29,9 @@ public class Bootstrap {
                 = directories.createInternalDirectory();
 
         Query<SqlSession, PasswordValidator> passwordValidator
-                = constant(this.passwordValidator);
+                = Query.lift(this::getPasswordValidator);
         Merge<SqlSession, UserInfo, PasswordValidator, UserInfo> passwordDigestWithValidator
-                = lift(UserInfo::withDigestedPassword);
+                = Merge.lift(UserInfo::withDigestedPassword);
         Transform<SqlSession, UserInfo, UserInfo> passwordDigest
                 = passwordValidator.intoRight(passwordDigestWithValidator);
 
@@ -53,4 +49,6 @@ public class Bootstrap {
                 .intoLeft(bootstrapUserWithDigestedPassword)
                 .andThen(bootstrapCompletedAction);
     }
+
+    protected abstract PasswordValidator getPasswordValidator();
 }
