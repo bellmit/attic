@@ -1,14 +1,5 @@
-import com.loginbox.build.Versions
-
 plugins {
     id 'java'
-}
-
-sourceCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
-    jcenter()
 }
 
 dependencies {
