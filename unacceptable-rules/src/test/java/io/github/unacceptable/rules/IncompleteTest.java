@@ -81,7 +81,7 @@ public class IncompleteTest {
             annotated.evaluate();
             fail();
         } catch(AssumptionViolatedException expected) {
-            assertThat(expected.getCause(), sameInstance(assertionFailed));
+            assertThat(expected.getCause(), sameInstance((Throwable)assertionFailed));
         }
     }
 }

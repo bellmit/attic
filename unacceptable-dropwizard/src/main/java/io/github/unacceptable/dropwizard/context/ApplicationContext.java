@@ -93,16 +93,23 @@ public class ApplicationContext<C extends Configuration> {
         this.configOverrides = configOverrides;
     }
 
+    public boolean isExternal() {
+        return getAppUrl() != null;
+    }
+
+    private String getAppUrl() {
+        return System.getProperty("app.url");
+    }
+
     private ApplicationState<C> applicationState() {
         return applicationState = Lazily.create(applicationState, this::detectApplicationState);
     }
 
     private ApplicationState<C> detectApplicationState() {
-        String appUrl = System.getProperty("app.url");
-        if (appUrl == null) {
+        if (!isExternal()) {
             return new OneShotApplicationState<>(dropwizardTestSupport());
         }
-        return new ExternalApplicationState<>(appUrl);
+        return new ExternalApplicationState<>(getAppUrl());
     }
 
     protected DropwizardTestSupport<C> dropwizardTestSupport() {
