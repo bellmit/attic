@@ -100,6 +100,8 @@ import java.util.function.Consumer;
  */
 public abstract class MybatisBundle<T extends io.dropwizard.Configuration> implements ConfiguredBundle<T>, DatabaseConfiguration<T> {
 
+    private static final String DEFAULT_NAME = "mybatis";
+
     private SqlSessionFactory sqlSessionFactory = null;
 
     private final Consumer<Configuration> configureCallback;
@@ -216,7 +218,7 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
         return configuration;
     }
 
-    protected void registerTypeHandlers(TypeHandlerRegistry registry) {
+    private void registerTypeHandlers(TypeHandlerRegistry registry) {
         registry.register(UUID.class, new UuidTypeHandler());
         registry.register(java.util.Optional.class, new Java8OptionalTypeHandler());
         registry.register(com.google.common.base.Optional.class, new GuavaOptionalTypeHandler());
@@ -258,5 +260,7 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
     public void initialize(Bootstrap<?> bootstrap) {
     }
 
-    protected abstract String getName();
+    protected String getName() {
+        return DEFAULT_NAME;
+    }
 }
