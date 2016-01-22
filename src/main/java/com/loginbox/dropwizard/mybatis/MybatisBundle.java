@@ -99,9 +99,7 @@ import java.util.function.Consumer;
  *         Your application's configuration class.
  */
 public abstract class MybatisBundle<T extends io.dropwizard.Configuration> implements ConfiguredBundle<T>, DatabaseConfiguration<T> {
-    private static final String DEFAULT_NAME = "mybatis";
 
-    private final String name = DEFAULT_NAME;
     private SqlSessionFactory sqlSessionFactory = null;
 
     private final Consumer<Configuration> configureCallback;
@@ -198,7 +196,7 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
 
         sqlSessionFactory = createSqlSessionFactory(dataSource);
 
-        environment.healthChecks().register(name, new SqlSessionFactoryHealthCheck(sqlSessionFactory));
+        environment.healthChecks().register(getName(), new SqlSessionFactoryHealthCheck(sqlSessionFactory));
         environment.jersey().register(SqlSessionProvider.binder(sqlSessionFactory));
     }
 
@@ -209,7 +207,7 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
 
     private Configuration buildMybatisConfiguration(DataSource dataSource) throws Exception {
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
-        Environment mybatisEnvironment = new Environment(name, transactionFactory, dataSource);
+        Environment mybatisEnvironment = new Environment(getName(), transactionFactory, dataSource);
         Configuration configuration = new Configuration(mybatisEnvironment);
         registerTypeHandlers(configuration.getTypeHandlerRegistry());
         registerOwnMappers(configuration);
@@ -218,7 +216,7 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
         return configuration;
     }
 
-    private void registerTypeHandlers(TypeHandlerRegistry registry) {
+    protected void registerTypeHandlers(TypeHandlerRegistry registry) {
         registry.register(UUID.class, new UuidTypeHandler());
         registry.register(java.util.Optional.class, new Java8OptionalTypeHandler());
         registry.register(com.google.common.base.Optional.class, new GuavaOptionalTypeHandler());
@@ -236,7 +234,7 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
 
     private ManagedDataSource buildDataSource(T configuration, io.dropwizard.setup.Environment environment) {
         PooledDataSourceFactory dataSourceFactory = getDataSourceFactory(configuration);
-        return dataSourceFactory.build(environment.metrics(), name);
+        return dataSourceFactory.build(environment.metrics(), getName());
     }
 
     /* @SafeVarargs would be appropriate, but it's not permitted on private methods until Java 9. */
@@ -259,4 +257,6 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration> imple
     @Override
     public void initialize(Bootstrap<?> bootstrap) {
     }
+
+    protected abstract String getName();
 }
