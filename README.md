@@ -9,7 +9,7 @@ entry points into applications. It's broadly similar to microframeworks like
 1. It's tiny. The redfox package contains under 100 lines of code. Redfox
     builds heavily on the [Werkzeug](http://werkzeug.pocoo.org) tools to implement
     its features, rather than re-reinventing the wheel.
-2. It's clean. The following is a valid Redfox application class:
+2. It's clean. The following is a valid Redfox application:
 
         from werkzeug import Response
         from redfox import WebApplication
@@ -19,6 +19,10 @@ entry points into applications. It's broadly similar to microframeworks like
             @get('/')
             def index(self, request):
                 return Response("Hello, world!")
+        
+        if __name__ == '__main__':
+            from redfox import server
+            server.run(Example())
 
 3. It's minimal. Redfox does not impose an ORM model, or a templating system.
 Bring your own, or create your own tools.
