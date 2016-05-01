@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "dependencies": {
+    "autoprefixer": "^6.3.6",
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.0.5",
+    "gulp-postcss": "^6.1.0",
+    "gulp-sourcemaps": "^2.0.0-alpha"
+  }
+}
