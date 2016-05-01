@@ -15,6 +15,7 @@ dependencies {
     }
 
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-assets', version: dropwizardVersion
     compile group: 'io.dropwizard', name: 'dropwizard-views-freemarker', version: dropwizardVersion
 
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: '1.0.0'
