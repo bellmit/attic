@@ -1,0 +1,38 @@
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+mainClassName = 'com.unreasonent.ds.DistantShore'
+archivesBaseName = 'distant-shore'
+
+dependencies {
+    ext {
+        // Ensure all dropwizard components share a version.
+        dropwizardVersion = '0.9.2'
+    }
+
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+
+    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: '1.0.0'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+}
+
+shadowJar {
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    mergeServiceFiles()
+}
+
+tasks.assemble {
+    // The shadow JAR is a good target for cloud platforms like Heroku. `java -jar distant-shore-all.jar` is way
+    // nicer than the full classpath incantation for the non-shadow JAR.
+    dependsOn 'shadowJar'
+}
+
+tasks.run {
+    args = ['server']
+}
