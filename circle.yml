@@ -1,0 +1,16 @@
+---
+machine:
+    java:
+        version: oraclejdk8
+
+checkout:
+    post:
+        - bin/use-pull-request-merge
+
+dependencies:
+    post:
+        - ./gradlew stage
+
+test:
+    post:
+        - bin/collate-test-results "${CIRCLE_TEST_REPORTS}"
