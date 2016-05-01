@@ -1,3 +1,21 @@
 allprojects {
     group = 'com.unreasonent.ds'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+        options.compilerArgs << '-Xlint:all'
+        options.compilerArgs << '-Werror'
+    }
+}
+
+subprojects {
+    plugins.withType(JavaPlugin) {
+        sourceCompatibility = '1.8'
+
+        // Set these once, for all modules. We'll be using Maven Central and JCenter throughout.
+        repositories {
+            mavenCentral()
+            jcenter()
+        }
+    }
 }
