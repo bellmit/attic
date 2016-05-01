@@ -1,6 +1,5 @@
 package com.unreasonent.ds;
 
-import com.loginbox.heroku.config.HerokuConfiguration;
 import io.dropwizard.Bundle;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -12,7 +11,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 public class DistantShoreTest {
-    @SuppressWarnings("unsafe")
+    @SuppressWarnings("unchecked")
     private final Bootstrap<DistantShoreConfiguration> bootstrap = mock(Bootstrap.class);
 
     private final DistantShore app = new DistantShore();
@@ -22,6 +21,11 @@ public class DistantShoreTest {
         app.initialize(bootstrap);
 
         verify(bootstrap, never()).addBundle(any(Bundle.class));
-        verify(bootstrap, never()).addBundle(any(ConfiguredBundle.class));
+        verify(bootstrap, never()).addBundle(anyConfiguredBundle());
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> ConfiguredBundle<T> anyConfiguredBundle() {
+        return any(ConfiguredBundle.class);
     }
 }
