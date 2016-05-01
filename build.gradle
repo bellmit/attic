@@ -19,3 +19,8 @@ subprojects {
         }
     }
 }
+
+task stage {
+    // On Heroku build _only_ the shadow JAR, and nothing else. All other targets are a waste of slug space.
+    dependsOn ':app:shadowJar'
+}
