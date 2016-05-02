@@ -2,6 +2,7 @@ package com.unreasonent.ds;
 
 import com.unreasonent.ds.frontend.FrontendBundle;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
@@ -14,6 +15,8 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
         new DistantShore().run(args);
     }
 
+    private final AssetsBundle assetsBundle
+            = new AssetsBundle("/assets");
     private final ViewBundle<DistantShoreConfiguration> viewBundle
             = new ViewBundle<>();
     private final FrontendBundle frontendBundle
@@ -21,6 +24,7 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
 
     @Override
     public void initialize(Bootstrap<DistantShoreConfiguration> bootstrap) {
+        bootstrap.addBundle(assetsBundle);
         bootstrap.addBundle(viewBundle);
         bootstrap.addBundle(frontendBundle);
     }

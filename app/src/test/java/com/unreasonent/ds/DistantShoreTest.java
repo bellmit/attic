@@ -2,6 +2,7 @@ package com.unreasonent.ds;
 
 import com.unreasonent.ds.frontend.FrontendBundle;
 import io.dropwizard.Configuration;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.views.ViewBundle;
 import org.junit.Test;
@@ -20,6 +21,7 @@ public class DistantShoreTest {
     public void registersBundles() {
         app.initialize(bootstrap);
 
+        verify(bootstrap).addBundle(isA(AssetsBundle.class));
         verify(bootstrap).addBundle(isViewBundle());
         verify(bootstrap).addBundle(isA(FrontendBundle.class));
     }
