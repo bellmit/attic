@@ -9,7 +9,7 @@ The executable artefact is produced by the `app` project's `assemble` target, at
 Useful build targets:
 
 * `./gradlew assemble`: build the binaries without running (most) checks.
-* `./gradlew check`: run the test suite.
+* `./gradlew check`: run the full test suite, including acceptance tests.
 * `./gradlew build`: do both.
 
 There's an additional build target, used on Heroku:

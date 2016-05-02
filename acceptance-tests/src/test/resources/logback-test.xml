@@ -1,0 +1,13 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Silence a bunch of noisy and irrelevant bits of Dropwizard administrivia during tests. Keep the warnings: they
+        generally indicate real problems. -->
+    <root level="warn">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

@@ -1,3 +1,8 @@
+ext {
+    // Ensure all dropwizard components share a version.
+    dropwizardVersion = '0.9.2'
+}
+
 allprojects {
     group = 'com.unreasonent.ds'
 
