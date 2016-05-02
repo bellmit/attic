@@ -6,6 +6,7 @@
     <title>Distant Shore</title>
 
     <link href="/assets/css/site.css" rel="stylesheet">
+    <script src="/assets/js/app.bundle.js"></script>
 </head>
 <body>
     <div id="app">hi, you</div>

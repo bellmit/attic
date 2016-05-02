@@ -5,6 +5,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var less = require('gulp-less');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
+var webpack = require('webpack-stream');
+var named = require('vinyl-named');
 var path = require('path');
 
 var inputs = path.resolve("src/main");
@@ -40,4 +42,25 @@ gulp.task('style', function () {
         .pipe(gulp.dest(lessOutput));
 });
 
-gulp.task('assets', ['style']);
+gulp.task('js', function() {
+    var jsSource = path.join(inputs, "js");
+    var jsRoots = path.join(jsSource, "*.js");
+    var jsOutput = path.join(assets, "js");
+
+    var webpackConfig = {
+        output: {
+            filename: "[name].bundle.js",
+        },
+        // Webpack has its own source map generator, and doesn't seem to integrate nicely with gulp-sourcemaps on its
+        // own. Using the same pipe setup as the less chain (above) results in none source maps.
+        devtool: '#source-map',
+    };
+
+    gulp
+        .src(jsRoots)
+        .pipe(named())
+        .pipe(webpack(webpackConfig))
+        .pipe(gulp.dest(jsOutput));
+});
+
+gulp.task('assets', ['style', 'js']);
