@@ -6,6 +6,7 @@ var less = require('gulp-less');
 var postcss = require('gulp-postcss');
 var autoprefixer = require('autoprefixer');
 var webpack = require('webpack-stream');
+var webpackCore = require('webpack');
 var named = require('vinyl-named');
 var path = require('path');
 
@@ -50,7 +51,45 @@ gulp.task('js', function() {
     var webpackConfig = {
         output: {
             filename: "[name].bundle.js",
+            // Including chunk hashes helps prevent loader shear if a deployment catches you in the middle of a session.
+            // A 404 is a better outcome than silently receiving the wrong source code.
+            chunkFilename: "[name].[chunkhash].chunk.js",
+            publicPath: "/assets/js/",
         },
+
+        resolve: {
+            // Automatically resolve JSX modules, like JS modules.
+            extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"],
+        },
+
+        module: {
+            loaders: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    loader: "babel",
+                    query: {
+                        presets: ['es2015'],
+                    },
+                },
+                {
+                    test: /\.jsx$/,
+                    exclude: /node_modules/,
+                    loader: "babel",
+                    query: {
+                        presets: ['react', 'es2015'],
+                    },
+                },
+            ],
+        },
+
+        plugins: [
+            new webpackCore.optimize.OccurrenceOrderPlugin(/* preferEntry=*/true),
+            new webpackCore.optimize.MinChunkSizePlugin({
+                minChunkSize: 100 * 1024, // Best guess: combine chunks under 100kb. Needs tweaking.
+            }),
+        ],
+
         // Webpack has its own source map generator, and doesn't seem to integrate nicely with gulp-sourcemaps on its
         // own. Using the same pipe setup as the less chain (above) results in none source maps.
         devtool: '#source-map',
