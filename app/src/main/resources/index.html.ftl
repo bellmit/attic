@@ -9,6 +9,6 @@
     <script src="/assets/js/app.bundle.js"></script>
 </head>
 <body>
-    <div id="app">hi, you</div>
+    <div id="app"></div>
 </body>
 </html>
