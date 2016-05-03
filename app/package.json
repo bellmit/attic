@@ -10,6 +10,10 @@
     "gulp-less": "^3.0.5",
     "gulp-postcss": "^6.1.0",
     "gulp-sourcemaps": "^2.0.0-alpha",
+    "react": "^15.0.2",
+    "react-document-title": "^2.0.1",
+    "react-dom": "^15.0.2",
+    "react-router": "^2.4.0",
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^3.2.0"
   }
