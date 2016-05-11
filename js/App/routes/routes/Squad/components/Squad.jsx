@@ -3,6 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import classNames from 'classnames';
+import asset from 'App/asset';
 
 const SPRITE_HEIGHT = 240; // in SVG image units.
 const SPRITE_WIDTH  = 128;
@@ -88,7 +89,7 @@ var CharacterSprite = React.createClass({
 
         var facingOffset = FACINGS[facing || "bottom-left"];
         var sprite = this.sprite(gender, hair, hat, outfit);
-        var path = `/assets/images/characters/${sprite}.png`;
+        var path = asset(`/assets/images/characters/${sprite}.png`);
 
         return (
             <svg {...props}

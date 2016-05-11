@@ -25,6 +25,7 @@
     "local": "node local/server.js"
   },
   "_aerobatic": {
+    "clientConfigVar": "appConfig",
     "build": {
       "engine": "npm",
       "script": "build",
