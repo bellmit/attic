@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "dependencies": {
+    "express": "^4.13.4",
+    "morgan": "^1.7.0"
+  },
+  "scripts": {
+    "local": "node local/server.js"
+  }
+}
