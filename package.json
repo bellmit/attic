@@ -2,10 +2,14 @@
   "private": true,
   "dependencies": {
     "express": "^4.13.4",
+    "less": "^2.7.1",
+    "less-plugin-autoprefix": "^1.5.1",
     "morgan": "^1.7.0"
   },
   "scripts": {
-    "build": "true",
+    "lessc": "lessc --source-map --autoprefix='Android 2.3,Android >= 4,Chrome >= 20,Firefox >= 24,Explorer >= 8,iOS >= 6,Opera >= 12,Safari >= 6' less/site.less dist/css/site.css",
+    "build": "npm run lessc",
+
     "local": "node local/server.js"
   },
   "_aerobatic": {
