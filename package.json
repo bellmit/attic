@@ -26,6 +26,14 @@
   },
   "_aerobatic": {
     "clientConfigVar": "appConfig",
+    "router": [
+      {
+        "module": "webpage",
+        "options": {
+          "pushState": true
+        }
+      }
+    ],
     "build": {
       "engine": "npm",
       "script": "build",
