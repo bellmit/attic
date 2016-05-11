@@ -5,6 +5,14 @@
     "morgan": "^1.7.0"
   },
   "scripts": {
+    "build": "true",
     "local": "node local/server.js"
+  },
+  "_aerobatic": {
+    "build": {
+      "engine": "npm",
+      "script": "build",
+      "output": "dist"
+    }
   }
 }
