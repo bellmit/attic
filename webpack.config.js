@@ -2,6 +2,7 @@
 
 var path = require('path');
 var webpack = require('webpack');
+var AerobaticChunkLoader = require('./local/aerobatic-webpack.js');
 
 module.exports = {
   entry: {
@@ -50,6 +51,9 @@ module.exports = {
   },
 
   plugins: [
+    new AerobaticChunkLoader({
+      clientConfigVar: 'appConfig',
+    }),
     new webpack.optimize.OccurrenceOrderPlugin(/* preferEntry=*/true),
     new webpack.optimize.MinChunkSizePlugin({
       // Best guess: combine chunks under 100kb. Needs tweaking.
