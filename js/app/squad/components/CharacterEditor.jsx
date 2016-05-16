@@ -9,39 +9,21 @@ import * as actions from '../actions';
 import CharacterSprite from './CharacterSprite';
 import CycleButtons from './CycleButtons';
 
-const dataProps = {
-  name: PropTypes.string.isRequired,
-  sprite: CharacterSprite.dataProps.isRequired,
-};
-
 const CharacterEditor = React.createClass({
-  statics: {
-    dataProps: PropTypes.shape(dataProps),
-  },
-
-  propTypes: {
-    ...dataProps,
-    onChangeName: PropTypes.func.isRequired,
-    onChangeGender: PropTypes.func.isRequired,
-    onChangeHat: PropTypes.func.isRequired,
-    onChangeHair: PropTypes.func.isRequired,
-    onChangeOutfit: PropTypes.func.isRequired,
-  },
-
   render() {
     return (
       <div className="row">
         <div className="col-md-1">
           <div className="form-group">
-            <CycleButtons onCycle={dir => this.props.onChangeHat(dir)} />
+            <CycleButtons onCycle={dir => this.props.changeCharacterHat(this.props.index, dir)} />
           </div>
 
           <div className="form-group">
-            <CycleButtons onCycle={dir => this.props.onChangeHair(dir)} />
+            <CycleButtons onCycle={dir => this.props.changeCharacterHair(this.props.index, dir)} />
           </div>
 
           <div className="form-group">
-            <CycleButtons onCycle={dir => this.props.onChangeOutfit(dir)} />
+            <CycleButtons onCycle={dir => this.props.changeCharacterOutfit(this.props.index, dir)} />
           </div>
 
           <div className="form-group">
@@ -58,7 +40,7 @@ const CharacterEditor = React.createClass({
                     type="radio"
                     name="gender"
                     value={gender}
-                    onChange={event => this.props.onChangeGender(gender)}
+                    onChange={event => this.props.changeCharacterGender(this.props.index, gender)}
                     checked={this.props.sprite.gender == gender} /> {gender}
                 </label>
               ))}
@@ -78,7 +60,7 @@ const CharacterEditor = React.createClass({
                 className="form-control"
                 placeholder="Character name…"
                 value={this.props.name}
-                onChange={event => this.props.onChangeName(event.target.value)} />
+                onChange={event => this.props.changeCharacterName(this.props.index, event.target.value)} />
             </label>
           </div>
         </div>

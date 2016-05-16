@@ -15,20 +15,7 @@ const FACINGS = options.FACINGS.reduce(
   {}
 );
 
-const dataProps = {
-  gender: PropTypes.oneOf(options.GENDERS).isRequired,
-  hair: PropTypes.oneOf(options.HAIRS).isRequired,
-  hat: PropTypes.oneOf(options.HATS).isRequired,
-  outfit: PropTypes.oneOf(options.OUTFITS).isRequired,
-};
-
 const CharacterSprite = React.createClass({
-  statics: {
-    dataProps: PropTypes.shape(dataProps),
-  },
-  
-  propTypes: dataProps,
-
   sprite(gender, hair, hat, outfit) {
     return [
       "B", // "battle" sprites
