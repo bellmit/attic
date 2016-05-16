@@ -19,11 +19,24 @@
     "redux": "^3.5.2",
     "webpack": "^1.13.0"
   },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "karma": "^0.13.22",
+    "karma-chai": "^0.1.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.0.1",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.4.5"
+  },
   "scripts": {
     "lessc": "lessc --source-map --autoprefix='Android 2.3,Android >= 4,Chrome >= 20,Firefox >= 24,Explorer >= 8,iOS >= 6,Opera >= 12,Safari >= 6' less/site.less dist/css/site.css",
     "webpack": "webpack",
     "webpack-watch": "webpack --watch",
+    "karma": "karma start --single-run",
+    "karma-watch": "karma start",
     "build": "npm run lessc && npm run webpack",
+    "test": "npm run karma",
     "local": "node local/server.js"
   },
   "_aerobatic": {

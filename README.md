@@ -17,3 +17,9 @@ Alternately, you can run the build steps separately:
     npm run webpack # or webpack-watch, for live updates while editing
 
 You will need the Distant Shore services running locally on their default ports.
+
+To run the unit tests for the UI, _you do not need the Distant Shore services_:
+
+    npm run test
+    npm run karma       # equivalent to test
+    npm run karma-watch # autostarts Firefox; manually connect other browsers

@@ -24,5 +24,5 @@ function appConfig(callback) {
  * this will return path, unaltered.
  */
 module.exports = function asset(path) {
-  return appConfig(config => `${config.staticAssetPath}${path}`) || path;
+  return appConfig(config => `${config.staticAssetPath || ''}${path}`) || path;
 }
