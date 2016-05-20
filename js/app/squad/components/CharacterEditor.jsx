@@ -1,13 +1,13 @@
 'use strict';
 
 import React, { PropTypes } from 'react';
-import classNames from 'classnames';
 import { randomIndex, cyclicIndex } from 'app/arrays';
 import { HATS, HAIRS, OUTFITS, GENDERS } from '../character-options';
 import * as actions from '../actions';
 
 import CharacterSprite from './CharacterSprite';
 import CycleButtons from './CycleButtons';
+import OptionButtons from './OptionButtons';
 
 export default function CharacterEditor({
   index,
@@ -34,24 +34,10 @@ export default function CharacterEditor({
       </div>
 
       <div className="form-group">
-        <div className="btn-group" data-toggle="buttons">
-          {GENDERS.map(gender => (
-            <label key={gender}
-              className={classNames({
-                "btn": true,
-                "btn-sm": true,
-                "btn-default": true,
-                "active": sprite.gender == gender,
-              })}>
-              <input
-                type="radio"
-                name="gender"
-                value={gender}
-                onChange={event => changeCharacterGender(index, gender)}
-                checked={sprite.gender == gender} /> {gender}
-            </label>
-          ))}
-        </div>
+        <OptionButtons
+          options={GENDERS}
+          value={sprite.gender}
+          onSelect={gender => changeCharacterGender(index, gender)} />
       </div>
     </div>
 
