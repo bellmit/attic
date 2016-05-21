@@ -11,11 +11,8 @@ export default function CharacterEditor({
   index,
   sprite,
   name,
-  changeCharacterHat,
-  changeCharacterHair,
-  changeCharacterOutfit,
-  changeCharacterGender,
   changeCharacterName,
+  updateCharacterSprite,
 }) {
   return <div className="row">
     <div className="col-md-1">
@@ -23,28 +20,28 @@ export default function CharacterEditor({
         <CycleButtons
           options={HATS}
           value={sprite.hat}
-          onSelect={hat => changeCharacterHat(index, hat)} />
+          onSelect={hat => updateCharacterSprite(index, { hat, })} />
       </div>
 
       <div className="form-group">
         <CycleButtons
           options={HAIRS}
           value={sprite.hair}
-          onSelect={hair => changeCharacterHair(index, hair)} />
+          onSelect={hair => updateCharacterSprite(index, { hair, })} />
       </div>
 
       <div className="form-group">
         <CycleButtons
           options={OUTFITS}
           value={sprite.outfit}
-          onSelect={outfit => changeCharacterOutfit(index, outfit)} />
+          onSelect={outfit => updateCharacterSprite(index, { outfit, })} />
       </div>
 
       <div className="form-group">
         <OptionButtons
           options={GENDERS}
           value={sprite.gender}
-          onSelect={gender => changeCharacterGender(index, gender)} />
+          onSelect={gender => updateCharacterSprite(index, { gender, })} />
       </div>
     </div>
 

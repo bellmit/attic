@@ -31,56 +31,33 @@ const initialCharacters = [
 ];
 
 const sprite = handleActions({
-  [actions.CHANGE_CHARACTER_GENDER]: (state, action) => ({
+  UPDATE_CHARACTER_SPRITE: (state, {payload}) => ({
     ...state,
-    gender: action.gender,
-  }),
-  [actions.CHANGE_CHARACTER_HAT]: (state, action) => ({
-    ...state,
-    hat: action.hat,
-  }),
-  [actions.CHANGE_CHARACTER_HAIR]: (state, action) => ({
-    ...state,
-    hair: action.hair,
-  }),
-  [actions.CHANGE_CHARACTER_OUTFIT]: (state, action) => ({
-    ...state,
-    outfit: action.outfit,
+    ...payload.sprite,
   }),
 });
 
-function character(state, action) {
-  switch (action.type) {
-  case actions.CHANGE_CHARACTER_NAME:
-    return {
-      ...state,
-      name: action.name,
-    };
-  case actions.CHANGE_CHARACTER_GENDER:
-  case actions.CHANGE_CHARACTER_HAT:
-  case actions.CHANGE_CHARACTER_HAIR:
-  case actions.CHANGE_CHARACTER_OUTFIT:
-    return {
-      ...state,
-      sprite: sprite(state.sprite, action),
-    };
-  default:
-    return state;
-  }
+const character = handleActions({
+  CHANGE_CHARACTER_NAME: (state, action) => ({
+    ...state,
+    name: action.payload.name,
+  }),
+  UPDATE_CHARACTER_SPRITE: (state, action) => ({
+    ...state,
+    sprite: sprite(state.sprite, action),
+  }),
+})
+
+function reduceIndexedElement(reducer) {
+  return (state, action) => state.map(
+    (elem, index) => action.payload.index == index ? reducer(elem, action) : elem
+  );
 }
 
-function characters(state=initialCharacters, action) {
-  switch (action.type) {
-  case actions.CHANGE_CHARACTER_NAME:
-  case actions.CHANGE_CHARACTER_GENDER:
-  case actions.CHANGE_CHARACTER_HAT:
-  case actions.CHANGE_CHARACTER_HAIR:
-  case actions.CHANGE_CHARACTER_OUTFIT:
-    return state.map((c, index) => index == action.index ? character(c, action) : c);
-  default:
-    return state;
-  }
-}
+const characters = handleActions({
+  CHANGE_CHARACTER_NAME: reduceIndexedElement(character),
+  UPDATE_CHARACTER_SPRITE: reduceIndexedElement(character),
+}, initialCharacters);
 
 module.exports = combineReducers({
   characters,

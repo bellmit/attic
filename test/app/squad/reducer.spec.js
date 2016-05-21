@@ -32,8 +32,8 @@ describe('app/squad/reducer', () => {
         sprite: {
           hair: "1",
           hat: "0",
-          gender: "F",
           outfit: "1",
+          gender: "F",
         },
       },
     ],
@@ -45,27 +45,40 @@ describe('app/squad/reducer', () => {
     expect(toState.characters[0].name).to.equal("Doug");
   });
 
-  it('changes character sprite hairs', () => {
-    var toState = reducer(fromState, actions.changeCharacterHair(0, "2"));
+  it('updates character sprites', () => {
+    var toState = reducer(fromState, actions.updateCharacterSprite(0, {
+      hair: "2",
+      hat: "1",
+      outfit: "2",
+      gender: "M",
+    }));
 
     expect(toState.characters[0].sprite.hair).to.equal("2");
-  });
-
-  it('changes character sprite hats', () => {
-    var toState = reducer(fromState, actions.changeCharacterHat(0, "1"));
-
     expect(toState.characters[0].sprite.hat).to.equal("1");
-  });
-
-  it('changes character sprite genders', () => {
-    var toState = reducer(fromState, actions.changeCharacterGender(0, "M"));
-
+    expect(toState.characters[0].sprite.outfit).to.equal("2");
     expect(toState.characters[0].sprite.gender).to.equal("M");
   });
 
-  it('changes character sprite outfits', () => {
-    var toState = reducer(fromState, actions.changeCharacterOutfit(0, "2"));
+  it('partially updates character sprites', () => {
+    var toState = reducer(fromState, actions.updateCharacterSprite(0, {
+      hair: "2",
+      gender: "M",
+    }));
 
-    expect(toState.characters[0].sprite.outfit).to.equal("2");
+    expect(toState.characters[0].sprite.hair).to.equal("2");
+    expect(toState.characters[0].sprite.hat).to.equal("0");
+    expect(toState.characters[0].sprite.outfit).to.equal("1");
+    expect(toState.characters[0].sprite.gender).to.equal("M");
+  });
+
+  it('ignores updates to a nonexistant character', () => {
+    var toState = reducer(fromState, actions.updateCharacterSprite(1, {
+      hair: "2",
+      hat: "1",
+      outfit: "2",
+      gender: "M",
+    }));
+
+    expect(toState).to.deep.equal(fromState);
   });
 });
