@@ -46,13 +46,13 @@ describe('app/squad/reducer', () => {
   });
 
   it('changes character sprite hairs', () => {
-    var toState = reducer(fromState, actions.changeCharacterHair(0, NEXT));
+    var toState = reducer(fromState, actions.changeCharacterHair(0, "2"));
 
     expect(toState.characters[0].sprite.hair).to.equal("2");
   });
 
   it('changes character sprite hats', () => {
-    var toState = reducer(fromState, actions.changeCharacterHat(0, NEXT));
+    var toState = reducer(fromState, actions.changeCharacterHat(0, "1"));
 
     expect(toState.characters[0].sprite.hat).to.equal("1");
   });
@@ -64,7 +64,7 @@ describe('app/squad/reducer', () => {
   });
 
   it('changes character sprite outfits', () => {
-    var toState = reducer(fromState, actions.changeCharacterOutfit(0, NEXT));
+    var toState = reducer(fromState, actions.changeCharacterOutfit(0, "2"));
 
     expect(toState.characters[0].sprite.outfit).to.equal("2");
   });

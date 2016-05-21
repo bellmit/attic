@@ -4,9 +4,7 @@ import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import * as actions from './actions';
 import * as options from './character-options';
-import { randomElement, cyclicIndex } from 'app/arrays';
-
-import { NEXT, PREV } from './components/CycleButtons';
+import { randomElement } from 'app/arrays';
 
 function randomSprite() {
   return {
@@ -32,19 +30,6 @@ const initialCharacters = [
   },
 ];
 
-function cycle(values, current, direction) {
-  var index = values.indexOf(current);
-  switch (direction) {
-  case NEXT:
-    index = cyclicIndex(index + 1, values);
-    break;
-  case PREV:
-    index = cyclicIndex(index - 1, values);
-    break;
-  }
-  return values[index];
-}
-
 const sprite = handleActions({
   [actions.CHANGE_CHARACTER_GENDER]: (state, action) => ({
     ...state,
@@ -52,15 +37,15 @@ const sprite = handleActions({
   }),
   [actions.CHANGE_CHARACTER_HAT]: (state, action) => ({
     ...state,
-    hat: cycle(options.HATS, state.hat, action.direction),
+    hat: action.hat,
   }),
   [actions.CHANGE_CHARACTER_HAIR]: (state, action) => ({
     ...state,
-    hair: cycle(options.HAIRS, state.hair, action.direction),
+    hair: action.hair,
   }),
   [actions.CHANGE_CHARACTER_OUTFIT]: (state, action) => ({
     ...state,
-    outfit: cycle(options.OUTFITS, state.outfit, action.direction),
+    outfit: action.outfit,
   }),
 });
 

@@ -22,26 +22,26 @@ export function changeCharacterGender(index, gender) {
   };
 }
 
-export function changeCharacterHat(index, direction) {
+export function changeCharacterHat(index, hat) {
   return {
     type: CHANGE_CHARACTER_HAT,
     index,
-    direction,
+    hat,
   };
 }
 
-export function changeCharacterHair(index, direction) {
+export function changeCharacterHair(index, hair) {
   return {
     type: CHANGE_CHARACTER_HAIR,
     index,
-    direction,
+    hair,
   };
 }
 
-export function changeCharacterOutfit(index, direction) {
+export function changeCharacterOutfit(index, outfit) {
   return {
     type: CHANGE_CHARACTER_OUTFIT,
     index,
-    direction,
+    outfit,
   };
 }

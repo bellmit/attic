@@ -1,9 +1,7 @@
 'use strict';
 
 import React, { PropTypes } from 'react';
-import { randomIndex, cyclicIndex } from 'app/arrays';
 import { HATS, HAIRS, OUTFITS, GENDERS } from '../character-options';
-import * as actions from '../actions';
 
 import CharacterSprite from './CharacterSprite';
 import CycleButtons from './CycleButtons';
@@ -22,15 +20,24 @@ export default function CharacterEditor({
   return <div className="row">
     <div className="col-md-1">
       <div className="form-group">
-        <CycleButtons onCycle={dir => changeCharacterHat(index, dir)} />
+        <CycleButtons
+          options={HATS}
+          value={sprite.hat}
+          onSelect={hat => changeCharacterHat(index, hat)} />
       </div>
 
       <div className="form-group">
-        <CycleButtons onCycle={dir => changeCharacterHair(index, dir)} />
+        <CycleButtons
+          options={HAIRS}
+          value={sprite.hair}
+          onSelect={hair => changeCharacterHair(index, hair)} />
       </div>
 
       <div className="form-group">
-        <CycleButtons onCycle={dir => changeCharacterOutfit(index, dir)} />
+        <CycleButtons
+          options={OUTFITS}
+          value={sprite.outfit}
+          onSelect={outfit => changeCharacterOutfit(index, outfit)} />
       </div>
 
       <div className="form-group">
