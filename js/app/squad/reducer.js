@@ -1,11 +1,10 @@
 'use strict';
 
 import { combineReducers } from 'redux';
+import { handleActions } from 'redux-actions';
 import * as actions from './actions';
 import * as options from './character-options';
-import { randomElement, cyclicIndex } from 'app/arrays';
-
-import { NEXT, PREV } from './components/CycleButtons';
+import { randomElement } from 'app/arrays';
 
 function randomSprite() {
   return {
@@ -31,75 +30,34 @@ const initialCharacters = [
   },
 ];
 
-function cycle(values, current, direction) {
-  var index = values.indexOf(current);
-  switch (direction) {
-  case NEXT:
-    index = cyclicIndex(index + 1, values);
-    break;
-  case PREV:
-    index = cyclicIndex(index - 1, values);
-    break;
-  }
-  return values[index];
+const sprite = handleActions({
+  UPDATE_CHARACTER_SPRITE: (state, {payload}) => ({
+    ...state,
+    ...payload.sprite,
+  }),
+});
+
+const character = handleActions({
+  CHANGE_CHARACTER_NAME: (state, action) => ({
+    ...state,
+    name: action.payload.name,
+  }),
+  UPDATE_CHARACTER_SPRITE: (state, action) => ({
+    ...state,
+    sprite: sprite(state.sprite, action),
+  }),
+})
+
+function reduceIndexedElement(reducer) {
+  return (state, action) => state.map(
+    (elem, index) => action.payload.index == index ? reducer(elem, action) : elem
+  );
 }
 
-function sprite(state, action) {
-  switch (action.type) {
-  case actions.CHANGE_CHARACTER_GENDER:
-    return {
-      ...state,
-      gender: action.gender,
-    };
-  case actions.CHANGE_CHARACTER_HAT:
-    return {
-      ...state,
-      hat: cycle(options.HATS, state.hat, action.direction),
-    };
-  case actions.CHANGE_CHARACTER_HAIR:
-    return {
-      ...state,
-      hair: cycle(options.HAIRS, state.hair, action.direction),
-    };
-  case actions.CHANGE_CHARACTER_OUTFIT:
-    return {
-      ...state,
-      outfit: cycle(options.OUTFITS, state.outfit, action.direction),
-    };
-  default:
-    return state;
-  }
-}
-
-function characters(state=initialCharacters, action) {
-  switch (action.type) {
-  case actions.CHANGE_CHARACTER_NAME:
-    return state.map((character, index) => {
-      if (index == action.index) {
-        return {
-          ...character,
-          name: action.name,
-        };
-      }
-      return character;
-    });
-  case actions.CHANGE_CHARACTER_GENDER:
-  case actions.CHANGE_CHARACTER_HAT:
-  case actions.CHANGE_CHARACTER_HAIR:
-  case actions.CHANGE_CHARACTER_OUTFIT:
-    return state.map((character, index) => {
-      if (index == action.index) {
-        return {
-          ...character,
-          sprite: sprite(character.sprite, action),
-        };
-      }
-      return character;
-    });
-  default:
-    return state;
-  }
-}
+const characters = handleActions({
+  CHANGE_CHARACTER_NAME: reduceIndexedElement(character),
+  UPDATE_CHARACTER_SPRITE: reduceIndexedElement(character),
+}, initialCharacters);
 
 module.exports = combineReducers({
   characters,

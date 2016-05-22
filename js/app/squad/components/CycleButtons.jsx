@@ -1,25 +1,27 @@
 'use strict';
 
 import React, { PropTypes } from 'react';
+import { cyclicIndex } from 'app/arrays';
 
-export const NEXT = 'next';
-export const PREV = 'prev';
+const NEXT = 1;
+const PREV = -1;
 
-const CycleButtons = React.createClass({
-  propTypes: {
-    onCycle: PropTypes.func.isRequired,
-  },
+function cycle(options, current, step) {
+  var currentIndex = options.indexOf(current);
+  var cycledIndex = cyclicIndex(currentIndex + step, options);
+  return options[cycledIndex];
+}
 
-  render() {
-    return <div className="btn-group" data-toggle="buttons">
-      <button className="btn btn-sm btn-default" onClick={() => this.props.onCycle(PREV)}>
-        &lt;
-      </button>
-      <button className="btn btn-sm btn-default" onClick={() => this.props.onCycle(NEXT)}>
-        &gt;
-      </button>
-    </div>;
-  },
-});
-
-export default CycleButtons;
+export default function CycleButtons({options, value, onSelect}) {
+  const prev = cycle(options, value, PREV);
+  const next = cycle(options, value, NEXT);
+  
+  return <div className="btn-group" data-toggle="buttons">
+    <button className="btn btn-sm btn-default" onClick={() => onSelect(next)}>
+      &lt;
+    </button>
+    <button className="btn btn-sm btn-default" onClick={() => onSelect(prev)}>
+      &gt;
+    </button>
+  </div>;
+}
