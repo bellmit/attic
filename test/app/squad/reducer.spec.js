@@ -42,7 +42,19 @@ describe('app/squad/reducer', () => {
   it('changes character names', () => {
     var toState = reducer(fromState, actions.changeCharacterName(0, "Doug"));
 
-    expect(toState.characters[0].name).to.equal("Doug");
+    expect(toState).to.deep.equal({
+      characters: [
+        {
+          name: "Doug",
+          sprite: {
+            hair: "1",
+            hat: "0",
+            outfit: "1",
+            gender: "F",
+          },
+        },
+      ],
+    });
   });
 
   it('updates character sprites', () => {
@@ -53,10 +65,19 @@ describe('app/squad/reducer', () => {
       gender: "M",
     }));
 
-    expect(toState.characters[0].sprite.hair).to.equal("2");
-    expect(toState.characters[0].sprite.hat).to.equal("1");
-    expect(toState.characters[0].sprite.outfit).to.equal("2");
-    expect(toState.characters[0].sprite.gender).to.equal("M");
+    expect(toState).to.deep.equal({
+      characters: [
+        {
+          name: "Bob",
+          sprite: {
+            hair: "2",
+            hat: "1",
+            outfit: "2",
+            gender: "M",
+          },
+        },
+      ],
+    });
   });
 
   it('partially updates character sprites', () => {
@@ -65,10 +86,19 @@ describe('app/squad/reducer', () => {
       gender: "M",
     }));
 
-    expect(toState.characters[0].sprite.hair).to.equal("2");
-    expect(toState.characters[0].sprite.hat).to.equal("0");
-    expect(toState.characters[0].sprite.outfit).to.equal("1");
-    expect(toState.characters[0].sprite.gender).to.equal("M");
+    expect(toState).to.deep.equal({
+      characters: [
+        {
+          name: "Bob",
+          sprite: {
+            hair: "2",
+            hat: "0",
+            outfit: "1",
+            gender: "M",
+          },
+        },
+      ],
+    });
   });
 
   it('ignores updates to a nonexistant character', () => {
