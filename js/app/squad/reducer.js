@@ -36,18 +36,18 @@ const initialCharacters = [
 const sprite = handleActions({
   UPDATE_CHARACTER_SPRITE: (state, {payload}) => ({
     ...state,
-    ...payload.sprite,
+    ...payload,
   }),
 });
 
 const character = handleActions({
   CHANGE_CHARACTER_NAME: (state, action) => ({
     ...state,
-    name: action.payload.name,
+    name: action.payload,
   }),
   CHANGE_CHARACTER_ARCHETYPE: (state, action) => ({
     ...state,
-    archetype: action.payload.archetype,
+    archetype: action.payload,
   }),
   UPDATE_CHARACTER_SPRITE: (state, action) => ({
     ...state,
@@ -57,7 +57,7 @@ const character = handleActions({
 
 function reduceIndexedElement(reducer) {
   return (state, action) => state.map(
-    (elem, index) => action.payload.index == index ? reducer(elem, action) : elem
+    (elem, index) => action.meta.index == index ? reducer(elem, action) : elem
   );
 }
 
