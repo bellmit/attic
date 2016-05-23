@@ -2,26 +2,30 @@
 
 import classNames from 'classnames';
 import React, { PropTypes } from 'react';
+import _ from 'lodash';
 
 export const NEXT = 'next';
 export const PREV = 'prev';
 
-export default function OptionButtons({options, value, onSelect}) {
-  return <div className="btn-group" data-toggle="buttons">
-    {options.map(option => (
-      <label key={option}
-        className={classNames({
+export default function OptionButtons({options, buttonClassName, value, onSelect}) {
+  if (Array.isArray(options)) {
+    options = options.reduce((opts, option) => ({
+      ...opts,
+      [option]: option,
+    }), {})
+  }
+
+  return <div className="btn-group">
+    {_.keys(options).map(option => (
+      <button key={option}
+        className={classNames(buttonClassName, {
           "btn": true,
-          "btn-sm": true,
           "btn-default": true,
           "active": value == option,
-        })}>
-        <input
-          type="radio"
-          value={option}
-          onChange={event => onSelect(option)}
-          checked={value == option} /> {option}
-      </label>
+        })}
+        onClick={event => onSelect(option)}>
+        {options[option]}
+      </button>
     ))}
   </div>;
 }

@@ -14,6 +14,11 @@ export default function CharacterEditor({
   changeCharacterName,
   updateCharacterSprite,
 }) {
+  var genders = {
+    F: "♀",
+    M: "♂",
+  };
+
   return <div className="row">
     <div className="col-md-1">
       <div className="form-group">
@@ -39,7 +44,8 @@ export default function CharacterEditor({
 
       <div className="form-group">
         <OptionButtons
-          options={GENDERS}
+          buttonClassName="btn-sm"
+          options={genders}
           value={sprite.gender}
           onSelect={gender => updateCharacterSprite(index, { gender, })} />
       </div>
