@@ -10,6 +10,14 @@ export const changeCharacterName = createAction(
   })
 );
 
+export const changeCharacterArchetype = createAction(
+  'CHANGE_CHARACTER_ARCHETYPE',
+  (index, archetype) => ({
+    index,
+    archetype,
+  })
+);
+
 export const updateCharacterSprite = createAction(
   'UPDATE_CHARACTER_SPRITE',
   (index, sprite) => ({

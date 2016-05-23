@@ -11,12 +11,32 @@ export default function CharacterEditor({
   index,
   sprite,
   name,
+  archetype,
   changeCharacterName,
+  changeCharacterArchetype,
   updateCharacterSprite,
 }) {
   var genders = {
     F: "♀",
     M: "♂",
+  };
+
+  var archetypes = {
+    skirmisher: <div>
+      <h5>Skirmisher</h5>
+      <p>Nimble fighter<br />
+      Vulnerable to Hunters</p>
+    </div>,
+    hunter: <div>
+      <h5>Hunter</h5>
+      <p>Stalwart archer<br />
+      Vulnerable to Sages</p>
+    </div>,
+    sage: <div>
+      <h5>Sage</h5>
+      <p>Crafty mystics<br />
+      Vulnerable to Skirmishers</p>
+    </div>,
   };
 
   return <div className="row">
@@ -65,6 +85,13 @@ export default function CharacterEditor({
             value={name}
             onChange={event => changeCharacterName(index, event.target.value)} />
         </label>
+      </div>
+
+      <div className="form-group">
+        <OptionButtons
+          options={archetypes}
+          value={archetype}
+          onSelect={archetype => changeCharacterArchetype(index, archetype)} />
       </div>
     </div>
   </div>;
