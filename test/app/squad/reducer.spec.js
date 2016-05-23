@@ -29,6 +29,7 @@ describe('app/squad/reducer', () => {
     characters: [
       {
         name: "Bob",
+        archetype: "skirmisher",
         sprite: {
           hair: "1",
           hat: "0",
@@ -46,6 +47,26 @@ describe('app/squad/reducer', () => {
       characters: [
         {
           name: "Doug",
+          archetype: "skirmisher",
+          sprite: {
+            hair: "1",
+            hat: "0",
+            outfit: "1",
+            gender: "F",
+          },
+        },
+      ],
+    });
+  });
+
+  it('changes character archetypes', () => {
+    var toState = reducer(fromState, actions.changeCharacterArchetype(0, "hunter"));
+
+    expect(toState).to.deep.equal({
+      characters: [
+        {
+          name: "Bob",
+          archetype: "hunter",
           sprite: {
             hair: "1",
             hat: "0",
@@ -69,6 +90,7 @@ describe('app/squad/reducer', () => {
       characters: [
         {
           name: "Bob",
+          archetype: "skirmisher",
           sprite: {
             hair: "2",
             hat: "1",
@@ -90,6 +112,7 @@ describe('app/squad/reducer', () => {
       characters: [
         {
           name: "Bob",
+          archetype: "skirmisher",
           sprite: {
             hair: "2",
             hat: "0",

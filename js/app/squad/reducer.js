@@ -18,14 +18,17 @@ function randomSprite() {
 const initialCharacters = [
   {
     name: "Player 1",
+    archetype: randomElement(options.ARCHETYPES),
     sprite: randomSprite(),
   },
   {
     name: "Player 3",
+    archetype: randomElement(options.ARCHETYPES),
     sprite: randomSprite(),
   },
   {
     name: "Player 2",
+    archetype: randomElement(options.ARCHETYPES),
     sprite: randomSprite(),
   },
 ];
@@ -33,14 +36,18 @@ const initialCharacters = [
 const sprite = handleActions({
   UPDATE_CHARACTER_SPRITE: (state, {payload}) => ({
     ...state,
-    ...payload.sprite,
+    ...payload,
   }),
 });
 
 const character = handleActions({
   CHANGE_CHARACTER_NAME: (state, action) => ({
     ...state,
-    name: action.payload.name,
+    name: action.payload,
+  }),
+  CHANGE_CHARACTER_ARCHETYPE: (state, action) => ({
+    ...state,
+    archetype: action.payload,
   }),
   UPDATE_CHARACTER_SPRITE: (state, action) => ({
     ...state,
@@ -50,12 +57,13 @@ const character = handleActions({
 
 function reduceIndexedElement(reducer) {
   return (state, action) => state.map(
-    (elem, index) => action.payload.index == index ? reducer(elem, action) : elem
+    (elem, index) => action.meta.index == index ? reducer(elem, action) : elem
   );
 }
 
 const characters = handleActions({
   CHANGE_CHARACTER_NAME: reduceIndexedElement(character),
+  CHANGE_CHARACTER_ARCHETYPE: reduceIndexedElement(character),
   UPDATE_CHARACTER_SPRITE: reduceIndexedElement(character),
 }, initialCharacters);
 
