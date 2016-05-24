@@ -1,0 +1,94 @@
+---
+rules:
+    "name":
+        - "{given-name} {surname}"
+
+    "given-name":
+        # VC-VC
+        - "{V}{cv}{cf}"
+        # CVC-VC
+        - "{Cv}{cv}{cf}"
+        # VC-CVC
+        - "{V}{cc}{v}{cf}"
+        # CVC-CVC
+        - "{Cv}{cc}{v}{cf}"
+
+    "surname":
+        # CVC-VC
+        - "{Cv}{cv}{cf}{surname-suffix}"
+        # CVC-CVC
+        - "{Cv}{cc}{v}{cf}{surname-suffix}"
+
+    "surname-suffix":
+        - "{v}{cr}{v}"
+
+    "V":
+        - "A"
+        - "U"
+        - "I"
+
+    "v":
+        - "a"
+        - "u"
+        - "i"
+
+    "cc":
+        - "{ch}{ca}"
+        - "{cr}{ch}"
+
+    "cr":
+        - "r"
+        - "l"
+        - "m"
+        - "n"
+
+    "ch":
+        - "p"
+        - "t"
+        - "ts"
+    
+    "ca":
+        - "h"
+        - "w"
+
+    "cv":
+        - "{cv.c}{v}"
+
+    "Cv":
+        - "{Cv.C}{v}"
+
+    "cv.c":
+        - "m"
+        - "n"
+        - "p"
+        - "t"
+        - "ts"
+        - "q"
+        - "t'"
+        - "q'"
+        - "h"
+        - "j"
+        - "w"
+        - "l"
+        - "r"
+
+    "Cv.C":
+        - "M"
+        - "N"
+        - "P"
+        - "T"
+        - "Ts"
+        - "Q"
+        - "H"
+        - "J"
+        - "W"
+        - "L"
+        - "R"
+
+    "cf":
+        - ""
+        - "m"
+        - "n"
+        - "p"
+        - "t"
+        - "j"

@@ -5,6 +5,9 @@ import { handleActions } from 'redux-actions';
 import * as actions from './actions';
 import * as options from './character-options';
 import { randomElement } from 'app/arrays';
+import * as sg from './string-generator';
+
+const nameGenerator = sg.load(require('./name-generator.yaml'));
 
 function randomSprite() {
   return {
@@ -15,19 +18,23 @@ function randomSprite() {
   };
 }
 
+function randomName() {
+  return nameGenerator.generate('name');
+}
+
 const initialCharacters = [
   {
-    name: "Player 1",
+    name: randomName(),
     archetype: randomElement(options.ARCHETYPES),
     sprite: randomSprite(),
   },
   {
-    name: "Player 3",
+    name: randomName(),
     archetype: randomElement(options.ARCHETYPES),
     sprite: randomSprite(),
   },
   {
-    name: "Player 2",
+    name: randomName(),
     archetype: randomElement(options.ARCHETYPES),
     sprite: randomSprite(),
   },
