@@ -9,7 +9,7 @@ var thisPackage = require('./package.json');
 
 module.exports = {
   entry: {
-    app: "app.js",
+    app: ['babel-polyfill', "app.js"],
     vendor: keys(thisPackage.dependencies),
   },
 
