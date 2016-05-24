@@ -26,6 +26,10 @@ describe('app/squad/reducer', () => {
   });
 
   var fromState = {
+    workflow: {
+      saving: false,
+      loading: false,
+    },
     characters: [
       {
         name: "Bob",
@@ -44,6 +48,10 @@ describe('app/squad/reducer', () => {
     var toState = reducer(fromState, actions.changeCharacterName(0, "Doug"));
 
     expect(toState).to.deep.equal({
+      workflow: {
+        saving: false,
+        loading: false,
+      },
       characters: [
         {
           name: "Doug",
@@ -63,6 +71,10 @@ describe('app/squad/reducer', () => {
     var toState = reducer(fromState, actions.changeCharacterArchetype(0, "hunter"));
 
     expect(toState).to.deep.equal({
+      workflow: {
+        saving: false,
+        loading: false,
+      },
       characters: [
         {
           name: "Bob",
@@ -87,6 +99,10 @@ describe('app/squad/reducer', () => {
     }));
 
     expect(toState).to.deep.equal({
+      workflow: {
+        saving: false,
+        loading: false,
+      },
       characters: [
         {
           name: "Bob",
@@ -109,6 +125,10 @@ describe('app/squad/reducer', () => {
     }));
 
     expect(toState).to.deep.equal({
+      workflow: {
+        saving: false,
+        loading: false,
+      },
       characters: [
         {
           name: "Bob",

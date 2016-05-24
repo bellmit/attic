@@ -74,6 +74,28 @@ const characters = handleActions({
   UPDATE_CHARACTER_SPRITE: reduceIndexedElement(character),
 }, initialCharacters);
 
+const workflow = handleActions({
+  LOADING_SQUAD: (state, action) => ({
+    ...state,
+    loading: true,
+  }),
+  SQUAD_LOADED: (state, action) => ({
+    ...state,
+    loading: false,
+  }),
+  SAVING_SQUAD: (state, action) => ({
+    ...state,
+    saving: true,
+  }),
+  SQUAD_SAVED: (state, action) => ({
+    ...state,
+    saving: false,
+  }),
+}, {
+  saving: false,
+});
+
 module.exports = combineReducers({
   characters,
+  workflow,
 });
