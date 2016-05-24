@@ -4,15 +4,17 @@
 // jsx element expressions.
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers } from 'redux'
-import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 import { Router, browserHistory } from 'react-router';
 
 import routes from './routes';
 import reducers from './reducers';
 
 const store = createStore(
-  combineReducers(reducers)
+  combineReducers(reducers),
+  applyMiddleware(ReduxThunk)
 );
 
 ReactDOM.render(
