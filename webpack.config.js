@@ -46,6 +46,11 @@ module.exports = {
           plugins: ['transform-object-rest-spread'],
         },
       },
+      {
+        test: /\.yaml$/,
+        exclude: /node_modules/,
+        loader: "json!yaml",
+      },
     ],
   },
 
