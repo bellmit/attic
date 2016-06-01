@@ -10,9 +10,7 @@ domReady(() => {
   // Aerobatic's injected <script> block has evaluated.
   __webpack_public_path__ = asset(__webpack_public_path__);
 
-  require.ensure([], (require) => {
-    // use explicit module index as a concession to Mac OS developers. Stops
-    // "require('./app')" from resolving to this very file.
-    require('./app/index');
-  });
+  // use explicit module index as a concession to Mac OS developers. Stops
+  // "require('./app')" from resolving to this very file.
+  require('./app/index');
 });
