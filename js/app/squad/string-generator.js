@@ -1,7 +1,7 @@
 'use strict';
 
 import { randomElement } from 'app/arrays';
-import _ from 'lodash';
+import forOwn from 'lodash.forown';
 
 function Literal(template) {
   this.template = template;
@@ -117,7 +117,7 @@ export function generator() {
 
 export function load(yaml) {
   var g = generator();
-  _.forOwn(yaml.rules, (templates, rule) => {
+  forOwn(yaml.rules, (templates, rule) => {
     templates.forEach(template => g.addRule(rule, template));
   });
   return g;

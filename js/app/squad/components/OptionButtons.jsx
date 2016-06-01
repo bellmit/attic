@@ -2,7 +2,7 @@
 
 import classNames from 'classnames';
 import React, { PropTypes } from 'react';
-import _ from 'lodash';
+import keys from 'lodash.keys';
 
 export const NEXT = 'next';
 export const PREV = 'prev';
@@ -16,7 +16,7 @@ export default function OptionButtons({options, buttonClassName, value, onSelect
   }
 
   return <div className="btn-group">
-    {_.keys(options).map(option => (
+    {keys(options).map(option => (
       <button key={option}
         className={classNames(buttonClassName, {
           "btn": true,
