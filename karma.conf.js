@@ -14,6 +14,7 @@ module.exports = function(config) {
 
     webpack: Object.assign({}, require('./webpack.config'), {
       entry: {},
+      plugins: [],
       devtool: 'inline-source-map',
     }),
 

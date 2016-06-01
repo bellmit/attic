@@ -7,6 +7,19 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     app: "app.js",
+    vendor: [
+      "classnames",
+      "detect-dom-ready",
+      "flux-standard-action",
+      "lodash",
+      "react",
+      "react-dom",
+      "react-document-title",
+      "react-redux",
+      "react-router",
+      "redux",
+      "redux-actions",
+    ],
   },
 
   resolve: {
@@ -20,7 +33,7 @@ module.exports = {
   output: {
     path: path.resolve("dist/js"),
     publicPath: "/js/",
-    filename: "[name].[chunkhash].bundle.js",
+    filename: "[name].[chunkhash].js",
   },
 
   module: {
@@ -53,6 +66,14 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(/* preferEntry=*/true),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'boot',
+      chunks: ['vendor'],
+    }),
     new HtmlWebpackPlugin({
       title: "Distant Shore",
       // escape the js/ subdir
