@@ -1,11 +1,16 @@
 'use strict';
 
 var path = require('path');
+var keys = require('lodash.keys');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+var thisPackage = require('./package.json');
 
 module.exports = {
   entry: {
     app: "app.js",
+    vendor: keys(thisPackage.dependencies),
   },
 
   resolve: {
@@ -18,12 +23,8 @@ module.exports = {
 
   output: {
     path: path.resolve("dist/js"),
-    filename: "[name].bundle.js",
-    // Including chunk hashes helps prevent loader shear if a deployment
-    // catches you in the middle of a session. A 404 is a better outcome than
-    // silently receiving the wrong source code.
-    chunkFilename: "chunks/[name].[chunkhash].chunk.js",
     publicPath: "/js/",
+    filename: "[name].[chunkhash].js",
   },
 
   module: {
@@ -56,9 +57,21 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(/* preferEntry=*/true),
-    new webpack.optimize.MinChunkSizePlugin({
-      // Best guess: combine chunks under 100kb. Needs tweaking.
-      minChunkSize: 100 * 1024,
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: Infinity,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'boot',
+      chunks: ['vendor'],
+    }),
+    new HtmlWebpackPlugin({
+      title: "Distant Shore",
+      // escape the js/ subdir
+      filename: '../index.html',
+      template: 'html/index.html',
+      inject: 'head',
+      chunksSortMode: 'dependency',
     }),
   ],
 

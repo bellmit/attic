@@ -2,26 +2,11 @@
 
 module.exports = {
   path: '/',
-
-  getComponents(nextState, callback) {
-    require.ensure([], (require) => {
-      callback(null, require('./components/App'));
-    });
+  component: require('./components/App'),
+  indexRoute: {
+    component: require('./components/Landing'),
   },
-
-  getIndexRoute(location, callback) {
-    require.ensure([], function (require) {
-      callback(null, {
-        component: require('./components/Landing'),
-      });
-    });
-  },
-
-  getChildRoutes(location, callback) {
-    require.ensure([], function (require) {
-      callback(null, [
-        require('./squad/routes'),
-      ]);
-    });
-  },
+  childRoutes: [
+    require('./squad/routes'),
+  ],
 };
