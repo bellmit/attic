@@ -2,6 +2,7 @@
 
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -19,7 +20,7 @@ module.exports = {
   output: {
     path: path.resolve("dist/js"),
     publicPath: "/js/",
-    filename: "[name].bundle.js",
+    filename: "[name].[chunkhash].bundle.js",
   },
 
   module: {
@@ -52,6 +53,14 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(/* preferEntry=*/true),
+    new HtmlWebpackPlugin({
+      title: "Distant Shore",
+      // escape the js/ subdir
+      filename: '../index.html',
+      template: 'html/index.html',
+      inject: 'head',
+      chunksSortMode: 'dependency',
+    }),
   ],
 
   devtool: '#source-map',
