@@ -1,26 +1,16 @@
 'use strict';
 
 var path = require('path');
+var keys = require('lodash.keys');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+var thisPackage = require('./package.json');
 
 module.exports = {
   entry: {
     app: "app.js",
-    vendor: [
-      "classnames",
-      "detect-dom-ready",
-      "flux-standard-action",
-      "lodash.forown",
-      "lodash.keys",
-      "react",
-      "react-dom",
-      "react-document-title",
-      "react-redux",
-      "react-router",
-      "redux",
-      "redux-actions",
-    ],
+    vendor: keys(thisPackage.dependencies),
   },
 
   resolve: {
