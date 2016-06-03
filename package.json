@@ -46,6 +46,7 @@
     "karma": "karma start --single-run",
     "karma-watch": "karma start",
     "build": "npm run lessc && npm run webpack",
+    "postinstall": "npm run build",
     "test": "npm run karma",
     "local": "node local/server.js"
   },
