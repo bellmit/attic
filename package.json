@@ -1,7 +1,6 @@
 {
   "private": true,
   "dependencies": {
-    "auth0-lock": "^9.2.1",
     "classnames": "^2.2.5",
     "detect-dom-ready": "^1.0.2",
     "jwt-decode": "^2.0.1",
@@ -37,7 +36,6 @@
     "less-plugin-autoprefix": "^1.5.1",
     "mocha": "^2.4.5",
     "morgan": "^1.7.0",
-    "transform-loader": "^0.2.3",
     "webpack": "^1.13.0",
     "yaml-loader": "^0.2.0"
   },
