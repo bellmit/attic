@@ -9,7 +9,7 @@ var thisPackage = require('./package.json');
 
 module.exports = {
   entry: {
-    app: "app.js",
+    app: ['babel-polyfill', "app.js"],
     vendor: keys(thisPackage.dependencies),
   },
 
@@ -51,6 +51,21 @@ module.exports = {
         test: /\.yaml$/,
         exclude: /node_modules/,
         loader: "json!yaml",
+      },
+      {
+        test: /node_modules[\\\/]auth0-lock[\\\/].*\.js$/,
+        loaders: [
+          'transform-loader/cacheable?brfs',
+          'transform-loader/cacheable?packageify',
+        ],
+      },
+      {
+        test: /node_modules[\\\/]auth0-lock[\\\/].*\.ejs$/,
+        loader: 'transform-loader/cacheable?ejsify',
+      },
+      {
+        test: /\.json$/,
+        loader: 'json',
       },
     ],
   },
