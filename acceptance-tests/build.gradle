@@ -16,7 +16,7 @@ dependencies {
     compile group: 'io.github.unacceptable', name: 'unacceptable-dropwizard', version: unacceptableVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-dsl', version: unacceptableVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-rules', version: unacceptableVersion
-    compile group: 'io.github.unacceptable', name: 'unacceptable-selenium', version: unacceptableVersion
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: jerseyVersion
 
     compile group: 'junit', name: 'junit', version: '4.12'
 

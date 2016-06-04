@@ -1,14 +1,15 @@
 package com.unreasonent.ds;
 
-import com.unreasonent.ds.frontend.FrontendBundle;
+import io.dropwizard.Bundle;
 import io.dropwizard.Configuration;
-import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.setup.Bootstrap;
-import io.dropwizard.views.ViewBundle;
 import org.junit.Test;
+import org.mockito.Matchers;
 
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 public class DistantShoreTest {
@@ -21,13 +22,17 @@ public class DistantShoreTest {
     public void registersBundles() {
         app.initialize(bootstrap);
 
-        verify(bootstrap).addBundle(isA(AssetsBundle.class));
-        verify(bootstrap).addBundle(isViewBundle());
-        verify(bootstrap).addBundle(isA(FrontendBundle.class));
+        verify(bootstrap, never()).addBundle(isBundle());
+        verify(bootstrap, never()).addBundle(isConfiguredBundle());
     }
 
     @SuppressWarnings("unchecked")
-    private <T extends Configuration> ViewBundle<T> isViewBundle() {
-        return isA(ViewBundle.class);
+    private <T extends Configuration> ConfiguredBundle<T> isConfiguredBundle() {
+        return isA(ConfiguredBundle.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Bundle isBundle() {
+        return isA(Bundle.class);
     }
 }
