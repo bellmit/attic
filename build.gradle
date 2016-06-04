@@ -1,6 +1,9 @@
 ext {
     // Ensure all dropwizard components share a version.
     dropwizardVersion = '0.9.2'
+
+    // Dependencies for dropwizard internals
+    jerseyVersion = '2.22.1'
 }
 
 allprojects {
