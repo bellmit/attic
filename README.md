@@ -2,14 +2,10 @@
 
 This is the UI you get at https://distant-shore.com/.
 
-Due to limitations on the Aerobatic tier used to deploy this app, production
-deploys happen from the `production` branch, rather than on every merge to
-`master`. Please coalesce groups of changes before deploying.
-
 To run the client locally, run:
 
     npm run build
-    npm run local
+    npm run web
 
 Alternately, you can run the build steps separately:
 
