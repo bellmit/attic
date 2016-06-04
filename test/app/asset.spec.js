@@ -17,7 +17,7 @@ describe("asset", () => {
   describe("Aerobatic environments", () => {
     before(() => {
       window.appConfig = {
-        staticAssetPath: "https://assets.example.com",
+        STATIC_ASSET_PATH: "https://assets.example.com",
       };
     });
 
@@ -30,7 +30,7 @@ describe("asset", () => {
   describe("Incomplete Aerobatic environments", () => {
     before(() => {
       window.appConfig = {
-        /* no staticAssetPath */
+        /* no STATIC_ASSET_PATH */
       };
     });
 

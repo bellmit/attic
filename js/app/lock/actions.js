@@ -9,8 +9,8 @@ import { replace } from 'react-router-redux';
  * and presume globals.
  */
 const lock = new Auth0Lock(
-  appConfig.settings.AUTH0_CLIENT_ID,
-  appConfig.settings.AUTH0_DOMAIN
+  appConfig.AUTH0_CLIENT_ID,
+  appConfig.AUTH0_DOMAIN
 );
 
 export function boot() {
