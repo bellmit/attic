@@ -2,15 +2,11 @@
 
 import { createAction } from 'redux-actions';
 import { replace } from 'react-router-redux';
+import Auth0Lock from 'auth0-lock';
 
-/*
- * No good way to include Auth0 in the webpack build on Aerobatic, since it
- * relies on Git dependencies transitively. Instead, we pull the CDN version
- * and presume globals.
- */
 const lock = new Auth0Lock(
-  appConfig.settings.AUTH0_CLIENT_ID,
-  appConfig.settings.AUTH0_DOMAIN
+  appConfig.AUTH0_CLIENT_ID,
+  appConfig.AUTH0_DOMAIN
 );
 
 export function boot() {
