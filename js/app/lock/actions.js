@@ -52,6 +52,7 @@ export function login() {
      * that's what this client uses; we're not a complete OAuth implementation.
      */
     lock.show({
+      socialBigButtons: true,
       // Force the use of JWT even though we're providing a callback URL.
       responseType: 'token',
       // Always redirect back to app root ...
@@ -65,7 +66,13 @@ export function login() {
 }
 
 export function logout() {
-  return lockClear();
+  return dispatch => {
+    dispatch(lockClear());
+    lock.logout({
+      client_id: appConfig.AUTH0_CLIENT_ID,
+      returnTo: window.location.origin,
+    });
+  }
 }
 
 export const lockSuccess = createAction(
