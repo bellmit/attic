@@ -1,5 +1,6 @@
 package com.unreasonent.ds;
 
+import com.unreasonent.ds.auth.AuthBundle;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -12,8 +13,12 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
         new DistantShore().run(args);
     }
 
+    private final AuthBundle authBundle
+            = new AuthBundle();
+
     @Override
     public void initialize(Bootstrap<DistantShoreConfiguration> bootstrap) {
+        bootstrap.addBundle(authBundle);
     }
 
     @Override

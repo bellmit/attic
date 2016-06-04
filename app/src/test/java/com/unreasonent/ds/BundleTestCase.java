@@ -14,6 +14,12 @@ public class BundleTestCase {
     protected final Environment environment = mock(Environment.class);
     protected final JerseyEnvironment jersey = mock(JerseyEnvironment.class);
 
+    protected final DistantShoreConfiguration configuration = new DistantShoreConfiguration() {
+        {
+            getOauth().setSecret("JWT-SECRET");
+        }
+    };
+
     @Before
     public void wireMocks() {
         when(environment.jersey()).thenReturn(jersey);

@@ -12,6 +12,11 @@ dependencies {
     }
 
     compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-auth', version: dropwizardVersion
+
+    // TODO when the jose4j version comes out, switch to https://github.com/ToastShaman/dropwizard-auth-jwt
+    // for the nicer API and broader feature support (asymmetric signatures!)
+    compile group: 'com.auth0', name: 'java-jwt', version: '2.1.0'
 
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: '1.0.0'
 

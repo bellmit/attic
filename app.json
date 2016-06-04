@@ -3,5 +3,11 @@
     {
       "url": "heroku/gradle"
     }
-  ]
+  ],
+  "env": {
+    "AUTH0_CLIENT_SECRET": {
+      "description": "API token secret (as a base64 string) - obtain from Auth0",
+      "required": true
+    }
+  }
 }

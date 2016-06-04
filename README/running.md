@@ -4,6 +4,8 @@
 
 First, [build](building.md) the server.
 
+You will need the Distant Shore Dev client secret, exported as `AUTH0_CLIENT_SECRET`.
+
 ## Locally
 
 Using your shell environment:
