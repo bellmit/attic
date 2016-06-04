@@ -15,8 +15,11 @@ var indexContext = {
 
 var app = express();
 
-// Make it possible to diagnose request-level problems locally
-app.use(morgan('dev'));
+// If PORT is set, assume we're on Heroku and let Heroku log requests.
+if (!process.env.PORT) {
+  // Make it possible to diagnose request-level problems locally
+  app.use(morgan('dev'));
+}
 
 // Serve assets right out of the dist tree.
 app.use('/js', express.static('dist/js', { maxAge: '1 year' }));
