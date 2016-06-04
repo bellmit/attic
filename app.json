@@ -1,0 +1,14 @@
+{
+  "success_url": "/",
+  "env": {
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "Must be set to 'false' to install build tools.",
+      "value": "false"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
