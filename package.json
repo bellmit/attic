@@ -15,7 +15,8 @@
     "react-router-redux": "^4.0.4",
     "redux": "^3.5.2",
     "redux-actions": "^0.9.1",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "babel-loader": "^6.2.4",
