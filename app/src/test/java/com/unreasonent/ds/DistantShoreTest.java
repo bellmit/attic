@@ -1,6 +1,7 @@
 package com.unreasonent.ds;
 
 import com.unreasonent.ds.auth.AuthBundle;
+import com.unreasonent.ds.cors.CorsBundle;
 import io.dropwizard.setup.Bootstrap;
 import org.junit.Test;
 
@@ -18,6 +19,7 @@ public class DistantShoreTest {
     public void registersBundles() {
         app.initialize(bootstrap);
 
+        verify(bootstrap).addBundle(isA(CorsBundle.class));
         verify(bootstrap).addBundle(isA(AuthBundle.class));
     }
 }

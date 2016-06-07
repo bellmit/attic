@@ -5,6 +5,10 @@
     }
   ],
   "env": {
+    "CORS_ORIGINS": {
+      "description": "Comma-separated Origin URLs for permitted browser clients",
+      "value": "https://*.herokuapp.com",
+    },
     "AUTH0_CLIENT_SECRET": {
       "description": "API token secret (as a base64 string) - obtain from Auth0",
       "required": true

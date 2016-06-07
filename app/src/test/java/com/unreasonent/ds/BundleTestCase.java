@@ -1,6 +1,7 @@
 package com.unreasonent.ds;
 
 import io.dropwizard.jersey.setup.JerseyEnvironment;
+import io.dropwizard.jetty.setup.ServletEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.junit.Before;
@@ -12,6 +13,7 @@ public class BundleTestCase {
     @SuppressWarnings("unchecked")
     protected final Bootstrap<DistantShoreConfiguration> bootstrap = mock(Bootstrap.class);
     protected final Environment environment = mock(Environment.class);
+    protected final ServletEnvironment servlets = mock(ServletEnvironment.class);
     protected final JerseyEnvironment jersey = mock(JerseyEnvironment.class);
 
     protected final DistantShoreConfiguration configuration = new DistantShoreConfiguration() {
@@ -22,6 +24,7 @@ public class BundleTestCase {
 
     @Before
     public void wireMocks() {
+        when(environment.servlets()).thenReturn(servlets);
         when(environment.jersey()).thenReturn(jersey);
     }
 }

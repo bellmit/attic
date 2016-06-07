@@ -1,6 +1,7 @@
 package com.unreasonent.ds;
 
 import com.unreasonent.ds.auth.AuthBundle;
+import com.unreasonent.ds.cors.CorsBundle;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -13,11 +14,14 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
         new DistantShore().run(args);
     }
 
+    private final CorsBundle corsBundle
+            = new CorsBundle();
     private final AuthBundle authBundle
             = new AuthBundle();
 
     @Override
     public void initialize(Bootstrap<DistantShoreConfiguration> bootstrap) {
+        bootstrap.addBundle(corsBundle);
         bootstrap.addBundle(authBundle);
     }
 
