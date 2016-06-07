@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import * as actions from 'app/lock/actions';
 
-function Landing({idToken, profile, login, logout}) {
+function Landing({idToken, profile, userId, login, logout}) {
   return <div className="container">
     <div className="col-md-3">
       <ul>
@@ -15,10 +15,15 @@ function Landing({idToken, profile, login, logout}) {
       </ul>
     </div>
     <div className="col-md-9">
-      <p>ID token: {idToken}</p>
+      <p>ID token:</p>
       {idToken &&
         <pre>{JSON.stringify(jwtDecode(idToken), null, "  ")}</pre>
       }
+      <p>API Identity: {
+        userId ?
+          <span className="glyphicon glyphicon-ok"></span> :
+          <span className="glyphicon glyphicon-remove"></span>
+      } <code>{userId}</code></p>
       <p>Profile:</p>
       {profile &&
         <pre>{JSON.stringify(profile, null, "  ")}</pre>}

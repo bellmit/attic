@@ -4,6 +4,8 @@ import { createAction } from 'redux-actions';
 import { replace } from 'react-router-redux';
 import Auth0Lock from 'auth0-lock';
 
+import whoAmI from 'app/api/who-am-i';
+
 const lock = new Auth0Lock(
   appConfig.AUTH0_CLIENT_ID,
   appConfig.AUTH0_DOMAIN
@@ -28,13 +30,21 @@ export function boot() {
       return;
     }
 
-    lock.getProfile(hash.id_token, (err, profile) => {
+    var idToken = hash.id_token;
+
+    lock.getProfile(idToken, (err, profile) => {
       if (err) {
         console.log("Login profile error:", err);
         return;
       }
-      dispatch(lockSuccess(profile, hash.id_token));
+      dispatch(lockSuccess({
+        idToken,
+        profile,
+      }));
     });
+
+    whoAmI(idToken)
+      .then(resp => dispatch(lockSuccess(resp)));
   };
 }
 
@@ -75,12 +85,6 @@ export function logout() {
   }
 }
 
-export const lockSuccess = createAction(
-  'LOCK_SUCCESS',
-  (profile, idToken) => ({
-    profile,
-    idToken,
-  })
-);
+export const lockSuccess = createAction('LOCK_SUCCESS');
 
 export const lockClear = createAction('LOCK_CLEAR');
