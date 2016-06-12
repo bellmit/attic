@@ -15,6 +15,7 @@ dependencies {
     compile group: 'com.lewisd', name: 'simple-dsl', version: '0.2'
     compile group: 'io.dropwizard', name: 'dropwizard-testing', version: dropwizardVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-aliases', version: unacceptableVersion
+    compile group: 'io.github.unacceptable', name: 'unacceptable-database', version: unacceptableVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-dropwizard', version: unacceptableVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-dsl', version: unacceptableVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-rules', version: unacceptableVersion
