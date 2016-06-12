@@ -3,6 +3,7 @@
 import { createAction } from 'redux-actions';
 import { replace } from 'react-router-redux';
 import Auth0Lock from 'auth0-lock';
+import jwtDecode from 'jwt-decode';
 
 import whoAmI from 'app/api/who-am-i';
 
@@ -11,12 +12,79 @@ const lock = new Auth0Lock(
   appConfig.AUTH0_DOMAIN
 );
 
-export function boot() {
-  return dispatch => {
-    var hash = lock.parseHash();
-    if (!hash)
-      return;
+function getProfile(idToken) {
+  return new Promise((resolve, reject) => {
+    lock.getProfile(idToken, (err, profile) => {
+      if (err)
+        reject(err);
+      else
+        resolve(profile);
+    });
+  });
+}
 
+function refreshToken(dispatch, getState) {
+  var state = getState();
+  var idToken = state.lock.idToken;
+  if (idToken) {
+    lock.getClient().renewIdToken(idToken, (err, result) => {
+      if (err) {
+        console.log("Failed to refresh ID token: ", err);
+        dispatch(abandon());
+      }
+      else
+        dispatch(bootFromToken(result.id_token));
+    });
+  }
+}
+
+function tokenExpires(idToken) {
+  var claims = jwtDecode(idToken);
+  if (claims.exp) {
+    var now = Date.now(); // epoch millis
+    var exp = claims.exp * 1000; // epoch sec -> epoch millis
+    var remaining = exp - now; // worst case: already invalid.
+    return remaining;
+  }
+  return null;
+}
+
+/*
+ * This is the primary entry point for applying a new token. This function will
+ * discard expired tokens (which handles the case that we have a cached token,
+ * but it has expired), then otherwise store the token to window.localStorage,
+ * schedule a token refresh and find our profile from Auth0.
+ *
+ * We can get here a few ways:
+ *
+ * - from bootFromHash, with a fresh token from a completed login attempt
+ * - from boot, with a token from window.localStorage
+ * - from refreshToken, with a token obtained from auth0's renewal API
+ */
+function bootFromToken(idToken) {
+  return (dispatch, getState) => {
+    var remaining = tokenExpires(idToken);
+    if (remaining && remaining <= 0) // too late, this one's dead. Give up on it.
+      return dispatch(abandon());
+
+    window.localStorage.idToken = idToken;
+
+    if (remaining) { // will expire, will need to refresh it in half the remaining lifetime.
+      var refreshIn = remaining / 2; // relative millis
+      setTimeout(refreshToken, refreshIn, dispatch, getState)
+    }
+
+    Promise.all([getProfile(idToken), whoAmI(idToken)])
+      .then(([profile, apiIdentity]) => dispatch(lockSuccess({
+        ...apiIdentity,
+        idToken,
+        profile,
+      })));
+  };
+}
+
+function bootFromHash(hash) {
+  return dispatch => {
     dispatch(replace({
       // Restore mid-app URLs (see login() action for the source of this data)
       path: hash.state,
@@ -31,20 +99,31 @@ export function boot() {
     }
 
     var idToken = hash.id_token;
+    dispatch(bootFromToken(idToken));
+  };
+}
 
-    lock.getProfile(idToken, (err, profile) => {
-      if (err) {
-        console.log("Login profile error:", err);
-        return;
-      }
-      dispatch(lockSuccess({
-        idToken,
-        profile,
-      }));
-    });
+/*
+ * Bootstrap the lock:
+ *
+ * - On fresh page views, remain logged out.
+ * - On return from auth0, apply the newly-obtained token to the lock.
+ * - On return with an existing token, apply it to the lock.
+ * - Schedule automatic token refresh, if necessary.
+ */
+export function boot() {
+  return dispatch => {
+    var hash = lock.parseHash();
+    if (hash) {
+      dispatch(bootFromHash(hash));
+      return;
+    }
 
-    whoAmI(idToken)
-      .then(resp => dispatch(lockSuccess(resp)));
+    var idToken = window.localStorage.idToken;
+    if (idToken) {
+      dispatch(bootFromToken(idToken));
+      return;
+    }
   };
 }
 
@@ -75,9 +154,16 @@ export function login() {
   };
 }
 
+function abandon() {
+  return dispatch => {
+    delete window.localStorage.idToken;
+    dispatch(lockClear());
+  }
+}
+
 export function logout() {
   return dispatch => {
-    dispatch(lockClear());
+    dispatch(abandon());
     lock.logout({
       client_id: appConfig.AUTH0_CLIENT_ID,
       returnTo: window.location.origin,
