@@ -8,7 +8,9 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import org.junit.Test;
 
-import static org.mockito.Matchers.isA;
+import static com.unreasonent.ds.bundle.WrapsBundle.wrapsBundle;
+import static org.hamcrest.Matchers.isA;
+import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -22,15 +24,10 @@ public class DistantShoreTest {
     public void registersBundles() {
         app.initialize(bootstrap);
 
-        verify(bootstrap).addBundle(isA(CorsBundle.class));
-        verify(bootstrap).addBundle(isA(AuthBundle.class));
-        verify(bootstrap).addBundle(isA(DatabaseBundle.class));
-        verify(bootstrap).addBundle(isAMigrationsBundle());
-        verify(bootstrap).addBundle(isA(AxonBundle.class));
-    }
-
-    @SuppressWarnings("unchecked")
-    private MigrationsBundle<?> isAMigrationsBundle() {
-        return isA(MigrationsBundle.class);
+        verify(bootstrap).addBundle(argThat(isA(CorsBundle.class)));
+        verify(bootstrap).addBundle(argThat(isA(AuthBundle.class)));
+        verify(bootstrap).addBundle(argThat(isA(DatabaseBundle.class)));
+        verify(bootstrap).addBundle(argThat(wrapsBundle(isA(MigrationsBundle.class))));
+        verify(bootstrap).addBundle(argThat(wrapsBundle(isA(AxonBundle.class))));
     }
 }

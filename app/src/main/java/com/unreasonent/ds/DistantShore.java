@@ -12,6 +12,8 @@ import io.dropwizard.setup.Environment;
 
 import javax.sql.DataSource;
 
+import static com.unreasonent.ds.bundle.BundleAdapter.wrap;
+
 /**
  * The Distant Shore server. For simplicity, this uses bundles for all of the actual app logic.
  */
@@ -43,11 +45,11 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
 
     @Override
     public void initialize(Bootstrap<DistantShoreConfiguration> bootstrap) {
-        bootstrap.addBundle(corsBundle);
-        bootstrap.addBundle(authBundle);
-        bootstrap.addBundle(databaseBundle);
-        bootstrap.addBundle(migrationsBundle);
-        bootstrap.addBundle(axonBundle);
+        bootstrap.addBundle(wrap(corsBundle));
+        bootstrap.addBundle(wrap(authBundle));
+        bootstrap.addBundle(wrap(databaseBundle));
+        bootstrap.addBundle(wrap(migrationsBundle));
+        bootstrap.addBundle(wrap(axonBundle));
     }
 
     @Override
