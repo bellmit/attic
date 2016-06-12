@@ -1,6 +1,7 @@
 package com.unreasonent.ds;
 
 import com.unreasonent.ds.auth.AuthBundle;
+import com.unreasonent.ds.axon.AxonBundle;
 import com.unreasonent.ds.cors.CorsBundle;
 import com.unreasonent.ds.database.DatabaseBundle;
 import io.dropwizard.Application;
@@ -8,6 +9,8 @@ import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+
+import javax.sql.DataSource;
 
 /**
  * The Distant Shore server. For simplicity, this uses bundles for all of the actual app logic.
@@ -30,6 +33,13 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
             return configuration.getDatabase();
         }
     };
+    private final AxonBundle axonBundle
+            = new AxonBundle() {
+        @Override
+        protected DataSource getDataSource() {
+            return databaseBundle.getDataSource();
+        }
+    };
 
     @Override
     public void initialize(Bootstrap<DistantShoreConfiguration> bootstrap) {
@@ -37,6 +47,7 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
         bootstrap.addBundle(authBundle);
         bootstrap.addBundle(databaseBundle);
         bootstrap.addBundle(migrationsBundle);
+        bootstrap.addBundle(axonBundle);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.unreasonent.ds;
 
 import com.unreasonent.ds.auth.AuthBundle;
+import com.unreasonent.ds.axon.AxonBundle;
 import com.unreasonent.ds.cors.CorsBundle;
 import com.unreasonent.ds.database.DatabaseBundle;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -25,6 +26,7 @@ public class DistantShoreTest {
         verify(bootstrap).addBundle(isA(AuthBundle.class));
         verify(bootstrap).addBundle(isA(DatabaseBundle.class));
         verify(bootstrap).addBundle(isAMigrationsBundle());
+        verify(bootstrap).addBundle(isA(AxonBundle.class));
     }
 
     @SuppressWarnings("unchecked")
