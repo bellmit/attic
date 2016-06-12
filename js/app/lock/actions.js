@@ -11,12 +11,30 @@ const lock = new Auth0Lock(
   appConfig.AUTH0_DOMAIN
 );
 
-export function boot() {
-  return dispatch => {
-    var hash = lock.parseHash();
-    if (!hash)
-      return;
+function getProfile(idToken) {
+  return new Promise((resolve, reject) => {
+    lock.getProfile(idToken, (err, profile) => {
+      if (err)
+        reject(err);
+      else
+        resolve(profile);
+    });
+  });
+}
 
+function bootFromToken(idToken) {
+  return dispatch => {
+    Promise.all([getProfile(idToken), whoAmI(idToken)])
+      .then(([profile, apiIdentity]) => dispatch(lockSuccess({
+        ...apiIdentity,
+        idToken,
+        profile,
+      })));
+  };
+}
+
+function bootFromHash(hash) {
+  return dispatch => {
     dispatch(replace({
       // Restore mid-app URLs (see login() action for the source of this data)
       path: hash.state,
@@ -31,20 +49,17 @@ export function boot() {
     }
 
     var idToken = hash.id_token;
+    dispatch(bootFromToken(idToken));
+  };
+}
 
-    lock.getProfile(idToken, (err, profile) => {
-      if (err) {
-        console.log("Login profile error:", err);
-        return;
-      }
-      dispatch(lockSuccess({
-        idToken,
-        profile,
-      }));
-    });
+export function boot() {
+  return dispatch => {
+    var hash = lock.parseHash();
+    if (!hash)
+      return;
 
-    whoAmI(idToken)
-      .then(resp => dispatch(lockSuccess(resp)));
+    dispatch(bootFromHash(hash));
   };
 }
 
