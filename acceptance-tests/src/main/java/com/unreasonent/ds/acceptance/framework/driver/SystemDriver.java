@@ -8,11 +8,12 @@ import io.dropwizard.testing.ConfigOverride;
 import io.github.unacceptable.database.DatabaseContext;
 import io.github.unacceptable.dropwizard.context.ApplicationContext;
 import io.github.unacceptable.lazy.Lazily;
+import io.github.unacceptable.liquibase.LiquibaseEnhancer;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 
 public class SystemDriver {
-    public final DatabaseContext database = new DatabaseContext();
+    public final DatabaseContext database = LiquibaseEnhancer.configureContext(new DatabaseContext());
     public final ApplicationContext<?> app = new ApplicationContext<DistantShoreConfiguration>(
             DistantShore.class,
             null /* config path */,

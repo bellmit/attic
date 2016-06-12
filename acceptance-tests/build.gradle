@@ -18,6 +18,7 @@ dependencies {
     compile group: 'io.github.unacceptable', name: 'unacceptable-database', version: unacceptableVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-dropwizard', version: unacceptableVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-dsl', version: unacceptableVersion
+    compile group: 'io.github.unacceptable', name: 'unacceptable-liquibase', version: unacceptableVersion
     compile group: 'io.github.unacceptable', name: 'unacceptable-rules', version: unacceptableVersion
     compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: jerseyVersion
 

@@ -4,6 +4,8 @@ import com.unreasonent.ds.auth.AuthBundle;
 import com.unreasonent.ds.cors.CorsBundle;
 import com.unreasonent.ds.database.DatabaseBundle;
 import io.dropwizard.Application;
+import io.dropwizard.db.PooledDataSourceFactory;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -21,12 +23,20 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
             = new AuthBundle();
     private final DatabaseBundle databaseBundle
             = new DatabaseBundle();
+    private final MigrationsBundle<DistantShoreConfiguration> migrationsBundle
+            = new MigrationsBundle<DistantShoreConfiguration>() {
+        @Override
+        public PooledDataSourceFactory getDataSourceFactory(DistantShoreConfiguration configuration) {
+            return configuration.getDatabase();
+        }
+    };
 
     @Override
     public void initialize(Bootstrap<DistantShoreConfiguration> bootstrap) {
         bootstrap.addBundle(corsBundle);
         bootstrap.addBundle(authBundle);
         bootstrap.addBundle(databaseBundle);
+        bootstrap.addBundle(migrationsBundle);
     }
 
     @Override

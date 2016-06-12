@@ -3,6 +3,7 @@ package com.unreasonent.ds;
 import com.unreasonent.ds.auth.AuthBundle;
 import com.unreasonent.ds.cors.CorsBundle;
 import com.unreasonent.ds.database.DatabaseBundle;
+import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import org.junit.Test;
 
@@ -23,5 +24,11 @@ public class DistantShoreTest {
         verify(bootstrap).addBundle(isA(CorsBundle.class));
         verify(bootstrap).addBundle(isA(AuthBundle.class));
         verify(bootstrap).addBundle(isA(DatabaseBundle.class));
+        verify(bootstrap).addBundle(isAMigrationsBundle());
+    }
+
+    @SuppressWarnings("unchecked")
+    private MigrationsBundle<?> isAMigrationsBundle() {
+        return isA(MigrationsBundle.class);
     }
 }
