@@ -1,6 +1,9 @@
 {
   "buildpacks": [
     {
+      "url": "https://github.com/unreasonent/heroku-buildpack-node-client-shim"
+    },
+    {
       "url": "heroku/nodejs"
     }
   ],
@@ -16,10 +19,6 @@
     "AUTH0_DOMAIN": {
       "description": "Auth0 authentication domain (obtain from Auth0)",
       "required": true
-    },
-    "NPM_CONFIG_PRODUCTION": {
-      "description": "Configure Node buildpack to install dev dependencies. Must be 'false'.",
-      "value": "false"
     }
   }
 }
