@@ -2,9 +2,12 @@
 
 var fs = require('fs');
 var path = require('path');
+var http = require('http');
 var express = require('express');
 var morgan = require('morgan');
 var handlebars = require('handlebars');
+var socketIo = require('socket.io');
+var logging = require('./logging');
 
 var port = process.env.PORT || 4000;
 
@@ -39,6 +42,10 @@ app.get(/.*/, function(req, res) {
   });
 });
 
-app.listen(port, function() {
+var server = http.Server(app);
+var io = socketIo(server);
+logging(io);
+
+server.listen(port, function() {
   console.log("started", `port=${port}`, `url=http://localhost:${port}/`);
 });
