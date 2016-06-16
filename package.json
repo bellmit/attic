@@ -17,6 +17,7 @@
     "redux": "^3.5.2",
     "redux-actions": "^0.9.1",
     "redux-thunk": "^2.1.0",
+    "socket.io-client": "^1.4.6",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "less-plugin-autoprefix": "^1.5.1",
     "mocha": "^2.4.5",
     "morgan": "^1.7.0",
+    "socket.io": "^1.4.6",
     "transform-loader": "^0.2.3",
     "webpack": "^1.13.0",
     "yaml-loader": "^0.2.0"
@@ -54,5 +56,8 @@
     "postinstall": "npm run build",
     "test": "npm run karma",
     "web": "node web/server.js"
+  },
+  "engines": {
+    "node": "6.2.1"
   }
 }
