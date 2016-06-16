@@ -2,3 +2,4 @@
 /dist/css/
 /dist/js/
 /dist/*.html
+/npm-debug.log
