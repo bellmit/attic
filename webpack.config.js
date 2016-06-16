@@ -9,7 +9,7 @@ var thisPackage = require('./package.json');
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', 'whatwg-fetch', "app.js"],
+    app: "app.js",
     vendor: keys(thisPackage.dependencies),
   },
 
