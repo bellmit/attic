@@ -29,7 +29,7 @@ function refreshToken(dispatch, getState) {
   if (idToken) {
     lock.getClient().renewIdToken(idToken, (err, result) => {
       if (err) {
-        console.log("Failed to refresh ID token: ", err);
+        console.error('lock.refresh.failed', err);
         dispatch(abandon());
       }
       else
@@ -94,7 +94,7 @@ function bootFromHash(hash) {
     }));
 
     if (hash.error) {
-      console.log("Login hash error:", hash);
+      console.log('lock.hash.failed', hash.error);
       return;
     }
 
