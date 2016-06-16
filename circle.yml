@@ -1,0 +1,9 @@
+---
+machine:
+  node:
+    version: '6.2.1'
+
+dependencies:
+  override:
+    - npm install --all
+

@@ -1,5 +1,7 @@
 # Distant Shore HTML5 Client
 
+[![Build Status](https://circleci.com/gh/unreasonent/distant-shore-html5-client.svg)](https://circleci.com/gh/unreasonent/distant-shore-html5-client/)
+
 This is the UI you get at https://distant-shore.com/.
 
 To run the client locally, run:
