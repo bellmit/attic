@@ -1,3 +1,10 @@
+var reporters = ['progress'];
+
+var circleTestDir = process.env.CIRCLE_TEST_REPORTS;
+if (circleTestDir) {
+  reporters.push('junit');
+}
+
 module.exports = function(config) {
   config.set({
     basePath: '',
@@ -18,7 +25,7 @@ module.exports = function(config) {
       devtool: 'inline-source-map',
     }),
 
-    reporters: ['progress'],
+    reporters: reporters,
 
     browsers: ['Firefox'],
 
@@ -28,5 +35,9 @@ module.exports = function(config) {
 
     autoWatch: true,
     singleRun: false,
+
+    junitReporter: {
+      outputDir: circleTestDir || '',
+    },
   })
 }
