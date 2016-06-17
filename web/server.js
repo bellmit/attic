@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var http = require('http');
 var express = require('express');
+var compression = require('compression');
 var morgan = require('morgan');
 var handlebars = require('handlebars');
 var socketIo = require('socket.io');
@@ -17,6 +18,8 @@ var indexContext = {
 };
 
 var app = express();
+
+app.use(compression());
 
 // If PORT is set, assume we're on Heroku and let Heroku log requests.
 if (!process.env.PORT) {
