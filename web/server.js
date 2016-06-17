@@ -25,9 +25,7 @@ if (!process.env.PORT) {
 }
 
 // Serve assets right out of the dist tree.
-app.use('/js', express.static('dist/js', { maxAge: '1 year' }));
-app.use('/css', express.static('dist/css'));
-app.use('/fonts', express.static('dist/fonts'));
+app.use('/bundle', express.static('dist/bundle', { maxAge: '1 year' }));
 app.use('/assets', express.static('dist/assets'));
 
 // HTML5 pushstate routing support. By the time we get here, we definitely did
