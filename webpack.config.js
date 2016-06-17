@@ -57,7 +57,7 @@ module.exports = {
       {
         test: /\.(woff|woff2|svg|ttf|eot)$/,
         exclude: /node_modules/,
-        loader: "file"
+        loader: "file?name=[name].[hash].[ext]",
       },
       {
         test: /\.yaml$/,
