@@ -7,12 +7,9 @@ This is the UI you get at https://distant-shore.com/.
 To run the client locally, run:
 
     npm run build
-    npm run web
-
-Alternately, you can run the build steps separately:
-
-    npm run lessc   # no watch mode for lessc, sadly
-    npm run webpack # or webpack-watch, for live updates while editing
+    npm run webpack       # equivalent to build, or use…
+    npm run webpack-watch # run webpack continuously while editing
+    npm run web           # start HTTP server locally
 
 You will need the Distant Shore services running locally on their default ports.
 

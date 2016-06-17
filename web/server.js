@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var http = require('http');
 var express = require('express');
+var compression = require('compression');
 var morgan = require('morgan');
 var handlebars = require('handlebars');
 var socketIo = require('socket.io');
@@ -18,6 +19,8 @@ var indexContext = {
 
 var app = express();
 
+app.use(compression());
+
 // If PORT is set, assume we're on Heroku and let Heroku log requests.
 if (!process.env.PORT) {
   // Make it possible to diagnose request-level problems locally
@@ -25,9 +28,7 @@ if (!process.env.PORT) {
 }
 
 // Serve assets right out of the dist tree.
-app.use('/js', express.static('dist/js', { maxAge: '1 year' }));
-app.use('/css', express.static('dist/css'));
-app.use('/fonts', express.static('dist/fonts'));
+app.use('/bundle', express.static('dist/bundle', { maxAge: '1 year' }));
 app.use('/assets', express.static('dist/assets'));
 
 // HTML5 pushstate routing support. By the time we get here, we definitely did
