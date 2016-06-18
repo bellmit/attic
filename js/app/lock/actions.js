@@ -103,6 +103,10 @@ function bootFromHash(hash) {
   };
 }
 
+function bootAnonymously() {
+  return lockSuccess({});
+}
+
 /*
  * Bootstrap the lock:
  *
@@ -124,10 +128,12 @@ export function boot() {
       dispatch(bootFromToken(idToken));
       return;
     }
+
+    dispatch(bootAnonymously());
   };
 }
 
-export function login() {
+export function login(options) {
   return dispatch => {
     /*
      * So. We have to use an explicit callback URL here, because we use a
@@ -141,6 +147,7 @@ export function login() {
      * that's what this client uses; we're not a complete OAuth implementation.
      */
     lock.show({
+      ...options,
       socialBigButtons: true,
       // Force the use of JWT even though we're providing a callback URL.
       responseType: 'token',

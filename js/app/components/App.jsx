@@ -13,15 +13,17 @@ const App = React.createClass({
   },
 
   render() {
-    var {children} = this.props;
+    var {booting, children} = this.props;
 
     return <DocumentTitle title="Distant Shore">
-      {children}
+    { !booting &&
+      children
+    }
     </DocumentTitle>;
   },
 });
 
 module.exports = connect(
-  state => ({}),
+  state => state.lock,
   dispatch => bindActionCreators({boot}, dispatch)
 )(App);
