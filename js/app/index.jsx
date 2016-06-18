@@ -10,8 +10,14 @@ import ReduxThunk from 'redux-thunk';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
 
+import Api, { ApiProvider } from 'app/api';
+
 import routes from './routes';
 import reducers from './reducers';
+import { mount as mountSubscriber } from './subscribe';
+import subscriber from './subscriber';
+
+const api = new Api();
 
 const store = createStore(
   combineReducers({
@@ -26,9 +32,14 @@ const store = createStore(
 
 const history = syncHistoryWithStore(browserHistory, store);
 
+mountSubscriber(store, subscriber(api));
+
 ReactDOM.render(
+
   <Provider store={store}>
-    <Router routes={routes} history={history} />
+    <ApiProvider api={api}>
+      <Router routes={routes} history={history} />
+    </ApiProvider>
   </Provider>,
   document.getElementById('app')
 );

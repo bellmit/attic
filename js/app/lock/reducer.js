@@ -6,7 +6,6 @@ var initialLock = {
   booting: true,
   idToken: null,
   profile: null,
-  userId: null,
 };
 
 module.exports = handleActions({

@@ -5,8 +5,6 @@ import { replace } from 'react-router-redux';
 import Auth0Lock from 'auth0-lock';
 import jwtDecode from 'jwt-decode';
 
-import whoAmI from 'app/api/who-am-i';
-
 const lock = new Auth0Lock(
   appConfig.AUTH0_CLIENT_ID,
   appConfig.AUTH0_DOMAIN
@@ -61,29 +59,30 @@ function tokenExpires(idToken) {
  * - from boot, with a token from window.localStorage
  * - from refreshToken, with a token obtained from auth0's renewal API
  */
-function bootFromToken(idToken) {
+function bootFromToken(idToken, api) {
   return (dispatch, getState) => {
     var remaining = tokenExpires(idToken);
     if (remaining && remaining <= 0) // too late, this one's dead. Give up on it.
       return dispatch(abandon());
 
     window.localStorage.idToken = idToken;
+    dispatch(lockSuccess({
+      idToken,
+    }));
 
     if (remaining) { // will expire, will need to refresh it in half the remaining lifetime.
       var refreshIn = remaining / 2; // relative millis
       setTimeout(refreshToken, refreshIn, dispatch, getState)
     }
 
-    Promise.all([getProfile(idToken), whoAmI(idToken)])
-      .then(([profile, apiIdentity]) => dispatch(lockSuccess({
-        ...apiIdentity,
-        idToken,
+    getProfile(idToken)
+      .then(profile => dispatch(lockSuccess({
         profile,
       })));
   };
 }
 
-function bootFromHash(hash) {
+function bootFromHash(hash, api) {
   return dispatch => {
     dispatch(replace({
       // Restore mid-app URLs (see login() action for the source of this data)
@@ -99,7 +98,7 @@ function bootFromHash(hash) {
     }
 
     var idToken = hash.id_token;
-    dispatch(bootFromToken(idToken));
+    dispatch(bootFromToken(idToken, api));
   };
 }
 
@@ -115,17 +114,17 @@ function bootAnonymously() {
  * - On return with an existing token, apply it to the lock.
  * - Schedule automatic token refresh, if necessary.
  */
-export function boot() {
+export function boot(api) {
   return dispatch => {
     var hash = lock.parseHash();
     if (hash) {
-      dispatch(bootFromHash(hash));
+      dispatch(bootFromHash(hash, api));
       return;
     }
 
     var idToken = window.localStorage.idToken;
     if (idToken) {
-      dispatch(bootFromToken(idToken));
+      dispatch(bootFromToken(idToken, api));
       return;
     }
 
@@ -178,6 +177,6 @@ export function logout() {
   }
 }
 
-export const lockSuccess = createAction('LOCK_SUCCESS');
+const lockSuccess = createAction('LOCK_SUCCESS');
 
-export const lockClear = createAction('LOCK_CLEAR');
+const lockClear = createAction('LOCK_CLEAR');
