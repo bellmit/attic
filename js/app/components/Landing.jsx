@@ -5,9 +5,11 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
+
+import { withLock } from 'app/lock/components';
 import * as actions from 'app/lock/actions';
 
-function LoggedInLanding({idToken, profile, logout}) {
+function LoggedInLanding({idToken, profile, logout, lock}) {
   return <div className="container">
     <div className="col-md-3">
       <ul>
@@ -20,7 +22,7 @@ function LoggedInLanding({idToken, profile, logout}) {
       <p>Profile:</p>
       {profile &&
         <pre>{JSON.stringify(profile, null, "  ")}</pre>}
-      <button className="btn btn-default" onClick={logout}>Log out</button>
+      <button className="btn btn-default" onClick={() => logout(lock)}>Log out</button>
     </div>
   </div>;
 }
@@ -42,9 +44,10 @@ function LandingCopy() {
 
 const AnonymousLanding = React.createClass({
   componentDidMount() {
-    this.props.login({
+    var {login, lock} = this.props;
+    login(lock, {
       container: "auth0-lock",
-    })
+    });
   },
 
   render() {
@@ -66,4 +69,4 @@ function Landing({idToken, ...props}) {
 module.exports = connect(
   state => state.lock,
   dispatch => bindActionCreators(actions, dispatch)
-)(Landing);
+)(withLock(Landing));

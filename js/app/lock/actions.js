@@ -2,15 +2,9 @@
 
 import { createAction } from 'redux-actions';
 import { replace } from 'react-router-redux';
-import Auth0Lock from 'auth0-lock';
 import jwtDecode from 'jwt-decode';
 
-const lock = new Auth0Lock(
-  appConfig.AUTH0_CLIENT_ID,
-  appConfig.AUTH0_DOMAIN
-);
-
-function getProfile(idToken) {
+function getProfile(lock, idToken) {
   return new Promise((resolve, reject) => {
     lock.getProfile(idToken, (err, profile) => {
       if (err)
@@ -21,7 +15,7 @@ function getProfile(idToken) {
   });
 }
 
-function refreshToken(dispatch, getState) {
+function refreshToken(dispatch, getState, api, lock) {
   var state = getState();
   var idToken = state.lock.idToken;
   if (idToken) {
@@ -31,7 +25,7 @@ function refreshToken(dispatch, getState) {
         dispatch(abandon());
       }
       else
-        dispatch(bootFromToken(result.id_token));
+        dispatch(bootFromToken(result.id_token, api, lock));
     });
   }
 }
@@ -59,7 +53,7 @@ function tokenExpires(idToken) {
  * - from boot, with a token from window.localStorage
  * - from refreshToken, with a token obtained from auth0's renewal API
  */
-function bootFromToken(idToken, api) {
+function bootFromToken(idToken, api, lock) {
   return (dispatch, getState) => {
     var remaining = tokenExpires(idToken);
     if (remaining && remaining <= 0) // too late, this one's dead. Give up on it.
@@ -72,17 +66,17 @@ function bootFromToken(idToken, api) {
 
     if (remaining) { // will expire, will need to refresh it in half the remaining lifetime.
       var refreshIn = remaining / 2; // relative millis
-      setTimeout(refreshToken, refreshIn, dispatch, getState)
+      setTimeout(refreshToken, refreshIn, dispatch, getState, api, lock);
     }
 
-    getProfile(idToken)
+    getProfile(lock, idToken)
       .then(profile => dispatch(lockSuccess({
         profile,
       })));
   };
 }
 
-function bootFromHash(hash, api) {
+function bootFromHash(hash, api, lock) {
   return dispatch => {
     dispatch(replace({
       // Restore mid-app URLs (see login() action for the source of this data)
@@ -98,7 +92,7 @@ function bootFromHash(hash, api) {
     }
 
     var idToken = hash.id_token;
-    dispatch(bootFromToken(idToken, api));
+    dispatch(bootFromToken(idToken, api, lock));
   };
 }
 
@@ -114,17 +108,17 @@ function bootAnonymously() {
  * - On return with an existing token, apply it to the lock.
  * - Schedule automatic token refresh, if necessary.
  */
-export function boot(api) {
+export function boot(api, lock) {
   return dispatch => {
     var hash = lock.parseHash();
     if (hash) {
-      dispatch(bootFromHash(hash, api));
+      dispatch(bootFromHash(hash, api, lock));
       return;
     }
 
     var idToken = window.localStorage.idToken;
     if (idToken) {
-      dispatch(bootFromToken(idToken, api));
+      dispatch(bootFromToken(idToken, api, lock));
       return;
     }
 
@@ -132,7 +126,7 @@ export function boot(api) {
   };
 }
 
-export function login(options) {
+export function login(lock, options) {
   return dispatch => {
     /*
      * So. We have to use an explicit callback URL here, because we use a
@@ -167,7 +161,7 @@ function abandon() {
   }
 }
 
-export function logout() {
+export function logout(lock) {
   return dispatch => {
     dispatch(abandon());
     lock.logout({
