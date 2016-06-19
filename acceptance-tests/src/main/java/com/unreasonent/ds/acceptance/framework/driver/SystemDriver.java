@@ -26,6 +26,7 @@ public class SystemDriver {
     public final ApiContext apiContext = new ApiContext(app);
 
     private WhoAmIDriver whoAmIDriver = null;
+    private SquadDriver squadDriver = null;
 
     public TestRule rules() {
         return RuleChain
@@ -35,5 +36,9 @@ public class SystemDriver {
 
     public WhoAmIDriver whoAmIDriver() {
         return whoAmIDriver = Lazily.create(whoAmIDriver, () -> new WhoAmIDriver(apiContext));
+    }
+
+    public SquadDriver squadDriver() {
+        return squadDriver = Lazily.create(squadDriver, () -> new SquadDriver(apiContext));
     }
 }
