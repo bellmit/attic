@@ -7,16 +7,18 @@ import { connect } from 'react-redux';
 import DocumentTitle from 'react-document-title';
 import classNames from 'classnames';
 
+import { withApi } from 'app/api';
+
 import * as actions from '../actions';
 import CharacterEditor from './CharacterEditor';
 
 const SquadEditor = React.createClass({
   componentWillMount() {
-    this.props.actions.loadSquad();
+    this.props.actions.loadSquad(this.props.api);
   },
 
   render() {
-    var {characters, actions, workflow} = this.props;
+    var {characters, actions, workflow, api} = this.props;
 
     return <DocumentTitle title="Your Squad">
       <div className="container">
@@ -44,7 +46,7 @@ const SquadEditor = React.createClass({
         <button
           className={classNames("btn", "btn-primary", {disabled: workflow.saving || workflow.loading})}
           disabled={workflow.saving || workflow.loading}
-          onClick={actions.saveSquad}>
+          onClick={() => actions.saveSquad(api)}>
           {workflow.saving ? "Saving…" : workflow.loading ? "Loading…" : "Save & return to lobby"}
         </button>
       </div>
@@ -65,4 +67,4 @@ function mapDispatchToProps(dispatch) {
 module.exports = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SquadEditor);
+)(withApi(SquadEditor));

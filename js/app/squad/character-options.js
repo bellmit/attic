@@ -7,7 +7,7 @@ export const FACINGS = [
   "bottom-right",
 ];
 
-export const ARCHETYPES = ["skirmisher", "hunter", "sage"];
+export const ARCHETYPES = ["SKIRMISHER", "HUNTER", "SAGE"];
 export const GENDERS = ["F", "M"];
 export const HAIRS = ["1", "2", "3"];
 export const HATS = ["0", "1", "2"];

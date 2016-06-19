@@ -8,21 +8,7 @@ import { NEXT, PREV } from 'app/squad/components/CycleButtons';
 describe('app/squad/reducer', () => {
   it('generates an initial state', () => {
     var state = reducer(undefined, '//test-action');
-    expect(state).to.have.property('characters').with.lengthOf(3);
-    state.characters.map(character => {
-      expect(character).to.have.property('name')
-        .with.length.at.least(1);
-
-      expect(character).to.have.property('sprite')
-      expect(character.sprite).to.have.property('gender')
-        .that.is.oneOf(options.GENDERS);
-      expect(character.sprite).to.have.property('hair')
-        .that.is.oneOf(options.HAIRS);
-      expect(character.sprite).to.have.property('hat')
-        .that.is.oneOf(options.HATS);
-      expect(character.sprite).to.have.property('outfit')
-        .that.is.oneOf(options.OUTFITS);
-    });
+    expect(state).to.have.property('characters').with.lengthOf(0);
   });
 
   var fromState = {
@@ -43,6 +29,26 @@ describe('app/squad/reducer', () => {
       },
     ],
   };
+
+  it('generates a squad in response to a GENERATE_SQUAD', () => {
+    var state = reducer(fromState, actions.generateSquad());
+    expect(state).to.have.property('characters')
+      .with.lengthOf(3);
+    state.characters.map(character => {
+      expect(character).to.have.property('name')
+        .with.length.at.least(1);
+
+      expect(character).to.have.property('sprite')
+      expect(character.sprite).to.have.property('gender')
+        .that.is.oneOf(options.GENDERS);
+      expect(character.sprite).to.have.property('hair')
+        .that.is.oneOf(options.HAIRS);
+      expect(character.sprite).to.have.property('hat')
+        .that.is.oneOf(options.HATS);
+      expect(character.sprite).to.have.property('outfit')
+        .that.is.oneOf(options.OUTFITS);
+    });
+  });
 
   it('changes character names', () => {
     var toState = reducer(fromState, actions.changeCharacterName(0, "Doug"));

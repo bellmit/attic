@@ -72,7 +72,9 @@ const characters = handleActions({
   CHANGE_CHARACTER_NAME: reduceIndexedElement(character),
   CHANGE_CHARACTER_ARCHETYPE: reduceIndexedElement(character),
   UPDATE_CHARACTER_SPRITE: reduceIndexedElement(character),
-}, initialCharacters);
+  SQUAD_LOADED: (state, action) => action.payload.characters,
+  GENERATE_SQUAD: (state, action) => initialCharacters,
+}, []);
 
 const workflow = handleActions({
   LOADING_SQUAD: (state, action) => ({
@@ -80,6 +82,10 @@ const workflow = handleActions({
     loading: true,
   }),
   SQUAD_LOADED: (state, action) => ({
+    ...state,
+    loading: false,
+  }),
+  GENERATE_SQUAD: (state, action) => ({
     ...state,
     loading: false,
   }),
