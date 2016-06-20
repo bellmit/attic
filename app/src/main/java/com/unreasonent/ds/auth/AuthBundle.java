@@ -2,7 +2,6 @@ package com.unreasonent.ds.auth;
 
 import com.unreasonent.ds.DistantShoreConfiguration;
 import com.unreasonent.ds.auth.authenticator.JwtAuthenticator;
-import com.unreasonent.ds.auth.resources.WhoAmI;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
@@ -24,6 +23,5 @@ public class AuthBundle implements ConfiguredBundle<DistantShoreConfiguration> {
                         .setPrefix("Bearer")
                         .buildAuthFilter()));
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
-        environment.jersey().register(new WhoAmI());
     }
 }
