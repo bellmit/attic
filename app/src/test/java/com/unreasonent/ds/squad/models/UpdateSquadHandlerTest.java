@@ -32,10 +32,20 @@ public class UpdateSquadHandlerTest {
 
     @Test
     public void updateModifiesSquads() {
+        Squad originalSquad = mock(Squad.class);
+        Squad newSquad = mock(Squad.class);
+        UpdateSquadCommand command = new UpdateSquadCommand("userid", newSquad);
+        fixture.given(new SquadUpdatedEvent("userid", originalSquad))
+                .when(command)
+                .expectEvents(new SquadUpdatedEvent("userid", newSquad));
+    }
+
+    @Test
+    public void identicalUpdateEmitsNothing() {
         Squad squad = mock(Squad.class);
         UpdateSquadCommand command = new UpdateSquadCommand("userid", squad);
         fixture.given(new SquadUpdatedEvent("userid", squad))
                 .when(command)
-                .expectEvents(new SquadUpdatedEvent("userid", squad));
+                .expectEvents();
     }
 }
