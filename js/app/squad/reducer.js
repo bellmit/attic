@@ -72,8 +72,36 @@ const characters = handleActions({
   CHANGE_CHARACTER_NAME: reduceIndexedElement(character),
   CHANGE_CHARACTER_ARCHETYPE: reduceIndexedElement(character),
   UPDATE_CHARACTER_SPRITE: reduceIndexedElement(character),
-}, initialCharacters);
+  SQUAD_LOADED: (state, action) => action.payload.characters,
+  GENERATE_SQUAD: (state, action) => initialCharacters,
+}, []);
+
+const workflow = handleActions({
+  LOADING_SQUAD: (state, action) => ({
+    ...state,
+    loading: true,
+  }),
+  SQUAD_LOADED: (state, action) => ({
+    ...state,
+    loading: false,
+  }),
+  GENERATE_SQUAD: (state, action) => ({
+    ...state,
+    loading: false,
+  }),
+  SAVING_SQUAD: (state, action) => ({
+    ...state,
+    saving: true,
+  }),
+  SQUAD_SAVED: (state, action) => ({
+    ...state,
+    saving: false,
+  }),
+}, {
+  saving: false,
+});
 
 module.exports = combineReducers({
   characters,
+  workflow,
 });

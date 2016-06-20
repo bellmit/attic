@@ -5,11 +5,14 @@ import DocumentTitle from 'react-document-title';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withApi } from 'app/api';
+import { withLock } from 'app/lock/components';
 import { boot } from 'app/lock/actions';
 
 const App = React.createClass({
   componentDidMount() {
-    this.props.boot();
+    var {api, lock} = this.props;
+    this.props.boot(api, lock);
   },
 
   render() {
@@ -26,4 +29,4 @@ const App = React.createClass({
 module.exports = connect(
   state => state.lock,
   dispatch => bindActionCreators({boot}, dispatch)
-)(App);
+)(withApi(withLock(App)));

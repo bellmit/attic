@@ -8,7 +8,32 @@ import { NEXT, PREV } from 'app/squad/components/CycleButtons';
 describe('app/squad/reducer', () => {
   it('generates an initial state', () => {
     var state = reducer(undefined, '//test-action');
-    expect(state).to.have.property('characters').with.lengthOf(3);
+    expect(state).to.have.property('characters').with.lengthOf(0);
+  });
+
+  var fromState = {
+    workflow: {
+      saving: false,
+      loading: false,
+    },
+    characters: [
+      {
+        name: "Bob",
+        archetype: "skirmisher",
+        sprite: {
+          hair: "1",
+          hat: "0",
+          outfit: "1",
+          gender: "F",
+        },
+      },
+    ],
+  };
+
+  it('generates a squad in response to a GENERATE_SQUAD', () => {
+    var state = reducer(fromState, actions.generateSquad());
+    expect(state).to.have.property('characters')
+      .with.lengthOf(3);
     state.characters.map(character => {
       expect(character).to.have.property('name')
         .with.length.at.least(1);
@@ -25,25 +50,14 @@ describe('app/squad/reducer', () => {
     });
   });
 
-  var fromState = {
-    characters: [
-      {
-        name: "Bob",
-        archetype: "skirmisher",
-        sprite: {
-          hair: "1",
-          hat: "0",
-          outfit: "1",
-          gender: "F",
-        },
-      },
-    ],
-  };
-
   it('changes character names', () => {
     var toState = reducer(fromState, actions.changeCharacterName(0, "Doug"));
 
     expect(toState).to.deep.equal({
+      workflow: {
+        saving: false,
+        loading: false,
+      },
       characters: [
         {
           name: "Doug",
@@ -63,6 +77,10 @@ describe('app/squad/reducer', () => {
     var toState = reducer(fromState, actions.changeCharacterArchetype(0, "hunter"));
 
     expect(toState).to.deep.equal({
+      workflow: {
+        saving: false,
+        loading: false,
+      },
       characters: [
         {
           name: "Bob",
@@ -87,6 +105,10 @@ describe('app/squad/reducer', () => {
     }));
 
     expect(toState).to.deep.equal({
+      workflow: {
+        saving: false,
+        loading: false,
+      },
       characters: [
         {
           name: "Bob",
@@ -109,6 +131,10 @@ describe('app/squad/reducer', () => {
     }));
 
     expect(toState).to.deep.equal({
+      workflow: {
+        saving: false,
+        loading: false,
+      },
       characters: [
         {
           name: "Bob",

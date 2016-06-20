@@ -22,17 +22,17 @@ export default function CharacterEditor({
   };
 
   var archetypes = {
-    skirmisher: <div>
+    SKIRMISHER: <div>
       <h5>Skirmisher</h5>
       <p>Nimble fighter<br />
       Vulnerable to Hunters</p>
     </div>,
-    hunter: <div>
+    HUNTER: <div>
       <h5>Hunter</h5>
       <p>Stalwart archer<br />
       Vulnerable to Sages</p>
     </div>,
-    sage: <div>
+    SAGE: <div>
       <h5>Sage</h5>
       <p>Crafty mystics<br />
       Vulnerable to Skirmishers</p>

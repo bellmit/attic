@@ -23,7 +23,7 @@ To run the unit tests for the UI, _you do not need the Distant Shore services_:
 
 All of the config keys default to values appropriate for staging. You may use these values for local development. To change them, export the named environment variable when starting the web server.
 
-* `API_URL`: the base URL of the Distant Shore API. Must not end in a slash; the app isn't that smart about URL construction.
+* `API_URL`: the base URL of the Distant Shore API.
 
 * `AUTH0_CLIENT_ID`: a public client ID for the matching Auth0 application. This must match the client secret used in the API server; Auth0 will issue tokens signed by that secret when the user logs in with this client.
 
