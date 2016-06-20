@@ -1,5 +1,6 @@
 package com.unreasonent.ds;
 
+import com.loginbox.dropwizard.mybatis.DatasourceMybatisBundle;
 import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import com.unreasonent.ds.auth.AuthBundle;
 import com.unreasonent.ds.axon.AxonBundle;
@@ -34,7 +35,7 @@ public class DistantShoreTest {
         verify(bootstrap).addBundle(argThat(isA(CorsBundle.class)));
         verify(bootstrap).addBundle(argThat(isA(AuthBundle.class)));
         verify(bootstrap).addBundle(argThat(isA(DatabaseBundle.class)));
-        verify(bootstrap).addBundle(argThat(isA(MybatisBundle.class)));
+        verify(bootstrap).addBundle(argThat(wrapsBundle(isA(DatasourceMybatisBundle.class))));
         verify(bootstrap).addBundle(argThat(wrapsBundle(isA(MigrationsBundle.class))));
         verify(bootstrap).addBundle(argThat(wrapsBundle(isA(AxonBundle.class))));
         verify(bootstrap).addBundle(argThat(wrapsBundle(isA(SquadBundle.class))));

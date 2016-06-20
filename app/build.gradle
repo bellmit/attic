@@ -26,7 +26,7 @@ dependencies {
     compileOnly group: 'javax.persistence', name: 'persistence-api', version: '1.0.2'
     compile group: 'org.axonframework', name: 'axon-core', version: axonVersion
 
-    compile group: 'com.loginbox.mybatis', name: 'dropwizard-mybatis', version: '1.0.0'
+    compile group: 'com.loginbox.mybatis', name: 'dropwizard-mybatis', version: '1.2.1'
 
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: '1.0.0'
     compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-db', version: '1.0.0'
