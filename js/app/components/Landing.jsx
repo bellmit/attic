@@ -6,8 +6,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 
+import { withApi } from 'app/api';
 import { withLock } from 'app/lock/components';
-import * as actions from 'app/lock/actions';
+import * as lockActions from 'app/lock/actions';
+import * as actions from '../actions';
 
 function LoggedInLanding({idToken, profile, logout, lock}) {
   return <div className="container">
@@ -60,13 +62,33 @@ const AnonymousLanding = React.createClass({
   },
 });
 
-function Landing({idToken, ...props}) {
+const LoadingLanding = withApi(React.createClass({
+  componentWillMount() {
+    var {openSquadIfNeeded, api} = this.props;
+
+    openSquadIfNeeded(api);
+  },
+
+  render() {
+    return false;
+  },
+}));
+
+function Landing({idToken, loading, ...props}) {
   if (!idToken)
     return <AnonymousLanding {...props} />
+  if (loading)
+    return <LoadingLanding {...props} />
   return <LoggedInLanding idToken={idToken} {...props} />
 }
 
 module.exports = connect(
-  state => state.lock,
-  dispatch => bindActionCreators(actions, dispatch)
+  state => ({
+    ...state.lock,
+    ...state.landing,
+  }),
+  dispatch => bindActionCreators({
+    ...lockActions,
+    ...actions,
+  }, dispatch)
 )(withLock(Landing));
