@@ -1,9 +1,7 @@
 package com.loginbox.dropwizard.mybatis;
 
-import io.dropwizard.ConfiguredBundle;
-import io.dropwizard.db.DatabaseConfiguration;
+import io.dropwizard.Bundle;
 import io.dropwizard.db.ManagedDataSource;
-import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
 
 /**
@@ -22,7 +20,7 @@ import io.dropwizard.setup.Bootstrap;
  *     }
  * }
  * </pre>
- * Then, register an instance of this bundle in your app's {@link io.dropwizard.Application#initialize(io.dropwizard.setup.Bootstrap)}
+ * Then, register an instance of this bundle in your app's {@link io.dropwizard.Application#initialize(Bootstrap)}
  * method:
  * <pre>
  * public class HelloWorld extends Application&lt;HelloWorldConfiguration&gt; {
@@ -61,29 +59,27 @@ import io.dropwizard.setup.Bootstrap;
  *     }
  * </pre>
  * <p>
- * There are three ways to configure MyBatis, depending on your needs: <ul> <li>The {@link #MybatisBundle(Class,
- * Class...)} constructor accepts an explicit list of mapper interfaces to configure. The corresponding SQL can be
- * stored in annotations on the mapper interfaces themselves, or in correspondingly-named {@code .xml} files in the same
- * package. For example, {@code com.example.mappers.Users} would correspond with the file {@code
- * com/example/mappers/Users.xml}.</li> <li>The {@link #MybatisBundle(String, String...)} constructor accepts a list of
- * packages to scan. Any mapper interfaces defined in these packages <em>or subpackages of these packages</em> will be
- * detected and configured. As with the explicit case, SQL for mappers can be stored in the mapper interface itself, or
- * in XML files.</li> <li>In either of the above cases, or using the {@link #MybatisBundle()} constructor, you can
- * optionally override the {@link #configureMybatis(org.apache.ibatis.session.Configuration)} method to customize the
- * Mybatis configuration yourself.</li> </ul>
- *
- * @param <T>
- *         Your application's configuration class.
+ * There are three ways to configure MyBatis, depending on your needs: <ul> <li>The {@link
+ * #DatasourceMybatisBundle(Class, Class...)} constructor accepts an explicit list of mapper interfaces to configure.
+ * The corresponding SQL can be stored in annotations on the mapper interfaces themselves, or in correspondingly-named
+ * {@code .xml} files in the same package. For example, {@code com.example.mappers.Users} would correspond with the file
+ * {@code com/example/mappers/Users.xml}.</li> <li>The {@link #DatasourceMybatisBundle(String, String...)} constructor
+ * accepts a list of packages to scan. Any mapper interfaces defined in these packages <em>or subpackages of these
+ * packages</em> will be detected and configured. As with the explicit case, SQL for mappers can be stored in the mapper
+ * interface itself, or in XML files.</li> <li>In either of the above cases, or using the {@link
+ * #DatasourceMybatisBundle()} constructor, you can optionally override the {@link
+ * #configureMybatis(org.apache.ibatis.session.Configuration)} method to customize the Mybatis configuration
+ * yourself.</li> </ul>
  */
-public abstract class MybatisBundle<T extends io.dropwizard.Configuration>
+public abstract class DatasourceMybatisBundle
         extends AbstractMybatisBundle
-        implements ConfiguredBundle<T>, DatabaseConfiguration<T> {
+        implements Bundle {
     /**
      * Creates a bundle with no mappers configured automatically. The bundle's Mybatis {@link
      * org.apache.ibatis.session.SqlSessionFactory} can still be configured by overriding {@link
      * #configureMybatis(org.apache.ibatis.session.Configuration)}.
      */
-    public MybatisBundle() {
+    public DatasourceMybatisBundle() {
         super();
     }
 
@@ -98,7 +94,7 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration>
      *         the remaining mappers to register.
      */
     // The wonky signature avoids ambiguity with the () and (String...) cases.
-    public MybatisBundle(Class<?> mapper, Class<?>... mappers) {
+    public DatasourceMybatisBundle(Class<?> mapper, Class<?>... mappers) {
         super(mapper, mappers);
     }
 
@@ -113,42 +109,34 @@ public abstract class MybatisBundle<T extends io.dropwizard.Configuration>
      *         the remaining packages to scan.
      */
     // The wonky signature avoids ambiguity with the () and (Class...) cases.
-    public MybatisBundle(String packageName, String... packageNames) {
+    public DatasourceMybatisBundle(String packageName, String... packageNames) {
         super(packageName, packageNames);
     }
 
     /**
      * Creates the bundle's MyBatis session factory and registers health checks.
      *
-     * @param configuration
-     *         the application's configuration.
      * @param environment
      *         the Dropwizard environment being started.
-     * @throws Exception
-     *         if MyBatis setup fails for any reason. MyBatis exceptions will be thrown as-is.
+     * @throws RuntimeException
+     *         if MyBatis setup fails for any reason. MyBatis exceptions will be thrown wrapped in a RuntimeException.
      */
     @Override
-    public void run(T configuration, io.dropwizard.setup.Environment environment) throws Exception {
-        ManagedDataSource dataSource = getManagedDataSource(configuration, environment);
-        run(dataSource, environment);
+    public void run(io.dropwizard.setup.Environment environment) {
+        ManagedDataSource dataSource = getManagedDataSource();
+        try {
+            run(dataSource, environment);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * Create (or obtain) the managed datasource used by this bundle. By default, this will create a new datasource from
-     * the passed configuration, but you can override this method to provide your own.
+     * Create (or obtain) the managed datasource used by this bundle.
      *
-     * @param configuration
-     *         the configuration to obtain datasource configuration from.
-     * @param environment
-     *         the environment to use when managing the datasource.
      * @return a managed data source.
      */
-    private ManagedDataSource getManagedDataSource(T configuration, io.dropwizard.setup.Environment environment) {
-        PooledDataSourceFactory dataSourceFactory = getDataSourceFactory(configuration);
-        ManagedDataSource dataSource = dataSourceFactory.build(environment.metrics(), getName());
-        environment.lifecycle().manage(dataSource);
-        return dataSource;
-    }
+    protected abstract ManagedDataSource getManagedDataSource();
 
     /**
      * Initializes the bundle by doing nothing.
