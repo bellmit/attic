@@ -7,6 +7,8 @@ import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 
+import java.util.Objects;
+
 public class PlayerOwnedSquad extends AbstractAnnotatedAggregateRoot<String> {
     private static final long serialVersionUID = 0;
 
@@ -15,7 +17,9 @@ public class PlayerOwnedSquad extends AbstractAnnotatedAggregateRoot<String> {
     private Squad squad;
 
     public void updateSquad(UpdateSquadCommand command) {
-        apply(new SquadUpdatedEvent(command.getUserId(), command.getSquad()));
+        Squad squad = command.getSquad();
+        if (!Objects.equals(this.squad, squad))
+            apply(new SquadUpdatedEvent(command.getUserId(), squad));
     }
 
     @EventHandler
