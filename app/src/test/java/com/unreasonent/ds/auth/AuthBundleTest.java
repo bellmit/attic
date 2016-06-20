@@ -1,7 +1,6 @@
 package com.unreasonent.ds.auth;
 
 import com.unreasonent.ds.BundleTestCase;
-import com.unreasonent.ds.auth.resources.WhoAmI;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import org.junit.Test;
@@ -18,6 +17,5 @@ public class AuthBundleTest extends BundleTestCase {
 
         verify(jersey).register(isA(AuthDynamicFeature.class));
         verify(jersey).register(isA(AuthValueFactoryProvider.Binder.class));
-        verify(jersey).register(isA(WhoAmI.class));
     }
 }

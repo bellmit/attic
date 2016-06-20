@@ -25,17 +25,12 @@ public class SystemDriver {
 
     public final ApiContext apiContext = new ApiContext(app);
 
-    private WhoAmIDriver whoAmIDriver = null;
     private SquadDriver squadDriver = null;
 
     public TestRule rules() {
         return RuleChain
                 .outerRule(database.rules())
                 .around(app.rules());
-    }
-
-    public WhoAmIDriver whoAmIDriver() {
-        return whoAmIDriver = Lazily.create(whoAmIDriver, () -> new WhoAmIDriver(apiContext));
     }
 
     public SquadDriver squadDriver() {
