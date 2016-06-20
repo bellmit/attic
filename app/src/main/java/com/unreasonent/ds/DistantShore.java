@@ -1,5 +1,6 @@
 package com.unreasonent.ds;
 
+import com.loginbox.dropwizard.mybatis.DatasourceMybatisBundle;
 import com.loginbox.dropwizard.mybatis.MybatisBundle;
 import com.unreasonent.ds.auth.AuthBundle;
 import com.unreasonent.ds.axon.AxonBundle;
@@ -7,6 +8,7 @@ import com.unreasonent.ds.cors.CorsBundle;
 import com.unreasonent.ds.database.DatabaseBundle;
 import com.unreasonent.ds.squad.SquadBundle;
 import io.dropwizard.Application;
+import io.dropwizard.db.ManagedDataSource;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -36,11 +38,11 @@ public class DistantShore extends Application<DistantShoreConfiguration> {
             = new AuthBundle();
     private final DatabaseBundle databaseBundle
             = new DatabaseBundle();
-    private final MybatisBundle<DistantShoreConfiguration> mybatisBundle
-            = new MybatisBundle<DistantShoreConfiguration>("com.unreasonent.ds") {
+    private final DatasourceMybatisBundle mybatisBundle
+            = new DatasourceMybatisBundle("com.unreasonent.ds") {
         @Override
-        public PooledDataSourceFactory getDataSourceFactory(DistantShoreConfiguration configuration) {
-            return configuration.getDatabase();
+        protected DataSource getDataSource() {
+            return databaseBundle.getDataSource();
         }
     };
     private final MigrationsBundle<DistantShoreConfiguration> migrationsBundle
