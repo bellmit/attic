@@ -18,10 +18,13 @@ public class Api {
     public Api(SystemDriver systemDriver, TestContext testContext) {
         this.testContext = testContext;
         this.apiContext = systemDriver.apiContext;
+
         this.whoAmI = new WhoAmI(systemDriver, testContext);
+        this.squad = new Squad(systemDriver, testContext);
     }
 
     public final WhoAmI whoAmI;
+    public final Squad squad;
 
     public void authenticateAs(String... args) {
         DslParams params = new DslParams(args,
