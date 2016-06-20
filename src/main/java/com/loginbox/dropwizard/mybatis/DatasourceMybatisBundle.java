@@ -4,6 +4,8 @@ import io.dropwizard.Bundle;
 import io.dropwizard.db.ManagedDataSource;
 import io.dropwizard.setup.Bootstrap;
 
+import javax.sql.DataSource;
+
 /**
  * Provides the MyBatis persistence framework to your Dropwizard app.
  * <p>
@@ -123,7 +125,7 @@ public abstract class DatasourceMybatisBundle
      */
     @Override
     public void run(io.dropwizard.setup.Environment environment) {
-        ManagedDataSource dataSource = getManagedDataSource();
+        DataSource dataSource = getDataSource();
         try {
             run(dataSource, environment);
         } catch (Exception e) {
@@ -136,7 +138,7 @@ public abstract class DatasourceMybatisBundle
      *
      * @return a managed data source.
      */
-    protected abstract ManagedDataSource getManagedDataSource();
+    protected abstract DataSource getDataSource();
 
     /**
      * Initializes the bundle by doing nothing.
