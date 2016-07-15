@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-var path = require('path');
-var keys = require('lodash.keys');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var path = require('path')
+var keys = require('lodash.keys')
+var webpack = require('webpack')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-var thisPackage = require('./package.json');
+var thisPackage = require('./package.json')
 
 module.exports = {
   entry: {
@@ -76,4 +76,4 @@ module.exports = {
   ],
 
   devtool: '#source-map',
-};
+}
