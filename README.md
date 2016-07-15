@@ -13,6 +13,7 @@ Source layout:
 * `src`: app sources (all languages)
     * `src/index.html`: the app's root page, minus script tags.
     * `src/app.jsx`: the app's entry point script.
+    * `src/app.less`: the app's entry point style sheet, using Less.
     * `src/components.jsx`: the app's React components.
     * `src/components.less`: the components' style sheets, using Less.
 * `web`: a trivial HTTP server for local development or deployment to Heroku.

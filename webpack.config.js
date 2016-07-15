@@ -10,7 +10,7 @@ var thisPackage = require('./package.json');
 
 module.exports = {
   entry: {
-    app: 'app',
+    app: ['app.less', 'app'],
     vendor: keys(thisPackage.dependencies),
   },
 
