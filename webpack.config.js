@@ -19,7 +19,7 @@ module.exports = {
       path.resolve("src"),
     ],
     // Automatically resolve JSX modules, like JS modules.
-    extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"],
+    extensions: ["", ".webpack.js", ".web.js", ".js"],
   },
 
   output: {
@@ -34,19 +34,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel",
-        query: {
-          presets: ['es2015'],
-          plugins: ['transform-object-rest-spread'],
-        },
-      },
-      {
-        test: /\.jsx$/,
-        exclude: /node_modules/,
-        loader: "babel",
-        query: {
-          presets: ['react', 'es2015'],
-          plugins: ['transform-object-rest-spread'],
-        },
       },
       {
         test: /\.less$/,

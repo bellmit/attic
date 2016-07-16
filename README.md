@@ -30,8 +30,7 @@ Source layout:
 
 Webpack has been configured to read the following extensions:
 
-* `.jsx`: ES2015 Javascript, with JSX syntax for React.
-* `.js`: ES2015 Javascript.
+* `.js`: ES2015 Javascript, with JSX syntax for React.
 * `.less`: Less stylesheets.
 
 Switch to Sass if you like.
