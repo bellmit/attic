@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-import { handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions'
 
 module.exports = handleActions({
   LANDING_LOADED: (state, action) => ({
@@ -9,4 +9,4 @@ module.exports = handleActions({
   }),
 }, {
   loading: true,
-});
+})

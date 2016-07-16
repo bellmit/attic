@@ -1,19 +1,19 @@
-'use strict';
+'use strict'
 
 function squad(api) {
   return {
     get() {
-      return api.get('/squad');
+      return api.get('/squad')
     },
 
     update(squad) {
-      return api.post('/squad', squad);
+      return api.post('/squad', squad)
     },
-  };
+  }
 }
 
 module.exports = {
   squad() {
-    return squad(this);
+    return squad(this)
   },
-};
+}

@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /*
  * Given an index and an array, map the index to an array slot. This assumes
@@ -8,20 +8,20 @@
  */
 export function cyclicIndex(index, array) {
   while (index < 0) {
-    index += array.length;
+    index += array.length
   }
   while (index >= array.length) {
-    index -= array.length;
+    index -= array.length
   }
-  return index;
-};
+  return index
+}
 
 /* Given an array, return a random index. */
 export function randomIndex(array) {
-  return Math.floor(Math.random() * array.length);
+  return Math.floor(Math.random() * array.length)
 }
 
 /* Given an array, return a random element. */
 export function randomElement(array) {
-  return array[randomIndex(array)];
+  return array[randomIndex(array)]
 }

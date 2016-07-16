@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
 function makeBridge(event, nativeEndpoint, socket) {
   return function(...args) {
-    nativeEndpoint(...args);
-    socket.emit(event, args);
+    nativeEndpoint(...args)
+    socket.emit(event, args)
   }
 }
 
-const TERMINALS = ['log', 'info', 'warn', 'error'];
+const TERMINALS = ['log', 'info', 'warn', 'error']
 
 /*
  * Forward log messages to terminals on `console` to the Socket.io socket
@@ -19,9 +19,9 @@ const TERMINALS = ['log', 'info', 'warn', 'error'];
 export default function install(console, socket) {
   for (var terminal of TERMINALS) {
     if (console[terminal]) {
-      var event = `console.${terminal}`;
-      var nativeEndpoint = console[terminal].bind(console);
-      console[terminal] = makeBridge(event, nativeEndpoint, socket);
+      var event = `console.${terminal}`
+      var nativeEndpoint = console[terminal].bind(console)
+      console[terminal] = makeBridge(event, nativeEndpoint, socket)
     }
   }
 }

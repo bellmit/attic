@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   path: '/',
@@ -9,4 +9,4 @@ module.exports = {
   childRoutes: [
     require('./squad/routes'),
   ],
-};
+}

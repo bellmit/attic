@@ -1,24 +1,24 @@
-'use strict';
+'use strict'
 
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import DocumentTitle from 'react-document-title';
-import classNames from 'classnames';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import DocumentTitle from 'react-document-title'
+import classNames from 'classnames'
 
-import { withApi } from 'app/api';
+import { withApi } from 'app/api'
 
-import * as actions from '../actions';
-import CharacterEditor from './CharacterEditor';
+import * as actions from '../actions'
+import CharacterEditor from './CharacterEditor'
 
 const SquadEditor = React.createClass({
   componentWillMount() {
-    this.props.actions.loadSquad(this.props.api);
+    this.props.actions.loadSquad(this.props.api)
   },
 
   render() {
-    var {characters, actions, workflow, api} = this.props;
+    var {characters, actions, workflow, api} = this.props
 
     return <DocumentTitle title="Your Squad">
       <div className="container">
@@ -50,21 +50,21 @@ const SquadEditor = React.createClass({
           {workflow.saving ? "Saving…" : workflow.loading ? "Loading…" : "Save & return to lobby"}
         </button>
       </div>
-    </DocumentTitle>;
+    </DocumentTitle>
   },
-});
+})
 
 function mapStateToProps(state) {
-  return state.squad;
+  return state.squad
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(actions, dispatch),
-  };
+  }
 }
 
 module.exports = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withApi(SquadEditor));
+)(withApi(SquadEditor))

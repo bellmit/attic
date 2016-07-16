@@ -1,13 +1,13 @@
-'use strict';
+'use strict'
 
-import { combineReducers } from 'redux';
-import { handleActions } from 'redux-actions';
-import * as actions from './actions';
-import * as options from './character-options';
-import { randomElement } from 'app/arrays';
-import * as sg from './string-generator';
+import { combineReducers } from 'redux'
+import { handleActions } from 'redux-actions'
+import * as actions from './actions'
+import * as options from './character-options'
+import { randomElement } from 'app/arrays'
+import * as sg from './string-generator'
 
-const nameGenerator = sg.load(require('./name-generator.yaml'));
+const nameGenerator = sg.load(require('./name-generator.yaml'))
 
 function randomSprite() {
   return {
@@ -15,11 +15,11 @@ function randomSprite() {
     hair: randomElement(options.HAIRS),
     outfit: randomElement(options.OUTFITS),
     gender: randomElement(options.GENDERS),
-  };
+  }
 }
 
 function randomName() {
-  return nameGenerator.generate('name');
+  return nameGenerator.generate('name')
 }
 
 const initialCharacters = [
@@ -38,14 +38,14 @@ const initialCharacters = [
     archetype: randomElement(options.ARCHETYPES),
     sprite: randomSprite(),
   },
-];
+]
 
 const sprite = handleActions({
   UPDATE_CHARACTER_SPRITE: (state, {payload}) => ({
     ...state,
     ...payload,
   }),
-});
+})
 
 const character = handleActions({
   CHANGE_CHARACTER_NAME: (state, action) => ({
@@ -65,7 +65,7 @@ const character = handleActions({
 function reduceIndexedElement(reducer) {
   return (state, action) => state.map(
     (elem, index) => action.meta.index == index ? reducer(elem, action) : elem
-  );
+  )
 }
 
 const characters = handleActions({
@@ -74,7 +74,7 @@ const characters = handleActions({
   UPDATE_CHARACTER_SPRITE: reduceIndexedElement(character),
   SQUAD_LOADED: (state, action) => action.payload.characters,
   GENERATE_SQUAD: (state, action) => initialCharacters,
-}, []);
+}, [])
 
 const workflow = handleActions({
   LOADING_SQUAD: (state, action) => ({
@@ -99,9 +99,9 @@ const workflow = handleActions({
   }),
 }, {
   saving: false,
-});
+})
 
 module.exports = combineReducers({
   characters,
   workflow,
-});
+})

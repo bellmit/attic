@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-import classNames from 'classnames';
-import React, { PropTypes } from 'react';
-import keys from 'lodash.keys';
+import classNames from 'classnames'
+import React, { PropTypes } from 'react'
+import keys from 'lodash.keys'
 
-export const NEXT = 'next';
-export const PREV = 'prev';
+export const NEXT = 'next'
+export const PREV = 'prev'
 
 export default function OptionButtons({options, buttonClassName, value, onSelect}) {
   if (Array.isArray(options)) {
@@ -27,5 +27,5 @@ export default function OptionButtons({options, buttonClassName, value, onSelect
         {options[option]}
       </button>
     ))}
-  </div>;
+  </div>
 }

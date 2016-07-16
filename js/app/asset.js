@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /*
  * Inject appConfig into a callback, if available. When appConfig is available,
@@ -9,12 +9,12 @@
 function appConfig(callback) {
   if (typeof window === 'undefined')
     // Node.
-    return undefined;
+    return undefined
   if (typeof window.appConfig === 'undefined')
     // Local server.
-    return undefined;
+    return undefined
   // Aerobatic, or at least a close approximation.
-  return callback(window.appConfig);
+  return callback(window.appConfig)
 }
 
 /*
@@ -24,5 +24,5 @@ function appConfig(callback) {
  * this will return path, unaltered.
  */
 module.exports = function asset(path) {
-  return appConfig(config => `${config.STATIC_ASSET_PATH || ''}${path}`) || path;
+  return appConfig(config => `${config.STATIC_ASSET_PATH || ''}${path}`) || path
 }

@@ -1,44 +1,44 @@
-'use strict';
+'use strict'
 
-import { createAction } from 'redux-actions';
-import { replace } from 'react-router-redux';
-import jwtDecode from 'jwt-decode';
+import { createAction } from 'redux-actions'
+import { replace } from 'react-router-redux'
+import jwtDecode from 'jwt-decode'
 
 function getProfile(lock, idToken) {
   return new Promise((resolve, reject) => {
     lock.getProfile(idToken, (err, profile) => {
       if (err)
-        reject(err);
+        reject(err)
       else
-        resolve(profile);
-    });
-  });
+        resolve(profile)
+    })
+  })
 }
 
 function refreshToken(dispatch, getState, api, lock) {
-  var state = getState();
-  var idToken = state.lock.idToken;
+  var state = getState()
+  var idToken = state.lock.idToken
   if (idToken) {
     lock.getClient().renewIdToken(idToken, (err, result) => {
       if (err) {
-        console.error('lock.refresh.failed', err);
-        dispatch(abandon());
+        console.error('lock.refresh.failed', err)
+        dispatch(abandon())
       }
       else
-        dispatch(bootFromToken(result.id_token, api, lock));
-    });
+        dispatch(bootFromToken(result.id_token, api, lock))
+    })
   }
 }
 
 function tokenExpires(idToken) {
-  var claims = jwtDecode(idToken);
+  var claims = jwtDecode(idToken)
   if (claims.exp) {
-    var now = Date.now(); // epoch millis
-    var exp = claims.exp * 1000; // epoch sec -> epoch millis
-    var remaining = exp - now; // worst case: already invalid.
-    return remaining;
+    var now = Date.now() // epoch millis
+    var exp = claims.exp * 1000 // epoch sec -> epoch millis
+    var remaining = exp - now // worst case: already invalid.
+    return remaining
   }
-  return null;
+  return null
 }
 
 /*
@@ -55,25 +55,25 @@ function tokenExpires(idToken) {
  */
 function bootFromToken(idToken, api, lock) {
   return (dispatch, getState) => {
-    var remaining = tokenExpires(idToken);
+    var remaining = tokenExpires(idToken)
     if (remaining && remaining <= 0) // too late, this one's dead. Give up on it.
-      return dispatch(abandon());
+      return dispatch(abandon())
 
-    window.localStorage.idToken = idToken;
+    window.localStorage.idToken = idToken
     dispatch(lockSuccess({
       idToken,
-    }));
+    }))
 
     if (remaining) { // will expire, will need to refresh it in half the remaining lifetime.
-      var refreshIn = remaining / 2; // relative millis
-      setTimeout(refreshToken, refreshIn, dispatch, getState, api, lock);
+      var refreshIn = remaining / 2 // relative millis
+      setTimeout(refreshToken, refreshIn, dispatch, getState, api, lock)
     }
 
     getProfile(lock, idToken)
       .then(profile => dispatch(lockSuccess({
         profile,
-      })));
-  };
+      })))
+  }
 }
 
 function bootFromHash(hash, api, lock) {
@@ -84,20 +84,20 @@ function bootFromHash(hash, api, lock) {
       // Get the token out of the URL, irreversibly (browser `back` won't
       // restore it)
       hash: null,
-    }));
+    }))
 
     if (hash.error) {
-      console.log('lock.hash.failed', hash.error);
-      return;
+      console.log('lock.hash.failed', hash.error)
+      return
     }
 
-    var idToken = hash.id_token;
-    dispatch(bootFromToken(idToken, api, lock));
-  };
+    var idToken = hash.id_token
+    dispatch(bootFromToken(idToken, api, lock))
+  }
 }
 
 function bootAnonymously() {
-  return lockSuccess({});
+  return lockSuccess({})
 }
 
 /*
@@ -110,20 +110,20 @@ function bootAnonymously() {
  */
 export function boot(api, lock) {
   return dispatch => {
-    var hash = lock.parseHash();
+    var hash = lock.parseHash()
     if (hash) {
-      dispatch(bootFromHash(hash, api, lock));
-      return;
+      dispatch(bootFromHash(hash, api, lock))
+      return
     }
 
-    var idToken = window.localStorage.idToken;
+    var idToken = window.localStorage.idToken
     if (idToken) {
-      dispatch(bootFromToken(idToken, api, lock));
-      return;
+      dispatch(bootFromToken(idToken, api, lock))
+      return
     }
 
-    dispatch(bootAnonymously());
-  };
+    dispatch(bootAnonymously())
+  }
 }
 
 export function login(lock, options) {
@@ -150,27 +150,27 @@ export function login(lock, options) {
         // ... but include enough info for boot() to restore path.
         state: window.location.pathname,
       },
-    });
-  };
+    })
+  }
 }
 
 function abandon() {
   return dispatch => {
-    delete window.localStorage.idToken;
-    dispatch(lockClear());
+    delete window.localStorage.idToken
+    dispatch(lockClear())
   }
 }
 
 export function logout(lock) {
   return dispatch => {
-    dispatch(abandon());
+    dispatch(abandon())
     lock.logout({
       client_id: appConfig.AUTH0_CLIENT_ID,
       returnTo: window.location.origin,
-    });
+    })
   }
 }
 
-const lockSuccess = createAction('LOCK_SUCCESS');
+const lockSuccess = createAction('LOCK_SUCCESS')
 
-const lockClear = createAction('LOCK_CLEAR');
+const lockClear = createAction('LOCK_CLEAR')

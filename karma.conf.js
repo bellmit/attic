@@ -1,8 +1,8 @@
-var reporters = ['progress'];
+var reporters = ['progress']
 
-var circleTestDir = process.env.CIRCLE_TEST_REPORTS;
+var circleTestDir = process.env.CIRCLE_TEST_REPORTS
 if (circleTestDir) {
-  reporters.push('junit');
+  reporters.push('junit')
 }
 
 module.exports = function(config) {

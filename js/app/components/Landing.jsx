@@ -1,15 +1,15 @@
-'use strict';
+'use strict'
 
-import React from 'react';
-import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import jwtDecode from 'jwt-decode';
+import React from 'react'
+import { Link } from 'react-router'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import jwtDecode from 'jwt-decode'
 
-import { withApi } from 'app/api';
-import { withLock } from 'app/lock/components';
-import * as lockActions from 'app/lock/actions';
-import * as actions from '../actions';
+import { withApi } from 'app/api'
+import { withLock } from 'app/lock/components'
+import * as lockActions from 'app/lock/actions'
+import * as actions from '../actions'
 
 function LoggedInLanding({idToken, profile, logout, lock}) {
   return <div className="container">
@@ -26,7 +26,7 @@ function LoggedInLanding({idToken, profile, logout, lock}) {
         <pre>{JSON.stringify(profile, null, "  ")}</pre>}
       <button className="btn btn-default" onClick={() => logout(lock)}>Log out</button>
     </div>
-  </div>;
+  </div>
 }
 
 function LandingCopy() {
@@ -41,15 +41,15 @@ function LandingCopy() {
       In the finished app, this should be a preview of a live fight, or a
       recording.
     </p>
-  </div>;
+  </div>
 }
 
 const AnonymousLanding = React.createClass({
   componentDidMount() {
-    var {login, lock} = this.props;
+    var {login, lock} = this.props
     login(lock, {
       container: "auth0-lock",
-    });
+    })
   },
 
   render() {
@@ -60,19 +60,19 @@ const AnonymousLanding = React.createClass({
       </div>
     </div>
   },
-});
+})
 
 const LoadingLanding = withApi(React.createClass({
   componentWillMount() {
-    var {openSquadIfNeeded, api} = this.props;
+    var {openSquadIfNeeded, api} = this.props
 
-    openSquadIfNeeded(api);
+    openSquadIfNeeded(api)
   },
 
   render() {
-    return false;
+    return false
   },
-}));
+}))
 
 function Landing({idToken, loading, ...props}) {
   if (!idToken)
@@ -91,4 +91,4 @@ module.exports = connect(
     ...lockActions,
     ...actions,
   }, dispatch)
-)(withLock(Landing));
+)(withLock(Landing))

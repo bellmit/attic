@@ -1,19 +1,19 @@
-'use strict';
+'use strict'
 
-import React, { PropTypes } from 'react';
-import asset from 'app/asset';
-import * as options from '../character-options';
+import React, { PropTypes } from 'react'
+import asset from 'app/asset'
+import * as options from '../character-options'
 
-const SPRITE_HEIGHT = 240; // in SVG image units.
-const SPRITE_WIDTH  = 128;
+const SPRITE_HEIGHT = 240 // in SVG image units.
+const SPRITE_WIDTH  = 128
 
 const FACINGS = options.FACINGS.reduce(
   (facings, facing, index) => {
-    facings[facing] = -index * SPRITE_HEIGHT;
-    return facings;
+    facings[facing] = -index * SPRITE_HEIGHT
+    return facings
   },
   {}
-);
+)
 
 function sprite(gender, hair, hat, outfit) {
   return [
@@ -24,8 +24,8 @@ function sprite(gender, hair, hat, outfit) {
     "H", hair,
     "-", hat,
     "C", outfit,
-  ].join("");
-};
+  ].join("")
+}
 
 
 export default function CharacterSprite({
@@ -61,9 +61,9 @@ export default function CharacterSprite({
    * frames around the sprite itself.)
    */
 
-  var facingOffset = FACINGS[facing || "bottom-left"];
-  var spriteAsset = sprite(gender, hair, hat, outfit);
-  var path = asset(`/assets/images/characters/${spriteAsset}.png`);
+  var facingOffset = FACINGS[facing || "bottom-left"]
+  var spriteAsset = sprite(gender, hair, hat, outfit)
+  var path = asset(`/assets/images/characters/${spriteAsset}.png`)
 
   return <svg {...props}
     viewBox={`0 0 ${SPRITE_WIDTH} ${SPRITE_HEIGHT}`}>
@@ -79,7 +79,7 @@ export default function CharacterSprite({
         keyTimes="0; 0.25; 0.5; 0.75; 1"
         repeatCount="indefinite"/>
     </image>
-  </svg>;
+  </svg>
 }
 
-module.exports = CharacterSprite;
+module.exports = CharacterSprite

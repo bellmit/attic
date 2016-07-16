@@ -1,11 +1,11 @@
-'use strict';
+'use strict'
 
-import React, { PropTypes } from 'react';
-import { HATS, HAIRS, OUTFITS, GENDERS } from '../character-options';
+import React, { PropTypes } from 'react'
+import { HATS, HAIRS, OUTFITS, GENDERS } from '../character-options'
 
-import CharacterSprite from './CharacterSprite';
-import CycleButtons from './CycleButtons';
-import OptionButtons from './OptionButtons';
+import CharacterSprite from './CharacterSprite'
+import CycleButtons from './CycleButtons'
+import OptionButtons from './OptionButtons'
 
 export default function CharacterEditor({
   index,
@@ -19,7 +19,7 @@ export default function CharacterEditor({
   var genders = {
     F: "♀",
     M: "♂",
-  };
+  }
 
   var archetypes = {
     SKIRMISHER: <div>
@@ -37,7 +37,7 @@ export default function CharacterEditor({
       <p>Crafty mystics<br />
       Vulnerable to Skirmishers</p>
     </div>,
-  };
+  }
 
   return <div className="row">
     <div className="col-md-1">
@@ -94,5 +94,5 @@ export default function CharacterEditor({
           onSelect={archetype => changeCharacterArchetype(index, archetype)} />
       </div>
     </div>
-  </div>;
+  </div>
 }

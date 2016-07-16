@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-import { handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions'
 
 var initialLock = {
   booting: true,
   idToken: null,
   profile: null,
-};
+}
 
 module.exports = handleActions({
   LOCK_SUCCESS: (state, action) => ({
@@ -18,4 +18,4 @@ module.exports = handleActions({
     ...initialLock,
     booting: false,
   }),
-}, initialLock);
+}, initialLock)
