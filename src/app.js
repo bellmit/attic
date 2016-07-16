@@ -1,7 +1,5 @@
 'use strict'
 
-require('../less/site.less')
-
 import domReady from 'detect-dom-ready'
 import asset from './app/asset'
 import io from 'socket.io-client'

@@ -11,13 +11,13 @@ var thisPackage = require('./package.json')
 
 module.exports = {
   entry: {
-    app: "app.js",
+    app: ['app.less', 'app.js'],
     vendor: keys(thisPackage.dependencies),
   },
 
   resolve: {
     root: [
-      path.resolve("js"),
+      path.resolve("src"),
     ],
     // Automatically resolve JSX modules, like JS modules.
     extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"],
@@ -115,7 +115,7 @@ module.exports = {
       title: "Distant Shore",
       // escape the js/ subdir
       filename: '../index.html',
-      template: 'html/index.html',
+      template: 'src/index.html',
       inject: 'head',
       chunksSortMode: 'dependency',
     }),
