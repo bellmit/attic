@@ -40,7 +40,7 @@ module.exports = {
         loader: ExtractTextPlugin.extract("css?sourceMap!postcss!less?sourceMap"),
       },
       {
-        test: /\.(woff|woff2|svg|ttf|eot)$/,
+        test: /\.(woff|woff2|svg|ttf|eot|png)$/,
         exclude: /node_modules/,
         loader: "file?name=[name].[hash].[ext]",
       },

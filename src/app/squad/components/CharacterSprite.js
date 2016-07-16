@@ -1,7 +1,6 @@
 'use strict'
 
 import React, { PropTypes } from 'react'
-import asset from 'app/asset'
 import * as options from '../character-options'
 
 const SPRITE_HEIGHT = 240 // in SVG image units.
@@ -63,7 +62,7 @@ export default function CharacterSprite({
 
   var facingOffset = FACINGS[facing || "bottom-left"]
   var spriteAsset = sprite(gender, hair, hat, outfit)
-  var path = asset(`/assets/images/characters/${spriteAsset}.png`)
+  var path = require(`./sprites/${spriteAsset}.png`)
 
   return <svg {...props}
     viewBox={`0 0 ${SPRITE_WIDTH} ${SPRITE_HEIGHT}`}>

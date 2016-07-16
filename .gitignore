@@ -1,4 +1,3 @@
 /node_modules/
-/dist/bundle/
-/dist/*.html
+/dist/
 /npm-debug.log
