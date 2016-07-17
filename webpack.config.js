@@ -1,26 +1,24 @@
-'use strict';
+'use strict'
 
-var path = require('path');
-var keys = require('lodash.keys');
-var webpack = require('webpack');
-var autoprefixer = require('autoprefixer');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var path = require('path')
+var keys = require('lodash.keys')
+var webpack = require('webpack')
+var autoprefixer = require('autoprefixer')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
-var thisPackage = require('./package.json');
+var thisPackage = require('./package.json')
 
 module.exports = {
   entry: {
-    app: "app.js",
+    app: ['app.less', 'app'],
     vendor: keys(thisPackage.dependencies),
   },
 
   resolve: {
     root: [
-      path.resolve("js"),
+      path.resolve("src"),
     ],
-    // Automatically resolve JSX modules, like JS modules.
-    extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"],
   },
 
   output: {
@@ -35,19 +33,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel",
-        query: {
-          presets: ['es2015'],
-          plugins: ['transform-object-rest-spread'],
-        },
-      },
-      {
-        test: /\.jsx$/,
-        exclude: /node_modules/,
-        loader: "babel",
-        query: {
-          presets: ['react', 'es2015'],
-          plugins: ['transform-object-rest-spread'],
-        },
       },
       {
         test: /\.less$/,
@@ -55,7 +40,7 @@ module.exports = {
         loader: ExtractTextPlugin.extract("css?sourceMap!postcss!less?sourceMap"),
       },
       {
-        test: /\.(woff|woff2|svg|ttf|eot)$/,
+        test: /\.(woff|woff2|svg|ttf|eot|png)$/,
         exclude: /node_modules/,
         loader: "file?name=[name].[hash].[ext]",
       },
@@ -97,7 +82,7 @@ module.exports = {
           'Safari >= 6',
         ],
       }),
-    ];
+    ]
   },
 
   plugins: [
@@ -112,14 +97,11 @@ module.exports = {
     }),
     new ExtractTextPlugin("[name].[contenthash].css"),
     new HtmlWebpackPlugin({
-      title: "Distant Shore",
-      // escape the js/ subdir
       filename: '../index.html',
-      template: 'html/index.html',
-      inject: 'head',
+      template: 'src/index.html',
       chunksSortMode: 'dependency',
     }),
   ],
 
   devtool: '#source-map',
-};
+}
