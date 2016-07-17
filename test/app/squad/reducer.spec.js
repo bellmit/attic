@@ -36,7 +36,7 @@ describe('app/squad/reducer', () => {
       .with.lengthOf(3)
     state.characters.map(character => {
       expect(character).to.have.property('name')
-        .with.length.at.least(1)
+        .that.is.not.equal('')
 
       expect(character).to.have.property('sprite')
       expect(character.sprite).to.have.property('gender')

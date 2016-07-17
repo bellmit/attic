@@ -1,3 +1,5 @@
+var webpackConfig = require('./webpack.config')
+
 var reporters = ['progress']
 
 var circleTestDir = process.env.CIRCLE_TEST_REPORTS
@@ -19,11 +21,21 @@ module.exports = function(config) {
       'test/bundle.js': ['webpack', 'sourcemap'],
     },
 
-    webpack: Object.assign({}, require('./webpack.config'), {
+    webpack: Object.assign({}, webpackConfig, {
       entry: {},
       plugins: [],
       devtool: 'inline-source-map',
+      externals: {
+        'cheerio': 'window',
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true,
+      },
     }),
+
+    webpackMiddleware: {
+      noInfo: true,
+    },
 
     reporters: reporters,
 
