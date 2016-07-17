@@ -59,7 +59,8 @@
     "karma-watch": "karma start",
     "test": "npm run karma",
     "postinstall": "npm run build",
-    "web": "node web/server.js"
+    "web": "node web/server.js",
+    "web-local": "API_URL=http://localhost:5000/ node web/server.js"
   },
   "engines": {
     "node": "6.2.1"

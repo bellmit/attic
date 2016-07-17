@@ -2,7 +2,7 @@
 
 /* -- defaults -- */
 var config = {
-  API_URL: 'http://localhost:5000',
+  API_URL: 'http://api.staging.distant-shore.com/',
   AUTH0_DOMAIN: 'unreasonent.auth0.com',
   AUTH0_CLIENT_ID: 'F3EFeKAOmYjNsqgYJ3yEo23ejqHXdlJK',
 }
