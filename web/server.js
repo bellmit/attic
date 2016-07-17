@@ -7,10 +7,6 @@ var express = require('express')
 var compression = require('compression')
 var morgan = require('morgan')
 var handlebars = require('handlebars')
-var socketIo = require('socket.io')
-var logging = require('./logging')
-
-var port = process.env.PORT || 4000
 
 var clientConfig = require('./clientConfig')
 var indexContext = {
@@ -43,10 +39,7 @@ app.get(/.*/, function(req, res) {
   })
 })
 
-var server = http.Server(app)
-var io = socketIo(server)
-logging(io)
-
-server.listen(port, function() {
+var port = process.env.PORT || 4000
+app.listen(port, function() {
   console.log("started", `port=${port}`, `url=http://localhost:${port}/`)
 })

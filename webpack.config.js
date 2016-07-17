@@ -11,7 +11,7 @@ var thisPackage = require('./package.json')
 
 module.exports = {
   entry: {
-    app: ['app.less', 'app.js'],
+    app: ['app.less', 'app'],
     vendor: keys(thisPackage.dependencies),
   },
 
@@ -112,11 +112,8 @@ module.exports = {
     }),
     new ExtractTextPlugin("[name].[contenthash].css"),
     new HtmlWebpackPlugin({
-      title: "Distant Shore",
-      // escape the js/ subdir
       filename: '../index.html',
       template: 'src/index.html',
-      inject: 'head',
       chunksSortMode: 'dependency',
     }),
   ],
