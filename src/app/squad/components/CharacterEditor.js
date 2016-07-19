@@ -39,30 +39,30 @@ export default function CharacterEditor({
     </div>,
   }
 
-  return <div className="row">
+  return <div className="row character-editor">
     <div className="col-md-1">
-      <div className="form-group">
+      <div className="form-group hats-input">
         <CycleButtons
           options={HATS}
           value={sprite.hat}
           onSelect={hat => updateCharacterSprite(index, { hat, })} />
       </div>
 
-      <div className="form-group">
+      <div className="form-group hairs-input">
         <CycleButtons
           options={HAIRS}
           value={sprite.hair}
           onSelect={hair => updateCharacterSprite(index, { hair, })} />
       </div>
 
-      <div className="form-group">
+      <div className="form-group outfits-input">
         <CycleButtons
           options={OUTFITS}
           value={sprite.outfit}
           onSelect={outfit => updateCharacterSprite(index, { outfit, })} />
       </div>
 
-      <div className="form-group">
+      <div className="form-group genders-input">
         <OptionButtons
           buttonClassName="btn-sm"
           options={genders}
@@ -72,11 +72,16 @@ export default function CharacterEditor({
     </div>
 
     <div className="col-md-2">
-      <CharacterSprite width="100" height="160" className="center-block" facing="bottom-right" {...sprite} />
+      <CharacterSprite
+          width="100"
+          height="160"
+          className="center-block character-sprite"
+          facing="bottom-right"
+          {...sprite} />
     </div>
 
     <div className="col-md-7">
-      <div className="form-group">
+      <div className="form-group name-input">
         <label>Name
           <input
             type="text"
@@ -87,7 +92,7 @@ export default function CharacterEditor({
         </label>
       </div>
 
-      <div className="form-group">
+      <div className="form-group archetype-input">
         <OptionButtons
           options={archetypes}
           value={archetype}
