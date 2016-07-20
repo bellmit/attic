@@ -17,10 +17,10 @@ export default function CycleButtons({options, value, onSelect}) {
   const next = cycle(options, value, NEXT)
 
   return <div className="btn-group" data-toggle="buttons">
-    <button className="btn btn-sm btn-default" onClick={() => onSelect(next)}>
+    <button className="btn btn-prev btn-sm btn-default" onClick={() => onSelect(prev)}>
       &lt;
     </button>
-    <button className="btn btn-sm btn-default" onClick={() => onSelect(prev)}>
+    <button className="btn btn-next btn-sm btn-default" onClick={() => onSelect(next)}>
       &gt;
     </button>
   </div>
