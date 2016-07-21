@@ -1,7 +1,5 @@
 'use strict'
 
-// For some insane reason, React isn't auto-required by babel when compiling
-// jsx element expressions.
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, combineReducers } from 'redux'
@@ -42,7 +40,6 @@ const history = syncHistoryWithStore(browserHistory, store)
 mountSubscriber(store, subscriber(api))
 
 ReactDOM.render(
-
   <Provider store={store}>
     <ApiProvider api={api}>
       <LockProvider lock={lock}>

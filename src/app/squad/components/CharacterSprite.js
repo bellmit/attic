@@ -1,6 +1,6 @@
 'use strict'
 
-import React, { PropTypes } from 'react'
+import React from 'react'
 import * as options from '../character-options'
 
 const SPRITE_HEIGHT = 240 // in SVG image units.

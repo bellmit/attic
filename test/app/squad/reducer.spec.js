@@ -3,7 +3,6 @@
 import reducer from 'app/squad/reducer'
 import * as actions from 'app/squad/actions'
 import * as options from 'app/squad/character-options'
-import { NEXT, PREV } from 'app/squad/components/CycleButtons'
 
 describe('app/squad/reducer', () => {
   it('generates an initial state', () => {

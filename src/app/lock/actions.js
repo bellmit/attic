@@ -87,7 +87,7 @@ function bootFromHash(hash, api, lock) {
     }))
 
     if (hash.error) {
-      console.log('lock.hash.failed', hash.error)
+      console.error('lock.hash.failed', hash.error)
       return
     }
 
@@ -127,7 +127,7 @@ export function boot(api, lock) {
 }
 
 export function login(lock, options) {
-  return dispatch => {
+  return () => {
     /*
      * So. We have to use an explicit callback URL here, because we use a
      * browserHistory for routing URLs but Auth0 requires a page-by-page

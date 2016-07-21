@@ -1,7 +1,7 @@
 'use strict'
 
+import React from 'react'
 import classNames from 'classnames'
-import React, { PropTypes } from 'react'
 import keys from 'lodash.keys'
 
 export const NEXT = 'next'
@@ -23,7 +23,7 @@ export default function OptionButtons({options, buttonClassName, value, onSelect
           "btn-default": true,
           "active": value == option,
         })}
-        onClick={event => onSelect(option)}>
+        onClick={() => onSelect(option)}>
         {options[option]}
       </button>
     ))}
