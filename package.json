@@ -62,7 +62,7 @@
     "build": "npm run webpack",
     "karma": "karma start --single-run",
     "karma-watch": "karma start",
-    "eslint": "eslint src",
+    "eslint": "eslint src test",
     "test": "npm run karma && npm run eslint",
     "postinstall": "npm run build",
     "web": "node web/server.js",

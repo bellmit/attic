@@ -21,7 +21,7 @@ describe('subscribe', () => {
 
   it('dedupes calls', () => {
     var calls = 0
-    function a(state) {
+    function a() {
       calls++
     }
 
