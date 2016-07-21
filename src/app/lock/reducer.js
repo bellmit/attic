@@ -14,7 +14,7 @@ module.exports = handleActions({
     booting: false,
     ...action.payload,
   }),
-  LOCK_CLEAR: (state, action) => ({
+  LOCK_CLEAR: () => ({
     ...initialLock,
     booting: false,
   }),

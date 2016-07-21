@@ -2,7 +2,6 @@
 
 import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
-import * as actions from './actions'
 import * as options from './character-options'
 import { randomElement } from 'app/arrays'
 import * as sg from './string-generator'
@@ -73,27 +72,27 @@ const characters = handleActions({
   CHANGE_CHARACTER_ARCHETYPE: reduceIndexedElement(character),
   UPDATE_CHARACTER_SPRITE: reduceIndexedElement(character),
   SQUAD_LOADED: (state, action) => action.payload.characters,
-  GENERATE_SQUAD: (state, action) => initialCharacters,
+  GENERATE_SQUAD: () => initialCharacters,
 }, [])
 
 const workflow = handleActions({
-  LOADING_SQUAD: (state, action) => ({
+  LOADING_SQUAD: state => ({
     ...state,
     loading: true,
   }),
-  SQUAD_LOADED: (state, action) => ({
+  SQUAD_LOADED: state => ({
     ...state,
     loading: false,
   }),
-  GENERATE_SQUAD: (state, action) => ({
+  GENERATE_SQUAD: state => ({
     ...state,
     loading: false,
   }),
-  SAVING_SQUAD: (state, action) => ({
+  SAVING_SQUAD: state => ({
     ...state,
     saving: true,
   }),
-  SQUAD_SAVED: (state, action) => ({
+  SQUAD_SAVED: state => ({
     ...state,
     saving: false,
   }),

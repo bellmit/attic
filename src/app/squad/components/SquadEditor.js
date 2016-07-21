@@ -1,7 +1,6 @@
 'use strict'
 
-import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import DocumentTitle from 'react-document-title'

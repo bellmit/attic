@@ -14,9 +14,10 @@ To run the client locally, run:
 
 To run the unit tests for the UI:
 
-    npm run test
-    npm run karma       # equivalent to test
+    npm run test        # run karma and eslint
+    npm run karma       # run karma only
     npm run karma-watch # autostarts Firefox; manually connect other browsers
+    npm run eslint      # run eslint only
 
 ## Configuration
 

@@ -39,7 +39,7 @@ module.exports = {
   fetch(path, options = {}) {
     var url = this.resolve(path)
 
-    var options = {
+    options = {
       ...options,
       headers: mergeHeaders(options.headers, this.token),
     }
@@ -54,6 +54,7 @@ module.exports = {
 
   post(path, entity, options = {}) {
     var request = {
+      ...options,
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',

@@ -3,7 +3,7 @@
 import { handleActions } from 'redux-actions'
 
 module.exports = handleActions({
-  LANDING_LOADED: (state, action) => ({
+  LANDING_LOADED: state => ({
     ...state,
     loading: false,
   }),

@@ -1,7 +1,7 @@
 'use strict'
 
-import React, { PropTypes } from 'react'
-import { HATS, HAIRS, OUTFITS, GENDERS } from '../character-options'
+import React from 'react'
+import { HATS, HAIRS, OUTFITS } from '../character-options'
 
 import CharacterSprite from './CharacterSprite'
 import CycleButtons from './CycleButtons'
