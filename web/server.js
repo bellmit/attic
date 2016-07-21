@@ -1,7 +1,6 @@
 'use strict'
 
 var path = require('path')
-var http = require('http')
 var express = require('express')
 var compression = require('compression')
 var morgan = require('morgan')
