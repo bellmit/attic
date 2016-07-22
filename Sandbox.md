@@ -48,7 +48,17 @@ what a mess …
 
 ## Sequence Diagrams
 
-{{{{{{ blue-modern
+{{{{{{ magazine
+    alice->bob: Test
+    bob->alice: Test response
+}}}}}}
+
+{{{{{{ napkin
+    alice->bob: Test
+    bob->alice: Test response
+}}}}}}
+
+{{{{{{ modern-blue
     alice->bob: Test
     bob->alice: Test response
 }}}}}}
