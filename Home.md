@@ -5,6 +5,10 @@
 * Owen Jacobson
 * William Bolton
 
+## What Are We Doing
+
+* Distant Shore: a web-based, player-vs-player tactical RPG
+
 ## Participating
 
 Be in IRC when you're available:
