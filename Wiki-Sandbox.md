@@ -28,10 +28,16 @@ this is
 just to say
 ```
 
-With syntax highlighting:
+With syntax highlighting (preferred):
 
 ```ruby
 def a_method(a)
   puts(a)
 end
 ```
+
+## Tables
+
+| A heading | A heading |
+| --------- | --------- |
+| Some      | columns   |
