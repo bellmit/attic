@@ -10,7 +10,7 @@ A playpen for all your Wiki Experiments.
 ## Fun with lists
 
 1. foo
-    a. bar
+    1. bar
         * baz
 
 * foo
