@@ -45,3 +45,7 @@ end
 | Some      | columns   |
 
 ~~what a mess …~~ HOORAY!
+
+| A heading | A heading | A heading | A heading | A heading | A heading | A heading | A heading |
+| --------- | --------- | --------- | --------- | --------- | --------- | --------- | --------- |
+| Some      | columns   | Some      | columns   | Some      | columns   | Some      | columns   |
