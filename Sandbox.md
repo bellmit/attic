@@ -2,8 +2,6 @@
 
 A playpen for all your Wiki Experiments.
 
-[[_TOC_]]
-
 ## Links
 
 * Wiki style: [[Home]] [[go home|Home]]
