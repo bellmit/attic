@@ -3,6 +3,11 @@
 ## What Are We Doing
 
 * Distant Shore: a web-based, player-vs-player tactical RPG
+    * Feature up next: match making and match wrapup
+
+        > LoneFoxLaughing: i.e. entering and exiting the active gameplay loop?
+        >
+        > ojacobson: Yeah, with a dummy loop in the middle three buttons: player A wins, player B wins, match abandoned)
 
 ## Participating
 
