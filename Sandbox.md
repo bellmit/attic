@@ -44,4 +44,4 @@ end
 | --------- | --------- |
 | Some      | columns   |
 
-what a mess …
+~~what a mess …~~ HOORAY!
