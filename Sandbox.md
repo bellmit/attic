@@ -45,3 +45,10 @@ end
 | Some      | columns   |
 
 what a mess …
+
+## Sequence Diagrams
+
+{{{{{{ blue-modern
+    alice->bob: Test
+    bob->alice: Test response
+}}}}}}
