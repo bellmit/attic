@@ -1,10 +1,5 @@
 # Unreasonable Entertainment
 
-## Who Are We
-
-* Owen Jacobson
-* William Bolton
-
 ## What Are We Doing
 
 * Distant Shore: a web-based, player-vs-player tactical RPG
