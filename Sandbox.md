@@ -5,7 +5,7 @@ A playpen for all your Wiki Experiments.
 ## Links
 
 * Wiki style: [[Home]] [[go home|Home]] [[Nonexistant Page]]
-* Markdown style: [go home](/Home) [Nonexistant Page](/Nonexistant-Page]
+* Markdown style: [go home](/Home) [Nonexistant Page](/Nonexistant-Page)
 
 ## Fun with lists
 
