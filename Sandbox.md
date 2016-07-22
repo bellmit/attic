@@ -4,8 +4,8 @@ A playpen for all your Wiki Experiments.
 
 ## Links
 
-* Wiki style: [[Home]] [[go home|Home]]
-* Markdown style: [go home](/Home)
+* Wiki style: [[Home]] [[go home|Home]] [[Nonexistant Page]]
+* Markdown style: [go home](/Home) [Nonexistant Page](/Nonexistant-Page]
 
 ## Fun with lists
 
