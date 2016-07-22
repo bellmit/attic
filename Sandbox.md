@@ -7,6 +7,16 @@ A playpen for all your Wiki Experiments.
 * Wiki style: [[Home]] [[go home|Home]]
 * Markdown style: [go home](/Home)
 
+## Fun with lists
+
+1. foo
+    a. bar
+        * baz
+
+* foo
+    * bar
+* foo
+
 ## Code blocks
 
 Markdown style:
