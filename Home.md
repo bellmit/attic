@@ -9,7 +9,7 @@
 
 Be in IRC when you're available:
 
-* irc://irc.freenode.org/#unreasonent
+* [Freenode channel: #unreasonent](irc://irc.freenode.org/#unreasonent)
 
 Code changes happen through [Github](https://github.com/unreasonent/). Ask in IRC to be added to the org!
 
