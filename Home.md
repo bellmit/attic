@@ -27,3 +27,5 @@ Code changes happen through [Github](https://github.com/unreasonent/). Ask in IR
 ## Important Accounts
 
 All primary accounts are stored in the `Unreasonable Entertainment` vault in 1Password. For access to this vault, contact Owen Jacobson.
+
+Production applications and Linode DNS are provided through Owen's personal accounts! Correct this at some point.
