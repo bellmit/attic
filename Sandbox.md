@@ -45,20 +45,3 @@ end
 | Some      | columns   |
 
 what a mess …
-
-## Sequence Diagrams
-
-{{{{{{ magazine
-    alice->bob: Test
-    bob->alice: Test response
-}}}}}}
-
-{{{{{{ napkin
-    alice->bob: Test
-    bob->alice: Test response
-}}}}}}
-
-{{{{{{ modern-blue
-    alice->bob: Test
-    bob->alice: Test response
-}}}}}}
