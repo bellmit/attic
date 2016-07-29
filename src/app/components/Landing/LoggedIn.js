@@ -6,10 +6,10 @@ export default function LoggedIn({logout, lock}) {
     <div className="col-md-3">
       <ul>
         <li><Link to="squad">Squad</Link></li>
+        <li><a role="button" onClick={() => logout(lock)}>Log out</a></li>
       </ul>
     </div>
     <div className="col-md-9">
-      <button className="btn btn-default" onClick={() => logout(lock)}>Log out</button>
     </div>
   </div>
 }
