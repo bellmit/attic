@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 
 import { withLock } from 'app/lock/components'
 import * as lockActions from 'app/lock/actions'
-import * as actions from '../actions'
 
 import LoggedIn from './Landing/LoggedIn'
 import Anonymous from './Landing/Anonymous'
@@ -27,6 +26,5 @@ module.exports = connect(
   }),
   dispatch => bindActionCreators({
     ...lockActions,
-    ...actions,
   }, dispatch)
 )(withLock(Landing))
