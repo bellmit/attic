@@ -8,15 +8,15 @@ BUILD_DIR, CACHE_DIR, ENV_DIR = ARGV
 HERE = File.dirname(File.dirname $0)
 
 DETECT_LANGS = %w(
-  heroku/ruby
-  heroku/nodejs
-  heroku/clojure
-  heroku/python
-  heroku/java
-  heroku/gradle
-  heroku/scala
-  heroku/php
-  heroku/go
+  ruby
+  nodejs
+  clojure
+  python
+  java
+  gradle
+  scala
+  php
+  go
 )
 
 
