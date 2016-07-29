@@ -10,7 +10,7 @@ A web-based, social tactical RPG.
     >
     > ojacobson: Yeah, with a dummy loop in the middle three buttons: player A wins, player B wins, match abandoned)
 
-## Design
+## Technology
 
 * An HTML5 client (React, Redux, ES6, the works) delivered by a mostly-static asset server.
     * This is realized in the [[html5-client|https://github.com/unreasonent/distant-shore-html5-client]] repo, and deployed in the ue-ds-html5-client family of Heroku apps.
