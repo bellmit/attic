@@ -22,6 +22,7 @@ function routes(store, api, lock) {
       component: require('./components/Landing'),
     },
     childRoutes: [
+      require('./battle/routes'),
       require('./squad/routes')(store, api),
     ],
   }
