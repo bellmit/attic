@@ -40,11 +40,11 @@ end
 def build(buildpacks)
   Dir.mktmpdir do |buildpacks_dir|
     language_args = DETECT_LANGS.map { |lang| "--language=#{lang}" }
-    run 'cytokine', '--verbose', 'get-default-buildpacks', *language_args, buildpacks_dir
+    run 'cytokine', 'get-default-buildpacks', '--verbose', *language_args, buildpacks_dir
 
     buildpack_args = (buildpacks || []).map { |pack| "--buildpack=#{pack}" }
     puts "--> bp: #{buildpack_args}"
-    run 'cytokine', '--verbose', *buildpack_args, BUILD_DIR, CACHE_DIR, ENV_DIR, buildpacks_dir
+    run 'cytokine', 'run-buildpacks', '--verbose', *buildpack_args, BUILD_DIR, CACHE_DIR, ENV_DIR, buildpacks_dir
   end
 end
 
