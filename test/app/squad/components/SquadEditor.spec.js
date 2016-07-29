@@ -26,10 +26,6 @@ describe('SquadEditor', function() {
       )
     })
 
-    it('loads squads on mount', function() {
-      expect(this.loadSquad).to.have.been.called.with(api)
-    })
-
     it('shows a disabled loading button', function() {
       var saveButton = this.wrapper.find('.btn-save')
       expect(saveButton).to.have.text('Loading…')
@@ -65,16 +61,6 @@ describe('SquadEditor', function() {
           characters={characters}
           loadSquad={this.loadSquad} />
       )
-    })
-
-    it('loads squads on mount', function() {
-      /*
-       * yes, really, even when we're already loaded. Normally this component
-       * doesn't remount while displaying squads, but we allow it, and reload.
-       *
-       * This logic probably belongs in the route, honestly.
-       */
-      expect(this.loadSquad).to.have.been.called.with(api)
     })
 
     it('displays character editors for squads', function() {
@@ -118,16 +104,6 @@ describe('SquadEditor', function() {
           characters={characters}
           loadSquad={this.loadSquad} />
       )
-    })
-
-    it('loads squads on mount', function() {
-      /*
-       * yes, really, even when we're already loaded. Normally this component
-       * doesn't remount while saving, but we allow it, and reload.
-       *
-       * This logic probably belongs in the route, honestly.
-       */
-      expect(this.loadSquad).to.have.been.called.with(api)
     })
 
     it('displays character editors for squads', function() {

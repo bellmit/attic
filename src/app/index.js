@@ -43,7 +43,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ApiProvider api={api}>
       <LockProvider lock={lock}>
-        <Router routes={routes} history={history} />
+        <Router routes={routes(store, api, lock)} history={history} />
       </LockProvider>
     </ApiProvider>
   </Provider>,
