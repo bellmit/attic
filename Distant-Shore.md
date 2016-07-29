@@ -10,6 +10,13 @@ A web-based, social tactical RPG.
     >
     > ojacobson: Yeah, with a dummy loop in the middle three buttons: player A wins, player B wins, match abandoned)
 
+## Sucks List
+
+Not quite bugs, but definitely a lot like them:
+
+* TLS everywhere. Right now there are lots of issues with mixed content, since `*.herokuapp.com` domains default to TLS and `*.distant-shore.com` domains default to not-TLS. Cross-origin issues exacerbate this (watch the browser console if you accidentally hit the `https://` version of a review app, for example via a Github link).
+* Error handling on API requests leaves the client stranded. For example, log out, then visit https://distant-shore.com/squad - browser console spews errors that the user can't see, and the UI never either reports them or recovers. (In fact, it _should_ prompt the user to log in, but there's a more general problem here.)
+
 ## Technology
 
 * An HTML5 client (React, Redux, ES6, the works) delivered by a mostly-static asset server.
