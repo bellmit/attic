@@ -22,6 +22,7 @@ DETECT_LANGS = %w(
 def export(env)
   File.open(File.join(HERE, "export"), 'w') do |exports|
     env.each do |name, value|
+      value = value.to_s
       ENV[name] = value
       exports.puts("export #{name}=#{Shellwords.shellescape(value)}")
     end
