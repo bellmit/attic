@@ -5,7 +5,6 @@ import { handleActions } from 'redux-actions'
 var initialLock = {
   booting: true,
   idToken: null,
-  profile: null,
 }
 
 module.exports = handleActions({

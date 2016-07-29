@@ -16,7 +16,7 @@ function Landing({idToken, loading, ...props}) {
     return <Anonymous {...props} />
   if (loading)
     return <Loading {...props} />
-  return <LoggedIn idToken={idToken} {...props} />
+  return <LoggedIn {...props} />
 }
 
 module.exports = connect(
