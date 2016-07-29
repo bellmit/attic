@@ -33,13 +33,16 @@ end
 def run(*argv)
   pid = spawn(*argv)
   Process.wait pid
+  exit $? if $? != 0
 end
 
 def build(buildpacks)
   Dir.mktmpdir do |buildpacks_dir|
     language_args = DETECT_LANGS.map { |lang| "--language=#{lang}" }
+    puts "--> Lang: #{language_args}"
     run 'cytokine', 'get-default-buildpacks', *language_args, buildpacks_dir
 
+    puts "--> Lang: #{language_args}"
     buildpack_args = (buildpacks || []).map { |pack| "--buildpack=#{pack}" }
     run 'cytokine', *buildpack_args, BUILD_DIR, CACHE_DIR, ENV_DIR, buildpacks_dir
   end
