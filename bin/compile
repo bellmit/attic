@@ -33,7 +33,7 @@ end
 def run(*argv)
   pid = spawn(*argv)
   Process.wait pid
-  exit $? if $? != 0
+  exit $?.exitstatus if $?.exitstatus != 0
 end
 
 def build(buildpacks)
