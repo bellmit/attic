@@ -23,6 +23,7 @@ function routes(store, api, lock) {
     },
     childRoutes: [
       require('./battle/routes'),
+      require('./lobby/routes'),
       require('./squad/routes')(store, api),
     ],
   }

@@ -11,13 +11,13 @@ export default function LoggedIn({logout, lock}) {
           Rebuild your squad and come back stronger than ever.
         </p>
       </Link>
-      <Link className="list-group-item" to="/battle/123">
+      <Link className="list-group-item" to="/lobby/challenge/123">
         <h2 className="list-group-item-heading">Challenge a friend</h2>
         <p className="list-group-item-text">
           DIY normcore wayfarers godard, truffaut cold-pressed occupy forage.
         </p>
       </Link>
-      <Link className="list-group-item" to="/battle/123">
+      <Link className="list-group-item" to="/lobby/ranked">
         <h2 className="list-group-item-heading">Ranked battle</h2>
         <p className="list-group-item-text">
           Take on challengers to prove you're the best there is.
