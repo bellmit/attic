@@ -3,11 +3,11 @@
 module.exports = {
   childRoutes: [
     {
-      path: 'lobby/challenge/:id',
+      path: 'challenge/:id',
       component: require('./components/Challenge'),
     },
     {
-      path: 'lobby/ranked',
+      path: 'ranked',
       component: require('./components/Ranked'),
     },
   ],
