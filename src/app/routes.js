@@ -17,11 +17,13 @@ function routes(store, api, lock) {
     component: require('./components/App'),
     indexRoute: {
       onEnter() {
-        dispatch.openSquadIfNeeded(api)
+        dispatch.detectSquadNeeded(api)
       },
       component: require('./components/Landing'),
     },
     childRoutes: [
+      require('./battle/routes'),
+      require('./lobby/routes'),
       require('./squad/routes')(store, api),
     ],
   }

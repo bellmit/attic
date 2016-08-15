@@ -4,17 +4,6 @@ import { createAction } from 'redux-actions'
 import { replace } from 'react-router-redux'
 import jwtDecode from 'jwt-decode'
 
-function getProfile(lock, idToken) {
-  return new Promise((resolve, reject) => {
-    lock.getProfile(idToken, (err, profile) => {
-      if (err)
-        reject(err)
-      else
-        resolve(profile)
-    })
-  })
-}
-
 function refreshToken(dispatch, getState, api, lock) {
   var state = getState()
   var idToken = state.lock.idToken
@@ -44,8 +33,8 @@ function tokenExpires(idToken) {
 /*
  * This is the primary entry point for applying a new token. This function will
  * discard expired tokens (which handles the case that we have a cached token,
- * but it has expired), then otherwise store the token to window.localStorage,
- * schedule a token refresh and find our profile from Auth0.
+ * but it has expired), then otherwise store the token to window.localStorage
+ * and schedule a token refresh.
  *
  * We can get here a few ways:
  *
@@ -68,11 +57,6 @@ function bootFromToken(idToken, api, lock) {
       var refreshIn = remaining / 2 // relative millis
       setTimeout(refreshToken, refreshIn, dispatch, getState, api, lock)
     }
-
-    getProfile(lock, idToken)
-      .then(profile => dispatch(lockSuccess({
-        profile,
-      })))
   }
 }
 

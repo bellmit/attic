@@ -9,14 +9,11 @@ import * as lockActions from 'app/lock/actions'
 
 import LoggedIn from './Landing/LoggedIn'
 import Anonymous from './Landing/Anonymous'
-import Loading from './Landing/Loading'
 
-function Landing({idToken, loading, ...props}) {
+function Landing({idToken, ...props}) {
   if (!idToken)
     return <Anonymous {...props} />
-  if (loading)
-    return <Loading {...props} />
-  return <LoggedIn idToken={idToken} {...props} />
+  return <LoggedIn {...props} />
 }
 
 module.exports = connect(
