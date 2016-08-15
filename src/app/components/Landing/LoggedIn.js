@@ -4,30 +4,40 @@ import classNames from 'classnames'
 
 import Copy from './Copy'
 
-function LinkIf({loading, ...props}) {
-  if (loading)
-    return <div {...props} />
-  return <Link {...props} />
+function LinkIf({enable, className, ...props}) {
+  var classes = classNames(className, {
+    disabled: !enable,
+  })
+  var Element = enable ? Link : 'div'
+  return <Element className={classes} {...props} />
 }
 
-export default function LoggedIn({logout, lock, loading}) {
+export default function LoggedIn({logout, lock, loading, squadNeeded}) {
+  var enableGameCreate = !(loading || squadNeeded)
+
   return <div className="container">
     <div className="list-group col-md-4">
       <Link to="squad" className="list-group-item">
-        <h2 className="list-group-item-heading">Edit your squad {loading &&
-          <small>
-            <span className="glyphicon glyphicon-refresh" />
-          </small>
-        }</h2>
+        <h2 className="list-group-item-heading">Edit your squad {/* trailing comment to retain whitespace */}
+          {loading &&
+            <small>
+              <span className="glyphicon glyphicon-refresh" />
+            </small>
+          }
+          {
+            squadNeeded &&
+            <small>
+              ❗️
+            </small>
+          }
+        </h2>
         <p className="list-group-item-text">
           Rebuild your squad and come back stronger than ever.
         </p>
       </Link>
       <LinkIf
-        loading={loading}
-        className={classNames('list-group-item', {
-          disabled: loading,
-        })}
+        enable={enableGameCreate}
+        className='list-group-item'
         to="/challenge/123">
         <h2 className="list-group-item-heading">Challenge a friend</h2>
         <p className="list-group-item-text">
@@ -35,10 +45,8 @@ export default function LoggedIn({logout, lock, loading}) {
         </p>
       </LinkIf>
       <LinkIf
-        loading={loading}
-        className={classNames('list-group-item', {
-          disabled: loading,
-        })}
+        enable={enableGameCreate}
+        className='list-group-item'
         to="/challenge/123">
         <h2 className="list-group-item-heading">Ranked battle</h2>
         <p className="list-group-item-text">
@@ -46,10 +54,8 @@ export default function LoggedIn({logout, lock, loading}) {
         </p>
       </LinkIf>
       <LinkIf
-        loading={loading}
-        className={classNames('list-group-item', {
-          disabled: loading,
-        })}
+        enable={enableGameCreate}
+        className='list-group-item'
         to="/challenge/123">
         <h2 className="list-group-item-heading">Practice battle</h2>
         <p className="list-group-item-text">
