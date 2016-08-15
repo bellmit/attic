@@ -10,6 +10,16 @@ A web-based, social tactical RPG.
     >
     > ojacobson: Yeah, with a dummy loop in the middle three buttons: player A wins, player B wins, match abandoned)
 
+## Revenue Model
+
+To manage payment costs, we indirect player payments through "challenge tokens" (name not final). Players purchase challenge tokens in blocks of (sizes here) using USD or CAD, then expend those tokens to begin games. We'll follow the now-traditional pricing model of selling small blocks at the highest marginal rate, with increasing discounts for larger blocks of challenge tokens.
+
+To encourage engagement, we also issue players a small stack of free challenge tokens once per day. This allows casual players to build our reach for us by challenging other players, and by keeping the ranked ladder populated.
+
+* Challenge a Friend: 1 challenge token for the challenger, no cost for the responding player.
+* Ranked Match: 1 challenge token for each player.
+* Practice Match: No challenge tokens.
+
 ## Sucks List
 
 Not quite bugs, but definitely a lot like them:
