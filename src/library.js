@@ -1,5 +1,5 @@
-export function foo() {
-  return "foo"
+export function foo(cb) {
+  cb("foo")
 }
 
 export function bar() {

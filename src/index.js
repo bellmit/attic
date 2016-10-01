@@ -1,3 +1,3 @@
 import { foo } from './library'
 
-foo()
+foo(msg => console.log(msg))

@@ -13,6 +13,18 @@ module.exports = {
     filename: 'bundle/[name].[hash].js',
   },
 
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loaders: [
+          'babel-loader',
+        ],
+      },
+    ],
+  },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html',
