@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "scripts": {
+    "webpack": "webpack",
+    "webpack-watch": "webpack --watch",
+    "build": "npm run webpack",
+    "postinstall": "npm run build"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^2.22.0",
+    "webpack": "^2.1.0-beta.25"
+  }
+}
