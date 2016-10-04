@@ -1,5 +1,6 @@
 import { actions as modelActions } from './model'
 import { bindActionCreators } from 'redux'
+import { animateScroll } from 'react-scroll'
 
 export const actions = {
   sendInputLine,
@@ -22,5 +23,6 @@ function sendInputLine(socket, line) {
 function receiveOutput(line) {
   return dispatch => {
     dispatch(modelActions.addOutput(line))
+    animateScroll.scrollToBottom()
   }
 }
