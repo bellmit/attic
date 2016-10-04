@@ -4,8 +4,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import ReduxThunk from 'redux-thunk'
 
+import socket from 'socket.io-client'
+
 import { reducers } from './model'
 import { App } from './components'
+import { connect } from './relay'
 
 const store = createStore(
   combineReducers(reducers),
@@ -14,9 +17,13 @@ const store = createStore(
   )
 )
 
+const relay = socket()
+
+connect(relay, store)
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App relay={relay} />
   </Provider>,
   document.getElementById('app')
 )

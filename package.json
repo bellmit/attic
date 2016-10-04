@@ -16,7 +16,9 @@
     "compression": "^1.6.2",
     "express": "^4.14.0",
     "html-webpack-plugin": "^2.22.0",
+    "iconv-lite": "^0.4.13",
     "morgan": "^1.7.0",
+    "socket.io": "^1.4.8",
     "webpack": "^2.1.0-beta.25"
   },
   "dependencies": {
@@ -25,6 +27,7 @@
     "react-redux": "^4.4.5",
     "redux": "^3.6.0",
     "redux-actions": "^0.12.0",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "socket.io-client": "^1.4.8"
   }
 }

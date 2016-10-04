@@ -1,11 +1,11 @@
 import { createAction, handleActions } from 'redux-actions'
 
-const addOutputLine = createAction('ADD_OUTPUT_LINE')
+const addOutput = createAction('ADD_OUTPUT')
 const addInputLine = createAction('ADD_INPUT_LINE')
 const changeInput = createAction('CHANGE_INPUT')
 
 const output = handleActions({
-  [addOutputLine]: (state, action) => [...state, action.payload],
+  [addOutput]: (state, action) => [...state, action.payload],
 }, [])
 
 const input = handleActions({
@@ -29,7 +29,7 @@ export const reducers = {
 }
 
 export const actions = {
-  addOutputLine,
+  addOutput,
   addInputLine,
   changeInput,
 }
