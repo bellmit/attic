@@ -27,7 +27,18 @@ Output.connect = connect(
   })
 )(Output)
 
-function Input({relay, value, changeInput, sendInputLine}) {
+function Input({relay, value, changeInput, sendInputLine, historyPrevious, historyNext}) {
+  const historyButtons = {
+    "ArrowUp": historyPrevious,
+    "ArrowDown": historyNext,
+  }
+
+  const onKeyUp = event => {
+    const key = event.key
+    const handler = historyButtons[key]
+    return handler && handler()
+  }
+
   return <form onSubmit={event => {
     event.preventDefault()
     sendInputLine(relay, value)
@@ -35,6 +46,7 @@ function Input({relay, value, changeInput, sendInputLine}) {
     <input
       type="text"
       onChange={event => changeInput(event.target.value)}
+      onKeyUp={onKeyUp}
       value={value} />
   </form>
 }
