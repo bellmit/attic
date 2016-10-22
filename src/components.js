@@ -12,7 +12,7 @@ export function App({relay}) {
   </div>
 }
 
-function Output({lines}) {
+export function Output({lines}) {
   return <div
     style={{
       fontFamily: "monospace",
@@ -31,7 +31,7 @@ Output.connect = connect(
   })
 )(Output)
 
-function Input({relay, value, changeInput, sendInputLine, historyPrevious, historyNext}) {
+export function Input({relay, value, changeInput, sendInputLine, historyPrevious, historyNext}) {
   const historyButtons = {
     "ArrowUp": historyPrevious,
     "ArrowDown": historyNext,
