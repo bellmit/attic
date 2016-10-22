@@ -13,7 +13,11 @@ export function App({relay}) {
 }
 
 function Output({lines}) {
-  return <div>
+  return <div
+    style={{
+      fontFamily: "monospace",
+      whiteSpace: "pre-wrap",
+    }}>
     {/* `lines` is a sequence of telnet chunks - basically raw TCP messages,
        broken up at arbitrary boundaries by the needs of the underlying network.
        Bolt it together into a single giant stream for rendering, until we have
