@@ -3,54 +3,45 @@ I find the statement
     Rule 2168 (Extending the voting period) is capable of extending
     the voting period of an Agoran decision.
 
-FALSE
-TRUE
+FALSE.
 
 CALLER'S ARGUMENTS:
 
-    Although voting periods are not explicitly secured, Rule 107 (Power 3) says
-    plainly "The voting period lasts for 7 days.", and although it provides
-    further restrictions on changing voting periods, it nowhere actually
-    permits other Rules to make such changes, especially not a Power 1 Rule
-    such as 2168.
+Although voting periods are not explicitly secured, Rule 107 (Power 3) says
+plainly "The voting period lasts for 7 days.", and although it provides further
+restrictions on changing voting periods, it nowhere actually permits other
+Rules to make such changes, especially not a Power 1 Rule such as 2168.
+
 
 JUDGE'S ARGUMENTS:
 
-    The clause reading
+Ørjan's argument is complete, and no-one has presented a convincing
+counterargument.
 
-        The voting period lasts for 7 days.
+The clause reading
 
-    from Rule 107 (power 3) and the clause reading
+    The voting period lasts for 7 days.
 
-        Whenever the voting period of an Agoran decision would end, and the
-        result would be FAILED QUORUM, the length of the voting period for that
-        decision is instead increased to 14 days, except if it is already that
-        length, provided this has not already happened for the decision in
-        question.
+from Rule 107 (power 3) and the clause reading
 
-    from Rule 2168 (power 1) are, clearly, not compatible. Rule 1030,
-    "Precedence between Rules," allows us to resolve this conflict easily:
+    Whenever the voting period of an Agoran decision would end, and the result
+    would be FAILED QUORUM, the length of the voting period for that decision
+    is instead increased to 14 days, except if it is already that length,
+    provided this has not already happened for the decision in question.
 
-        In a conflict between Rules, the conflict shall be resolved by
-        performing the following comparisons in the sequence written in this
-        rule, until the conflict is resolved.
+from Rule 2168 (power 1) are not compatible. Rule 1030, "Precedence between
+Rules," allows us to resolve this conflict. It begins:
 
-        - In a conflict between Rules with different Power, the Rule with the
-          higher Power takes precedence over the Rule with the lower Power;
-          otherwise,
+    In a conflict between Rules, the conflict shall be resolved by performing
+    the following comparisons in the sequence written in this rule, until the
+    conflict is resolved.
 
-        [...]
+    - In a conflict between Rules with different Power, the Rule with the
+      higher Power takes precedence over the Rule with the lower Power;
+      otherwise,
 
-    As Rule 107 has a higher Power, it takes precedence, and voting periods are
-    exactly seven days long. Ørjan's argument is convincing.
+    [...]
 
-    However, it's also incomplete. Rule 107 explicitly constrains the extension
-    of voting periods:
-
-        The voting period for a decision cannot be set or changed to a duration
-        longer than fourteen days.
-
-    This clause would be nonsensical if voting periods could not be extended.
-    Therefore, this clause implies that other rules CAN modify the length of a
-    voting period, even in the absence of any rule explicitly permitting or
-    denying such changes.
+As Rule 107 has a higher Power han Rule 2168, it takes precedence, and voting
+periods are exactly seven days long. Rule 2168 is not capable of extending a
+voting period.
