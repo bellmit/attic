@@ -1,12 +1,11 @@
 Agoran Credit Union report
 
-Date of this report: Sun 15 Jan 2017
+Date of this report: Sun  8 Jan 2017
 Date of last report: Wed  4 Jan 2017
 
 
 Recent events (all times UTC)
 
-Mon 21 Nov 00:00:00
 Mon 28 Nov 00:00:00  Union Credits increase (ais523 +90, aranea +150,
                       Murphy +150, o +300, omd +60, Sprocklem +60)
 ----- previous report -----
@@ -16,16 +15,16 @@ Mon 19 Dec 00:00:00  Union Credits increase (ditto)
 Mon 26 Dec 00:00:00  Union Credits increase (ditto)
 Mon  2 Jan 00:00:00  Union Credits increase (ditto)
 ----- time of last report -----
-Mon  9 Jan 00:00:00  Union Credits increase (ditto)
 ----- future events -----
-Mon 16 Jan 00:00:00  Union Credits will increase (ditto)
+Mon  9 Jan 00:00:00  Union Credits increase (ais523 +90, aranea +150,
+                      Murphy +150, o +150, omd +60, Sprocklem +60)
 
 
 Member     Budget     Union Credits
 -----------------------------------
-ais523       30           5010
-aranea       50           4800
-Murphy       50           8850
-o           100           7800
-omd          20           2820
-Sprocklem    20           2760
+ais523       30           4920
+aranea       50           4650
+Murphy       50           8700
+o            50           7500
+omd          20           2760
+Sprocklem    20           2700
