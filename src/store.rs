@@ -29,7 +29,7 @@ impl<S, R> Store<S, R> {
     /// store.dispatch(&8);
     /// assert_eq!(store.get_state(), &13);
     /// ```
-    pub fn from_state<A>(initial_state: S, reducer: R) -> Store<S, R> where
+    pub fn from_state<A>(initial_state: S, reducer: R) -> Self where
         R: Reducer<S, A> {
         Store {
             state:   initial_state,
@@ -55,7 +55,7 @@ impl<S, R> Store<S, R> {
     /// store.dispatch(&8);
     /// assert_eq!(store.get_state(), &13);
     /// ```
-    pub fn from_factory<A, F>(state_factory: F, reducer: R) -> Store<S, R> where
+    pub fn from_factory<A, F>(state_factory: F, reducer: R) -> Self where
         F: Factory<S>,
         R: Reducer<S, A> {
         let initial_state = state_factory.create();
@@ -81,7 +81,7 @@ impl<S, R> Store<S, R> {
     /// store.dispatch(&8);
     /// assert_eq!(store.get_state(), &8);
     /// ```
-    pub fn from_default<A>(reducer: R) -> Store<S, R> where
+    pub fn from_default<A>(reducer: R) -> Self where
         S: Default,
         R: Reducer<S, A> {
         let state_factory = Default::default;
