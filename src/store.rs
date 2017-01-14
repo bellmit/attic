@@ -5,14 +5,12 @@ use super::reducer::*;
 /// applies them to the contained state.
 ///
 /// Useful stores generally must be mutable.
-pub struct Store<'a, S, A> where
-    S: 'a,
-    A: 'a {
+pub struct Store<S, R> {
     state: S,
-    reducer: &'a Reducer<S, A>,
+    reducer: R,
 }
 
-impl<'a, S, A> Store<'a, S, A> {
+impl<S, R> Store<S, R> {
     /// Make a new store from a fixed state.
     ///
     /// The initial state will be the provided `initial_state`, and actions will be
@@ -25,14 +23,14 @@ impl<'a, S, A> Store<'a, S, A> {
     ///     state + action
     /// }
     ///
-    /// let reducer = &add;
-    /// let mut store = redux::Store::from_state(5, reducer);
+    /// let mut store = redux::Store::from_state(5, add);
     /// assert_eq!(store.get_state(), &5);
     ///
     /// store.dispatch(&8);
     /// assert_eq!(store.get_state(), &13);
     /// ```
-    pub fn from_state(initial_state: S, reducer: &'a Reducer<S, A>) -> Store<'a, S, A> {
+    pub fn from_state<A>(initial_state: S, reducer: R) -> Store<S, R> where
+        R: Reducer<S, A> {
         Store {
             state:   initial_state,
             reducer: reducer,
@@ -51,33 +49,20 @@ impl<'a, S, A> Store<'a, S, A> {
     ///     state + action
     /// }
     ///
-    /// let reducer = &add;
-    /// let mut store = redux::Store::from_factory(|| 5, reducer);
+    /// let mut store = redux::Store::from_factory(|| 5, add);
     /// assert_eq!(store.get_state(), &5);
     ///
     /// store.dispatch(&8);
     /// assert_eq!(store.get_state(), &13);
     /// ```
-    pub fn from_factory<F: Factory<S>>(state_factory: F, reducer: &'a Reducer<S, A>) -> Store<'a, S, A>
-        where F: FnOnce() -> S {
+    pub fn from_factory<A, F>(state_factory: F, reducer: R) -> Store<S, R> where
+        F: Factory<S>,
+        R: Reducer<S, A> {
         let initial_state = state_factory.create();
 
         Store::from_state(initial_state, reducer)
     }
 
-    /// Borrow the current state for inspection.
-    pub fn get_state(&self) -> &S {
-        &self.state
-    }
-
-    /// Apply `action` to the current state through the reducer.
-    pub fn dispatch(&mut self, action: &A) {
-        let reducer = &self.reducer;
-        self.state = reducer.reduce(&self.state, action);
-    }
-}
-
-impl<'a, S: Default, A> Store<'a, S, A> {
     /// Make a new store from the default value of the state type.
     ///
     /// The initial state will be taken from the `Default` trait, and actions will
@@ -90,16 +75,29 @@ impl<'a, S: Default, A> Store<'a, S, A> {
     ///     state + action
     /// }
     ///
-    /// let reducer = &add;
-    /// let mut store = redux::Store::from_default(reducer);
+    /// let mut store = redux::Store::from_default(add);
     /// assert_eq!(store.get_state(), &0);
     ///
     /// store.dispatch(&8);
     /// assert_eq!(store.get_state(), &8);
     /// ```
-    pub fn from_default(reducer: &'a Reducer<S, A>) -> Store<'a, S, A> {
+    pub fn from_default<A>(reducer: R) -> Store<S, R> where
+        S: Default,
+        R: Reducer<S, A> {
         let state_factory = Default::default;
 
         Store::from_factory(state_factory, reducer)
+    }
+
+    /// Borrow the current state for inspection.
+    pub fn get_state(&self) -> &S {
+        &self.state
+    }
+
+    /// Apply `action` to the current state through the reducer.
+    pub fn dispatch<A>(&mut self, action: &A) where
+        R: Reducer<S, A> {
+        let reducer = &self.reducer;
+        self.state = reducer.reduce(&self.state, action);
     }
 }
