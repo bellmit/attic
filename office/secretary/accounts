@@ -52,11 +52,11 @@
     Organization:ACU:Member:Sprocklm       20 Budget
     Organization:蘭亭社:Member:天火狐        50 Budget
 
-2017-01-07 * Organization Amended
+2017-01-07 * Organization "ACU" amended
     Player:o                               50 Budget
     Organization:ACU:Member:o
 
-2017-01-07 * Organization Created
+2017-01-07 * Organization "AVM" created
     Organization:AVM:Member:o              50 Budget
     Player:o
 
@@ -81,6 +81,34 @@
     Player:o                                5 Shinies
     Player:Aris
 
+2017-01-15 * Pend proposal "Modern Electioneering"
+    Agora                                   6 Shinies
+    Player:nichdel
+
+2017-01-15 * Pend proposal "Economic Flexibility v2"
+    Agora                                   6 Shinies
+    Player:nichdel
+
+2017-01-15 * Pend proposal "Economic Flexibility v2"
+    Agora                                   5 Shinies
+    Player:nichdel
+
+2015-01-15 * Organization "ABM" amended
+    Player:nichdel                         25 Budget
+    Organization:ABM:Member:nichdel                  = 0 Budget
+
+2015-01-15 * Organization "AVM" amended
+    Organization:AVM:Member:nichdel        25 Budget
+    Player:nichdel
+
+2015-01-15 * Organization "ACU" amended
+    Organization:ACU:Member:nichdel        75 Budget
+    Player:nichdel                                   = -100 Budget
+
+2015-01-16 * Aris
+    Player:Aris                             5 Shinies
+    Player:nichdel
+
 2017-02-01 ! Payday
     Player:ais523                          20 Shinies
     Player:aranea                          30 Shinies
@@ -99,4 +127,4 @@
     Player:Warrigal, the                   10 Shinies
     Player:Yally                           10 Shinies
     Player:天火狐                           10 Shinies
-    Agora                                             = 452 Shinies
+    Agora                                             = 469 Shinies
