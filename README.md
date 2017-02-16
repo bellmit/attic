@@ -7,6 +7,31 @@ methods from a list of known origins, which may include wildcards. The origins
 can be configured either in your application's config file, or in an
 environment variable for platforms such as Heroku.
 
+## Installation
+
+This library is hosted on [JCenter](https://bintray.com/bintray/jcenter). To
+add it to your project, first add the JCenter repository, then add the
+following dependency:
+
+* Maven:
+
+    ```xml
+    <dependency>
+        <groupId>ca.grimoire.dropwizard.cors</groupId>
+        <artifactId>dropwizard-simple-cors</artifactId>
+        <version>VERSION</version>
+    </dependency>
+    ```
+
+* Gradle:
+
+    ```groovy
+    dependencies {
+        # ...
+        compile 'ca.grimoire.dropwizard.cors:dropwizard-simple-cors:*'
+    }
+    ```
+
 ## Usage
 
 1. Add this module as a dependency for your application.
