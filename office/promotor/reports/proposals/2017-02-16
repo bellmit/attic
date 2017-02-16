@@ -1,0 +1,151 @@
+As an agent of the PDA, I hereby distribute each listed proposal,
+initiating the Agoran Decision of whether to adopt it, and removing
+it from the proposal pool. For this decision, the vote collector is
+the Assessor, and the valid options are FOR and AGAINST (PRESENT is
+also a valid vote).
+
+ID     Author(s)   AI   Title                    Pender     Pend fee
+---------------------------------------------------------------------
+7840*  G.          3.0  Not an Apple campsite    o          4 sh.
+7841*  o           2.0  Payday cleanup           o          4 sh.
+7842*  nichdel, o  2.0  Economic Flexibility v2  nichdel    5 sh. [1]
+7843*  nichdel     2.0  Modern Electioneering    nichdel    6 sh.
+
+The proposal pool currently contains the following proposals:
+
+
+The following proposals were previously distributed in the past month, and are
+listed here to show their pend fees:
+
+ID     Author(s)   AI   Title           Pender    Pend fee
+--------------------------------------------------------------
+7839   o, Alexis   3.2  Alexis’ Decree  o         4 sh.
+
+Legend: <ID>* : Proposal is pending.
+
+Notes:
+[1]: An incorect version of this proposal was previously pended for 5 shinies,
+and was later withdrawn.
+
+
+
+The full text of the aforementioned proposals is included below (except the ones
+from the third category).
+
+//////////////////////////////////////////////////////////////////////
+ID: 1740
+Title: Not an Apple campsite
+Adoption index: 3.0
+Author: G.
+Co-author(s):
+Pender: o
+Pend fee: 4
+
+
+Amend Rule 1728 by replacing 'itent' with 'intent'
+
+// typo introduced by proposal 7815 - though I assume it's an obvious
+// typo synonym and doesn't break the mechanism
+
+//////////////////////////////////////////////////////////////////////
+Title: Payday cleanup
+Adoption index: 2.0
+Author: o
+Co-author(s): G.
+Pender: o
+Pend fee: 4
+
+
+Modify the rule “Economics” by removing the paragraph
+
+   The Secretary CAN cause Agora to pay any player or organization by
+   announcement if doing so is specified by a rule.
+
+Modify the rule “Payday” to read:
+
+     In a timely fashion after the start of each month, if Agora's Balance
+     is greater than 0, the Secretary CAN and SHALL initiate a Payday by
+     announcement.  The initiation of a Payday causes Agora to pay each
+     player 10 shinies, plus another 10 shinies for each office that player
+     holds.
+
+
+//////////////////////////////////////////////////////////////////////
+Title: Economic Flexibility v2
+Adoption Index: 2.0
+Author: nichdel
+Co-author(s): o
+Pender: nichdel
+Pend fee: 5 (See [1], above.)
+
+
+[Changes from v1: Reduced the power of the Shiny Supply Level, included
+protections for organization balances.]
+
+Amend the rule titled "Economics" by replacing:
+
+       regardless of rules to the contrary.
+
+With:
+
+       rules to the contrary notwithstanding.
+
+[Just standardization.]
+
+Amend the rule titled "Economics" by replacing:
+
+       Any attempt by a player to PAY any amount that would make
+       eir own balance negative is INEFFECTIVE, rules to the contrary
+       notwithstanding.
+
+With:
+
+       Any attempt to PAY any amount that would make any player's or any
+       organization's balance negative is INEFFECTIVE, rules to the
+       contrary notwithstanding.
+
+[Current wording allows a proxy to reduce balances below 0.]
+
+Amend the rule titled "Payday" to read, in full:
+
+       Payrate is an office switch, tracked by the ADoP, with a
+       default value of 10 and possible values of positive integers.
+
+       At the start of each month, if Agora's Balance is not 0 or less,
+       Agora SHALL pay each player 10 shinies. Immediately afterward, if
+       Agora's Balance is not 0 or less, Agora SHALL pay each player who
+       holds an office the office's Payrate value, in ascending order of
+       Payrate (breaking ties alphabetically by office) until all are
+       paid or paying the next office would leave Agora's balance at 0
+       or less.
+
+[1) Reduce the responsibility of the Secretary. 2) Separate payment into
+a basic stipend for everyone and then office payments. 3) Introduce the
+concept of payrates so that different offices can get different pays.]
+
+Enact a new rule (P=2) titled "Shiny Supply Level" which reads:
+
+       The Supply Level is 1000.
+
+       When the Supply Level is changed, Agora's Balance is increased or
+       decreased such that all Balances add up to the Supply Level.
+
+[Introduces an explicit method for adjusting the amount of shinies in
+circulation.]
+
+//////////////////////////////////////////////////////////////////////
+Title: Modern Electioneering
+Adoption Index: 2.0
+Author: nichdel
+Co-author(s):
+Pender: nichdel
+Pend fee: 6
+
+
+If the proposal "Economic Flexibility 2" passes then amend Rule 2154
+(Election Procedure) by adding, to the end:
+
+       During an election any player may propose, by announcement, a
+       valid Payrate for the office. If a player is elected and has
+       proposed a Payrate, the office's Payrate is set to eir proposed
+       number.
