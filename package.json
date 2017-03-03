@@ -1,0 +1,10 @@
+{
+  "name": "clocker",
+  "version": "1.0.0",
+  "private": true,
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.0"
+  }
+}

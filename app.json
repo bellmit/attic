@@ -1,0 +1,10 @@
+{
+  "formation": {
+    "web": {
+      "count": 1
+    },
+    "worker": {
+      "count": 1
+    }
+  }
+}
