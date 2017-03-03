@@ -1,5 +1,5 @@
 function tick() {
-  console.log('tick')
+  console.log('tick tock')
   schedule()
 }
 
