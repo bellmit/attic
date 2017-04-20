@@ -132,3 +132,58 @@
 2017-02-14 * o
     Player:o                               20 Shinies
     Player:Aris
+
+2017-03-01 * Payday
+    Player:ais523                          20 Shinies
+    Player:aranea                          30 Shinies
+    Player:Aris                            20 Shinies
+    Player:Charles                         10 Shinies
+    Player:G.                              40 Shinies
+    Player:Henri                           10 Shinies
+    Player:Murphy                          10 Shinies
+    Player:nichdel                         40 Shinies
+    Player:o                               20 Shinies
+    Player:omd                             10 Shinies
+    Player:Roujo                           10 Shinies
+    Player:Sci_Guy12                       10 Shinies
+    Player:Sprocklem                       10 Shinies
+    Player:Tekneek                         10 Shinies
+    Player:Warrigal, the                   10 Shinies
+    Player:Yally                           10 Shinies
+    Player:天火狐                           10 Shinies
+    Agora                                             = 189 Shinies
+
+2017-04-01 * Payday
+    Player:ais523                          20 Shinies
+    Player:aranea                          30 Shinies
+    Player:Aris                            20 Shinies
+    Player:Charles                         10 Shinies
+    Player:G.                              40 Shinies
+    Player:Henri                           10 Shinies
+    Player:Murphy                          10 Shinies
+    Player:nichdel                         40 Shinies
+    Player:o                               20 Shinies
+    Player:omd                             10 Shinies
+    Player:Roujo                           10 Shinies
+    Player:Sci_Guy12                       10 Shinies
+    Player:Sprocklem                       10 Shinies
+    Player:Tekneek                         10 Shinies
+    Player:Warrigal, the                   10 Shinies
+    Player:Yally                           10 Shinies
+    Player:Zachary Watterson               10 Shinies
+    Player:天火狐                           10 Shinies
+    Agora                                             = -101 Shinies
+
+2017-04-16 + Organizations amended
+    Organization:ABM:Member:Quazie         25 Budget
+    Organization:ACU:Member:Quazie        100 Budget
+    Organization:AVM:Member:Quazie        100 Budget
+    Organization:蘭亭社:Member:Quazie       50 Budget
+    Player:Quazie
+
+2017-04-19 + Quazie Declared Bankrupt
+    Organization:ABM:Member:Quazie        -25 Budget = 0 Budget
+    Organization:ACU:Member:Quazie       -100 Budget = 0 Budget
+    Organization:AVM:Member:Quazie       -100 Budget = 0 Budget
+    Organization:蘭亭社:Member:Quazie      -50 Budget = 0 Budget
+    Player:Quazie                                    = 0 Budget
