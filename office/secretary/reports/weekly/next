@@ -21,9 +21,12 @@ Wed,  1 Feb 2017 00:00:00  Payday
 Tue, 14 Feb 2017 03:47:00  o Paid 20 Shinies (Aris)
 Wed,  1 Mar 2017 00:00:00  Payday
 Wed,  1 Apr 2017 00:00:00  Payday
-Sun, 16 Apr 2017 21:04:27  Quazie joins Organizations "ABM", "ACU",
+Sun, 16 Apr 2017 21:04:27 !Quazie joins Organizations "ABM", "ACU",
                                 "AVM", and 天火狐
-Wed, 19 Apr 2017 23:29:03  Quazie declared Bankrupt
+Wed, 19 Apr 2017 23:29:03 !Quazie declared Bankrupt
+
+Events marked with a ! are provisional until the status of Quazie as a
+player is resolved.
 
 
 Personal Lockouts:
@@ -38,27 +41,27 @@ Global Lockout: No
 
 Balances:
 
-         469 Shinies  Agora
+          -1 Shinies  Agora
            5 Shinies  Organization:AVM
-         526 Shinies  Player
-          43 Shinies    Aris
-          20 Shinies    Charles
-          80 Shinies    G.
-          20 Shinies    Henri
-          20 Shinies    Murphy
-          20 Shinies    Roujo
-          20 Shinies    Sci_Guy12
-          20 Shinies    Sprocklem
-          20 Shinies    Tekneek
-          20 Shinies    Warrigal, the
-          20 Shinies    Yally
-          40 Shinies    ais523
-          60 Shinies    aranea
-          58 Shinies    nichdel
-          25 Shinies    o
-          20 Shinies    omd
-          20 Shinies    天火狐
-      -1,000 Shinies  Proposal:7838
+         996 Shinies  Player
+          53 Shinies    Aris
+          40 Shinies    Charles
+         140 Shinies    G.
+          40 Shinies    Henri
+          40 Shinies    Murphy
+          40 Shinies    Roujo
+          40 Shinies    Sci_Guy12
+          40 Shinies    Sprocklem
+          40 Shinies    Tekneek
+          40 Shinies    Warrigal, the
+          40 Shinies    Yally
+          10 Shinies    Zachary Watterson
+          70 Shinies    ais523
+         100 Shinies    aranea
+         108 Shinies    nichdel
+          75 Shinies    o
+          40 Shinies    omd
+          40 Shinies    天火狐
 
 
 Budgets:

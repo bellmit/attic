@@ -154,15 +154,15 @@
     Agora                                             = 189 Shinies
 
 2017-04-01 * Payday
-    Player:ais523                          20 Shinies
-    Player:aranea                          30 Shinies
-    Player:Aris                            20 Shinies
+    Player:ais523                          10 Shinies
+    Player:aranea                          10 Shinies
+    Player:Aris                            10 Shinies
     Player:Charles                         10 Shinies
-    Player:G.                              40 Shinies
+    Player:G.                              10 Shinies
     Player:Henri                           10 Shinies
     Player:Murphy                          10 Shinies
-    Player:nichdel                         40 Shinies
-    Player:o                               20 Shinies
+    Player:nichdel                         10 Shinies
+    Player:o                               10 Shinies
     Player:omd                             10 Shinies
     Player:Roujo                           10 Shinies
     Player:Sci_Guy12                       10 Shinies
@@ -172,7 +172,11 @@
     Player:Yally                           10 Shinies
     Player:Zachary Watterson               10 Shinies
     Player:天火狐                           10 Shinies
-    Agora                                             = -101 Shinies
+    Agora                                             = 9 Shinies
+
+2017-04-01 * Arbitor Payday
+    Player:G.                              10 Shinies
+    Agora                                             = -1 Shinies
 
 2017-04-16 + Organizations amended
     Organization:ABM:Member:Quazie         25 Budget
