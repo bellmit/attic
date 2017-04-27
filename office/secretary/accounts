@@ -1,189 +1,197 @@
 2016-12-05 * Proposal 7838 enacted
-    Agora                               1,000 Shinies
+    Agora                                1,000 Shinies
     Proposal:7838
 
 2017-01-06 * Payday
-    Player:ais523                          20 Shinies
-    Player:Alexis                          20 Shinies
-    Player:aranea                          30 Shinies
-    Player:Aris                            20 Shinies
-    Player:Charles                         10 Shinies
-    Player:G.                              40 Shinies
-    Player:Henri                           10 Shinies
-    Player:Murphy                          10 Shinies
-    Player:nichdel                         40 Shinies
-    Player:o                               20 Shinies
-    Player:omd                             10 Shinies
-    Player:Roujo                           10 Shinies
-    Player:Sci_Guy12                       10 Shinies
-    Player:Sprocklem                       10 Shinies
-    Player:Tekneek                         10 Shinies
-    Player:Warrigal, the                   10 Shinies
-    Player:Yally                           10 Shinies
-    Player:天火狐                           10 Shinies
-    Agora                                             = 700 Shinies
+    Player:ais523                           20 Shinies
+    Player:Alexis                           20 Shinies
+    Player:aranea                           30 Shinies
+    Player:Aris                             20 Shinies
+    Player:Charles                          10 Shinies
+    Player:G.                               40 Shinies
+    Player:Henri                            10 Shinies
+    Player:Murphy                           10 Shinies
+    Player:nichdel                          40 Shinies
+    Player:o                                20 Shinies
+    Player:omd                              10 Shinies
+    Player:Roujo                            10 Shinies
+    Player:Sci_Guy12                        10 Shinies
+    Player:Sprocklem                        10 Shinies
+    Player:Tekneek                          10 Shinies
+    Player:Warrigal, the                    10 Shinies
+    Player:Yally                            10 Shinies
+    Player:天火狐                            10 Shinies
+    Agora                                              = 700 Shinies
 
 2017-01-06 * Pend proposal "Not an Apple campsite"
-    Agora                                   4 Shinies
+    Agora                                    4 Shinies
     Player:o
 
 2017-01-06 * Pend proposal "Payday cleanup"
-    Agora                                   4 Shinies
+    Agora                                    4 Shinies
     Player:o
 
 2017-01-07 * Import Budget from reports
-    Player:ais523                         -55 Budget
-    Player:aranea                         -75 Budget
-    Player:Murphy                         -50 Budget
-    Player:nichdel                        -25 Budget
-    Player:o                             -100 Budget
-    Player:omd                            -20 Budget
-    Player:Sprocklem                      -45 Budget
-    Player:天火狐                          -50 Budget
-    Organization:ABM:Member:ais523         25 Budget
-    Organization:ABM:Member:aranea         25 Budget
-    Organization:ABM:Member:nichdel        25 Budget
-    Organization:ABM:Member:Sprocklem      25 Budget
-    Organization:ACU:Member:ais523         30 Budget
-    Organization:ACU:Member:aranea         50 Budget
-    Organization:ACU:Member:Murphy         50 Budget
-    Organization:ACU:Member:o             100 Budget
-    Organization:ACU:Member:omd            20 Budget
-    Organization:ACU:Member:Sprocklm       20 Budget
-    Organization:蘭亭社:Member:天火狐        50 Budget
+    Player:ais523                          -55 Budget
+    Player:aranea                          -75 Budget
+    Player:Murphy                          -50 Budget
+    Player:nichdel                         -25 Budget
+    Player:o                              -100 Budget
+    Player:omd                             -20 Budget
+    Player:Sprocklem                       -45 Budget
+    Player:天火狐                           -50 Budget
+    Organization:ABM:Member:ais523          25 Budget
+    Organization:ABM:Member:aranea          25 Budget
+    Organization:ABM:Member:nichdel         25 Budget
+    Organization:ABM:Member:Sprocklem       25 Budget
+    Organization:ACU:Member:ais523          30 Budget
+    Organization:ACU:Member:aranea          50 Budget
+    Organization:ACU:Member:Murphy          50 Budget
+    Organization:ACU:Member:o              100 Budget
+    Organization:ACU:Member:omd             20 Budget
+    Organization:ACU:Member:Sprocklm        20 Budget
+    Organization:蘭亭社:Member:天火狐         50 Budget
 
 2017-01-07 * Organization "ACU" amended
-    Player:o                               50 Budget
+    Player:o                                50 Budget
     Organization:ACU:Member:o
 
 2017-01-07 * Organization "AVM" created
-    Organization:AVM:Member:o              50 Budget
+    Organization:AVM:Member:o               50 Budget
     Player:o
 
 2017-01-07 * Agoran Voting Market (Sell Tender)
-    Organization:AVM:Bond:o                 5 Shinies
-    Organization:AVM:Votes:o                1 Vote
+    Organization:AVM:Bond:o                  5 Shinies
+    Organization:AVM:Votes:o                 1 Vote
     Player:o
 
 2017-01-07 * Pend proposal "Alexis' Decree"
-    Agora                                   4 Shinies
+    Agora                                    4 Shinies
     Player:o
 
 2017-01-10 * Distribute Alexis' assets
-    Agora                                  20 Shinies
-    Player:Alexis                                     = 0 Shinies
+    Agora                                   20 Shinies
+    Player:Alexis                                      = 0 Shinies
 
 2017-01-11 * Aris
-    Player:Aris                             3 Shinies
-    Player:o                                          = 0 Shinies
+    Player:Aris                              3 Shinies
+    Player:o                                           = 0 Shinies
 
 2017-01-14 * o
-    Player:o                                5 Shinies
+    Player:o                                 5 Shinies
     Player:Aris
 
 2017-01-15 * Pend proposal "Modern Electioneering"
-    Agora                                   6 Shinies
+    Agora                                    6 Shinies
     Player:nichdel
 
 2017-01-15 * Pend proposal "Economic Flexibility v2"
-    Agora                                   6 Shinies
+    Agora                                    6 Shinies
     Player:nichdel
 
 2017-01-15 * Pend proposal "Economic Flexibility v2"
-    Agora                                   5 Shinies
+    Agora                                    5 Shinies
     Player:nichdel
 
 2015-01-15 * Organization "ABM" amended
-    Player:nichdel                         25 Budget
-    Organization:ABM:Member:nichdel                  = 0 Budget
+    Player:nichdel                          25 Budget
+    Organization:ABM:Member:nichdel                   = 0 Budget
 
 2015-01-15 * Organization "AVM" amended
-    Organization:AVM:Member:nichdel        25 Budget
+    Organization:AVM:Member:nichdel         25 Budget
     Player:nichdel
 
 2015-01-15 * Organization "ACU" amended
-    Organization:ACU:Member:nichdel        75 Budget
-    Player:nichdel                                   = -100 Budget
+    Organization:ACU:Member:nichdel         75 Budget
+    Player:nichdel                                    = -100 Budget
 
 2015-01-16 * Aris
-    Player:Aris                             5 Shinies
+    Player:Aris                              5 Shinies
     Player:nichdel
 
 2017-02-01 * Payday
-    Player:ais523                          20 Shinies
-    Player:aranea                          30 Shinies
-    Player:Aris                            20 Shinies
-    Player:Charles                         10 Shinies
-    Player:G.                              40 Shinies
-    Player:Henri                           10 Shinies
-    Player:Murphy                          10 Shinies
-    Player:nichdel                         40 Shinies
-    Player:o                               20 Shinies
-    Player:omd                             10 Shinies
-    Player:Roujo                           10 Shinies
-    Player:Sci_Guy12                       10 Shinies
-    Player:Sprocklem                       10 Shinies
-    Player:Tekneek                         10 Shinies
-    Player:Warrigal, the                   10 Shinies
-    Player:Yally                           10 Shinies
-    Player:天火狐                           10 Shinies
-    Agora                                             = 469 Shinies
+    Player:ais523                           20 Shinies
+    Player:aranea                           30 Shinies
+    Player:Aris                             20 Shinies
+    Player:Charles                          10 Shinies
+    Player:G.                               40 Shinies
+    Player:Henri                            10 Shinies
+    Player:Murphy                           10 Shinies
+    Player:nichdel                          40 Shinies
+    Player:o                                20 Shinies
+    Player:omd                              10 Shinies
+    Player:Roujo                            10 Shinies
+    Player:Sci_Guy12                        10 Shinies
+    Player:Sprocklem                        10 Shinies
+    Player:Tekneek                          10 Shinies
+    Player:Warrigal, the                    10 Shinies
+    Player:Yally                            10 Shinies
+    Player:天火狐                            10 Shinies
+    Agora                                              = 469 Shinies
 
 2017-02-14 * o
-    Player:o                               20 Shinies
+    Player:o                                20 Shinies
     Player:Aris
 
 2017-03-01 * Payday
-    Player:ais523                          20 Shinies
-    Player:aranea                          30 Shinies
-    Player:Aris                            20 Shinies
-    Player:Charles                         10 Shinies
-    Player:G.                              40 Shinies
-    Player:Henri                           10 Shinies
-    Player:Murphy                          10 Shinies
-    Player:nichdel                         40 Shinies
-    Player:o                               20 Shinies
-    Player:omd                             10 Shinies
-    Player:Roujo                           10 Shinies
-    Player:Sci_Guy12                       10 Shinies
-    Player:Sprocklem                       10 Shinies
-    Player:Tekneek                         10 Shinies
-    Player:Warrigal, the                   10 Shinies
-    Player:Yally                           10 Shinies
-    Player:天火狐                           10 Shinies
-    Agora                                             = 189 Shinies
+    Player:ais523                           20 Shinies
+    Player:aranea                           30 Shinies
+    Player:Aris                             20 Shinies
+    Player:Charles                          10 Shinies
+    Player:G.                               40 Shinies
+    Player:Henri                            10 Shinies
+    Player:Murphy                           10 Shinies
+    Player:nichdel                          40 Shinies
+    Player:o                                20 Shinies
+    Player:omd                              10 Shinies
+    Player:Roujo                            10 Shinies
+    Player:Sci_Guy12                        10 Shinies
+    Player:Sprocklem                        10 Shinies
+    Player:Tekneek                          10 Shinies
+    Player:Warrigal, the                    10 Shinies
+    Player:Yally                            10 Shinies
+    Player:天火狐                            10 Shinies
+    Agora                                              = 189 Shinies
 
 2017-04-01 * Payday
-    Player:ais523                          10 Shinies
-    Player:aranea                          10 Shinies
-    Player:Aris                            10 Shinies
-    Player:Charles                         10 Shinies
-    Player:G.                              10 Shinies
-    Player:Henri                           10 Shinies
-    Player:Murphy                          10 Shinies
-    Player:nichdel                         10 Shinies
-    Player:o                               10 Shinies
-    Player:omd                             10 Shinies
-    Player:Roujo                           10 Shinies
-    Player:Sci_Guy12                       10 Shinies
-    Player:Sprocklem                       10 Shinies
-    Player:Tekneek                         10 Shinies
-    Player:Warrigal, the                   10 Shinies
-    Player:Yally                           10 Shinies
-    Player:Zachary Watterson               10 Shinies
-    Player:天火狐                           10 Shinies
-    Agora                                             = 9 Shinies
+    Player:ais523                           10 Shinies
+    Player:aranea                           10 Shinies
+    Player:Aris                             10 Shinies
+    Player:Charles                          10 Shinies
+    Player:G.                               10 Shinies
+    Player:Henri                            10 Shinies
+    Player:Murphy                           10 Shinies
+    Player:nichdel                          10 Shinies
+    Player:o                                10 Shinies
+    Player:omd                              10 Shinies
+    Player:Roujo                            10 Shinies
+    Player:Sci_Guy12                        10 Shinies
+    Player:Sprocklem                        10 Shinies
+    Player:Tekneek                          10 Shinies
+    Player:Warrigal, the                    10 Shinies
+    Player:Yally                            10 Shinies
+    Player:Zachary Watterson                10 Shinies
+    Player:天火狐                            10 Shinies
+    Agora                                              = 9 Shinies
 
 2017-04-16 + Organizations amended
-    Organization:ABM:Member:Quazie         25 Budget
-    Organization:ACU:Member:Quazie        100 Budget
-    Organization:AVM:Member:Quazie        100 Budget
-    Organization:蘭亭社:Member:Quazie       50 Budget
+    Organization:ABM:Member:Quazie          25 Budget
+    Organization:ACU:Member:Quazie         100 Budget
+    Organization:AVM:Member:Quazie         100 Budget
+    Organization:蘭亭社:Member:Quazie        50 Budget
     Player:Quazie
 
 2017-04-19 + Quazie Declared Bankrupt
-    Organization:ABM:Member:Quazie        -25 Budget = 0 Budget
-    Organization:ACU:Member:Quazie       -100 Budget = 0 Budget
-    Organization:AVM:Member:Quazie       -100 Budget = 0 Budget
-    Organization:蘭亭社:Member:Quazie      -50 Budget = 0 Budget
-    Player:Quazie                                    = 0 Budget
+    Organization:ABM:Member:Quazie         -25 Budget = 0 Budget
+    Organization:ACU:Member:Quazie        -100 Budget = 0 Budget
+    Organization:AVM:Member:Quazie        -100 Budget = 0 Budget
+    Organization:蘭亭社:Member:Quazie       -50 Budget = 0 Budget
+    Player:Quazie                                     = 0 Budget
+
+2017-04-26 * Publius Scribonius Scholasticus
+    Player:Publius Scribonius Scholasticus  20 Shinies
+    Player:o
+
+2017-04-26 + Quazie
+    Player:Quazie                           20 Shinies
+    Player:Sprocklem
