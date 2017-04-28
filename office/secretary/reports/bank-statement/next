@@ -31,8 +31,11 @@ Wed 19 Apr 23:29:03 !Quazie declared Bankrupt
 Mon 24 Apr 00:00:00  Union Credits increase (ais523 +90, aranea +150,
                       nichdel +225, Murphy +150, o +150, omd +60,
                       Sprocklem +60)
+Thu 27 Apr 05:33:46  nichdel leaves ACU
 ----- future events -----
-Mon  1 May 00:00:00  Union Credits will increase (ditto)
+Mon  1 May 00:00:00  Union Credits will increase (ais523 +90,
+                      aranea +150, Murphy +150, o +150, omd +60,
+                      Sprocklem +60)
 
 Events marked with a ! are provisional until the status of Quazie as a
 player is resolved.
@@ -42,7 +45,6 @@ Member     Budget     Union Credits
 -----------------------------------
 ais523       30           6360
 aranea       50           7050
-nichdel      75           3375
 Murphy       50          11100
 o            50           9900
 omd          20           3720

@@ -182,11 +182,11 @@
     Player:Quazie
 
 2017-04-19 + Quazie Declared Bankrupt
-    Organization:ABM:Member:Quazie         -25 Budget = 0 Budget
-    Organization:ACU:Member:Quazie        -100 Budget = 0 Budget
-    Organization:AVM:Member:Quazie        -100 Budget = 0 Budget
-    Organization:蘭亭社:Member:Quazie       -50 Budget = 0 Budget
-    Player:Quazie                                     = 0 Budget
+    Organization:ABM:Member:Quazie         -25 Budget  = 0 Budget
+    Organization:ACU:Member:Quazie        -100 Budget  = 0 Budget
+    Organization:AVM:Member:Quazie        -100 Budget  = 0 Budget
+    Organization:蘭亭社:Member:Quazie       -50 Budget  = 0 Budget
+    Player:Quazie                                      = 0 Budget
 
 2017-04-26 * Publius Scribonius Scholasticus
     Player:Publius Scribonius Scholasticus  20 Shinies
@@ -195,3 +195,17 @@
 2017-04-26 + Quazie
     Player:Quazie                           20 Shinies
     Player:Sprocklem
+
+2017-04-27 * Organization "AAaAA" created
+    Organization:ACU:Member:nichdel                    = 0 Budget
+    Organization:AVM:Member:nichdel                    = 50 Budget
+    Organization:AAaAA:Member:nichdel                  = 50 Budget
+
+2017-04-27 * Organization "AAaAA"
+    Organization:AAaAA:Proxies:nichdel      10 Shinies
+    Player:nichdel
+
+2017-04-27 * Pend proposals "Mint Chocolate" and "Free Agency"
+    Agora                                   10 Shinies
+    Agora                                    9 Shinies
+    Player:nichdel

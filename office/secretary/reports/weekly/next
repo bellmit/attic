@@ -24,9 +24,16 @@ Sun, 16 Apr 2017 21:04:27 !Quazie joins Organizations "ABM", "ACU",
                                 "AVM", and 蘭亭社
 Wed, 19 Apr 2017 23:29:03 !Quazie declared Bankrupt
 ----- time of last report -----
-Tue, 14 Feb 2017 03:47:00  Publius Scribonius Scholasticus paid
+Wed, 26 Apr 2017 18:47:12  Publius Scribonius Scholasticus paid
                                 20 Shinies (o)
-Tue, 14 Feb 2017 03:47:00 !Quazie paid 20 Shinies (Sprocklem)
+Thu, 27 Apr 2017 00:08:15 !Quazie paid 20 Shinies (Sprocklem)
+Thu, 27 Apr 2017 05:33:46  nichdel leaves Organization "ACU"
+Thu, 27 Apr 2017 05:33:46  nichdel creates Organization "AAaAA"
+Thu, 27 Apr 2017 05:33:46  nichdel joins Organization "AAaAA"
+Thu, 27 Apr 2017 05:33:46  Organization "AAaAA" paid 10 Shinies
+                                (nichdel)
+Thu, 27 Apr 2017 21:52:20  Agora paid 10 Shinies (nichdel)
+Thu, 27 Apr 2017 21:52:20  Agora paid 9 Shinies (nichdel)
 
 Events marked with a ! are provisional until the status of Quazie as a
 player is resolved.
@@ -76,18 +83,18 @@ Quazie is a player   Quazie is not a player   Holder
 
 Budgets:
 
-Player         ABM  ACU  AVM  蘭亭社     Expenditure
+Player         AAaAA   ABM  ACU  AVM  蘭亭社     Expenditure
 ---------------------------------------------------
-ais523          25   30                       55
-aranea          25   50                       75
-Murphy               50                       50
-nichdel              75   25                 100
-o                    50   50                 100
-omd                  20                       20
-Sprocklem       25   20                       45
-天火狐                           50            50
+ais523                  25   30                       55
+aranea                  25   50                       75
+Murphy                       50                       50
+nichdel           50              50                 100
+o                            50   50                 100
+omd                          20                       20
+Sprocklem               25   20                       45
+天火狐                                   50            50
 
-Income          75  295   75    50           495
+Income            50    75  220  100    50           495
 
 ABM = The Agoran Betting Market
 ACU = The Agoran Credit Union
