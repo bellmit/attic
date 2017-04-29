@@ -28,7 +28,7 @@ Create a new rule with power 1 named "Shame", and set its body to:
 
     b) each Ashamed player's Shame is reset to the default value, then
 
-    c) the player who Shunned The Unworthy's shame is increased by one.
+    c) the player who Shunned The Unworthy's Shame is increased by one.
 
 [Create a cumulative penalty system and a consequence for accumulating too
 many.]

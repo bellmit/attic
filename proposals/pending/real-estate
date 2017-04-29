@@ -1,0 +1,89 @@
+Proposal: Real Estate
+Adoption index: 3
+Authors: o
+Co-authors: Aris
+
+If Shinies are money - plentiful, liquid, easily acquired in small
+quanties but still valuable - then Estates are land: rare, illiquid,
+difficult to acquire in any quantity, intrinsically valuable.
+
+Enact a new rule, "The Surveyor", with power 1, with the text:
+
+    The Surveyor is an office. Eir weekly report includes the owner of
+    each Estate.
+
+Enact a new rule, "Estates", with power 2, with the text:
+
+    An Estate is a type of entity. The following changes are secured:
+    creating, modifying, or destroying an Estate; and causing an
+    entity to become an Estate or cease to be an Estate.
+
+    Owner is a switch belonging to each Estate, tracked by the
+    Surveyor, whose legal values are any player, any Organization, or
+    Agora. The default Owner of an Estate is Agora. Changes to Owner
+    switches are secured.
+
+    To transfer an Estate to a player or Organization is to set its
+    Owner switch to that player or that Organization. To transfer an
+    Estate to Agora is to set its Owner switch to Agora.
+
+    A player who owns an Estate can and may transfer it to any player,
+    to any Organization, or to Agora, by announcement.
+
+    A player may cause an Organization which owns an Estate to transfer
+    that Estate to any player, to any Organization, or to Agora, by
+    announcement, if it is Appropriate to do so under that
+    Organization's charter.
+
+Create the following Estates:
+
+    * The Estate of Antegria
+    * The Estate of Borduria
+    * The Estate of Cagliostro
+    * The Estate of Dawsbergen
+    * The Estate of Erehwon
+
+Enact a new rule, "Estate Ballots", with power 3, with the text:
+
+    During any Agoran Decision, a player who owns one or more Estates
+    can, by announcement, expend any number of their owned Estates on
+    the Agoran Decision by transferring that Estate to Agora. Eir
+    voting strength on that decision is increased by 1 for each Estate
+    expended on it.
+
+Enact a new rule, "Estate Auctions", with power 2, with the text:
+
+    At the start of each month, if Agora owns at least one Estate, the
+    Surveyor shall put one Estate which is owned by Agora up for
+    auction, by announcement. Each auction ends seven days after it
+    begins.
+
+    During an auction, any player may bid any number of Shinies by
+    announcement. Any player may cause any Organization to bid any
+    number of Shinies, by announcement, if it is Appropriate under that
+    Organization's charter to place the bid.
+
+    At the end of an auction, if there is a single highest bid, the
+    player or Organization that placed the highest bid can cause Agora
+    to transfer the auctioned Estate to emself by paying Agora the
+    number of Shinies stated in their most recent bid. If the highest
+    bidder does not do so in a timely fashion, the Surveyor shall issue
+    the player who submitted the bid a Yellow Card.
+
+Amend rule 2485 ("You Can't Take It With You") and replace its text with:
+
+     "Heir" is a person switch, tracked by the Registrar, whose value
+     is either empty or the name of a player or Organization. Each
+     person's Heir is empty by default. A player may flip eir Heir by
+     announcement.
+
+     When a player is deregistered, if eir Heir switch is not empty, e
+     automatically pays all of eir Balance to the named player or
+     Organization, and transfers all of eir Estates to the named player
+     or Organization. Otherwise, if eir Heir switch is empty, e may
+     specify another player, an Organization, or Agora, and pay all of
+     eir Balance and transfer all of eir Estates to the specified
+     player or Organization. If the player does not do so within 1 day
+     of deregistration, the Registrar CAN and SHALL cause that player
+     to pay eir Balance to Agora and to transfer all of eir Estates to
+     Agora, by announcement.
