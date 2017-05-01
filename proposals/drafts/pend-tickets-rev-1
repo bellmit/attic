@@ -1,0 +1,24 @@
+Proposal: Pend Tickets (revision 1)
+Adoption index: 3
+Authors: o
+Co-authors: G.
+
+Enact a new rule, "Pend Tickets", with power 1, with the text:
+
+    Pend Tickets is a natural player switch, tracked by the Distributor.
+
+    Any player can and may pay Agora a number of Shinies equal to an N
+    times the Pending List Price (with N a positive integer) to add N
+    to eir Pend Tickets switch, by announcement.
+
+    Any player whose Pend Tickets switch is greater than zero can
+    decrease eir Pend Tickets switch by N, and increase another
+    player's Pend Tickets switch by N, by announcement, if neither
+    player's Pend Tickets switch would be set to a negative value.
+
+Amend rule 2445 ("How to Pend a Proposal") by adding a new paragraph to
+the end of the text:
+
+    Any player whose Pend Tickets switch is greater than zero can
+    decrease eir Pend Tickets switch by one to switch a proposal's
+    imminence to "pending", by announcement.
