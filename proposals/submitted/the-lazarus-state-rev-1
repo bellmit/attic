@@ -1,0 +1,13 @@
+Proposal: The Lazarus State (revision 1)
+Adoption index: 1
+Authors: o
+
+Amend rule 2485, "You can't take it with you", by changing its title to
+"You Can't Take It With You", then by changing the paragraph beginning
+"When a player is deregistered" to read, in full:
+
+    When a player is deregistered, if eir Heir switch is not empty, e
+    automatically pays all of eir Shinies to their Heir immediately
+    before deregistration. Otherwise, if eir Heir switch is empty, e
+    automatically pays all of eir Shinies to Agora immediately before
+    deregistration.
