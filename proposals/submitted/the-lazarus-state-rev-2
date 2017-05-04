@@ -1,10 +1,14 @@
-Proposal: The Lazarus State (revision 1)
+Proposal: The Lazarus State (revision 2)
 Adoption index: 1
 Authors: o
 
 Amend rule 2485, "You can't take it with you", by changing its title to
-"You Can't Take It With You", then by changing the paragraph beginning
-"When a player is deregistered" to read, in full:
+"You Can't Take It With You", then by changing the text to read, in
+full:
+
+    "Heir" is a person switch, tracked by the Registrar, whose value is
+    either empty, or a player other tham emself. Each person's Heir is
+    empty by default. A player may flip eir Heir by announcement.
 
     When a player is deregistered, if eir Heir switch is not empty, e
     automatically pays all of eir Shinies to their Heir immediately
