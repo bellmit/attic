@@ -22,12 +22,15 @@ Create a new rule, "Shame", with power 1, with the following text:
 
     c) the player who Shunned The Unworthy's Shame is increased by one.
 
-    A player whose Shame is greater than zero can pay Agora a number of
-    Shinies equal to four times the Pending List Price to reduce eir
-    shame by one, by announcement.
+    An Ashmed player can pay any amount of Shinies to any combination
+    of players, Organizations, and Agora, such that the total number of
+    Shinies paid by that player is equal to the value of eir Shame
+    switch times the Pending List Price, to reduce eir shame by one, by
+    announcement.
 
 [Create a cumulative penalty system and a consequence for accumulating
-too many.]
+too many. Allow charitable donations to extirpate shame, incentivizing
+doing so early by hiking the cost for each point of Shame.]
 
 Amend rule 2427 ("Yellow Cards"), by replacing the sentence:
 

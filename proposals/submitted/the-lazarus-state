@@ -1,0 +1,16 @@
+Proposal: The Lazarus State
+Adoption index: 1
+Authors: o
+
+Amend rule 2485, "You can't take it with you", by changing its title to
+"You Can't Take It With You", then by changing the paragraph beginning
+"When a player is deregistered" to read, in full:
+
+     When a player is deregistered, if eir Heir switch is not empty, e
+     automatically pays all of eir Balance to the named player or
+     organization. Otherwise, if eir Heir switch is empty, e may
+     specify another player, an organization, or Agora and pay all of
+     eir Balance to the specified player or organization. If the player
+     does not do so within 3 days of deregistration and is not a player
+     at that time, the Secretary CAN and SHALL cause that player to pay
+     eir Balance to Agora, by announcement.

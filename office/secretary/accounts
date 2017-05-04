@@ -214,10 +214,6 @@
     Agora                                    4 Shinies
     Player:o
 
-2017-04-28 * Pend proposal "Agora's To-Do List"
-    Agora                                    4 Shinies
-    Player:Publius Scribonius Scholasticus
-
 2017-04-30 * Pend proposal "Assets v3"
     Agora                                    4 Shinies
     Player:Aris
@@ -246,9 +242,46 @@
     Player:Yally                            10 Shinies
     Player:Zachary Watterson                10 Shinies
     Player:天火狐                            10 Shinies
-    Agora                                              = -145 Shinies
+    Agora                                              = -149 Shinies
 
 2017-05-01 + Payday (Quazie)
     Player:Quazie                           10 Shinies
-    Agora                                              = -155 Shinies
+    Agora                                  -10 Shinies = -159 Shinies
 
+2017-05-01 * Agoran Voting Market (withdrawn Sell Tender)
+    Organization:AVM:Bond:o                 -5 Shinies
+    Organization:AVM:Votes:o                -1 Vote
+    Player:o
+
+2017-05-01 * Pend proposal "Agora's To-Do List"
+    Agora                                    4 Shinies
+    Player:Publius Scribonius Scholasticus
+
+2017-05-02 * Pend proposal "Emergency Scam Fix"
+    Agora                                    6 Shinies
+    Player:ais523
+
+2017-05-02 * Roujo
+    Player:Roujo                            20 Shinies
+    Player:nichdel
+
+2017-05-02 * Agoran Voting Market (Sell Tender)
+    Organization:AVM:Bond:o                  6 Shinies
+    Organization:AVM:Votes:o                 1 Vote
+    Player:o
+
+2017-05-02 + Roujo's Estate
+    Agora                                   70 Shinies
+    Player:Roujo                                       = 0 Shinies
+
+2017-05-02 * Estates
+    Player:Charles                         -50 Shinies = 0 Shinies
+    Player:Sci_Guy12                       -50 Shinies = 0 Shinies
+    Player:Tekneek                         -50 Shinies = 0 Shinies
+    Player:Yally                           -50 Shinies = 0 Shinies
+    Player:Zachary Watterson               -20 Shinies = 0 Shinies
+    Agora
+
+2017-05-04 + G.
+    Player:G.                                1 Shinies
+    Player:ais523

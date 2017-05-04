@@ -1,0 +1,19 @@
+Proposal: Pend Tickets (revision 3)
+Adoption index: 3
+Authors: o
+Co-authors: G., Aris
+
+Enact a new rule, "Pend Tickets", with power 1, with the text:
+
+    Pend Tickets are a currency. The Promotor is the recordkeepor of
+    Pend Tickets.
+
+    Any player can and may pay Agora a number of Shinies equal to an N
+    times the Pending List Price (with N a positive integer) to create
+    N Pend Tickets in eir own possession, by announcement.
+
+Amend rule 2445 ("How to Pend a Proposal") by adding a new paragraph to
+the end of the text:
+
+    Any player who owns a Pend Ticket may, by announcement, destroy a
+    Pend Ticket they own to flip a proposal's imminence to pending.

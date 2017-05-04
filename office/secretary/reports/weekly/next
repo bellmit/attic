@@ -10,79 +10,78 @@ Wed,  1 Feb 2017 00:00:00  Payday
 Tue, 14 Feb 2017 03:47:00  o Paid 20 Shinies (Aris)
 Wed,  1 Mar 2017 00:00:00  Payday
 Wed,  1 Apr 2017 00:00:00  Payday
-Sun, 16 Apr 2017 21:04:27 !Quazie joins Organizations "ABM", "ACU",
+Sun, 16 Apr 2017 21:04:27 !Quazie joined Organizations "ABM", "ACU",
                                 "AVM", and 蘭亭社
 Wed, 19 Apr 2017 23:29:03 !Quazie declared Bankrupt
 ----- previous report -----
 Wed, 26 Apr 2017 18:47:12  Publius Scribonius Scholasticus paid
                                 20 Shinies (o)
 Thu, 27 Apr 2017 00:08:15 !Quazie paid 20 Shinies (Sprocklem)
-Thu, 27 Apr 2017 05:33:46  nichdel leaves Organization "ACU"
-Thu, 27 Apr 2017 05:33:46  nichdel creates Organization "AAaAA"
-Thu, 27 Apr 2017 05:33:46  nichdel joins Organization "AAaAA"
+Thu, 27 Apr 2017 05:33:46  nichdel left Organization "ACU"
+Thu, 27 Apr 2017 05:33:46  nichdel created Organization "AAaAA"
+Thu, 27 Apr 2017 05:33:46  nichdel joined Organization "AAaAA"
 Thu, 27 Apr 2017 05:33:46  Organization "AAaAA" paid 10 Shinies
                                 (nichdel)
 Thu, 27 Apr 2017 21:52:20  Agora paid 10 Shinies (nichdel)
 Thu, 27 Apr 2017 21:52:20  Agora paid 9 Shinies (nichdel)
 Fri, 28 Apr 2017 22:44:11  Agora paid 4 Shinies (o)
-Fri, 28 Apr 2017 19:28:44  Agora paid 4 Shinies (P.S.Scholasticus)
 Sun, 30 Apr 2017 21:06:24  Agora paid 4 Shinies (Aris)
 Sun, 30 Apr 2017 23:37:45  Agora paid 5 Shinies (ais523)
 ----- time of last report -----
 Mon,  1 May 2017 00:00:00  Payday
+Mon,  1 May 2017 07:07:43  o paid 5 Shinies (Organization "AVM")
+Mon,  1 May 2017 20:47:10  Agora paid 4 Shinies (P.S.Scholasticus)
+Tue,  2 May 2017 00:38:42  Agora paid 6 Shinies (ais523)
+Tue,  2 May 2017 02:15:14  Roujo paid 20 Shinies (nichdel)
+Tue,  2 May 2017 04:11:07  Organization "AVM" paid 6 Shinies (o)
+Tue,  2 May 2017 05:23:56  Agora paid 70 Shinies (Roujo)
+Tue,  2 May 2017 23:43:27  Agora paid 220 Shinies (Charles, Sci_Guy12,
+                                Tekneek, Yally, Zachary Watterson)
+Wed,  3 May 2017 04:22:28  o amended Organization "AVM"'s charter
+Thu,  4 May 2017 00:11:00 ?G. paid (ais523)
 
-Events marked with a ! are provisional until the status of Quazie as a
-player is resolved.
-
+Events marked with a ! are provisional until an outstanding CFJ is
+resolved.
 
 Personal Lockouts:
 
 Player             Until
 ------------------------
-!Quazie     July 18, 2017
-
-Records marked with a ! are provisional until the status of Quazie as a
-player is resolved.
-
+Quazie     July 18, 2017
 
 Global Lockout: No
 
 
 Balances:
 
-Quazie is a player   Quazie is not a player   Holder
-------------------------------------------------------
-        45 Shinies               45 Shinies   Agora
-        15 Shinies               15 Shinies   Organization
-        10 Shinies               10 Shinies     AAaAA
-         5 Shinies                5 Shinies     AVM
-       940 Shinies              940 Shinies   Player
-        49 Shinies               49 Shinies     Aris
-        40 Shinies               40 Shinies     Charles
-       130 Shinies              130 Shinies     G.
-        40 Shinies               40 Shinies     Henri
-        40 Shinies               40 Shinies     Murphy
-        16 Shinies               16 Shinies     Publius Scribonius Scholasticus
-        20 Shinies                              Quazie
-        40 Shinies               40 Shinies     Roujo
-        40 Shinies               40 Shinies     Sci_Guy12
-        20 Shinies               40 Shinies     Sprocklem
-        40 Shinies               40 Shinies     Tekneek
-        40 Shinies               40 Shinies     Warrigal, the
-        40 Shinies               40 Shinies     Yally
-        10 Shinies               10 Shinies     Zachary Watterson
-        65 Shinies               65 Shinies     ais523
-       100 Shinies              100 Shinies     aranea
-        79 Shinies               79 Shinies     nichdel
-        51 Shinies               51 Shinies     o
-        40 Shinies               40 Shinies     omd
-        40 Shinies               40 Shinies     天火狐
+The following information is provisional until the resolutions of CFJs
+XXXX and XXXX.
+
+         141 Shinies  Agora
+          16 Shinies  Organization
+          10 Shinies    AAaAA
+           6 Shinies    AVM
+         843 Shinies  Player
+          59 Shinies    Aris
+         141 Shinies    G.
+          50 Shinies    Henri
+          50 Shinies    Murphy
+          26 Shinies    Publius Scribonius Scholasticus
+          30 Shinies    Quazie
+          30 Shinies    Sprocklem
+          50 Shinies    Warrigal, the
+          68 Shinies    ais523
+         110 Shinies    aranea
+          69 Shinies    nichdel
+          60 Shinies    o
+          50 Shinies    omd
+          50 Shinies    天火狐
 
 
 Budgets:
 
 Player         AAaAA   ABM  ACU  AVM  蘭亭社     Expenditure
----------------------------------------------------
+-----------------------------------------------------------
 ais523                  25   30                       55
 aranea                  25   50                       75
 Murphy                       50                       50
