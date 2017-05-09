@@ -1,4 +1,4 @@
-Proposal: The Lazarus State (revision 2)
+Proposal: The Lazarus State (revision 3)
 Adoption index: 1
 Authors: o
 
@@ -7,8 +7,9 @@ Amend rule 2485, "You can't take it with you", by changing its title to
 full:
 
     "Heir" is a person switch, tracked by the Registrar, whose value is
-    either empty, or a player other tham emself. Each person's Heir is
-    empty by default. A player may flip eir Heir by announcement.
+    either empty, or a player other than emself, or any Organization.
+    Each person's Heir is empty by default. A player may flip eir Heir
+    by announcement.
 
     When a player is deregistered, if eir Heir switch is not empty, e
     automatically pays all of eir Shinies to their Heir immediately

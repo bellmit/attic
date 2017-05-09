@@ -192,7 +192,7 @@
     Player:Publius Scribonius Scholasticus  20 Shinies
     Player:o
 
-2017-04-26 + Quazie
+2017-04-26 * Quazie
     Player:Quazie                           20 Shinies
     Player:Sprocklem
 
@@ -244,7 +244,7 @@
     Player:天火狐                            10 Shinies
     Agora                                              = -149 Shinies
 
-2017-05-01 + Payday (Quazie)
+2017-05-01 * Payday (Quazie)
     Player:Quazie                           10 Shinies
     Agora                                  -10 Shinies = -159 Shinies
 
@@ -285,3 +285,16 @@
 2017-05-04 + G.
     Player:G.                                1 Shinies
     Player:ais523
+
+2017-05-05 + AAaAA Voting Round Closed
+    Player:Quazie                            5 Shinies
+    Player:Publius Scribonius Scholasticus   5 Shinies
+    Organization:AAaAA:Proxies:nichdel                 = 0 Shinies
+
+2017-05-06 * aranea's Estate
+    Agora                                  110 Shinies
+    Player:aranea                                      = 0 Shinies
+
+2017-05-06 * nichdel
+    Player:nichdel                           6 Shinies
+    Player:o
