@@ -1,37 +1,22 @@
 Agoran Credit Union report
 
-Date of this report: Sun,  7 May 2017
-Date of last report: Sun, 30 Apr 2017
+Date of this report: Sun, 14 May 2017
+Date of last report: Sun,  7 May 2017
 
 
 Recent events (all times UTC)
 
-Mon 30 Jan 00:00:00  Union Credits increase (ditto)
-Mon  6 Feb 00:00:00  Union Credits increase (ditto)
-Mon 13 Feb 00:00:00  Union Credits increase (ditto)
-Mon 20 Feb 00:00:00  Union Credits increase (ditto)
-Mon 27 Feb 00:00:00  Union Credits increase (ditto)
-Mon  6 Mar 00:00:00  Union Credits increase (ditto)
-Mon 13 Mar 00:00:00  Union Credits increase (ditto)
-Mon 20 Mar 00:00:00  Union Credits increase (ditto)
-Mon 27 Mar 00:00:00  Union Credits increase (ditto)
-Mon  3 Apr 00:00:00  Union Credits increase (ditto)
-Mon 10 Apr 00:00:00  Union Credits increase (ditto)
-Sun 16 Apr 21:04:27 !Quazie joins ACU (100 Budget)
-Mon 17 Apr 00:00:00 !Union Credits increase (ais523 +90, aranea +150,
-                      nichdel +225, Murphy +150, o +150, omd +60,
-                      Quazie +300, Sprocklem +60)
-Wed 19 Apr 23:29:03 !Quazie declared Bankrupt
------ previous report -----
 Mon 24 Apr 00:00:00  Union Credits increase (ais523 +90, aranea +150,
                       nichdel +225, Murphy +150, o +150, omd +60,
                       Sprocklem +60)
 Thu 27 Apr 05:33:46  nichdel leaves ACU
------ time of last report -----
+----- previous report -----
 Mon  1 May 00:00:00  Union Credits increase (ais523 +90, aranea +150,
                       Murphy +150, o +150, omd +60, Sprocklem +60)
+----- time of last report -----
+Mon  8 May 00:00:00  Union Credits increase (ditto)
 ----- future events -----
-Mon  8 May 00:00:00  Union Credits will increase (ditto)
+Mon  15May 00:00:00  Union Credits will increase (ditto)
 
 Events marked with a ! are provisional until the status of Quazie's
 actions is resolved.
@@ -39,9 +24,9 @@ actions is resolved.
 
 Member     Budget     Union Credits
 -----------------------------------
-ais523       30           6450
-aranea       50           7200
-Murphy       50          11250
-o            50          10050
-omd          20           3780
-Sprocklem    20           3720
+ais523       30           6540
+aranea       50           7350
+Murphy       50          11400
+o            50          10200
+omd          20           3840
+Sprocklem    20           3780
