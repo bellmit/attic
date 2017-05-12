@@ -20,7 +20,8 @@ filers = {
 def file_as(original, canonical):
     # Avoid overwriting existing files with the canonical name
     flags = os.O_RDWR | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW
-    with os.fdopen(os.open(canonical, flags)):
+    mode = 0o666
+    with os.fdopen(os.open(canonical, flags, mode), 'r'):
         # If we created it successfully, we own it now. Rename the original over it.
         try:
             os.rename(original, canonical)

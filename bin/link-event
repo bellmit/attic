@@ -53,7 +53,8 @@ def make_event(document, collection, normal_timestamp, suffix):
 
     metadata_file = path.join(collection, '{base}.yaml'.format(base=event_base))
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW
-    with os.fdopen(os.open(metadata_file, flags), 'w') as meta:
+    mode = 0o666
+    with os.fdopen(os.open(metadata_file, flags, mode), 'w') as meta:
         yaml.dump(event_metadata, meta, explicit_start=True, default_flow_style=False)
 
     document_link = path.join(
