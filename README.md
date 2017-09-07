@@ -7,41 +7,101 @@ methods from a list of known origins, which may include wildcards. The origins
 can be configured either in your application's config file, or in an
 environment variable for platforms such as Heroku.
 
-## Installation
-
-This library is hosted on [JCenter](https://bintray.com/bintray/jcenter). To
-add it to your project, first add the JCenter repository, then add the
-following dependency:
-
-* Maven:
-
-    ```xml
-    <dependency>
-        <groupId>ca.grimoire.dropwizard.cors</groupId>
-        <artifactId>dropwizard-simple-cors</artifactId>
-        <version>VERSION</version>
-    </dependency>
-    ```
-
-* Gradle:
-
-    ```groovy
-    dependencies {
-        # ...
-        compile 'ca.grimoire.dropwizard.cors:dropwizard-simple-cors:*'
-    }
-    ```
-
 ## Usage
 
 1. Add this module as a dependency for your application.
 
+    This library is hosted on [JCenter](https://bintray.com/bintray/jcenter). To
+    add it to your project, first add the JCenter repository:
+
+    * Maven:
+
+        ```xml
+        <repositories>
+            <repository>
+                <id>jcenter</id>
+                <url>https://jcenter.bintray.com/</url>
+            </repository>
+        </repositories>
+        ```
+
+    * Gradle:
+
+        ```groovy
+        repositories {
+            jcenter()
+        }
+        ```
+    Then add the following dependency:
+
+    * Maven:
+
+        ```xml
+        <dependency>
+            <groupId>ca.grimoire.dropwizard.cors</groupId>
+            <artifactId>dropwizard-simple-cors</artifactId>
+            <version>VERSION</version>
+        </dependency>
+        ```
+
+    * Gradle:
+
+        ```groovy
+        dependencies {
+            # ...
+            compile group: 'ca.grimoire.dropwizard.cors', name: 'dropwizard-simple-cors', version: 'VERSION'
+        }
+        ```
+    Replacing `VERSION` with the version you wish to use.
+
 2. Implement `CrossOriginFilterFactoryHolder` on your configuration class.
+
+    ```Java
+    import io.dropwizard.Configuration;
+    import ca.grimoire.dropwizard.cors.config.CrossOriginFilterFactory;
+    import ca.grimoire.dropwizard.cors.config.CrossOriginFilterFactoryHolder;
+
+    public class MyConfiguration extends Configuration implements CrossOriginFilterFactoryHolder {
+        private CrossOriginFilterFactory cors = new CrossOriginFilterFactory();
+
+        public void setCors(CrossOriginFilterFactory cors) {
+            this.cors = cors;
+        }
+
+        @Override
+        public CrossOriginFilterFactory getCors() {
+            return cors;
+        }
+    }
+    ```
 
 3. Register `CorsBundle` in your application class.
 
+    ```Java
+    import ca.grimoire.dropwizard.cors.CorsBundle;
+
+    import io.dropwizard.Application;
+    import io.dropwizard.setup.Bootstrap;
+
+    public class MyApplication extends Application<MyConfiguration> {
+
+        @Override
+        public void initialize(Bootstrap<MyConfiguration> bootstrap) {
+            bootstrap.addBundle(new CorsBundle<MyConfiguration>());
+        }
+
+    }
+    ```
+
 4. Configure the list of origins you wish to authorize, either in your
     configuration file or through the `CORS_ORIGINS` environment variable.
+
+    ```yaml
+    cors:
+      origins: "*"
+    ```
+
+    I make no statements about the advisability of configuring CORS that way. Your needs may differ.
 
 Your application will respond both to simple CORS requests and to CORS
 preflight (`OPTIONS`) requests, and authorize them if they originate from one
