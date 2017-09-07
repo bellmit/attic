@@ -19,14 +19,11 @@ environment variable for platforms such as Heroku.
         ```xml
         <repositories>
             <repository>
-                <snapshots>
-                    <enabled>false</enabled>
-                </snapshots>
-                <id>bintray-ojacobson-releases</id>
-                <name>bintray</name>
-                <url>http://dl.bintray.com/ojacobson/releases</url>
+                <id>jcenter</id>
+                <url>https://jcenter.bintray.com/</url>
             </repository>
         </repositories>
+        ```
 
     * Gradle:
 
