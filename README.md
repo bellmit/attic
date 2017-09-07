@@ -13,9 +13,9 @@ environment variable for platforms such as Heroku.
 
     This library is hosted on [JCenter](https://bintray.com/bintray/jcenter). To
     add it to your project, first add the JCenter repository:
-    
+
     * Maven:
-    
+
         ```xml
         <repositories>
             <repository>
@@ -27,18 +27,18 @@ environment variable for platforms such as Heroku.
                 <url>http://dl.bintray.com/ojacobson/releases</url>
             </repository>
         </repositories>
-    
+
     * Gradle:
-    
+
         ```groovy
         repositories {
             jcenter()
         }
         ```
     Then add the following dependency:
-    
+
     * Maven:
-    
+
         ```xml
         <dependency>
             <groupId>ca.grimoire.dropwizard.cors</groupId>
@@ -46,9 +46,9 @@ environment variable for platforms such as Heroku.
             <version>VERSION</version>
         </dependency>
         ```
-    
+
     * Gradle:
-    
+
         ```groovy
         dependencies {
             # ...
@@ -63,14 +63,14 @@ environment variable for platforms such as Heroku.
     import io.dropwizard.Configuration;
     import ca.grimoire.dropwizard.cors.config.CrossOriginFilterFactory;
     import ca.grimoire.dropwizard.cors.config.CrossOriginFilterFactoryHolder;
-     
+
     public class MyConfiguration extends Configuration implements CrossOriginFilterFactoryHolder {
         private CrossOriginFilterFactory cors = new CrossOriginFilterFactory();
-        
+
         public void setCors(CrossOriginFilterFactory cors) {
             this.cors = cors;
         }
-        
+
         @Override
         public CrossOriginFilterFactory getCors() {
             return cors;
@@ -82,17 +82,17 @@ environment variable for platforms such as Heroku.
 
     ```Java
     import ca.grimoire.dropwizard.cors.CorsBundle;
-     
+
     import io.dropwizard.Application;
     import io.dropwizard.setup.Bootstrap;
-     
+
     public class MyApplication extends Application<MyConfiguration> {
-        
+
         @Override
         public void initialize(Bootstrap<MyConfiguration> bootstrap) {
             bootstrap.addBundle(new CorsBundle<MyConfiguration>());
         }
-        
+
     }
     ```
 
@@ -103,7 +103,7 @@ environment variable for platforms such as Heroku.
     cors:
       origins: "*"
     ```
-    
+
     I make no statements about the advisability of configuring CORS that way. Your needs may differ.
 
 Your application will respond both to simple CORS requests and to CORS
