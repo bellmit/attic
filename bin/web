@@ -3,6 +3,14 @@
 # See "Running in Production" in the API Star documentation at
 # <https://github.com/encode/apistar#running-in-production>
 
+# In development, gunicorn can automatically reload code as you edit it. To
+# enable this feature, export `GUNICORN_CMD_ARGS='--reload'` before running
+# this script.
+#
+# See:
+# * <http://docs.gunicorn.org/en/stable/settings.html>
+# * <http://docs.gunicorn.org/en/stable/settings.html#reload>
+
 # If the `PORT` environment variable is set, we're probably running on a
 # platform like Heroku that expects the application to bind to it. Otherwise,
 # default to port 5000. gunicorn will print the value on startup either way,

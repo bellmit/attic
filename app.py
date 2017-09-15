@@ -28,6 +28,9 @@
 # source tree. It can also be run with gunicorn directly: see that script for
 # recommended options.
 #
+# See the documentation in the `bin/web` script for some useful pointers on
+# running this service locally.
+#
 # ## STRUCTURE
 #
 # This service is built on top of the API Star
