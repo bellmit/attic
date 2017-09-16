@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+# Every time the registry service is deployed, this script ensures its database
+# schemata are up to date. This is largely driven by the Alembic database
+# migration tool.
+#
+# Database migrations are maintained in the `database` directory in this source
+# tree, and tracked automatically within the managed database. This script
+# assumes that the target database will be passed as a `postgresql://` URL in
+# the `DATABASE_URL` environment variable, and will default to the
+# `cadastre-devel` database on localhost if this environment variable is not
+# set.
+#
+# See:
+# * <http://alembic.zzzcomputing.com/en/latest/>
+# * The `cadastre.config` Python module
+
+exec alembic upgrade head

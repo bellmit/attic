@@ -37,45 +37,49 @@
 # <https://github.com/encode/apistar> framework, and makes extensive use of the
 # services provided by that framework.
 #
-# The following is broken up into chapters, describing discrete pieces of the
-# service's functionality (and implementing them as we go along).
+# The code is broken up into chapters, describing discrete pieces of the
+# service's functionality (and implementing them as we go along). Each chapter
+# correpsonds to a Python module. The recommended reading order is given by the
+# imports below.
 
-# ## GREETINGS
-#
-# The simplest possible service. This service returns either a JSON document
-# containing a generic greeting (if no `name` parameter is provided) or a JSON
-# document with a personalized greeting (if a `name` parameter is provided).
-# Conventionally, the `name` parameter is a URL path parameter or a query
-# parameter, and this service is exposed as a `GET` interface, but it also
-# supports configuration as a `POST` endpoint accepting either a form parameter
-# named "name" or a single JSON string.
-
-def welcome(name=None):
-    if name is None:
-        return {'message': 'Welcome to API Star!'}
-    return {'message': 'Welcome to API Star, %s!' % name}
+from cadastre import sql
+from cadastre import config
+from cadastre import document
 
 # ## THE WEB APPLICATION
 
 # The preceding services must be bound together into a URL hierarchy. We assign
-# a URL to each service, as well as to API Star's generated documentation for
-# our service (useful for developers writing clients). The generated
-# documentation relies on static files for style sheets, so we assign a URL for
-# that, as well.
+# a URL namespace to each group of services from each chapter, as well as a pair
+# of URLs to API Star's generated documentation for our service (useful for
+# developers writing clients). The generated documentation relies on static
+# files for style sheets, so we assign a URL for that, as well.
 
 from apistar import Include, Route
 from apistar.handlers import docs_urls, static_urls
+from cadastre import document
 
 routes = [
-    Route('/', 'GET', welcome),
+    Include('/document', document.routes),
     Include('/docs', docs_urls),
     Include('/static', static_urls),
 ]
 
-# Finally, expose all of the endpoints registered above as an API Star
-# application. This can be bound to a WSGI framework and executed as a web
-# application - as gunicorn does.
+# The preceeding services also export components used to manipulate HTTP
+# requests and responses.
+
+from cadastre import sql
+
+components = sql.components + document.components
+
+# Finally, expose all of the endpoints, as well as supporting components, as an
+# API Star application. This can be bound to a WSGI framework and executed as a
+# web application - as gunicorn does.
 
 from apistar.frameworks.wsgi import WSGIApp as App
+from cadastre import config
 
-app = App(routes=routes)
+app = App(
+    routes=routes,
+    components=components,
+    settings=config.settings,
+)
