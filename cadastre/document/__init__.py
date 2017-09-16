@@ -40,17 +40,36 @@ class NullRenderer(Renderer):
 # meaningful and parseable values in the MIME message. A message whose ID or
 # publication date cannot be determined will be rejected with a 400 error.
 
-from apistar import http
+from apistar import http, typesystem, Response
+from apistar.interfaces import Router
+from http import HTTPStatus
 from . import metadata as meta
 from . import repository as repo
+
+class Submission(typesystem.Object):
+    properties = {
+        'download_url': typesystem.string(format='URL'),
+    }
 
 def submit_original(
     original: http.Body,
     content_type: http.Header,
     metadata: meta.MergedMetadata,
     repository: repo.Repository,
-):
-    repository.submit(original, content_type, metadata.message_id, metadata.date)
+    router: Router,
+) -> Submission:
+    revision = repository.submit(original, content_type, metadata.message_id, metadata.date)
+    download_url = router.reverse_url('retrieve_revision', {
+        'message_id': revision.message_id,
+        'revision': revision.revision,
+    })
+    return Response(
+        Submission(download_url=download_url),
+        status=HTTPStatus.SEE_OTHER,
+        headers={
+            'Location': download_url,
+        },
+    )
 
 # This service retrieves stored revisions, verbatim, and returns them with the
 # same content type used to submit them. It accepts two parameters

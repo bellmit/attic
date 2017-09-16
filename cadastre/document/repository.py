@@ -20,7 +20,7 @@ class Repository(object):
     # * Otherwise, if the ID has been submitted before, add the document as a
     #   new revision if any property of the revision would differ.
     #
-    # In either case, the document model object used to store the original will
+    # In either case, the revision model object used to store the original will
     # be returned.
     def submit(self, original, content_type, message_id, date):
         # This implementation contains an inherent data race. It determines
@@ -35,8 +35,8 @@ class Repository(object):
         # violating a constraint. However, it's not terribly user-friendly when
         # this happens.
         document = self.ensure_document_by_id(message_id)
-        document.add_revision(original, content_type, date)
-        return document
+        revision = document.add_revision(original, content_type, date)
+        return revision
 
     # In order to manipulate a document, first we have to ensure it exists. The
     # following logic implements a slightly race-prone way of determining this:
@@ -118,13 +118,14 @@ class Document(sql.Base):
     # revision distinct from the most recent revision.
     def add_revision(self, body, content_type, date):
         if not self.currently_like(body, content_type, date):
-            self.current = revision = Revision(
+            self.current = Revision(
                 message_id   = self.message_id,
                 revision     = self.next_revision,
                 date         = date,
                 body         = body,
                 content_type = content_type,
             )
+        return self.current
 
     # A document is "currently like" a body, content type, message_id, and date
     # if it has a current revision, and the current revision's properties are
