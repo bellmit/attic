@@ -76,7 +76,7 @@ class Revision(sql.Base):
         ForeignKey('document.message_id', deferrable = True, initially = 'DEFERRED'),
         primary_key = True)
     revision     = Column(Integer, primary_key = True)
-    date         = Column(DateTime, nullable = False)
+    date         = Column(DateTime(timezone = True), nullable = False)
     body         = Column(LargeBinary, nullable = False)
     content_type = Column(String, nullable = False)
 

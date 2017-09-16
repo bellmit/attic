@@ -21,7 +21,7 @@ def upgrade():
         'revision',
         sa.Column('message_id', sa.String, primary_key = True),
         sa.Column('revision', sa.Integer, primary_key = True),
-        sa.Column('date', sa.DateTime, nullable = False),
+        sa.Column('date', sa.DateTime(timezone = True), nullable = False),
         sa.Column('body', sa.LargeBinary, nullable = False),
         sa.Column('content_type', sa.String, nullable = False),
     )

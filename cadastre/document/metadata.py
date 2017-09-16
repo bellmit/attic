@@ -8,12 +8,50 @@
 # unparseable document, or a document with problematic metadata, to an extractor
 # returns an empty `Metadata` result.
 #
-# The interesting metadata fields are `message_id`, which uniquely identifies
-# the original, and `date`, which dates its publication.
+# The interesting metadata fields are `message_id` (a freeform string), which
+# uniquely identifies the original, and `date` (a UTC-ified DateTime object),
+# which dates its publication.
 
 import collections as c
+import datetime as dt
+import email
+
+# Take an arbitrary datetime and ensure that it's in UTC. We do this instead of
+# relying on the server timestamp for simple predictability.
+def utc_normalize(datetime):
+    return datetime.astimezone(dt.timezone.utc)
+
+# Convert non-None values using a simple function, while leaving None unchanged.
+def convert_nonnull(value, converter):
+    if value is None:
+        return value
+    return converter(value)
+
+# Remove leading and trailing angle brackets from message IDs, if present.
+#
+# For reasons known only to the authors of RFC 822, the Message-ID header
+# generally has `<this sort of@format>`, where the actual message identifier is
+# taken to be the part without the angle brackets. This function checks whether
+# those characters are present and balanced, and if so, removes them.
+def bare_message_id(message_id):
+    if message_id.startswith('<') and message_id.endswith('>'):
+        return message_id[1:-1]
+    return message_id
 
 class Metadata(c.namedtuple('Metadata', ['message_id', 'date'])):
+    # Automatically do some widespread varieties of cleanup. The message ID is
+    # stripped of angle brackets, and the incoming datetime in `date` to UTC.
+    # Doing it here means we only have to write the code once.
+    #
+    # The ugly `__new__` dance is a consequence of the choice to subclass a
+    # namedtuple type.
+    def __new__(cls, message_id, date):
+        return super().__new__(
+            cls,
+            message_id = convert_nonnull(message_id, bare_message_id),
+            date = convert_nonnull(date, utc_normalize),
+        )
+
     # Metadata objects can be merged. Merging a Metadata object creates a new
     # Metadata object whose fields are the value of the corresponding field in
     # self, if set, or the value of the corresponding field in the merged
@@ -43,7 +81,7 @@ def extract_rfc822_metadata(original):
     message = email.message_from_bytes(original)
     return Metadata(
         message_id=message['Message-ID'],
-        date=message['Date'],
+        date=convert_nonnull(message['Date'], email.utils.parsedate_to_datetime),
     )
 
 # This extractor always finds nothing. It's used as a fallback extractor when no
@@ -76,6 +114,7 @@ def extractor_for_mime_type(mime_type):
 # A request can provide metadata drawn from request headers.
 
 from apistar import http
+import email
 
 class HeaderMetadata(Metadata):
     pass
@@ -83,7 +122,7 @@ class HeaderMetadata(Metadata):
 def header_metadata(message_id: http.Header = None, date: http.Header = None):
     return Metadata(
         message_id=message_id,
-        date=date,
+        date=convert_nonnull(date, email.utils.parsedate_to_datetime)
     )
 
 # A request can provide metadata detected from the request body.
