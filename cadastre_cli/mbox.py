@@ -20,6 +20,14 @@
 # This parser makes no effort to understand the structure of individual
 # messages. That step can be handled using the `email.parser` module, or using
 # any other RFC-2822-parsing code.
+#
+# This parser does not give a fuck about your Content-Length headers, for
+# reasons laid out here: <https://www.jwz.org/doc/content-length.html>. If they
+# are present, this code will preserve them verbatim, just like every other byte
+# of message content, but this parser makes no effort to understand or reconcile
+# any message header, including Content-Length. If that header is present, and
+# if it disagrees with the location of the `From ` lines, the `From ` lines will
+# be taken as authoritative and the header preserved but disregarded.
 
 def messages(stream):
     # A tiny state machine, driven by lines. Initially, it expects a `From `
@@ -74,6 +82,9 @@ class Message(object):
 # If parsing fails, a number of error states are reachable. The following
 # exceptions capture them.
 
-# Raised if the parser is unable to reconcile input with the mbox format.
+# Raised if the parser is unable to reconcile input with the mbox format. This
+# is effectively only possible if the first line of input does not begin with
+# `From ` - the mbox format is otherwise so flexible that nearly anything is
+# valid.
 class InvalidMbox(Exception):
     pass
