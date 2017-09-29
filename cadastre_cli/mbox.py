@@ -32,7 +32,7 @@
 def messages(stream):
     # A tiny state machine, driven by lines. Initially, it expects a `From `
     # line, and will reject any other inputs.
-    state = ExpectFrom()
+    state = ExpectPostmark()
     for line in stream:
         state, message = state.on_line(line)
         if message is not None:
@@ -43,15 +43,14 @@ def messages(stream):
 
 # The states.
 
-#
-class ExpectFrom(object):
+class ExpectPostmark(object):
     def on_eof(self):
         # Empty mbox stream, return nothing as there is no message.
         return None
 
     def on_line(self, line):
         if line.startswith(b'From '):
-            return Message([]), None
+            return Message.new_message(), None
         raise InvalidMbox()
 
 class Message(object):
@@ -64,18 +63,61 @@ class Message(object):
     def message(self):
         return b''.join(self.lines)
 
+    @classmethod
+    def make(cls, *args, **kwargs):
+        return cls(*args, **kwargs)
+
+    @classmethod
+    def new_message(cls):
+        return cls.make([])
+
+    def extend_message(self, next_line):
+        return self.make(self.lines + [next_line])
+
     def on_eof(self):
         # End of input. Return the accumulated lines as the body of the final
         # message.
         return self.message
 
     def on_line(self, line):
-        # If the current line is a From line, it marks the end of the current
-        # message and the beginning of the following message.
+        # If the current line is blank, it _may_ be the first line of a
+        # postmark. Suspend parsing, but keep the line handy if it turns out to
+        # be part of the message body.
+        if line == b'\n':
+            return MaybePostmark(self.lines, line), None
+        # Otherwise, accumulate the line into the current message, and keep
+        # parsing.
+        return self.extend_message(line), None
+
+class MaybePostmark(object):
+    def __init__(self, message_lines, next_line):
+        self.message_lines = message_lines
+        # Fun fact: self.next_line is always b'\n'. We pretend otherwise because
+        # the code's clearer if it's treated uniformly.
+        self.next_line = next_line
+
+    @classmethod
+    def make(cls, *args, **kwargs):
+        return cls(*args, **kwargs)
+
+    def on_eof(self):
+        # Wasn't a postmark. EOF means the line was part of the final message.
+        return b''.join(self.message_lines + [self.next_line])
+
+    def on_line(self, line):
+        # If we're in this state and we see a postmark, then the blank line that
+        # got us here was part of that postmark. Throw it out and start
+        # processing the next message.
         if line.startswith(b'From '):
-            return type(self)([]), self.message
-        # Otherwise, accumulate it into the current message, and keep parsing.
-        return type(self)(self.lines + [line]), None
+            return Message.new_message(), b''.join(self.message_lines)
+        # If we're in this state and we see a blank line, the last blank line
+        # that got us here was part of the current message, but the current
+        # blank line could still be part of a postmark.
+        if line == b'\n':
+            return self.make(self.message_lines + [self.next_line], line), None
+        # Otherwise, both the current line and the blank line that got us here
+        # are part of the current message. Go back to parsing message body.
+        return Message(self.message_lines + [self.next_line, line]), None
 
 # ## Errors
 #
