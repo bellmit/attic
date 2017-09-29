@@ -50,7 +50,7 @@ class ExpectPostmark(object):
 
     def on_line(self, line):
         if line.startswith(b'From '):
-            return Message.new_message(), None
+            return Message.new_message(line), None
         raise InvalidMbox()
 
 class Message(object):
@@ -68,8 +68,8 @@ class Message(object):
         return cls(*args, **kwargs)
 
     @classmethod
-    def new_message(cls):
-        return cls.make([])
+    def new_message(cls, line):
+        return cls.make([line])
 
     def extend_message(self, next_line):
         return self.make(self.lines + [next_line])
@@ -109,7 +109,7 @@ class MaybePostmark(object):
         # got us here was part of that postmark. Throw it out and start
         # processing the next message.
         if line.startswith(b'From '):
-            return Message.new_message(), b''.join(self.message_lines)
+            return Message.new_message(line), b''.join(self.message_lines)
         # If we're in this state and we see a blank line, the last blank line
         # that got us here was part of the current message, but the current
         # blank line could still be part of a postmark.
