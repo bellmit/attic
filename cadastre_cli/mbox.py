@@ -29,6 +29,18 @@
 # if it disagrees with the location of the `From ` lines, the `From ` lines will
 # be taken as authoritative and the header preserved but disregarded.
 
+# Each message is rturned as a Message object - a named pair of postmark and
+# body. The postmark is the mailbox message's "From …" line, verbatim, without
+# the leading newline; the body is the entire content of the message, including
+# headers, as a bytes.
+
+import collections
+
+Message = collections.namedtuple('Message', ['postmark', 'body'])
+
+# Parse messages from a stream, yielding one at a time, until the stream is
+# exhausted or an error occurs.
+
 def messages(stream):
     # A tiny state machine, driven by lines. Initially, it expects a `From `
     # line, and will reject any other inputs.
@@ -43,6 +55,9 @@ def messages(stream):
 
 # The states.
 
+# Initially, the only input we expect is a bare postmark, with no leading blank
+# line. The parser will reject any other input, other than end of input (which
+# represents an empty mailbox).
 class ExpectPostmark(object):
     def on_eof(self):
         # Empty mbox stream, return nothing as there is no message.
@@ -50,11 +65,16 @@ class ExpectPostmark(object):
 
     def on_line(self, line):
         if line.startswith(b'From '):
-            return Message.new_message(line), None
+            return ReadMessage.new_message(line), None
         raise InvalidMbox()
 
-class Message(object):
-    def __init__(self, lines):
+# In this state, the parser expects to see a message line. If the line is
+# non-blank, it's added to the message and parsing continues; if it's blank, the
+# line is held (see the MaybePostmark state) until the following line can be
+# inspected to determine if it is a postmark. This state never rejects.
+class ReadMessage(object):
+    def __init__(self, postmark, lines):
+        self.postmark = postmark
         self.lines = lines
 
     # The accumulated message so far. This is the string sum of the lines, since
@@ -68,29 +88,47 @@ class Message(object):
         return cls(*args, **kwargs)
 
     @classmethod
-    def new_message(cls, line):
-        return cls.make([line])
+    def new_message(cls, postmark):
+        return cls.make(postmark, [])
 
     def extend_message(self, next_line):
-        return self.make(self.lines + [next_line])
+        return self.make(self.postmark, self.lines + [next_line])
+
+    def maybe_postmark(self, line):
+        return MaybePostmark(self.postmark, self.lines, line)
 
     def on_eof(self):
         # End of input. Return the accumulated lines as the body of the final
         # message.
-        return self.message
+        return Message(self.postmark, self.message)
 
     def on_line(self, line):
         # If the current line is blank, it _may_ be the first line of a
         # postmark. Suspend parsing, but keep the line handy if it turns out to
         # be part of the message body.
         if line == b'\n':
-            return MaybePostmark(self.lines, line), None
+            return self.maybe_postmark(line), None
         # Otherwise, accumulate the line into the current message, and keep
         # parsing.
         return self.extend_message(line), None
 
+# In this state, the parser has seen a blank line and expects to see one of the
+# following:
+#
+# * another blank line. The previously-seen blank line was part of a message,
+#   but the parser will return to this state in case the new blank line is part
+#   of a postmark.
+#
+# * a line beginning with 'From ': The previously-seen blank line was part of a
+#   postmark. Generate the parsed message up to that point, then start a new
+#   message.
+#
+# * Anything else: the blank line was part of the previous message. Return to
+#   the ReadMessage state and continue.
+
 class MaybePostmark(object):
-    def __init__(self, message_lines, next_line):
+    def __init__(self, postmark, message_lines, next_line):
+        self.postmark = postmark
         self.message_lines = message_lines
         # Fun fact: self.next_line is always b'\n'. We pretend otherwise because
         # the code's clearer if it's treated uniformly.
@@ -100,24 +138,41 @@ class MaybePostmark(object):
     def make(cls, *args, **kwargs):
         return cls(*args, **kwargs)
 
+    @property
+    def message_with_suspended_line(self):
+        return b''.join(self.message_lines + [self.next_line])
+
+    @property
+    def message_dropping_suspended_line(self):
+        return b''.join(self.message_lines)
+
+    def new_message(self, line):
+        return ReadMessage.new_message(line)
+
+    def maybe_postmark_again(self, line):
+        return self.make(self.postmark, self.message_lines + [self.next_line], line)
+
+    def resume_message_with(self, line):
+        return ReadMessage(self.postmark, self.message_lines + [self.next_line, line])
+
     def on_eof(self):
         # Wasn't a postmark. EOF means the line was part of the final message.
-        return b''.join(self.message_lines + [self.next_line])
+        return Message(self.postmark, self.message_with_suspended_line)
 
     def on_line(self, line):
         # If we're in this state and we see a postmark, then the blank line that
         # got us here was part of that postmark. Throw it out and start
         # processing the next message.
         if line.startswith(b'From '):
-            return Message.new_message(line), b''.join(self.message_lines)
+            return self.new_message(line), Message(self.postmark, self.message_dropping_suspended_line)
         # If we're in this state and we see a blank line, the last blank line
         # that got us here was part of the current message, but the current
         # blank line could still be part of a postmark.
         if line == b'\n':
-            return self.make(self.message_lines + [self.next_line], line), None
+            return self.maybe_postmark_again(line), None
         # Otherwise, both the current line and the blank line that got us here
         # are part of the current message. Go back to parsing message body.
-        return Message(self.message_lines + [self.next_line, line]), None
+        return self.resume_message_with(line), None
 
 # ## Errors
 #

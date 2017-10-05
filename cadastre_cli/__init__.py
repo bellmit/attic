@@ -16,7 +16,7 @@ def make_toplevel_parser():
     )
     parser.add_argument(
         '--cadastre-url',
-        nargs=1,
+        nargs='?',
         metavar='URL',
         default=os.environ.get('CADASTRE_URL', 'https://cadastre.herokuapp.com/'),
         help="Cadastre server URL (overrides CADASTRE_URL from environment)",
@@ -31,6 +31,10 @@ def make_toplevel_parser():
 # Each subcommand is exported by a module (or, really, any object) with a
 # three-part API:
 #
+# * The `command` property will be used as the command name. This SHOULD be the
+#   name of the module with underscores replaced with dashes, but CAN be any
+#   appropriate, unique string.
+#
 # * The `parser_options` dict will be used to pass arguments to the Argparse
 #   parser. This can be used to allow the module to provide top-level help and
 #   other metadata.
@@ -43,15 +47,18 @@ def make_toplevel_parser():
 #   truthy or integer-shaped, so that the result can be used as an exit status.
 
 from . import mail
+from . import fix_postmarks
 
 def attach_commands(parser):
     subparsers = parser.add_subparsers(
         title="subcommands",
     )
 
-    mail_parser = subparsers.add_parser('mail', **mail.parser_options)
-    mail_parser.set_defaults(run=mail.run)
-    mail.configure_parser(mail_parser)
+    for module in [mail, fix_postmarks]:
+        mod_parser = subparsers.add_parser(module.command, **module.parser_options)
+        mod_parser.set_defaults(run=module.run)
+        module.configure_parser(mod_parser)
+
 
 # Rig up commands to a unified parser and apply it to the CLI args from
 # `sys.argv`. The returned Namespace is compatible with the `run` function,

@@ -1,3 +1,5 @@
+command = 'mail'
+
 parser_options = dict(
     help='submit mail messages to Cadastre',
     description='Store a mail message in Cadastre'
@@ -13,7 +15,7 @@ def configure_parser(parser):
         nargs='?',
         metavar='FILE',
         help='path to an email message file (defaults to stdin)', # XXX this should say "mbox" and also parse mbox
-        default=sys.stdin,
+        default=sys.stdin.buffer,
         type=argparse.FileType('rb'),
     )
 
@@ -29,7 +31,7 @@ def run(args):
                 headers={
                     'Content-Type': 'message/rfc822',
                 },
-                data=message,
+                data=message.body,
                 allow_redirects=False,
             )
             resp.raise_for_status()
