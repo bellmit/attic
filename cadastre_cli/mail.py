@@ -18,6 +18,11 @@ def configure_parser(parser):
         default=sys.stdin.buffer,
         type=argparse.FileType('rb'),
     )
+    parser.add_argument(
+        '-q', '--quiet',
+        action='store_true',
+        help='do not print message URLs to stdout',
+    )
 
 import requests
 from urllib.parse import urljoin
@@ -35,4 +40,5 @@ def run(args):
                 allow_redirects=False,
             )
             resp.raise_for_status()
-            print(urljoin(args.cadastre_url, resp.json()['download_url']))
+            if not args.quiet:
+                print(urljoin(args.cadastre_url, resp.json()['download_url']))
