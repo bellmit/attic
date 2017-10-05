@@ -81,8 +81,57 @@ def extract_rfc822_metadata(original):
     message = email.message_from_bytes(original)
     return Metadata(
         message_id=message['Message-ID'],
-        date=convert_nonnull(message['Date'], email.utils.parsedate_to_datetime),
+        date=extract_message_date(message)
     )
+
+# Parses a string to a datetime object, following the interface of
+# email.utils.parsedate_to_datetime. However, if the input contains no date,
+# this returns None rather than vomiting up a type error.
+
+import email
+
+def parsedate_to_datetime(str):
+    try:
+        return email.utils.parsedate_to_datetime(str)
+    except TypeError:
+        return None
+
+# Given a single Received: header value, attempt to extract the date part. The
+# RFC grammar for this header is
+#
+# received        =       "Received:" name-val-list ";" date-time CRLF
+#
+# However, this parser permits whitespace after the final semicolon, for
+# compatibility with the huge range of mail systems that generate such headers.
+
+import re
+
+def extract_received_date(header):
+    parts = re.split(';\s+', header)
+    candidate_date = parts[-1]
+    return parsedate_to_datetime(candidate_date)
+
+# Try to infer the date of an email message. For messages with a valid RFC2822
+# Date: header, this is easy, use that header. Otherwise, run down the Received:
+# headers and pick the one with the most recent date. Failing that, give up and
+# return None.
+#
+# This algorithm exists to cope with garbage Date headers, messages without a
+# Date, and other anomalies that definitely exist in the wild. Using the
+# received headers is a hack, but a reasonable one.
+
+def extract_message_date(message):
+    if message['Date']:
+        rfc_date = parsedate_to_datetime(message['Date'])
+        if rfc_date is not None:
+            return rfc_date
+
+    received = message.get_all('Received')
+    if received is not None:
+        received.sort(key=extract_received_date)
+        return extract_received_date(received[-1])
+
+    return None
 
 # This extractor always finds nothing. It's used as a fallback extractor when no
 # extractor is appropriate for a given message based on other information known
