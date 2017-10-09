@@ -28,11 +28,10 @@ import requests
 from urllib.parse import urljoin
 
 def run(args):
-    document_url = urljoin(args.cadastre_url, 'document/')
     with args.file as file:
         for message in mbox.messages(file):
             resp = requests.post(
-                url=document_url,
+                url=args.urls.documents,
                 headers={
                     'Content-Type': 'message/rfc822',
                 },
@@ -41,4 +40,4 @@ def run(args):
             )
             resp.raise_for_status()
             if not args.quiet:
-                print(urljoin(args.cadastre_url, resp.json()['download_url']))
+                print(args.urls.join(resp.json()['download_url']))

@@ -9,6 +9,7 @@
 
 import argparse
 import os
+from . import urls
 
 def make_toplevel_parser():
     parser = argparse.ArgumentParser(
@@ -18,8 +19,10 @@ def make_toplevel_parser():
         '--cadastre-url',
         nargs='?',
         metavar='URL',
+        dest='urls',
         default=os.environ.get('CADASTRE_URL', 'https://cadastre.herokuapp.com/'),
         help="Cadastre server URL (overrides CADASTRE_URL from environment)",
+        type=urls.Urls,
     )
     return parser
 
@@ -46,6 +49,11 @@ def make_toplevel_parser():
 #   parsed argparse Namespace as an argument. This should return something
 #   truthy or integer-shaped, so that the result can be used as an exit status.
 
+from . import register
+from . import login
+from . import whoami
+from . import tokens
+from . import revoke_token
 from . import mail
 from . import fix_postmarks
 
@@ -54,7 +62,7 @@ def attach_commands(parser):
         title="subcommands",
     )
 
-    for module in [mail, fix_postmarks]:
+    for module in [register, login, whoami, tokens, revoke_token, mail, fix_postmarks]:
         mod_parser = subparsers.add_parser(module.command, **module.parser_options)
         mod_parser.set_defaults(run=module.run)
         module.configure_parser(mod_parser)
