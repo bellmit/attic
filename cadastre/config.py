@@ -32,10 +32,12 @@ class Env(environment.Environment):
 # migrations, run the `bin/release` script.
 
 from . import sql
+from . import authn
 
 env = Env()
 
 settings = {
+    'AUTHENTICATION': authn.authentication,
     'DATABASE': {
         'URL': env['DATABASE_URL'],
         'METADATA': sql.Base.metadata,

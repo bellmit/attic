@@ -40,32 +40,37 @@ class NullRenderer(Renderer):
 # meaningful and parseable values in the MIME message. A message whose ID or
 # publication date cannot be determined will be rejected with a 400 error.
 
-from apistar import http, typesystem, Response
-from apistar.interfaces import Router
+from apistar import http, typesystem, Response, reverse_url
+from apistar.interfaces import Auth, Router
 from http import HTTPStatus
 from . import metadata as meta
 from . import repository as repo
+from cadastre.authn import policy
 
 class Submission(typesystem.Object):
     properties = {
         'download_url': typesystem.string(format='URL'),
     }
 
+@policy.authenticated
 def submit_original(
     original: http.Body,
     content_type: http.Header,
     metadata: meta.MergedMetadata,
     repository: repo.Repository,
-    router: Router,
+    auth: Auth,
 ) -> Submission:
-    revision = repository.submit(original, content_type, metadata.message_id, metadata.date)
-    download_url = router.reverse_url('retrieve_revision', {
-        'message_id': revision.message_id,
-        'revision': revision.revision,
-    })
+    revision = repository.submit(original, content_type, metadata.message_id, metadata.date, auth.get_user_id())
+    download_url = reverse_url(
+        'retrieve_revision',
+        message_id=revision.message_id,
+        revision=revision.revision,
+    )
     return Response(
         Submission(download_url=download_url),
-        status=HTTPStatus.SEE_OTHER,
+        # This should be SEE_OTHER, but apistar misrenders the response. See
+        # <https://github.com/encode/apistar/issues/317>.
+        status=HTTPStatus.OK,
         headers={
             'Location': download_url,
         },

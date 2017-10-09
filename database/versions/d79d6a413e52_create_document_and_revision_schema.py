@@ -47,8 +47,3 @@ def upgrade():
         deferrable = True,
         initially = 'DEFERRED',
     )
-
-
-def downgrade():
-    op.drop_table('document')
-    op.drop_table('revision')

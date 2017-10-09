@@ -22,7 +22,7 @@ class Repository(object):
     #
     # In either case, the revision model object used to store the original will
     # be returned.
-    def submit(self, original, content_type, message_id, date):
+    def submit(self, original, content_type, message_id, date, submitter):
         # This implementation contains an inherent data race. It determines
         # whether the document already exists by querying, then decides whether
         # to create or whether to append a revision based on what it finds
@@ -35,7 +35,7 @@ class Repository(object):
         # violating a constraint. However, it's not terribly user-friendly when
         # this happens.
         document = self.ensure_document_by_id(message_id)
-        revision = document.add_revision(original, content_type, date)
+        revision = document.add_revision(original, content_type, date, submitter)
         return revision
 
     # In order to manipulate a document, first we have to ensure it exists. The
@@ -79,6 +79,9 @@ class Revision(sql.Base):
     date         = Column(DateTime(timezone = True), nullable = False)
     body         = Column(LargeBinary, nullable = False)
     content_type = Column(String, nullable = False)
+    submitter    = Column(String,
+        ForeignKey('user.email'),
+    )
 
 # A Document groups revisions and identifies the current revision.
 
@@ -116,7 +119,7 @@ class Document(sql.Base):
 
     # Add a revision to this document, if the arguments would generate a
     # revision distinct from the most recent revision.
-    def add_revision(self, body, content_type, date):
+    def add_revision(self, body, content_type, date, submitter):
         if not self.currently_like(body, content_type, date):
             self.current = Revision(
                 message_id   = self.message_id,
@@ -124,6 +127,7 @@ class Document(sql.Base):
                 date         = date,
                 body         = body,
                 content_type = content_type,
+                submitter    = submitter,
             )
         return self.current
 
