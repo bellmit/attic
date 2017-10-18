@@ -36,7 +36,6 @@ import apistar.exceptions
 import bcrypt
 import sqlalchemy.exc
 
-# For development convenience, this directly converts to an HTTP response.
 class UserExistsError(apistar.exceptions.ValidationError):
     pass
 
@@ -49,7 +48,8 @@ class Repository(object):
     # In either case, the user model object used to represent the user will be
     # returned.
     #
-    # If the user already exists, this method raises a UserExistsError.
+    # If the user already exists, this method raises a UserExistsError. This
+    # error can be directly used as an HTTP response.
     def create_user(self, email, password):
         password_digest = digest_password(password)
         user = User(

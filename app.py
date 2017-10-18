@@ -46,6 +46,7 @@ from cadastre import sql
 from cadastre import config
 from cadastre import authn
 from cadastre import document
+from cadastre import state
 
 # ## THE WEB APPLICATION
 
@@ -59,10 +60,12 @@ from apistar import Include, Route
 from apistar.handlers import docs_urls, static_urls
 from cadastre import authn
 from cadastre import document
+from cadastre import state
 
 routes = [
-    Include('/document', document.routes),
     Include('/user', authn.routes),
+    Include('/document', document.routes),
+    Include('/state', state.routes),
     Include('/docs', docs_urls),
     Include('/static', static_urls),
 ]
@@ -74,7 +77,11 @@ from cadastre import authn
 from cadastre import document
 from cadastre import sql
 
-components = sql.components + authn.components + document.components
+components = [
+    *sql.components,
+    *authn.components,
+    *document.components,
+]
 
 # Finally, expose all of the endpoints, as well as supporting components, as an
 # API Star application. This can be bound to a WSGI framework and executed as a
