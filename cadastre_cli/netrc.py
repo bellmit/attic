@@ -9,7 +9,7 @@ def update_netrc(host, username, password):
         table = netrc.netrc(path)
     except FileNotFoundError:
         # Create the file, with sane permissions
-        os.close(os.open(path, os.RDWR | os.CREAT, 0o700))
+        os.close(os.open(path, os.O_RDWR | os.O_CREAT, 0o700))
         table = netrc.netrc(path)
 
     table.hosts[host] = (username, None, password)
