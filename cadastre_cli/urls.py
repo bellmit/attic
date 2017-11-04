@@ -15,7 +15,7 @@ class Urls(object):
 
     @property
     def documents(self):
-        return urljoin(self.base_url, 'document/')
+        return urljoin(self.base_url, 'document')
 
     @property
     def user(self):
