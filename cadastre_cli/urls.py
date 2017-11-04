@@ -1,5 +1,11 @@
 from urllib.parse import urljoin, urlparse, urlsplit, urlunsplit, urlencode, parse_qsl, quote
 
+def add_params(url, additional_params):
+    parts = urlsplit(url)
+    params =parse_qsl(parts.query) + list(additional_params)
+    query = urlencode(params, quote_via=quote)
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, query, parts.fragment))
+
 class Urls(object):
     def __init__(self, base_url):
         self.base_url = base_url
@@ -25,11 +31,7 @@ class Urls(object):
                 else:
                     yield ('annotated', '')
 
-        base = urljoin(self.base_url, 'document')
-        parts = urlsplit(base)
-        params = parse_qsl(parts.query) + list(annotated_params())
-        query = urlencode(params, quote_via=quote)
-        return urlunsplit((parts.scheme, parts.netloc, parts.path, query, parts.fragment))
+        return add_params(self.documents, annotated_params())
 
     @property
     def user(self):
