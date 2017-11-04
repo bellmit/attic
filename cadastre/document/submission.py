@@ -88,10 +88,18 @@ class Document(typesystem.Object):
         'annotation_url': typesystem.string(format='URL'),
     }
 
+# Filter generator that implements the `annotated` criterion: if `annotated` is
+# set, return the appropriate filter list; otherwise, return an empty list.
+def annotation_filters(annotated):
+    if annotated is not None:
+        if annotated:
+            yield repo.is_annotated
+        else:
+            yield repo.not_annotated
+
 def list_documents(repository: repo.Repository, annotated: bool = None):
-    documents = repository.get_documents(
-        annotated=annotated,
-    )
+    document_filters = annotation_filters(annotated)
+    documents = repository.get_documents(document_filters)
 
     def model_to_response(model):
         return Document(

@@ -4,6 +4,7 @@
 
 import apistar.exceptions
 from decorator import decorator
+from functools import reduce
 from sqlalchemy.orm.exc import NoResultFound
 
 class RevisionNotFound(apistar.exceptions.NotFound):
@@ -23,6 +24,25 @@ def sql_not_found_as(exc_type):
         except NoResultFound as e:
             raise exc_type() from e
     return interceptor
+
+# ### Predicates
+#
+# The `get_documents` repository method, defined below, accepts "filters" to
+# control which documents are included in the resulting list. These filters are
+# functions from an SQLAlchemy query to another SQLAlchemy query. The following
+# helpers define filters for common cases.
+
+# Match only documents which are currently annotated. This checks the foreign
+# key, rather than adding a join, and thus relies on referential integrity for
+# correctness. This is faster, but less flexible: we must accept that empty
+# annotations are still considered annotations.
+def is_annotated(query):
+    return query.filter(Document.current_annotation != None)
+
+# Match only documents which are not currently annotated. This is the exact
+# negative of the `is_annotated` filter.
+def not_annotated(query):
+    return query.filter(Document.current_annotation == None)
 
 class Repository(object):
     def __init__(self, session):
@@ -60,22 +80,19 @@ class Repository(object):
 
     # Retrieves all documents, in chronological order.
     #
-    # If `annotated` is set to True, the returned document list will be
-    # restricted to only annotated documents. If `annotated` is set to False,
-    # the returned document list will be restricted to only non-annotated
-    # documents. If `annotated` is not set, both classes of documents will be
-    # included. Note that a document with an empty annotation is considered
-    # annotated.
-    def get_documents(self, annotated=None):
+    # The passed filters will be applied to the generated SQLAlchemy query in
+    # order, and may manipulate the query to control the returned list. This is
+    # a very general mechanism, sufficient to support nearly any SQL-based
+    # variation on listing documents.
+    def get_documents(self, filters):
         query = self.session.query(Document)\
             .join(Document.revision)\
             .order_by(Revision.date.asc())
 
-        if annotated is not None:
-            if annotated:
-                query = query.filter(Document.current_annotation != None)
-            else:
-                query = query.filter(Document.current_annotation == None)
+        def apply_filter(query, filter):
+            return filter(query)
+
+        query = reduce(apply_filter, filters, query)
 
         return query.all()
 
