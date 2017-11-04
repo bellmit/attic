@@ -58,6 +58,27 @@ class Repository(object):
             .filter_by(message_id = message_id)\
             .one()
 
+    # Retrieves all documents, in chronological order.
+    #
+    # If `annotated` is set to True, the returned document list will be
+    # restricted to only annotated documents. If `annotated` is set to False,
+    # the returned document list will be restricted to only non-annotated
+    # documents. If `annotated` is not set, both classes of documents will be
+    # included. Note that a document with an empty annotation is considered
+    # annotated.
+    def get_documents(self, annotated=None):
+        query = self.session.query(Document)\
+            .join(Document.revision)\
+            .order_by(Revision.date.asc())
+
+        if annotated is not None:
+            if annotated:
+                query = query.filter(Document.current_annotation != None)
+            else:
+                query = query.filter(Document.current_annotation == None)
+
+        return query.all()
+
     # Returns a list of annotations stored in the repository, in order of the
     # dates of the associated messages. If `before` is set, only annotations
     # attached to documents whose dates are strictly before that date are

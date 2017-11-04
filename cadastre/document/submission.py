@@ -66,6 +66,49 @@ def retrieve_revision(message_id, revision, repository: repo.Repository):
     revision = repository.retrieve_revision(message_id, revision)
     return Response(revision.body, content_type = revision.content_type)
 
+# This service enumerates stored documents matching specific criteria. By
+# default, it returns a list of all known documents.
+#
+# Supported criteria:
+#
+# * `annotated`: if not set, include all documents. If set to `true`, include
+#   only documents with annotations. If set to an empty string, include only
+#   documents without annotations. A future version will likely use `false` in
+#   place of the empty string, pending the resolution of
+#   <https://github.com/encode/apistar/issues/354>. A message with an empty
+#   annotation is, for the purposes of this criterion, annotated.
+
+from apistar import typesystem, reverse_url
+from . import repository as repo
+
+class Document(typesystem.Object):
+    properties = {
+        'message_id': typesystem.string(),
+        'download_url': typesystem.string(format='URL'),
+        'annotation_url': typesystem.string(format='URL'),
+    }
+
+def list_documents(repository: repo.Repository, annotated: bool = None):
+    documents = repository.get_documents(
+        annotated=annotated,
+    )
+
+    def model_to_response(model):
+        return Document(
+            message_id=model.message_id,
+            download_url=reverse_url(
+                'retrieve_revision',
+                message_id=model.message_id,
+                revision=model.revision.revision,
+            ),
+            annotation_url=reverse_url(
+                'submit_annotation',
+                message_id=model.message_id,
+            ),
+        )
+
+    return [model_to_response(m) for m in documents]
+
 # ## WEB APPLICATION CONFIGURATION
 
 # Documents have a set of related API routes, which will all be mounted
@@ -75,6 +118,8 @@ def retrieve_revision(message_id, revision, repository: repo.Repository):
 from apistar import Route
 
 routes = [
-    Route('/', 'POST', submit_original),
+    Route('', 'POST', submit_original),
+    Route('', 'GET', list_documents),
+    Route('/', 'POST', submit_original, name='submit_original_legacy'),
     Route('/{message_id}/{revision}/original', 'GET', retrieve_revision),
 ]
