@@ -1,4 +1,4 @@
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin, urlparse, urlsplit, urlunsplit, urlencode, parse_qsl, quote
 
 class Urls(object):
     def __init__(self, base_url):
@@ -16,6 +16,20 @@ class Urls(object):
     @property
     def documents(self):
         return urljoin(self.base_url, 'document')
+
+    def get_documents(self, annotated):
+        def annotated_params():
+            if annotated is not None:
+                if annotated:
+                    yield ('annotated', 'true')
+                else:
+                    yield ('annotated', '')
+
+        base = urljoin(self.base_url, 'document')
+        parts = urlsplit(base)
+        params = parse_qsl(parts.query) + list(annotated_params())
+        query = urlencode(params, quote_via=quote)
+        return urlunsplit((parts.scheme, parts.netloc, parts.path, query, parts.fragment))
 
     @property
     def user(self):
