@@ -1,8 +1,8 @@
-command = 'mail'
+command = 'import'
 
 parser_options = dict(
-    help='submit mail messages from an mbox stream or procmail filter to Cadastre',
-    description='Store a mail message in Cadastre from an mbox file or procmail filter',
+    help='submit mail messages from RFC 2822 files to Cadastre',
+    description='Store loose mail messages in Cadastre'
 )
 
 import argparse
@@ -12,9 +12,9 @@ from . import mbox
 def configure_parser(parser):
     parser.add_argument(
         'file',
-        nargs='?',
+        nargs='+',
         metavar='FILE',
-        help='path to an mbox stream (defaults to stdin)',
+        help='path to an email message file (defaults to stdin)',
         default=sys.stdin.buffer,
         type=argparse.FileType('rb'),
     )
@@ -28,14 +28,14 @@ import requests
 from urllib.parse import urljoin
 
 def run(args):
-    with args.file as file:
-        for message in mbox.messages(file):
+    for file in args.file:
+        with file as message:
             resp = requests.post(
                 url=args.urls.documents,
                 headers={
                     'Content-Type': 'message/rfc822',
                 },
-                data=message.body,
+                data=message,
                 allow_redirects=False,
             )
             resp.raise_for_status()

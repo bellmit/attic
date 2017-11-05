@@ -55,6 +55,7 @@ from . import whoami
 from . import tokens
 from . import revoke_token
 from . import mail
+from . import import_
 from . import list_documents
 from . import annotate
 from . import state
@@ -66,8 +67,8 @@ def attach_commands(parser):
     )
 
     for module in [
-        register, login, whoami, tokens, revoke_token, mail, list_documents,
-        annotate, state, fix_postmarks,
+        register, login, whoami, tokens, revoke_token, mail, import_,
+        list_documents, annotate, state, fix_postmarks,
     ]:
         mod_parser = subparsers.add_parser(module.command, **module.parser_options)
         mod_parser.set_defaults(run=module.run)
