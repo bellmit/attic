@@ -197,7 +197,6 @@ from apistar import Route
 routes = [
     Route('', 'POST', submit_original),
     Route('', 'GET', list_documents),
-    Route('/', 'POST', submit_original, name='submit_original_legacy'),
     Route('/{message_id}', 'GET', retrieve_document),
     Route('/{message_id}/{revision}/original', 'GET', retrieve_revision),
 ]
