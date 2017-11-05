@@ -84,6 +84,7 @@ from . import repository as repo
 class Document(typesystem.Object):
     properties = {
         'message_id': typesystem.string(),
+        'url':  typesystem.string(format='URL'),
         'download_url': typesystem.string(format='URL'),
         'annotation_url': typesystem.string(format='URL'),
     }
@@ -104,6 +105,10 @@ def list_documents(repository: repo.Repository, annotated: bool = None):
     def model_to_response(model):
         return Document(
             message_id=model.message_id,
+            url=reverse_url(
+                'retrieve_document',
+                message_id=model.message_id,
+            ),
             download_url=reverse_url(
                 'retrieve_revision',
                 message_id=model.message_id,
@@ -117,6 +122,70 @@ def list_documents(repository: repo.Repository, annotated: bool = None):
 
     return [model_to_response(m) for m in documents]
 
+# Service to retrieve metadata about a single document. This is more complete
+# than the information returned in the document list.
+
+from apistar import typesystem, reverse_url
+from . import repository as repo
+
+class Revision(typesystem.Object):
+    properties = {
+        'revision': typesystem.integer(),
+        'download_url': typesystem.string(format='URL'),
+    }
+
+class Annotation(typesystem.Object):
+    properties = {
+        'revision': typesystem.integer(),
+        'download_url': typesystem.string(format='URL'),
+    }
+
+class Document(typesystem.Object):
+    properties = {
+        'message_id': typesystem.string(),
+        'revisions': typesystem.array(items = Revision),
+        'annotations': typesystem.array(items = Annotation),
+        'current_revision': Revision,
+        'current_annotation': Annotation,
+        'annotate_url': typesystem.string(format='URL'),
+    }
+
+def retrieve_document(message_id, repository: repo.Repository):
+    document = repository.get_document(message_id)
+
+    def revision_model_to_wire(model):
+        return Revision(
+                revision=model.revision,
+                download_url=reverse_url(
+                    'retrieve_revision',
+                    message_id=model.message_id,
+                    revision=model.revision,
+                )
+            )
+
+    def annotation_model_to_wire(model):
+        return Annotation(
+            revision=model.revision,
+            download_url=reverse_url(
+                'retrieve_annotation',
+                message_id=model.message_id,
+                revision=model.revision,
+            )
+        )
+
+    current_annotation = dict()
+    if document.annotation is not None:
+        current_annotation = dict(current_annotation=annotation_model_to_wire(document.annotation))
+
+    return Document(
+        message_id=document.message_id,
+        annotate_url=reverse_url('submit_annotation', message_id=document.message_id),
+        revisions=[revision_model_to_wire(r) for r in document.revisions],
+        annotations=[annotation_model_to_wire(a) for a in document.annotations],
+        current_revision=revision_model_to_wire(document.revision),
+        **current_annotation,
+    )
+
 # ## WEB APPLICATION CONFIGURATION
 
 # Documents have a set of related API routes, which will all be mounted
@@ -129,5 +198,6 @@ routes = [
     Route('', 'POST', submit_original),
     Route('', 'GET', list_documents),
     Route('/', 'POST', submit_original, name='submit_original_legacy'),
+    Route('/{message_id}', 'GET', retrieve_document),
     Route('/{message_id}/{revision}/original', 'GET', retrieve_revision),
 ]

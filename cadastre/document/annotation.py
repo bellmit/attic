@@ -67,40 +67,7 @@ from . import repository as repo
 
 def retrieve_annotation(message_id, revision, repository: repo.Repository) -> Annotation:
     annotation = repository.retrieve_annotation(message_id, revision)
-    return Annotation(changes=annotation.changes)
-
-# List the  annotation revisions for a document.
-from apistar import typesystem, reverse_url, Response
-from http import HTTPStatus
-from . import repository as repo
-
-class Annotation(typesystem.Object):
-    properties = {
-        'revision': typesystem.Integer,
-        'url': typesystem.string(format='URL'),
-    }
-
-class Annotations(typesystem.Object):
-    properties = {
-        'current': typesystem.string(format='URL'),
-        'annotations': typesystem.array(items = Annotation),
-    }
-
-def document_annotations(message_id, repository: repo.Repository) -> Annotations:
-    def annotation_url(annotation):
-        return reverse_url(
-            'retrieve_annotation',
-            message_id=annotation.message_id,
-            revision=annotation.revision,
-        )
-    document = repository.get_document(message_id)
-    annotations = [
-        Annotation(revision=annotation.revision, url=annotation_url(annotation))
-        for annotation in document.annotations
-    ]
-    if document.annotation is None:
-        return Annotations(annotations=annotations)
-    return Annotations(annotations=annotations, current=current_url)
+    return dict(changes=annotation.changes)
 
 # ## WEB APPLICATION CONFIGURATION
 
@@ -112,6 +79,5 @@ from apistar import Route
 
 routes = [
     Route('/{message_id}/annotation', 'POST', submit_annotation),
-    Route('/{message_id}/annotation', 'GET', document_annotations),
     Route('/{message_id}/annotation/{revision}', 'GET', retrieve_annotation),
 ]

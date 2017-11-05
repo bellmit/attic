@@ -175,13 +175,17 @@ class Revision(sql.Base):
     # use in queries are automatically detected. The DB constraint is used for
     # schematic enforcement ("every revision has a document"), but not for app
     # logic.
-    message_id   = Column(String, primary_key = True)
+    message_id   = Column(String, ForeignKey('document.message_id'), primary_key = True)
     revision     = Column(Integer, primary_key = True)
     date         = Column(DateTime(timezone = True), nullable = False)
     body         = Column(LargeBinary, nullable = False)
     content_type = Column(String, nullable = False)
     submitter    = Column(String,
         ForeignKey('user.email'),
+    )
+
+    document = relationship(lambda: Document,
+        foreign_keys=[message_id],
     )
 
 # An annotation holds structured data describing the document's effects on the
@@ -198,7 +202,6 @@ class Annotation(sql.Base):
 
     document = relationship(lambda: Document,
         foreign_keys=[message_id],
-        backref='annotations',
     )
 
 # A Document groups revisions and identifies the current revision, as well as
@@ -224,7 +227,16 @@ class Document(sql.Base):
     # Equal to the current revision as selected out of the database, if any.
     # This can and will be None for documents where no revision has been
     # recorded in the database.
-    revision = relationship(Revision)
+    revision = relationship(
+        Revision,
+        foreign_keys=[message_id, current_revision],
+    )
+
+    revisions = relationship(
+        Revision,
+        foreign_keys=[Revision.message_id],
+        order_by=Revision.revision,
+    )
 
     # Equal to the current annotation as selected out of the database, if any.
     # This can and will be None for documents where no annotation has been
@@ -249,7 +261,17 @@ class Document(sql.Base):
     # impossible for the situations warned about to arise.
     #
     # I'd still like to know how to fix it though.
-    annotation = relationship(Annotation, foreign_keys=[message_id, current_annotation])
+    annotation = relationship(
+        Annotation,
+        foreign_keys=[message_id, current_annotation],
+    )
+
+    annotations = relationship(
+        Annotation,
+        foreign_keys=[Annotation.message_id],
+        order_by=Annotation.revision,
+    )
+
 
     # The next revision of a document is, for simplicity's sake, the
     # next-highest number. This gives each document an easy, humane range of
