@@ -23,6 +23,9 @@ class Urls(object):
     def documents(self):
         return urljoin(self.base_url, 'document')
 
+    def document(self, message_id):
+        return urljoin(self.base_url, 'document/{0}'.format(message_id))
+
     def get_documents(self, annotated):
         def annotated_params():
             if annotated is not None:
@@ -51,3 +54,10 @@ class Urls(object):
 
     def revoke_token(self, id):
         return urljoin(self.base_url, f'user/token/{id}')
+
+    def state(self, before):
+        def before_params():
+            if before is not None:
+                yield ('before', before.isoformat())
+
+        return add_params(urljoin(self.base_url, 'state'), before_params())
