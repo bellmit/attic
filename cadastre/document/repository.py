@@ -196,6 +196,7 @@ class Annotation(sql.Base):
     message_id = Column(String, ForeignKey('document.message_id'), primary_key = True)
     revision   = Column(Integer, primary_key = True)
     changes    = Column(JSON, nullable = False)
+    events     = Column(JSON, nullable = False)
     submitter  = Column(String,
         ForeignKey('user.email'),
     )
@@ -334,17 +335,18 @@ class Document(sql.Base):
 
     # Set the annotations on this document. This will replace the current
     # annotations, if any, if the new annotation differs.
-    def update_annotation(self, changes, submitter):
-        if not self.currently_annotated_like(changes):
+    def update_annotation(self, changes, events, submitter):
+        if not self.currently_annotated_like(changes, events):
             self.annotation = stored_annotation = Annotation(
                 message_id = self.message_id,
                 revision   = self.next_annotation,
                 changes    = changes,
+                events     = events,
                 submitter  = submitter,
             )
         return self.annotation
 
-    def currently_annotated_like(self, changes):
+    def currently_annotated_like(self, changes, events):
         # Not annotated, so can't be annotated like anything.
         if self.annotation is None:
             return False
@@ -352,6 +354,8 @@ class Document(sql.Base):
         # Check properties pairwise, returning as soon as we find one that
         # differs.
         if self.annotation.changes != changes:
+            return False
+        if self.annotation.events != events:
             return False
 
         # By exhaustion, self _is_ annotated like the arguments. Note that we do
