@@ -94,6 +94,56 @@ class SetOperation(object):
         except JsonPointerException as e:
             return state, str(e)
 
+# op: append
+# path: <json-pointer>
+# value: <any>
+#
+# Appends a value to an existing array-typed value. Fails if the target is not
+# an array.
+
+from jsonpointer import JsonPointer, JsonPointerException
+
+class AppendOperation(object):
+    def __init__(self, path, value, **kwargs):
+        self.pointer = JsonPointer(path)
+        self.value = value
+
+    def apply(self, state):
+        try:
+            list = self.pointer.get(state)
+            return self.pointer.set(state, list + [self.value], inplace=False), None
+        except JsonPointerException as e:
+            return state, str(e)
+        except TypeError as e:
+            return state, f'Value not a list: {list}'
+
+# op: add
+# from: [<json-pointer>, ...]
+# value: <int>
+# into: <json-pointer>
+#
+# Adds `value` and the sum of a list of existing int fields to an existing int
+# field (or an absent field in an existing object, which is treated as an
+# existing zero), in place. Both `paths` and `value` are optional:.
+
+from jsonpointer import JsonPointer, JsonPointerException
+
+class AddOperation(object):
+    def __init__(self, into, value = 0, **kwargs):
+        self.into = JsonPointer(into)
+        self.value = value
+        self.paths = [] if 'from' not in kwargs else [JsonPointer(path) for path in kwargs['from']]
+
+    def apply(self, state):
+        try:
+            base = self.into.get(state, 0)
+            values = sum((p.get(state) for p in self.paths), 0)
+            return self.into.set(state, base + values + self.value, inplace=False), None
+        except JsonPointerException as e:
+            return state, str(e)
+        except TypeError as e:
+            return state, str(e)
+
 # op: error
 # message: <string>
 #
@@ -108,6 +158,8 @@ class ErrorOperation(object):
 
 # Parses a dict, which describes a single Operation, into that Operation.
 operations = {
+    'add': AddOperation,
+    'append': AppendOperation,
     'create': CreateOperation,
     'error': ErrorOperation,
     'set': SetOperation,
