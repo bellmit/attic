@@ -231,12 +231,14 @@ class Document(sql.Base):
     revision = relationship(
         Revision,
         foreign_keys=[message_id, current_revision],
+        lazy='joined',
     )
 
     revisions = relationship(
         Revision,
         foreign_keys=[Revision.message_id],
         order_by=Revision.revision,
+        lazy='joined',
     )
 
     # Equal to the current annotation as selected out of the database, if any.
