@@ -14,24 +14,16 @@
 #   strictly before this moment in time will be considered when computing the
 #   state of the game. This allows retroactive computation of the state as of a
 #   specific point in time.
-#
-# * events_from (datetime, ISO8601): include event descriptions for documents
-#   whose dates are not less than this date.
-#
-# * office (string): include event descriptions only for events in this office.
-#
 import functools
 from dateutil import parser
 from cadastre.document import state
 from cadastre.document import repository as repo
 
-def compute_state(repository: repo.Repository, before = None, events_from = None, office = None):
+def compute_state(repository: repo.Repository, before = None):
     # There's no support for datetime query params in apistar yet, but see
     # <https://github.com/encode/apistar/issues/353>
     if before is not None:
         before = parser.parse(before)
-    if events_from is not None:
-        events_from = parser.parse(events_from)
 
     annotations = repository.get_annotations(
         before=before,
@@ -58,24 +50,12 @@ def compute_state(repository: repo.Repository, before = None, events_from = None
     # associated document to decorate events, so we can't just do this on
     # ingestion or require the annotator do it. We prune the annotation list
     # based on ?events_from and ?office, as above.
-    if events_from is None:
-        def check_annotation(annotation):
-            return True
-    else:
-        def check_annotation(annotation):
-            return annotation.document.revision.date >= events_from
-    if office is None:
-        def check_office(event):
-            return True
-    else:
-        def check_office(event):
-            return event['office'] == office
     def timestamp_event(annotation, event):
         return dict(timestamp=annotation.document.revision.date.isoformat(), **event)
     def timestamped_events(annotation):
-        return [timestamp_event(annotation, e) for e in annotation.events if check_office(e)]
+        return [timestamp_event(annotation, e) for e in annotation.events]
 
-    events = sum((timestamped_events(a) for a in annotations if check_annotation(a)), [])
+    events = sum((timestamped_events(a) for a in annotations), [])
 
     # Finally, stick it all together into a response.
 
