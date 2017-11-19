@@ -1,3 +1,4 @@
+-e git+https://github.com/ojacobson/actinide/@54505db9f0cd1034a0d4cfe33abe1a518dec2af8#egg=actinide
 alembic==0.9.5
 apistar==0.3.9
 bcrypt==3.1.3
