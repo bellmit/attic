@@ -23,8 +23,13 @@ def run(args):
     resp.raise_for_status()
     result = resp.json()
 
-    for error in result['errors']:
-        print("cadastre: state error: {0}".format(error), file=sys.stderr)
-    del result['errors']
+    for warning in result['warnings']:
+        print("cadastre: warning in message {0[message_id]}: {0[message]}".format(warning), file=sys.stderr)
 
-    print(yaml.safe_dump(result, default_flow_style=False))
+    events = [
+        dict(office=e['office'], message=e['message'], timestamp=e['timestamp'])
+        for e in result['events']
+    ]
+    state = result['state']
+
+    print(yaml.safe_dump(dict(events=events, state=state), default_flow_style=False))

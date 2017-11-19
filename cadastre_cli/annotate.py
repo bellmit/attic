@@ -13,7 +13,6 @@ def configure_parser(parser):
     )
 
 import requests
-import frontmatter
 import tempfile
 
 def fetch_document(urls, message_id):
@@ -27,23 +26,7 @@ def fetch_document(urls, message_id):
     current_revision = resp.text
 
     current_annotation = dict(
-        events=[
-            dict(
-                office='some-office',
-                message='Your summary here (repeat as needed)',
-            ),
-        ],
-        changes=[
-            dict(
-                op='create',
-                path='/example/path',
-            ),
-            dict(
-                op='set',
-                path='/example/path/value',
-                value='Hello, world',
-            ),
-        ],
+        program='; Annotate using Actinide notation.\n'
     )
     if 'current_annotation' in document:
         current_annotation_url = urls.join(document['current_annotation']['download_url'])
@@ -51,7 +34,7 @@ def fetch_document(urls, message_id):
         resp.raise_for_status()
         current_annotation = resp.json()
 
-    return frontmatter.Post(current_revision, **current_annotation), document['annotate_url']
+    return current_revision, current_annotation, document['annotate_url']
 
 import os
 import subprocess
@@ -60,28 +43,39 @@ def run_editor(path):
     editor = os.environ.get('EDITOR', 'vi')
     subprocess.run([editor, path], check=True)
 
-def edit_annotations(document):
-    with tempfile.NamedTemporaryFile() as edit_file:
-        frontmatter.dump(document, edit_file, handler=frontmatter.YAMLHandler())
+edit_separator = '; --- END ANNOTATIONS (leave this line intact, or remove it and everything after) ---'
+
+def edit_annotation(revision, annotations):
+    with tempfile.NamedTemporaryFile(prefix='cadastre-annotation-', mode='w+', encoding='UTF-8') as edit_file:
+        print(annotations['program'], file=edit_file)
+        print(file=edit_file)
+        print(edit_separator, file=edit_file)
+        edit_file.write(revision)
         edit_file.flush()
         run_editor(edit_file.name)
 
         # Can't reuse the existing handle, it has the original state cached
         # somewhere we can't get it. Fortunately, the file has a name at this
         # point, so we can reopen it.
-        with open(edit_file.name, 'rb') as edit_file:
-            return frontmatter.load(edit_file, handler=frontmatter.YAMLHandler())
+        with open(edit_file.name, 'r', encoding='UTF-8') as edit_file:
+            data = edit_file.read()
+            separator_at = data.find('\n' + edit_separator + '\n')
+            if separator_at >= 0:
+                data = data[:separator_at]
+            if data.strip() == '':
+                return None
+            return dict(program=data)
 
-def update_annotations(annotate_url, annotations):
-    resp = requests.post(annotate_url, json=annotations)
+def update_annotation(annotate_url, annotation):
+    resp = requests.post(annotate_url, json=annotation)
     resp.raise_for_status()
 
 
 def run(args):
     for message in args.message:
-        document, annotate_url = fetch_document(args.urls, message)
-        document = edit_annotations(document)
-        if document.metadata == dict() and document.content == '':
-            print(f"Empty metadata file for {message}, skipping")
+        raw_revision, annotation, annotate_url = fetch_document(args.urls, message)
+        annotation = edit_annotation(raw_revision, annotation)
+        if annotation is None:
+            print(f"Empty annotation for {message}, skipping")
         else:
-            update_annotations(args.urls.join(annotate_url), document.metadata)
+            update_annotation(args.urls.join(annotate_url), annotation)
