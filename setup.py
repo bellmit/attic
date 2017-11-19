@@ -9,7 +9,6 @@ setup(
     install_requires=[
         'dateparser',
         'requests',
-        'python-frontmatter',
         'PyYAML',
     ]
 )
