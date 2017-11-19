@@ -25,19 +25,9 @@ from http import HTTPStatus
 from cadastre.authn import policy
 from . import repository as repo
 
-class Event(typesystem.Object):
-    properties = {
-        'office': typesystem.string(),
-        'message': typesystem.string(),
-    }
-
-class Change(dict):
-    pass
-
 class Annotation(typesystem.Object):
     properties = {
-        'events': typesystem.array(items = Event),
-        'changes': typesystem.array(items = Change),
+        'program': typesystem.string(),
     }
 
 class Submission(typesystem.Object):
@@ -54,8 +44,7 @@ def submit_annotation(
 ) -> Submission:
     document = repository.get_document(message_id)
     annotation = document.update_annotation(
-        annotation['changes'],
-        annotation['events'],
+        annotation['program'],
         auth.get_user_id(),
     )
     annotation_url = reverse_url(
@@ -78,7 +67,7 @@ from . import repository as repo
 
 def retrieve_annotation(message_id, revision, repository: repo.Repository) -> Annotation:
     annotation = repository.retrieve_annotation(message_id, revision)
-    return dict(events=annotation.events, changes=annotation.changes)
+    return Annotation(program=annotation.program)
 
 # ## WEB APPLICATION CONFIGURATION
 

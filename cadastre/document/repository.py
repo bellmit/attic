@@ -165,7 +165,7 @@ class Repository(object):
 from cadastre import sql
 from .metadata import coalesce
 
-from sqlalchemy import Column, Integer, String, DateTime, LargeBinary, JSON, ForeignKey, ForeignKeyConstraint
+from sqlalchemy import Column, Integer, String, Text, DateTime, LargeBinary, ForeignKey, ForeignKeyConstraint
 from sqlalchemy.orm import relationship, foreign
 
 class Revision(sql.Base):
@@ -195,8 +195,8 @@ class Annotation(sql.Base):
     __tablename__ = 'annotation'
     message_id = Column(String, ForeignKey('document.message_id'), primary_key = True)
     revision   = Column(Integer, primary_key = True)
-    changes    = Column(JSON, nullable = False)
-    events     = Column(JSON, nullable = False)
+    program    = Column(Text, nullable = False)
+
     submitter  = Column(String,
         ForeignKey('user.email'),
     )
@@ -337,27 +337,24 @@ class Document(sql.Base):
 
     # Set the annotations on this document. This will replace the current
     # annotations, if any, if the new annotation differs.
-    def update_annotation(self, changes, events, submitter):
-        if not self.currently_annotated_like(changes, events):
+    def update_annotation(self, program, submitter):
+        if not self.currently_annotated_like(program):
             self.annotation = stored_annotation = Annotation(
                 message_id = self.message_id,
                 revision   = self.next_annotation,
-                changes    = changes,
-                events     = events,
+                program    = program,
                 submitter  = submitter,
             )
         return self.annotation
 
-    def currently_annotated_like(self, changes, events):
+    def currently_annotated_like(self, program):
         # Not annotated, so can't be annotated like anything.
         if self.annotation is None:
             return False
 
         # Check properties pairwise, returning as soon as we find one that
         # differs.
-        if self.annotation.changes != changes:
-            return False
-        if self.annotation.events != events:
+        if self.annotation.program != program:
             return False
 
         # By exhaustion, self _is_ annotated like the arguments. Note that we do
