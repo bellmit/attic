@@ -41,5 +41,13 @@ settings = {
     'DATABASE': {
         'URL': env['DATABASE_URL'],
         'METADATA': sql.Base.metadata,
-    }
+    },
+    'STATICS': {
+        'ROOT_DIR': 'static',
+        'PACKAGE_DIRS': ['apistar'],
+    },
+    'TEMPLATES': {
+        'ROOT_DIR': 'static',
+        'PACKAGE_DIRS': ['apistar'],
+    },
 }

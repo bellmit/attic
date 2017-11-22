@@ -47,27 +47,30 @@ from cadastre import config
 from cadastre import authn
 from cadastre import document
 from cadastre import state
+from cadastre import ui
 
 # ## THE WEB APPLICATION
 
 # The preceding services must be bound together into a URL hierarchy. We assign
 # a URL namespace to each group of services from each chapter, as well as a pair
 # of URLs to API Star's generated documentation for our service (useful for
-# developers writing clients). The generated documentation relies on static
-# files for style sheets, so we assign a URL for that, as well.
+# developers writing clients). Both the generated documentation and Cadastre's
+# own HTML5 UI rely on static files,so we assign a URL for those, as well.
 
 from apistar import Include, Route
-from apistar.handlers import docs_urls, static_urls
+from apistar.handlers import docs_urls, serve_static
 from cadastre import authn
 from cadastre import document
 from cadastre import state
+from cadastre import ui
 
 routes = [
     Include('/user', authn.routes),
     Include('/document', document.routes),
     Include('/state', state.routes),
     Include('/docs', docs_urls),
-    Include('/static', static_urls),
+    Include('', ui.routes),
+    Route('/{path}', 'GET', serve_static),
 ]
 
 # The preceeding services also export components used to manipulate HTTP
