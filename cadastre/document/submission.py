@@ -78,16 +78,7 @@ def retrieve_revision(message_id, revision, repository: repo.Repository):
 #   <https://github.com/encode/apistar/issues/354>. A message with an empty
 #   annotation is, for the purposes of this criterion, annotated.
 
-from apistar import typesystem, reverse_url
 from . import repository as repo
-
-class Document(typesystem.Object):
-    properties = {
-        'message_id': typesystem.string(),
-        'url':  typesystem.string(format='URL'),
-        'download_url': typesystem.string(format='URL'),
-        'annotation_url': typesystem.string(format='URL'),
-    }
 
 # Filter generator that implements the `annotated` criterion: if `annotated` is
 # set, return the appropriate filter list; otherwise, return an empty list.
@@ -98,39 +89,15 @@ def annotation_filters(annotated):
         else:
             yield repo.not_annotated
 
-def list_documents(repository: repo.Repository, annotated: bool = None):
-    document_filters = annotation_filters(annotated)
-    documents = repository.get_documents(document_filters)
-
-    def model_to_response(model):
-        return Document(
-            message_id=model.message_id,
-            url=reverse_url(
-                'retrieve_document',
-                message_id=model.message_id,
-            ),
-            download_url=reverse_url(
-                'retrieve_revision',
-                message_id=model.message_id,
-                revision=model.revision.revision,
-            ),
-            annotation_url=reverse_url(
-                'submit_annotation',
-                message_id=model.message_id,
-            ),
-        )
-
-    return [model_to_response(m) for m in documents]
-
-# Service to retrieve metadata about a single document. This is more complete
-# than the information returned in the document list.
-
 from apistar import typesystem, reverse_url
-from . import repository as repo
 
+# The following document models define the public-facing UI for document
+# objects. We use these for both lists of documents and for metadata about
+# single documents, to simplify client development.
 class Revision(typesystem.Object):
     properties = {
         'revision': typesystem.integer(),
+        'date': typesystem.string(format='ISO8601'),
         'download_url': typesystem.string(format='URL'),
     }
 
@@ -150,41 +117,58 @@ class Document(typesystem.Object):
         'annotate_url': typesystem.string(format='URL'),
     }
 
-def retrieve_document(message_id, repository: repo.Repository):
-    document = repository.get_document(message_id)
+# Construct a wire object from various repository objects. The internal
+# representations use rich python objects; the external, only types that fit in
+# a JSON document.
 
-    def revision_model_to_wire(model):
-        return Revision(
-                revision=model.revision,
-                download_url=reverse_url(
-                    'retrieve_revision',
-                    message_id=model.message_id,
-                    revision=model.revision,
-                )
-            )
-
-    def annotation_model_to_wire(model):
-        return Annotation(
+def model_to_revision(model):
+    return Revision(
             revision=model.revision,
+            date=model.date,
             download_url=reverse_url(
-                'retrieve_annotation',
+                'retrieve_revision',
                 message_id=model.message_id,
                 revision=model.revision,
             )
         )
 
+def model_to_annotation(model):
+    return Annotation(
+        revision=model.revision,
+        download_url=reverse_url(
+            'retrieve_annotation',
+            message_id=model.message_id,
+            revision=model.revision,
+        )
+    )
+
+def model_to_document(document):
     current_annotation = dict()
     if document.annotation is not None:
-        current_annotation = dict(current_annotation=annotation_model_to_wire(document.annotation))
+        current_annotation = dict(current_annotation=model_to_annotation(document.annotation))
 
     return Document(
         message_id=document.message_id,
         annotate_url=reverse_url('submit_annotation', message_id=document.message_id),
-        revisions=[revision_model_to_wire(r) for r in document.revisions],
-        annotations=[annotation_model_to_wire(a) for a in document.annotations],
-        current_revision=revision_model_to_wire(document.revision),
+        revisions=[model_to_revision(r) for r in document.revisions],
+        annotations=[model_to_annotation(a) for a in document.annotations],
+        current_revision=model_to_revision(document.revision),
         **current_annotation,
     )
+
+def list_documents(repository: repo.Repository, annotated: bool = None):
+    document_filters = annotation_filters(annotated)
+    documents = repository.get_documents(document_filters)
+    return [model_to_document(m) for m in documents]
+
+# Service to retrieve metadata about a single document. This is more complete
+# than the information returned in the document list.
+
+from . import repository as repo
+
+def retrieve_document(message_id, repository: repo.Repository):
+    document = repository.get_document(message_id)
+    return model_to_document(document)
 
 # ## WEB APPLICATION CONFIGURATION
 
