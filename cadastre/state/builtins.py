@@ -84,12 +84,19 @@ class State(b.object):
 
         self.An.fn(self.get)
         self.An.fn(self.set)
+        self.An.fn(self.delete)
 
     def get(self, path):
         return jp.resolve_pointer(self.state, path)
 
     def set(self, path, value):
         return jp.set_pointer(self.state, path, value)
+
+    def delete(self, path):
+        pointer = jp.JsonPointer(path)
+        node, key = pointer.to_last(self.state)
+        del node[key]
+        return self.state
 
 # ### METADATA CAPTURE FUNCTIONS
 
