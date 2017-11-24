@@ -90,7 +90,7 @@ class PasswordChange(typesystem.Object):
         'password': typesystem.string(min_length=8),
     }
 
-@policy.authenticated
+@policy.interactive
 def change_password(request: PasswordChange, auth: Auth):
     auth.user.update_password(request['password'])
 
