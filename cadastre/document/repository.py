@@ -87,7 +87,10 @@ class Repository(object):
     def get_documents(self, filters):
         query = self.session.query(Document)\
             .join(Document.revision)\
-            .order_by(Revision.date.asc())
+            .order_by(
+                Revision.date.asc(),
+                Document.message_id.asc(),
+            )
 
         def apply_filter(query, filter):
             return filter(query)
@@ -184,10 +187,6 @@ class Revision(sql.Base):
         ForeignKey('user.email'),
     )
 
-    document = relationship(lambda: Document,
-        foreign_keys=[message_id],
-    )
-
 # An annotation holds structured data describing the document's effects on the
 # game.
 
@@ -199,10 +198,6 @@ class Annotation(sql.Base):
 
     submitter  = Column(String,
         ForeignKey('user.email'),
-    )
-
-    document = relationship(lambda: Document,
-        foreign_keys=[message_id],
     )
 
 # A Document groups revisions and identifies the current revision, as well as
@@ -239,6 +234,7 @@ class Document(sql.Base):
         foreign_keys=[Revision.message_id],
         order_by=Revision.revision,
         lazy='joined',
+        backref='document',
     )
 
     # Equal to the current annotation as selected out of the database, if any.
@@ -267,12 +263,15 @@ class Document(sql.Base):
     annotation = relationship(
         Annotation,
         foreign_keys=[message_id, current_annotation],
+        lazy='joined',
     )
 
     annotations = relationship(
         Annotation,
         foreign_keys=[Annotation.message_id],
         order_by=Annotation.revision,
+        lazy='joined',
+        backref='document',
     )
 
 
