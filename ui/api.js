@@ -1,5 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { encode } from 'base-64'
+
+function basicCredentials(username, password) {
+    const credentialsPair = encode(`${username}:${password}`)
+    const header = `Basic ${credentialsPair}`
+    return {
+        'Authorization': header,
+    }
+}
+
+function tokenCredentials(token) {
+    if (!token)
+        return {}
+
+    return {
+        'Authorization': `Bearer ${token}`,
+    }
+}
+
+function throwHttpErrors(resp) {
+    if (resp.status >= 400)
+        throw resp
+    return resp
+}
 
 // Cadastre API client
 //
@@ -15,6 +39,35 @@ import PropTypes from 'prop-types'
 
 // Entry point for calling back to Cadastre.
 export default class Api {
+    constructor(token=null) {
+        this.token = token
+        this.authHook = null
+    }
+
+    // Creates an API instance using the last token saved with
+    // `saveCredentials`, if any.
+    static withSavedCredentials() {
+        const token = localStorage.getItem('token')
+        return new Api(token)
+    }
+
+    // Registers an auth hook. If a request fails, the auth hook will be called,
+    // with one argument (a function which retries the failed request).
+    setAuthHook(authHook) {
+        this.authHook = authHook
+    }
+
+    // Update the token used on future requests, including pending retries.
+    setToken(token) {
+        this.token = token
+    }
+
+    // Write the current credentials to localStorage. Future calls to
+    // `withSavedCredentials` will recover this token.
+    saveCredentials() {
+        localStorage.setItem('token', this.token)
+    }
+
     // Submits a new annotation for a specific document. The first argument is
     // the URL fragment returned by Cadastre; this can be pointed at the wrong
     // thing and will do wrong things in return if you do that.
@@ -22,7 +75,7 @@ export default class Api {
         const message = {
             program,
         }
-        return this.postJson(message)
+        return this.postJson(url, message)
     }
 
     // Loads a specific annotation. The first argument is the URL fragment
@@ -32,11 +85,59 @@ export default class Api {
         return this.getJson(url)
     }
 
+    // A retryable fetch. All request methods on this class, other than those
+    // directly related to login, are implemented in terms of this - it provides
+    // core error handling (primarily, login-related error handling).
+    fetch(url, opts={}) {
+        const headers = opts.headers || {}
+        const attempt = () =>
+            fetch(url, {
+                ...opts,
+                headers: {
+                    ...tokenCredentials(this.token),
+                    ...headers,
+                },
+            })
+                .then(throwHttpErrors)
+                .catch(authRetry)
+        const authRetry = err => new Promise((resolve, reject) => {
+            const retry = () => resolve(attempt())
+            const cancel = () => reject(err)
+
+            if (!this.authHook)
+                cancel()
+            else if (err.status != 403)
+                cancel()
+            else
+                this.authHook(retry, cancel)
+        })
+        return attempt()
+    }
+
     // GET a JSON document. This is exposed for utility, but should rarely be
     // called by clients - the higher-level task-specific methods of this object
     // are more appropriate.
     getJson(url) {
-        return fetch(url)
+        return this.fetch(url)
+            .then(resp => resp.json())
+    }
+
+    // Log into Cadastre with an existing account. This method does not
+    // automatically retry on errors!
+    login(email, password) {
+        const message = {
+            description: `Cadastre Web UI (on ${new Date()})`,
+        }
+        const payload = JSON.stringify(message)
+        return fetch('/user/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                ...basicCredentials(email, password),
+            },
+            body: payload,
+        })
+            .then(throwHttpErrors)
             .then(resp => resp.json())
     }
 
@@ -44,7 +145,7 @@ export default class Api {
     // fragment returned by Cadastre; this can be pointed at the wrong thing and
     // will do wrong things in return if you do that.
     original(url) {
-        return fetch(url)
+        return this.fetch(url)
             .then(resp => resp.blob())
             .then(blob => new Promise(resolve => {
                 const reader = new FileReader()
@@ -67,13 +168,33 @@ export default class Api {
     // are more appropriate.
     postJson(url, message) {
         const payload = JSON.stringify(message)
-        return fetch(url, {
+        return this.fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: payload,
         })
+    }
+
+    // Log into Cadastre with a new account. This method does not automatically
+    // retry on errors!
+    register(email, password) {
+        const message = {
+            email,
+            password,
+            token_description: `Cadastre Web UI (on ${new Date()})`,
+        }
+        const payload = JSON.stringify(message)
+        return fetch('/user/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: payload,
+        })
+            .then(throwHttpErrors)
+            .then(resp => resp.json())
     }
 
     // Fetches document metadata for a specific document, by message ID.
@@ -106,7 +227,7 @@ export class ApiProvider extends React.Component {
     }
 
     getChildContext() {
-        const api = new Api()
+        const api = Api.withSavedCredentials()
 
         return {api,}
     }

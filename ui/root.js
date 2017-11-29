@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom'
 import Documents from './documents'
 import Doc from './document'
 import State from './state'
+import Login from './login'
 
 import NavBar from './navbar'
 
@@ -20,6 +21,7 @@ export default function App({location}) {
         <Route exact path="/" component={Documents.connect} />
         <Route exact path="/document/:messageId" component={Doc.connect} />
         <Route exact path="/state" component={State.connect} />
+        <Login.withApi />
     </div>
 }
 

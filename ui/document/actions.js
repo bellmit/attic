@@ -8,6 +8,7 @@ const changeAnnotation = createAction('CHANGE_ANNOTATION')
 const forgetDocument = createAction('FORGET_DOCUMENT')
 const savingAnnotation = createAction('SAVING_ANNOTATION')
 const savedAnnotation = createAction('SAVED_ANNOTATION')
+const saveAnnotationFailed = createAction('SAVE_ANNOTATION_FAILED')
 
 function loadOriginal(api, meta) {
     return dispatch =>
@@ -44,7 +45,8 @@ function saveAnnotation(api, url, program) {
     return dispatch => {
         dispatch(savingAnnotation())
         api.annotate(url, program)
-            .then(dispatch(savedAnnotation()))
+            .then(() => dispatch(savedAnnotation()))
+            .catch(() => dispatch(saveAnnotationFailed()))
     }
 }
 
@@ -80,6 +82,10 @@ export const reducer = handleActions({
         ...state,
         saving: false,
         dirty: false,
+    }),
+    [saveAnnotationFailed]: (state, action) => ({
+        ...state,
+        saving: false,
     }),
     [forgetDocument]: (state, action) => ({
         original: null,
