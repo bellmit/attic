@@ -14,15 +14,16 @@ function nullIf(candidate, value) {
     return candidate
 }
 
-function SubmissionEditor({api, document, contentType, messageId, date, changeContentType, changeMessageId, changeDate, submitDocument}) {
-    function submit() {
-        return submitDocument(
+function SubmissionEditor({api, document, contentType, messageId, date, submitting, changeContentType, changeMessageId, changeDate, submitDocument}) {
+    function submit(evt) {
+        submitDocument(
             api,
             document,
             contentType,
             nullIf(messageId, ''),
             nullIf(date, '')
         )
+        evt.preventDefault()
     }
     return <form onSubmit={submit}>
         <div className="form-group">
@@ -56,7 +57,7 @@ function SubmissionEditor({api, document, contentType, messageId, date, changeCo
                 value={date}
                 onChange={evt => changeDate(evt.target.value)} />
         </div>
-        <button type="submit" disabled={!document} className="btn btn-default">Submit Document</button>
+        <button type="submit" disabled={!document && !submitting} className="btn btn-default">Submit Document</button>
     </form>
 }
 

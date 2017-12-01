@@ -85,6 +85,10 @@ export default class Login extends React.Component {
     }
 
     render() {
+        function submit(evt) {
+            this.login()
+            evt.preventDefault()
+        }
         return <Modal
             style={{
                 overlay: {
@@ -111,7 +115,7 @@ export default class Login extends React.Component {
             }}
             isOpen={this.state.open}
             shouldCloseOnOverlayClick={false}>
-            <form onSubmit={() => this.login()}>
+            <form onSubmit={submit}>
                 { this.state.invalidCredentials &&
                     <div className="alert alert-warning" role="alert">Invalid email or password.</div>
                 }
