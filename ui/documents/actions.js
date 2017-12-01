@@ -27,6 +27,9 @@ const documentComparators = {
     date(a, b) {
         return stringCompare(a.current_revision.date, b.current_revision.date)
     },
+    subject(a, b) {
+        return stringCompare(a.current_revision.subject, b.current_revision.subject)
+    },
     annotated(a, b) {
         if (a.current_annotation && b.current_annotation)
             return 0

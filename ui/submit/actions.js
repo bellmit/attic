@@ -4,15 +4,16 @@ import { push } from 'react-router-redux'
 const changeDocument = createAction('CHANGE_DOCUMENT')
 const changeContentType = createAction('CHANGE_CONTENT_TYPE')
 const changeMessageId = createAction('CHANGE_MESSAGE_ID')
+const changeSubject = createAction('CHANGE_SUBJECT')
 const changeDate = createAction('CHANGE_DATE')
 const clearSubmission = createAction('CLEAR_SUBMISSION')
 const submitting = createAction('SUBMITTING')
 const submitFailed = createAction('SUBMIT_FAILED')
 
-function submitDocument(api, document, contentType, messageId, date) {
+function submitDocument(api, document, contentType, messageId, date, subject) {
     return dispatch => {
         dispatch(submitting())
-        api.submitDocument(document, contentType, messageId, date)
+        api.submitDocument(document, contentType, messageId, date, subject)
             .then(json => json.message_id)
             .then(messageId => dispatch(push(`/document/${messageId}`)))
             .catch(json => dispatch(submitFailed()))
@@ -23,6 +24,7 @@ export default {
     changeDocument,
     changeContentType,
     changeMessageId,
+    changeSubject,
     changeDate,
     clearSubmission,
     submitDocument,
@@ -41,6 +43,10 @@ export const reducer = handleActions({
         ...state,
         messageId: action.payload,
     }),
+    [changeSubject]: (state, action) => ({
+        ...state,
+        subject: action.payload,
+    }),
     [changeDate]: (state, action) => ({
         ...state,
         date: action.payload,
@@ -52,6 +58,7 @@ export const reducer = handleActions({
         contentType: '',
         messageId: '',
         date: '',
+        subject: '',
     }),
     [submitting]: (state, action) => ({
         ...state,
@@ -67,4 +74,5 @@ export const reducer = handleActions({
     contentType: '',
     messageId: '',
     date: '',
+    subject: '',
 })

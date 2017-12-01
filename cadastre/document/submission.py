@@ -35,7 +35,14 @@ def submit_original(
     repository: repo.Repository,
     auth: Auth,
 ) -> Submission:
-    revision = repository.submit(original, content_type, metadata.message_id, metadata.date, auth.get_user_id())
+    revision = repository.submit(
+        original,
+        content_type,
+        metadata.message_id,
+        metadata.date,
+        metadata.subject,
+        auth.get_user_id(),
+    )
     download_url = reverse_url(
         'retrieve_revision',
         message_id=revision.message_id,
@@ -103,6 +110,7 @@ class Revision(typesystem.Object):
     properties = {
         'revision': typesystem.integer(),
         'date': typesystem.string(format='ISO8601'),
+        'subject': typesystem.string(),
         'download_url': typesystem.string(format='URL'),
     }
 
@@ -130,6 +138,7 @@ def model_to_revision(model):
     return Revision(
             revision=model.revision,
             date=model.date,
+            subject=model.subject,
             download_url=reverse_url(
                 'retrieve_revision',
                 message_id=model.message_id,

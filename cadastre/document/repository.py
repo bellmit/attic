@@ -122,7 +122,7 @@ class Repository(object):
     #
     # In either case, the revision model object used to store the original will
     # be returned.
-    def submit(self, original, content_type, message_id, date, submitter):
+    def submit(self, original, content_type, message_id, date, subject, submitter):
         # This implementation contains an inherent data race. It determines
         # whether the document already exists by querying, then decides whether
         # to create or whether to append a revision based on what it finds
@@ -135,7 +135,7 @@ class Repository(object):
         # violating a constraint. However, it's not terribly user-friendly when
         # this happens.
         document = self.ensure_document_by_id(message_id)
-        revision = document.add_revision(original, content_type, date, submitter)
+        revision = document.add_revision(original, content_type, date, subject, submitter)
         return revision
 
     # In order to manipulate a document, first we have to ensure it exists. The
@@ -181,6 +181,7 @@ class Revision(sql.Base):
     message_id   = Column(String, ForeignKey('document.message_id'), primary_key = True)
     revision     = Column(Integer, primary_key = True)
     date         = Column(DateTime(timezone = True), nullable = False)
+    subject      = Column(String, nullable = False)
     body         = Column(LargeBinary, nullable = False)
     content_type = Column(String, nullable = False)
     submitter    = Column(String,
@@ -299,12 +300,13 @@ class Document(sql.Base):
 
     # Add a revision to this document, if the arguments would generate a
     # revision distinct from the most recent revision.
-    def add_revision(self, body, content_type, date, submitter):
-        if not self.currently_like(body, content_type, date):
+    def add_revision(self, body, content_type, date, subject, submitter):
+        if not self.currently_like(body, content_type, date, subject):
             self.revision = Revision(
                 message_id   = self.message_id,
                 revision     = self.next_revision,
                 date         = date,
+                subject      = subject,
                 body         = body,
                 content_type = content_type,
                 submitter    = submitter,
@@ -314,7 +316,7 @@ class Document(sql.Base):
     # A document is "currently like" a body, content type, message_id, and date
     # if it has a current revision, and the current revision's properties are
     # equal to those given as arguments.
-    def currently_like(self, body, content_type, date):
+    def currently_like(self, body, content_type, date, subject):
         # Self is never currently like something if it has no current revision.
         if self.revision is None:
             return False
@@ -326,6 +328,8 @@ class Document(sql.Base):
         if self.revision.content_type != content_type:
             return False
         if self.revision.date != date:
+            return False
+        if self.revision.subject != subject:
             return False
 
         # Found no differences. By exhaustion, self _is_ currently like the

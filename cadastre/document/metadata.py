@@ -9,8 +9,9 @@
 # returns an empty `Metadata` result.
 #
 # The interesting metadata fields are `message_id` (a freeform string), which
-# uniquely identifies the original, and `date` (a UTC-ified DateTime object),
-# which dates its publication.
+# uniquely identifies the original, `date` (a UTC-ified DateTime object), which
+# dates its publication, and `subject` (a string), which summarizes the
+# document.
 
 import collections as c
 import datetime as dt
@@ -38,18 +39,19 @@ def bare_message_id(message_id):
         return message_id[1:-1]
     return message_id
 
-class Metadata(c.namedtuple('Metadata', ['message_id', 'date'])):
+class Metadata(c.namedtuple('Metadata', ['message_id', 'date', 'subject'])):
     # Automatically do some widespread varieties of cleanup. The message ID is
     # stripped of angle brackets, and the incoming datetime in `date` to UTC.
     # Doing it here means we only have to write the code once.
     #
     # The ugly `__new__` dance is a consequence of the choice to subclass a
     # namedtuple type.
-    def __new__(cls, message_id, date):
+    def __new__(cls, message_id, date, subject):
         return super().__new__(
             cls,
             message_id = convert_nonnull(message_id, bare_message_id),
             date = convert_nonnull(date, utc_normalize),
+            subject = subject,
         )
 
     # Metadata objects can be merged. Merging a Metadata object creates a new
@@ -63,6 +65,7 @@ class Metadata(c.namedtuple('Metadata', ['message_id', 'date'])):
         return type(self)(
             message_id=coalesce(self.message_id, onto.message_id),
             date=coalesce(self.date, onto.date),
+            subject=coalesce(self.subject, onto.subject),
         )
 
 # Return the first non-None value of its arguments, or `None` if all arguments
@@ -81,7 +84,8 @@ def extract_rfc822_metadata(original):
     message = email.message_from_bytes(original)
     return Metadata(
         message_id=message['Message-ID'],
-        date=extract_message_date(message)
+        date=extract_message_date(message),
+        subject=message['Subject'],
     )
 
 # Parses a string to a datetime object, following the interface of
@@ -168,10 +172,15 @@ import email
 class HeaderMetadata(Metadata):
     pass
 
-def header_metadata(message_id: http.Header = None, date: http.Header = None):
+def header_metadata(
+    message_id: http.Header = None,
+    date: http.Header = None,
+    subject: http.Header = None
+):
     return Metadata(
         message_id=message_id,
-        date=convert_nonnull(date, email.utils.parsedate_to_datetime)
+        date=convert_nonnull(date, email.utils.parsedate_to_datetime),
+        subject=subject,
     )
 
 # A request can provide metadata detected from the request body.

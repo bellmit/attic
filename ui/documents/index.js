@@ -21,7 +21,7 @@ function DocumentSummary({document}) {
         <td><Link to={{
             pathname: `/document/${document.message_id}`,
             state: document,
-        }}>{document.message_id}</Link></td>
+        }}>{document.current_revision.subject}</Link></td>
         <td>{document.current_revision.date}</td>
     </tr>
 }
@@ -67,8 +67,8 @@ function DocumentsTable({documents, sort, sortReverse, sortDocuments}) {
                 <th className="col-md-1" style={{cursor: 'pointer'}} onClick={() => sortDocuments('annotated')}>
                     An <SortIcon name='annotated' sort={sort} reverse={sortReverse} />
                 </th>
-                <th style={{cursor: 'pointer'}} onClick={() => sortDocuments('message_id')}>
-                    Message ID <SortIcon name='message_id' sort={sort} reverse={sortReverse} />
+                <th style={{cursor: 'pointer'}} onClick={() => sortDocuments('subject')}>
+                    Subject <SortIcon name='subject' sort={sort} reverse={sortReverse} />
                 </th>
                 <th className="col-md-2" style={{cursor: 'pointer'}} onClick={() => sortDocuments('date')}>
                     Date <SortIcon name='date' sort={sort} reverse={sortReverse} />

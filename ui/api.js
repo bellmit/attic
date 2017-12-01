@@ -198,12 +198,15 @@ export default class Api {
     }
 
     // Submits a document to the registry.
-    submitDocument(document, contentType, messageId, date) {
+    submitDocument(document, contentType, messageId, date, subject) {
         const messageIdHeader = messageId ? {
             'Message-ID': messageId,
         } : {}
         const dateHeader = date ? {
             'Date': date,
+        } : {}
+        const subjectHeader = subject ? {
+            'Subject': subject,
         } : {}
         return this.getJson('/document', {
             method: 'POST',
@@ -211,6 +214,7 @@ export default class Api {
                 'Content-Type': contentType,
                 ...messageIdHeader,
                 ...dateHeader,
+                ...subjectHeader,
             },
             body: document,
         })

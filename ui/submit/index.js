@@ -14,14 +14,15 @@ function nullIf(candidate, value) {
     return candidate
 }
 
-function SubmissionEditor({api, document, contentType, messageId, date, submitting, changeContentType, changeMessageId, changeDate, submitDocument}) {
+function SubmissionEditor({api, document, contentType, messageId, subject, date, submitting, changeContentType, changeMessageId, changeSubject, changeDate, submitDocument}) {
     const submit = evt => {
         submitDocument(
             api,
             document,
             contentType,
             nullIf(messageId, ''),
-            nullIf(date, '')
+            nullIf(date, ''),
+            nullIf(subject, ''),
         )
         evt.preventDefault()
     }
@@ -41,12 +42,21 @@ function SubmissionEditor({api, document, contentType, messageId, date, submitti
         </div>
         <div className="form-group">
             <label htmlFor="submission-message-id">Message ID</label>
-            <input type="email"
+            <input type="text"
                 className="form-control"
                 id="submission-message-id"
                 placeholder="(Detect message ID)"
                 value={messageId}
                 onChange={evt => changeMessageId(evt.target.value)} />
+        </div>
+        <div className="form-group">
+            <label htmlFor="submission-subject">Subject</label>
+            <input type="text"
+                className="form-control"
+                id="submission-subject"
+                placeholder="(Detect subject)"
+                value={subject}
+                onChange={evt => changeSubject(evt.target.value)} />
         </div>
         <div className="form-group">
             <label htmlFor="submission-date">Effective Date</label>
