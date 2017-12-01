@@ -117,8 +117,8 @@ export default class Api {
     // GET a JSON document. This is exposed for utility, but should rarely be
     // called by clients - the higher-level task-specific methods of this object
     // are more appropriate.
-    getJson(url) {
-        return this.fetch(url)
+    getJson(url, opts={}) {
+        return this.fetch(url, opts)
             .then(resp => resp.json())
     }
 
@@ -195,6 +195,25 @@ export default class Api {
         })
             .then(throwHttpErrors)
             .then(resp => resp.json())
+    }
+
+    // Submits a document to the registry.
+    submitDocument(document, contentType, messageId, date) {
+        const messageIdHeader = messageId ? {
+            'Message-ID': messageId,
+        } : {}
+        const dateHeader = date ? {
+            'Date': date,
+        } : {}
+        return this.getJson('/document', {
+            method: 'POST',
+            headers: {
+                'Content-Type': contentType,
+                ...messageIdHeader,
+                ...dateHeader,
+            },
+            body: document,
+        })
     }
 
     // Fetches document metadata for a specific document, by message ID.

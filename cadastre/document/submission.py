@@ -22,6 +22,7 @@ from cadastre.authn import policy
 
 class Submission(typesystem.Object):
     properties = {
+        'message_id': typesystem.string(),
         'download_url': typesystem.string(format='URL'),
         'annotation_url': typesystem.string(format='URL'),
     }
@@ -45,7 +46,11 @@ def submit_original(
         message_id=revision.message_id,
     )
     return Response(
-        Submission(download_url=download_url, annotation_url=annotation_url),
+        Submission(
+            message_id=revision.message_id,
+            download_url=download_url,
+            annotation_url=annotation_url,
+        ),
         # This should be SEE_OTHER, but apistar misrenders the response. See
         # <https://github.com/encode/apistar/issues/317>.
         status=HTTPStatus.OK,

@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import createHistory from 'history/createHashHistory'
+import { ConnectedRouter } from 'react-router-redux'
 
 import App from './root'
 import createStore from './store'
@@ -22,7 +24,8 @@ import { ApiProvider } from './api'
 // two frameworks: Redux processes state changes and sets the properties of
 // React components, and React renders those components into the DOM.
 
-const store = createStore()
+const history = createHistory()
+const store = createStore(history)
 
 // Render the root of the application:
 //
@@ -39,9 +42,9 @@ const store = createStore()
 ReactDOM.render(
     <Provider store={store}>
         <ApiProvider>
-            <HashRouter>
+            <ConnectedRouter history={history}>
                 <App.routed />
-            </HashRouter>
+            </ConnectedRouter>
         </ApiProvider>
     </Provider>,
     document.getElementById('app'),

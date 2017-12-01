@@ -106,7 +106,7 @@ export default class Login extends React.Component {
                     padding: '20px',
                 },
             }}
-            className={{
+            classNames={{
                 afterOpen: 'col-md-4 col-md-offset-4',
             }}
             isOpen={this.state.open}

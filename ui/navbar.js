@@ -22,6 +22,7 @@ export default function NavBar({location}) {
         <div className="container-fluid">
             <ul className="nav navbar-nav">
                 <NavLink path={location.pathname} to='/'>Documents</NavLink>
+                <NavLink path={location.pathname} to='/submit'>Submit Document</NavLink>
                 <NavLink path={location.pathname} to='/state'>Browse State</NavLink>
             </ul>
             <Route exact path="/" component={documents.Navbar.connect} />

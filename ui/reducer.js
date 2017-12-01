@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
+import { routerReducer } from 'react-router-redux'
 
 import * as documents from './documents'
 import * as doc from './document'
+import * as submit from './submit'
 import * as state from './state'
 
 // Constructs the root reducer for Cadastre. This is a combination of a number
@@ -11,6 +13,8 @@ export default function createReducer() {
     return combineReducers({
         documents: documents.reducer,
         document: doc.reducer,
+        submit: submit.reducer,
         state: state.reducer,
+        router: routerReducer,
     })
 }
