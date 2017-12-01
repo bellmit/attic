@@ -85,7 +85,7 @@ export default class Login extends React.Component {
     }
 
     render() {
-        function submit(evt) {
+        const submit = evt => {
             this.login()
             evt.preventDefault()
         }
@@ -110,7 +110,7 @@ export default class Login extends React.Component {
                     padding: '20px',
                 },
             }}
-            classNames={{
+            className={{
                 afterOpen: 'col-md-4 col-md-offset-4',
             }}
             isOpen={this.state.open}

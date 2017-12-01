@@ -15,7 +15,7 @@ function nullIf(candidate, value) {
 }
 
 function SubmissionEditor({api, document, contentType, messageId, date, submitting, changeContentType, changeMessageId, changeDate, submitDocument}) {
-    function submit(evt) {
+    const submit = evt => {
         submitDocument(
             api,
             document,
