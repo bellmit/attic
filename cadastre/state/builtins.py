@@ -128,13 +128,17 @@ class Warnings(b.object):
 # ### Import code from a key
 
 An.eval('''
-(define-macro (import key)
-    (read (string-to-input-port (get key))))
-''')
+(begin
+    (define (state-export path form)
+        (set path (display form)))
 
-An.eval('''
-(define-macro (export path form)
-    `(begin
-        (set ,path ,(display form))
-        ,form))
+    (define (state-import path)
+       (read (string-to-input-port (get path))))
+
+    (define-macro (export path . forms)
+        (state-export path `(begin ,@forms))
+        (state-import path))
+
+    (define-macro (import path)
+        (state-import path)))
 ''')
