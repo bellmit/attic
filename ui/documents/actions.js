@@ -65,7 +65,7 @@ export const reducer = handleActions({
     // once)
     documents: null,
     // The current sort property, if any.
-    sort: null,
+    sort: 'date',
     // Reverses the sorting if true.
-    sortReverse: false,
+    sortReverse: true,
 })
