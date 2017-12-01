@@ -53,6 +53,7 @@ function DocumentEditor({annotation, dirty, saving, changeAnnotation}) {
 export function Navbar({api, dirty, saving, annotation, saveAnnotation, meta}) {
     return <form className="navbar-form navbar-left">
         <button
+            type="button"
             className="btn btn-primary"
             disabled={!dirty && !saving}
             onClick={() => saveAnnotation(api, meta.annotate_url, annotation)}>Save</button>
