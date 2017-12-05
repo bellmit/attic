@@ -64,13 +64,13 @@ function DocumentsTable({documents, sort, sortReverse, sortDocuments}) {
     return <table className="table table-striped table-condensed">
         <thead>
             <tr>
-                <th className="col-md-1" style={{cursor: 'pointer'}} onClick={() => sortDocuments('annotated')}>
+                <th className="col-md-1 table-sort-heading" onClick={() => sortDocuments('annotated')}>
                     An <SortIcon name='annotated' sort={sort} reverse={sortReverse} />
                 </th>
-                <th style={{cursor: 'pointer'}} onClick={() => sortDocuments('subject')}>
+                <th className="table-sort-heading" onClick={() => sortDocuments('subject')}>
                     Subject <SortIcon name='subject' sort={sort} reverse={sortReverse} />
                 </th>
-                <th className="col-md-2" style={{cursor: 'pointer'}} onClick={() => sortDocuments('date')}>
+                <th className="col-md-2 table-sort-heading" onClick={() => sortDocuments('date')}>
                     Date <SortIcon name='date' sort={sort} reverse={sortReverse} />
                 </th>
             </tr>

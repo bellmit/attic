@@ -22,7 +22,7 @@ function CollapseButton({collapsed, toggleCollapsed}) {
 // of that property.
 function StateProperty({name, value}) {
     return <tr>
-        <td className="col-md-1" style={{verticalAlign: 'top'}}>{name}</td>
+        <td className="col-md-1 state-property-name">{name}</td>
         <td><StateNode value={value} /></td>
     </tr>
 }
@@ -83,7 +83,7 @@ function StateArray({value}) {
 
 // Renders a literal-shaped state value.
 function StateLiteral({value}) {
-    return <div style={{whiteSpace: 'pre-wrap'}}>{value}</div>
+    return <div className="state-literal">{value}</div>
 }
 
 // Renders a tree of state values. Pass root=true to force this node to expand.

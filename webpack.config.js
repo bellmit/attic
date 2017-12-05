@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
@@ -42,7 +43,7 @@ module.exports = {
         // I looked at not using either, and browser tech has largely caught up
         // with these APIs, but it's still unreliable enough (according to
         // caniuse) that I opted to include the polyfills.
-        app: ['babel-polyfill', 'whatwg-fetch', 'app'],
+        app: ['app.css', 'babel-polyfill', 'whatwg-fetch', 'app'],
     },
 
     resolve: {
@@ -61,6 +62,13 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
             },
+            // Gather CSS for ExtractTextPlugin
+            {
+                test: /.css$/,
+                use: ExtractTextPlugin.extract({
+                    use: 'css-loader',
+                }),
+            },
         ],
     },
 
@@ -76,6 +84,8 @@ module.exports = {
     plugins: Array.prototype.concat(
         environment.plugins || [],
         [
+            // Compile and combine stylesheets during asset compilation.
+            new ExtractTextPlugin("[name].[chunkhash].css"),
             // Inject the generated entry point name into index.html at build
             // time.
             new HtmlWebpackPlugin({
