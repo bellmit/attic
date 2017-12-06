@@ -1,0 +1,21 @@
+.document-editor {
+}
+
+.document-editor-original {
+    /* Approximately enough space for the navbar plus following space */
+    top: 72px;
+    bottom: 0;
+    left: 15px;
+    right: 50%;
+    position: fixed;
+    overflow: scroll;
+}
+
+.document-editor-annotation {
+    /* Approximately enough space for the navbar plus following space */
+    top: 72px;
+    bottom: 0;
+    left: 50%;
+    right: 15px;
+    position: fixed;
+}

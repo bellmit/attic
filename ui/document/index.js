@@ -18,34 +18,35 @@ export { reducer }
 
 // Renders a document's original. This is a dumb PRE of the document text.
 function DocumentOriginal({original}) {
-    return original != null ?
-        <pre>{original}</pre> :
-        <div className="text-muted text-center">Loading original document...</div>
+    return <div className="document-editor-original">
+        { original != null ?
+            <pre>{original}</pre> :
+            <div className="text-muted text-center">Loading original document...</div>
+        }
+    </div>
 }
 
 // Renders an editor containing the document's current annotation, and publishes
 // those changes back into the Redux store.
 function DocumentEditor({annotation, dirty, saving, changeAnnotation}) {
-    return [
+    return <div className="document-editor-annotation">
         <Prompt
-            key="document-dirty-prompt"
             when={dirty}
-            message="You have unsaved annotation changes, are you sure you want to abandon them?" />,
-        annotation != null ?
+            message="You have unsaved annotation changes, are you sure you want to abandon them?" />
+        { annotation != null ?
             <AceEditor
-                key="document-editor"
                 mode="scheme"
                 theme="xcode"
                 width="100%"
-                height="600px"
+                height="100%"
                 tabSize={2}
                 wrapEnabled={true}
                 readOnly={saving}
                 value={annotation}
                 onChange={changeAnnotation}
                 editorProps={{$blockScrolling: Infinity}} /> :
-            <div key="document-loading" className="text-muted text-center">Loading annotation...</div>,
-    ]
+            <div key="document-loading" className="text-muted text-center">Loading annotation...</div> }
+    </div>
 }
 
 // Additional top-level nav bar content to include when rendering the `Document`
@@ -86,15 +87,9 @@ export default class Document extends React.Component {
     }
 
     render() {
-        return <div className="container-fluid">
-            <div className="row">
-                <div className="col-md-6">
-                    <DocumentOriginal {...this.props} />
-                </div>
-                <div className="col-md-6">
-                    <DocumentEditor {...this.props} />
-                </div>
-            </div>
+        return <div className="document-editor">
+            <DocumentOriginal {...this.props} />
+            <DocumentEditor {...this.props} />
         </div>
     }
 }
