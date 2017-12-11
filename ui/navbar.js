@@ -27,6 +27,9 @@ export default function NavBar({location}) {
             </ul>
             <Route exact path="/" component={documents.Navbar.connect} />
             <Route exact path="/document/:messageId" component={doc.Navbar.connect} />
+            <ul className="nav navbar-nav navbar-right">
+                <li><a href="https://github.com/ojacobson/cadastre/issues">Report a Bug</a></li>
+            </ul>
         </div>
     </nav>
 }
