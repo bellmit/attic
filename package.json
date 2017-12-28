@@ -1,0 +1,14 @@
+{
+    "private": "true",
+    "dependencies": {
+        "db-migrate": "^0.10.2",
+        "db-migrate-pg": "^0.2.5",
+        "express": "^4.16.2",
+        "express-promise-router": "^2.0.0",
+        "heartbeats": "^5.0.1",
+        "pg": "^7.4.0",
+        "pg-pubsub": "^0.3.0",
+        "sequelize": "^4.28.6",
+        "sse-express": "^2.0.1-rc"
+    }
+}
