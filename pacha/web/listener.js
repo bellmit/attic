@@ -7,8 +7,7 @@ module.exports = function(store, pubsub) {
     router.use(express.json())
 
     router.post('/command', async (req, res) => {
-        const frame = await store.commandFrame()
-        await store.addCommand(frame, req.body)
+        await store.addCommand(req.body)
         res.status(204).end()
     })
 

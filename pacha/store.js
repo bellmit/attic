@@ -5,23 +5,18 @@
 // the list of commands going back to the beginning of time.)
 //
 // A Store mediates all ot this.
-module.exports = function Store(storage, commandReducer, eventReducer, initialState={}) {
+module.exports = function Store(storage, commandReducer, eventReducer) {
     return {
-        async commandFrame() {
-            return await storage.transaction(async t => {
-                const frameInfo = await storage.frame()
-                return frameInfo.command_frame
-            })
-        },
         async currentFrame() {
             return await storage.transaction(async t => {
-                const frameInfo = await storage.frame()
+                const frameInfo = await storage.frame(t)
                 return frameInfo.current_frame
             })
         },
-        async addCommand(frame, command) {
+        async addCommand(command) {
             return await storage.transaction(async t => {
-                await storage.addCommand(t, frame, command)
+                let frameInfo = await storage.frame(t)
+                await storage.addCommand(t, frameInfo.command_frame, command)
             })
         },
         async advanceFrame() {
@@ -30,7 +25,7 @@ module.exports = function Store(storage, commandReducer, eventReducer, initialSt
                 if (!nextFrame && !prevFrame)
                     return null
                 const commands = await storage.frameCommands(t, nextFrame)
-                const state = await storage.frameState(t, prevFrame) || initialState
+                const state = await storage.frameState(t, prevFrame)
                 const events = flatMap(commands, command => commandReducer(state, command))
                 const storeEvents = storage.addEvents(t, nextFrame, events)
                 const nextState = events.reduce(eventReducer, state)
