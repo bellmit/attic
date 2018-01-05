@@ -158,8 +158,6 @@ module.exports = {
             },
             transaction: t,
         })
-        if (!events)
-            return []
         return events.events
     },
 
