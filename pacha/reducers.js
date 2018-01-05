@@ -13,11 +13,11 @@ module.exports = {
     // Obviously wrong, needs a better fix because commands come from players
     // over the network and can be garbage.
     state: handleActions({
-        [commands.joinGame]: (state, { payload }) => payload.name in state ?
+        [commands.joinGame]: (state, { payload }) => state.players && payload.name in state.players ?
                 // This player is already present.
                 [] :
                 // Hello, beautiful. Let me announce you in.
-                events.playerJoined(payload.name),
+                [events.playerJoined(payload.name)],
     }, []),
 
     event: combineReducers({

@@ -37,6 +37,12 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
     const eventsCache = lru(minimumRetainedFrames)
     const eventsPromises = {}
 
+    function commandEventsReducer([state, events], command) {
+        const nextEvents = commandReducer(state, command)
+        const nextState = nextEvents.reduce(eventReducer, state)
+        return [nextState, [...events, ...nextEvents]]
+    }
+
     return {
         async findResumePoint(targetFrame) {
             return await storage.transaction(async t => {
@@ -50,7 +56,7 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
                 // actually reconstruct, resume from the oldest state we have,
                 // instead, and skip the client forwards in time.
                 const [oldestFrame, oldestState] = await storage.oldestState(t)
-                    if (oldestFrame.gt(targetFrame))
+                if (oldestFrame.gt(targetFrame))
                     return [oldestFrame, currentFrame, oldestState]
 
                 // Asked for a state it's safe to resume from (no possibility of
@@ -74,11 +80,9 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
 
                 const prevState = await stateAt(t, prevFrame)
                 const frameCommands = await storage.frameCommands(t, nextFrame)
-                const frameEvents = _.flatMap(frameCommands, command => commandReducer(prevState, command))
+                const [nextState, nextEvents] = frameCommands.reduce(commandEventsReducer, [prevState, []])
 
-                const storeEvents = storage.addEvents(t, nextFrame, frameEvents)
-
-                const nextState = frameEvents.reduce(eventReducer, prevState)
+                const storeEvents = storage.addEvents(t, nextFrame, nextEvents)
                 saveState(nextFrame, nextState)
 
                 await storeEvents
