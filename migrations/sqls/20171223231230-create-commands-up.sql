@@ -1,15 +1,9 @@
 create table frame (
-    oldest_frame bigint
-        not null,
     current_frame bigint
-        not null,
-    command_frame bigint
-        not null,
-    check (command_frame > current_frame),
-    check (current_frame > oldest_frame)
+        not null
 );
 insert into frame
-    values (-199, 1, 3);
+    values (0);
 
 create table command (
     frame bigint
@@ -27,8 +21,8 @@ create table state (
     state json
         not null
 );
-
-insert into state values (1, '{}');
+insert into state
+    values (0, '{}');
 
 create table events (
     frame bigint

@@ -2,6 +2,7 @@
   "private": "true",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "big-integer": "^1.6.26",
     "db-migrate": "^0.10.2",
     "db-migrate-pg": "^0.2.5",
     "express": "^4.16.2",
