@@ -1,4 +1,5 @@
-const flatMap = require('./flatMap')
+const _ = require('lodash')
+const lru = require("lru-cache")
 const offerPump = require('./offerPump')
 
 // A command reducer takes a state and a command, and produces a list of events.
@@ -33,6 +34,9 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
         await storage.deleteBefore(t, retainedFrame)
     }))
 
+    const eventsCache = lru(minimumRetainedFrames)
+    const eventsPromises = {}
+
     return {
         async findResumePoint(targetFrame) {
             return await storage.transaction(async t => {
@@ -46,7 +50,7 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
                 // actually reconstruct, resume from the oldest state we have,
                 // instead, and skip the client forwards in time.
                 const [oldestFrame, oldestState] = await storage.oldestState(t)
-                if (oldestFrame.gt(targetFrame))
+                    if (oldestFrame.gt(targetFrame))
                     return [oldestFrame, currentFrame, oldestState]
 
                 // Asked for a state it's safe to resume from (no possibility of
@@ -70,7 +74,7 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
 
                 const prevState = await stateAt(t, prevFrame)
                 const frameCommands = await storage.frameCommands(t, nextFrame)
-                const frameEvents = flatMap(frameCommands, command => commandReducer(prevState, command))
+                const frameEvents = _.flatMap(frameCommands, command => commandReducer(prevState, command))
 
                 const storeEvents = storage.addEvents(t, nextFrame, frameEvents)
 
@@ -85,15 +89,32 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
                 return nextFrame
             })
         },
-        async state(frame) {
-            return await storage.transaction(async t => {
-                return await stateAt(t, frame)
-            })
-        },
         async events(frame) {
-            return await storage.transaction(async t => {
-                return await storage.frameEvents(t, frame)
+            // Because this gets called every frame by every client, there's a
+            // thundering herd of selects every frame - one per client - if this
+            // query method is implemented the naive way. This approach reuses a
+            // select if it's already in flight, on the assumption that the
+            // table is write-once or and that it's therefore safe to share
+            // reads between unrelated clients. Any previously-computed results
+            // within the cache horizon are also reused without re-querying
+            // them.
+            const cacheKey = frame.toString()
+            const cachedEvents = eventsCache.get(cacheKey)
+            if (cachedEvents !== undefined)
+                return cachedEvents
+            if (cacheKey in eventsPromises)
+                return await eventsPromises[cacheKey]
+            const eventsPromise = eventsPromises[cacheKey] = storage.transaction(async t => {
+                try {
+                    const events = await storage.frameEvents(t, frame)
+
+                    eventsCache.set(cacheKey, events)
+                    return events
+                } finally {
+                    delete eventsPromises[cacheKey]
+                }
             })
+            return await eventsPromise
         },
     }
 }

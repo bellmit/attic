@@ -1,6 +1,6 @@
+const _ = require('lodash')
 const Sequelize = require('sequelize')
 const bigInt = require('big-integer')
-const flatMap = require('./flatMap')
 
 const Op = Sequelize.Op
 
@@ -176,7 +176,7 @@ module.exports = {
             ],
             transaction: t,
         })
-        return flatMap(events, event => event.events)
+        return _.flatMap(events, event => event.events)
     },
 
     async addEvents(t, frame, events) {
