@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import reducers from '../pacha/reducers'
+import commands from '../pacha/commands'
 
 let state = undefined
 const events = new EventSource('/api/events')
@@ -14,18 +15,15 @@ events.addEventListener('events', evt => {
     render()
 })
 
-const pulse = async line => {
-    console.log('posting')
+const enterGame = async name => {
+    const payload = commands.joinGame(name)
     await fetch('/api/command', {
         method: 'POST',
         headers: new Headers({
             'Content-Type': 'application/json',
         }),
-        body: JSON.stringify({
-            line,
-        }),
+        body: JSON.stringify(payload),
     })
-    console.log('posted')
 }
 
 class Line extends React.Component {
@@ -58,12 +56,10 @@ class Line extends React.Component {
     }
 }
 
-const ChatLine = ({line}) => line ? <p>{line}</p> : null
-
 const render = () => ReactDOM.render(
     <div>
-        <Line onLine={line => pulse(line)}>Pulse</Line>
-        { state && state.events.map((event, idx) => <ChatLine key={idx} {...event} />) }
+        <Line onLine={line => enterGame(line)}>Pulse</Line>
+        <pre>{JSON.stringify(state, undefined, '  ')}</pre>
     </div>,
     document.getElementById('app'),
 )
