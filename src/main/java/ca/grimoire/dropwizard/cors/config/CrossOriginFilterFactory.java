@@ -35,17 +35,28 @@ import java.util.EnumSet;
  */
 public class CrossOriginFilterFactory {
     /* The default Jetty set, plus Authorization to allow clients to pass JWT tokens instead of browser creds. */
-    private static final String ALLOWED_HEADERS = "Authorization,X-Requested-With,Content-Type,Accept,Origin";
+    private static final String DEFAULT_ALLOWED_HEADERS = "Authorization,X-Requested-With,Content-Type,Accept,Origin";
 
     @NotNull
     @NotEmpty
     private String origins = defaultOrigins();
+
+    @NotNull
+    @NotEmpty
+    private String allowedHeaders = defaultAllowedHeaders();
 
     private static String defaultOrigins() {
         String origins = System.getenv("CORS_ORIGINS");
         if (origins != null)
             return origins;
         return "http://localhost:*";
+    }
+
+    private static String defaultAllowedHeaders() {
+        String allowedHeaders = System.getenv("CORS_ALLOWED_HEADERS");
+        if (allowedHeaders != null)
+            return allowedHeaders;
+        return DEFAULT_ALLOWED_HEADERS;
     }
 
     @JsonProperty
@@ -71,6 +82,26 @@ public class CrossOriginFilterFactory {
         this.origins = origins;
     }
 
+    @JsonProperty
+    public String getAllowedHeaders() {
+        return allowedHeaders;
+    }
+
+    /**
+     * Configure a list of allowed headers for cross-origin requests.
+     * <p>
+     * The list of allowed headers must be provided as a single, comma-separated string.
+     * <p>
+     * If not set, this property will default to the value of the {@code CORS_ORIGINS} environment variable, or to
+     * {@code DEFAULT_ALLOWED_HEADERS} if the {@code CORS_ALLOWED_HEADERS} environment variable is also unset.
+     *
+     * @param allowedHeaders the list of allowed headers to use.
+     */
+    @JsonProperty
+    public void setAllowedHeaders(String allowedHeaders) {
+        this.allowedHeaders = allowedHeaders;
+    }
+
     /**
      * Constructs a new {@link CrossOriginFilter} for the configured origins, and associates it with the provided
      * {@link ServletEnvironment}.
@@ -79,8 +110,8 @@ public class CrossOriginFilterFactory {
      */
     public void registerFilter(ServletEnvironment servlets) {
         FilterRegistration.Dynamic filter = servlets.addFilter("CrossOriginFilter", CrossOriginFilter.class);
-        filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, origins);
-        filter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, ALLOWED_HEADERS);
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, getOrigins());
+        filter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, getAllowedHeaders());
 
         filter.addMappingForUrlPatterns(
                 EnumSet.of(DispatcherType.REQUEST),

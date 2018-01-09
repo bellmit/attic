@@ -27,11 +27,26 @@ public class CrossOriginFilterFactoryTest {
     @Test
     public void registersFilter() {
         factory.setOrigins("http://unit.example.com");
+        factory.setAllowedHeaders("Authorization,X-Requested-With,Content-Type,Accept,Origin,Cache-Control");
 
         factory.registerFilter(servlets);
 
         verify(servlets).addFilter("CrossOriginFilter", CrossOriginFilter.class);
         verify(filter).setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "http://unit.example.com");
+        verify(filter).setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "Authorization,X-Requested-With,Content-Type,Accept,Origin,Cache-Control");
+        verify(filter).addMappingForUrlPatterns(
+                EnumSet.of(DispatcherType.REQUEST),
+                false,
+                "*"
+        );
+    }
+
+    @Test
+    public void registersFilterWithDefaults() {
+        factory.registerFilter(servlets);
+
+        verify(servlets).addFilter("CrossOriginFilter", CrossOriginFilter.class);
+        verify(filter).setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "http://localhost:*");
         verify(filter).setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, "Authorization,X-Requested-With,Content-Type,Accept,Origin");
         verify(filter).addMappingForUrlPatterns(
                 EnumSet.of(DispatcherType.REQUEST),
@@ -39,4 +54,5 @@ public class CrossOriginFilterFactoryTest {
                 "*"
         );
     }
+
 }
