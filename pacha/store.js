@@ -11,14 +11,24 @@ const offerPump = require('./offerPump')
 // A Store mediates all ot this.
 module.exports = function Store({storage, commandReducer, eventReducer, commandFrameAdvance, minimumRetainedFrames}) {
     async function stateAt(t, frame) {
+        const cachedState = stateCache.get(frame.toString())
+        if (cachedState)
+            return cachedState
+
         const [lastStoredFrame, lastStoredState] = await storage.lastStateAt(t, frame)
         const catchupEvents = await storage.frameRangeEvents(t, lastStoredFrame, frame)
-        return catchupEvents.reduce(eventReducer, lastStoredState)
+        const state = catchupEvents.reduce(eventReducer, lastStoredState)
+        return state
     }
 
-    const saveState = offerPump(async (frame, state) => await storage.transaction(async t => {
+    const backgroundSaveState = offerPump(async (frame, state) => await storage.transaction(async t => {
         return await storage.addState(t, frame, state)
     }))
+
+    function saveState(frame, state) {
+        stateCache.set(frame.toString(), state)
+        backgroundSaveState(frame, state)
+    }
 
     const pruneHistory = offerPump(async frame => await storage.transaction(async t => {
         // We can't prune anything we might need to reconstruct states within
@@ -34,6 +44,7 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
         await storage.deleteBefore(t, retainedFrame)
     }))
 
+    const stateCache = lru(minimumRetainedFrames)
     const eventsCache = lru(minimumRetainedFrames)
     const eventsPromises = {}
 
@@ -83,9 +94,9 @@ module.exports = function Store({storage, commandReducer, eventReducer, commandF
                 const [nextState, nextEvents] = frameCommands.reduce(commandEventsReducer, [prevState, []])
 
                 const storeEvents = storage.addEvents(t, nextFrame, nextEvents)
-                saveState(nextFrame, nextState)
-
                 await storeEvents
+
+                saveState(nextFrame, nextState)
 
                 const prunedFrame = nextFrame.subtract(minimumRetainedFrames)
                 pruneHistory(prunedFrame)
