@@ -103,6 +103,16 @@ environment variable for platforms such as Heroku.
 
     I make no statements about the advisability of configuring CORS that way. Your needs may differ.
 
+5. Configure the list of allowed headers, either in your
+    configuration file or through the `CORS_ALLOWED_HEADERS` environment variable.
+
+    ```yaml
+    cors:
+      allowedHeaders: "Authorization,X-Requested-With,Content-Type,Accept,Origin"
+    ```
+
+ 
+
 Your application will respond both to simple CORS requests and to CORS
 preflight (`OPTIONS`) requests, and authorize them if they originate from one
 of the allowed origins.
