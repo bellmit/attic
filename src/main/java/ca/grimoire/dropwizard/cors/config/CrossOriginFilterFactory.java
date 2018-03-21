@@ -45,6 +45,8 @@ public class CrossOriginFilterFactory {
     @NotEmpty
     private String allowedHeaders = defaultAllowedHeaders();
 
+    private String allowedMethods = defaultAllowedMethods();
+
     private static String defaultOrigins() {
         String origins = System.getenv("CORS_ORIGINS");
         if (origins != null)
@@ -57,6 +59,14 @@ public class CrossOriginFilterFactory {
         if (allowedHeaders != null)
             return allowedHeaders;
         return DEFAULT_ALLOWED_HEADERS;
+    }
+
+    /*
+     * Note that this method can return null (as opposed to those above)
+     * because we fall back to Jetty's default if no config is specified.
+     */
+    private static String defaultAllowedMethods() {
+        return System.getenv("CORS_ALLOWED_METHODS");
     }
 
     @JsonProperty
@@ -102,6 +112,27 @@ public class CrossOriginFilterFactory {
         this.allowedHeaders = allowedHeaders;
     }
 
+    @JsonProperty
+    public String getAllowedMethods() {
+        return allowedMethods;
+    }
+
+    /**
+     * Configure a list of allowed methods for cross-origin requests.
+     * <p>
+     * The list of allowed methods must be provided as a single, comma-separated string.
+     * <p>
+     * If not set, this property will default to the value of the {@code CORS_ALLOWED_METHODS} environment variable,
+     * or to the Jetty built-in default (which is currently GET,POST,HEAD) if the {@code CORS_ALLOWED_METHODS}
+     * environment variable is also unset.
+     *
+     * @param allowedMethods the list of allowed methods to use.
+     */
+    @JsonProperty
+    public void setAllowedMethods(String allowedMethods) {
+        this.allowedMethods = allowedMethods;
+    }
+
     /**
      * Constructs a new {@link CrossOriginFilter} for the configured origins, and associates it with the provided
      * {@link ServletEnvironment}.
@@ -112,6 +143,10 @@ public class CrossOriginFilterFactory {
         FilterRegistration.Dynamic filter = servlets.addFilter("CrossOriginFilter", CrossOriginFilter.class);
         filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, getOrigins());
         filter.setInitParameter(CrossOriginFilter.ALLOWED_HEADERS_PARAM, getAllowedHeaders());
+        String methods = getAllowedMethods();
+        if (methods != null && !methods.isEmpty()) {
+            filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, methods);
+        }
 
         filter.addMappingForUrlPatterns(
                 EnumSet.of(DispatcherType.REQUEST),
