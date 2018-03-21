@@ -92,7 +92,7 @@ public class CrossOriginFilterFactory {
      * <p>
      * The list of allowed headers must be provided as a single, comma-separated string.
      * <p>
-     * If not set, this property will default to the value of the {@code CORS_ORIGINS} environment variable, or to
+     * If not set, this property will default to the value of the {@code CORS_ALLOWED_HEADERS} environment variable, or to
      * {@code DEFAULT_ALLOWED_HEADERS} if the {@code CORS_ALLOWED_HEADERS} environment variable is also unset.
      *
      * @param allowedHeaders the list of allowed headers to use.
