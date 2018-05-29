@@ -19,6 +19,16 @@ apply plugin: 'com.jfrog.bintray'
 group = 'ca.grimoire.dropwizard.cors'
 sourceCompatibility = '1.8'
 
+def pomConfig = {
+	licenses {
+		license([:]) {
+			name "MIT License"
+			url "http://opensource.org/licenses/MIT"
+			distribution "repo"
+		}
+	}
+}
+
 release {
     grgit = Grgit.open(projectDir)
 }
@@ -71,6 +81,15 @@ publishing {
 
             artifact sourcesJar
             artifact javadocJar
+			groupId 'ca.grimoire.dropwizard.cors'
+            artifactId 'dropwizard-simple-cors'
+            version = project.version
+			pom.withXml {
+                def root = asNode()
+                root.appendNode('name', 'Dropwizard Simple CORS')
+                root.appendNode('url', 'https://github.com/ojacobson/dropwizard-simple-cors')
+                root.children().last() + pomConfig
+            }
         }
     }
 }
