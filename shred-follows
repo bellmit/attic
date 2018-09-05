@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+
+import tweepy
+import click
+
+from deadbird import client
+
+def shred_follows(api):
+    me = api.me()
+    for follow in api.friends_ids(me):
+        api.destroy_friendship(follow)
+
+@click.command()
+def main():
+    """Unfollow absolutely everyone.
+    """
+    api = client.make_api()
+
+    shred_follows(api)
+
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+
+import tweepy
+import click
+
+from deadbird import client
+
+def shred_tweets(api):
+    for status in tweepy.Cursor(api.user_timeline).items():
+        api.destroy_status(status.id)
+
+@click.command()
+def main():
+    """Delete your Twitter statuses.
+    """
+    api = client.make_api()
+
+    shred_tweets(api)
+
+
+if __name__ == '__main__':
+    main()
