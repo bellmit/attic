@@ -1,0 +1,39 @@
+{
+  "private": "true",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "big-integer": "^1.6.26",
+    "db-migrate": "^0.10.2",
+    "db-migrate-pg": "^0.2.5",
+    "express": "^4.16.2",
+    "express-promise-router": "^2.0.0",
+    "heartbeats": "^5.0.1",
+    "lodash": "^4.17.4",
+    "lru-cache": "^4.1.1",
+    "pg": "^7.4.0",
+    "pg-pubsub": "^0.3.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "sequelize": "^4.28.6",
+    "sse-express": "^2.0.1-rc",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "html-webpack-plugin": "^2.30.1",
+    "uglifyjs-webpack-plugin": "^1.1.0",
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "webpack": "webpack",
+    "webpack-watch": "webpack --watch",
+    "heroku-postbuild": "npm run webpack"
+  }
+}
