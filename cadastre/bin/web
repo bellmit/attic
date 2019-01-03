@@ -1,0 +1,31 @@
+#!/bin/bash -e
+
+# See "Running in Production" in the API Star documentation at
+# <https://github.com/encode/apistar#running-in-production>
+
+# If the `PORT` environment variable is set, we're probably running on a
+# platform like Heroku that expects the application to bind to it. Otherwise,
+# default to port 5000. gunicorn will print the value on startup either way,
+# allowing administrators and developers to determine the server's base URL.
+#
+# See:
+# * <https://devcenter.heroku.com/articles/runtime-principles#web-servers>
+# * <https://devcenter.heroku.com/articles/dynos#web-dynos>
+
+PORT=${PORT:-5000}
+
+# Run the application with gunicorn. Note that the API Star documentation
+# recommends setting `--workers`. We omit this option: on our target platform,
+# this is controlled automatically using the `WEB_CONCURRENCY` environment
+# variable, which has a computed default based on the resources available at
+# runtime. Falling back to gunicorn's default configuration is safe enough, as
+# an administrator who discovers this is the wrong configuration can easily set
+# `WEB_CONCURRENCY` to override it.
+#
+# See:
+# * <https://devcenter.heroku.com/articles/python-gunicorn#basic-configuration>
+# * <http://docs.gunicorn.org/en/stable/settings.html#workers>
+
+exec gunicorn app:app \
+    --bind="0.0.0.0:${PORT}" \
+    --worker-class=meinheld.gmeinheld.MeinheldWorker
