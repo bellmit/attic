@@ -1,0 +1,37 @@
+#!/bin/bash -e
+
+cd "$(dirname "${0}")"
+
+HOSTKEYS=modules/ssh/files/hostkeys
+
+# filth begins
+alpha=192.168.50.20
+beta=192.168.50.21
+delta=192.168.50.22
+# filth ends, but see -v ip=... below
+
+echo "${ADDRESS}"
+
+echo -n > "${HOSTKEYS}"/ssh_known_hosts
+
+for host in alpha beta delta; do
+    for type in rsa dsa; do
+        ssh-keygen \
+            -N '' \
+            -C 'REMOVE BEFORE TAKEOFF' \
+            -t ${type} \
+            -f "${HOSTKEYS}"/"${host}"/"ssh_host_${type}_key"
+        awk \
+            -v host="${host}" \
+            -v ip="${!host}" \
+            '{ print host "," ip, $1, $2 }' \
+            "${HOSTKEYS}"/"${host}"/"ssh_host_${type}_key.pub" \
+            >> "${HOSTKEYS}"/ssh_known_hosts
+    done
+done
+
+ssh-keygen \
+    -N '' \
+    -C 'postgres@all' \
+    -t rsa \
+    -f modules/postgresql/files/ssh/id_rsa

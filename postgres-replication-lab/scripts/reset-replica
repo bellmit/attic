@@ -1,0 +1,33 @@
+#!/bin/bash -e
+
+MASTER=$1
+SOURCE=${2:-$MASTER}
+
+VERSION=9.2
+CLUSTER=main
+PGDATA=/var/lib/postgresql/$VERSION/$CLUSTER
+
+export PGUSER=replication
+export PGPASSWORD=replication
+export PGDATABASE=postgres
+
+pg_ctlcluster $VERSION $CLUSTER stop || true
+
+psql -h $SOURCE -c "SELECT pg_start_backup('resync-replica', TRUE);"
+rsync \
+    -aczv \
+    --del \
+    --delete-excluded \
+    --exclude postmaster.pid \
+    --exclude 'pg_xlog/*' \
+    $SOURCE:$PGDATA/ \
+    $PGDATA
+psql -h $SOURCE -c "SELECT pg_stop_backup();"
+
+cat > $PGDATA/recovery.conf <<RECOVERY_CONF
+standby_mode = on
+recovery_target_timeline = latest
+primary_conninfo = 'host=$MASTER port=5432 user=$PGUSER password=$PGPASSWORD dbname=$PGDATABASE'
+RECOVERY_CONF
+
+pg_ctlcluster $VERSION $CLUSTER start

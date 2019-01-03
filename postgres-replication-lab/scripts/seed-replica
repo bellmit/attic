@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+SOURCE=$1
+
+VERSION=9.2
+CLUSTER=main
+PGDATA=/var/lib/postgresql/$VERSION/$CLUSTER
+
+pg_ctlcluster $VERSION $CLUSTER stop || true
+
+rsync \
+    -aczv \
+    --del \
+    --delete-excluded \
+    --exclude postmaster.pid \
+    --exclude 'pg_xlog/*' \
+    $SOURCE:$PGDATA/ \
+    $PGDATA
