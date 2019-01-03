@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+# Based on the 'asadmin' command from Glassfish 3.1.2.2.
+# Do not distribute.
+
+# Differences from stock: can be run from /usr/local/bin. The stock asadmin
+# assumes it's being run from within the glassfish installation tree.
+
+# Always use JDK 1.6 or higher
+AS_INSTALL='/opt/glassfish/glassfish3/glassfish'
+AS_INSTALL_LIB="$AS_INSTALL/modules"
+. "${AS_INSTALL}/config/asenv.conf"
+JAVA=java
+#Depends upon Java from ../config/asenv.conf
+if [ ${AS_JAVA} ]; then
+    JAVA=${AS_JAVA}/bin/java
+fi
+
+exec "$JAVA" -jar "$AS_INSTALL_LIB/admin-cli.jar" "$@"
+
