@@ -1,0 +1,19 @@
+[package]
+name = "toot"
+version = "0.1.0"
+authors = ["Owen Jacobson <owen.jacobson@grimoire.ca>"]
+
+[dependencies.iron]
+version = "*"
+
+[dependencies.logger]
+git = "https://github.com/iron/logger.git"
+
+[dependencies.mustache]
+version = "*"
+
+[dependencies.router]
+version = "*"
+
+[dependencies.rustc-serialize]
+version = "*"
