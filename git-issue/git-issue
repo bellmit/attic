@@ -1,0 +1,227 @@
+#!/usr/bin/env python
+
+import sys
+import subprocess as s
+import optparse as o
+import urllib2 as u
+import json as j
+import re
+import os
+import errno
+
+REDMINE = 'https://redmine.2ndsiteinc.com%s'
+REMOTE = 'origin'
+UPSTREAM = '%s/master' % (REMOTE,)
+
+SUBJECT_MANGLES = [
+    (re.compile(r"'"), ''),
+    (re.compile(r'[^a-zA-Z0-9]+'), '-'),
+]
+
+PREPARE_COMMITMSG_HOOK=[
+    '#!/bin/bash -e\n',
+    '### git-issue hook\n',
+    '{self} --prepare-commit-msg "$@"\n',
+    '{chain}\n',
+]
+
+def parse_args():
+    p = o.OptionParser(
+        usage="%prog [options] NUMBER [DESCRIPTION]",
+        description="streamline management of local issue branches"
+    )
+    p.add_option(
+        '--install',
+        action='store_true',
+        default=False,
+        help='Install hooks.',
+    )
+    p.add_option(
+        '--prepare-commit-msg',
+        action='store_true',
+        default=False,
+        help='Act as a prepare-commit-msg hook and insert "See #1234: " at the start of the commit message.',
+    )
+    options, args = p.parse_args()
+    if options.install:
+        return options, None, None
+    elif len(args) < 1:
+        p.print_help()
+        p.exit(1)
+    elif len(args) == 1:
+        return options, args[0], None
+    return options, args[0], ' '.join(args[1:])
+
+def check_output(*popenargs, **kwargs):
+    Popen = s.Popen
+    PIPE = s.PIPE
+    if sys.version_info >= (2, 7):
+        CalledProcessError = s.CalledProcessError
+    else:
+        CalledProcessError = lambda retcode, cmd, output: s.CalledProcessError(retcode, cmd)
+    # Code below cribbed verbatim from Python 2.7's subprocess module for use
+    # on Python 2.6.
+    r"""Run command with arguments and return its output as a byte string.
+    
+    If the exit code was non-zero it raises a CalledProcessError.  The
+    CalledProcessError object will have the return code in the returncode
+    attribute and output in the output attribute.
+    
+    The arguments are the same as for the Popen constructor.  Example:
+    
+    >>> check_output(["ls", "-l", "/dev/null"])
+    'crw-rw-rw- 1 root root 1, 3 Oct 18  2007 /dev/null\n'
+    
+    The stdout argument is not allowed as it is used internally.
+    To capture standard error in the result, use stderr=STDOUT.
+    
+    >>> check_output(["/bin/sh", "-c",
+    ...               "ls -l non_existent_file ; exit 0"],
+    ...              stderr=STDOUT)
+    'ls: non_existent_file: No such file or directory\n'
+    """
+    if 'stdout' in kwargs:
+        raise ValueError('stdout argument not allowed, it will be overridden.')
+    process = Popen(stdout=PIPE, *popenargs, **kwargs)
+    output, unused_err = process.communicate()
+    retcode = process.poll()
+    if retcode:
+        cmd = kwargs.get("args")
+        if cmd is None:
+            cmd = popenargs[0]
+        raise CalledProcessError(retcode, cmd, output=output)
+    return output
+
+
+def git(*args):
+    return check_output(('git',) + args)
+
+def current_branch():
+    try:
+        return git('symbolic-ref', 'HEAD')
+    except s.CalledProcessError, e:
+        # "Not on a branch" (and also possibly "not in a git repo" :-\ )
+        if e.returncode == 128:
+            return None
+
+def fetch_issue(issue):
+    issue_path = '/issues/%s.json' % (issue,)
+    response = u.urlopen(REDMINE % issue_path)
+    return j.load(response)
+
+def name_issue_branch(issue, description):
+    summary = description
+    for pattern, replacement in SUBJECT_MANGLES:
+        summary = re.sub(pattern, replacement, summary)
+    assert ' ' not in summary
+    summary = summary.strip('-')
+    summary = summary.lower()
+    return 'issue-{issue}-{summary}'.format(summary=summary, issue=issue)
+
+def is_issue_branch(branch, issue):
+    return branch_issue(branch) == issue
+
+def branch_issue(branch):
+    if branch is None:
+        return None
+    if branch.startswith('refs/heads/'):
+        branch = branch[len('refs/heads/'):]
+    if branch.startswith('issue-'):
+        issue = ''
+        for char in branch[len('issue-'):]:
+            if char == '-':
+                break
+            issue += char
+        return issue
+    else:
+        return None
+
+def branches():
+    branch_list = git('branch')
+    assert branch_list[-1] == "\n"
+    lines = branch_list[:-1].split("\n")
+    return [line[2:] for line in lines] # strip leading '  ' or '* '
+
+def summarize(issue_json):
+    # Turn first-level keys (only; not values or nested keys) into ASCII for compat with
+    # Python < 2.6.5.
+    issue_json = dict((k.encode('US-ASCII'), v) for k, v in issue_json.iteritems())
+    return "Working on [{issue[project][name]}] #{issue[id]}: {issue[subject]}".format(**issue_json)
+
+def install_hooks():
+    git_dir = git('rev-parse', '--git-dir')[:-1]
+    hooks = os.path.join(git_dir, 'hooks')
+    prepare_commit_msg = os.path.join(hooks, 'prepare-commit-msg')
+    try:
+        with open(prepare_commit_msg, 'r') as input:
+            lines = input.readlines()
+            if lines[:2] == PREPARE_COMMITMSG_HOOK[:2]:
+                return # hook already installed
+        os.rename(prepare_commit_msg, prepare_commit_msg + ".git-issue-chain")
+        chain = prepare_commit_msg + '.git-issue-chain "$@"'
+    except IOError, e:
+        # Not found is fine, we're about to create it.
+        if e.errno != errno.ENOENT:
+            raise
+        else:
+            chain = ""
+    with open(prepare_commit_msg, 'w') as output:
+        for line in PREPARE_COMMITMSG_HOOK:
+            self = os.path.abspath(sys.argv[0])
+            output.write(line.format(self=self, chain=chain))
+    os.chmod(prepare_commit_msg, 0755)
+
+def become_issue_branch(issue, description):
+    if git('status', '--porcelain') != '':
+        print >>sys.stderr, "Uncommitted changes found in working tree"
+        return 2
+    
+    branch = current_branch()
+    if is_issue_branch(branch, issue):
+        # Already on the correct issue branch. Do nothing; don't even validate
+        # that the issue exists in Redmine.
+        return 0
+    
+    # Retrieve issue metadata from Redmine
+    issue_json = fetch_issue(issue)
+        
+    for branch in branches():
+        if is_issue_branch(branch, issue):
+            git('checkout', branch)
+            print summarize(issue_json)
+            return 0
+
+    if description is None:
+        name = name_issue_branch(issue_json['issue']['id'], issue_json['issue']['subject'])
+    else:
+        name = name_issue_branch(issue, description)
+    
+    git('fetch', REMOTE)
+    git('checkout', UPSTREAM, '-b', name)
+    print summarize(issue_json)
+    return 0
+
+def prepare_commit_msg_hook(filename):
+    branch = current_branch()
+    issue = branch_issue(branch)
+    if issue is None:
+        return 0
+    temp = filename + '.git-issue-tmp'
+    with open(filename, 'r') as input:
+        with open(temp, 'w') as output:
+            print >>output, "See #%s: " % (issue,)
+            for line in input:
+                output.write(line)
+    os.rename(temp, filename)
+    return 0
+
+def main():
+    options, issue, description = parse_args()
+    if options.install:
+        return install_hooks()
+    if options.prepare_commit_msg:
+        return prepare_commit_msg_hook(issue)
+    return become_issue_branch(issue, description)
+
+if __name__ == '__main__':
+    sys.exit(main())
