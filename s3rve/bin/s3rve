@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require './lib/s3rve/cli'
+require './lib/s3rve'
+
+opts = S3rve::Cli.options
+if opts.args.length != 1
+  S3rve::Cli.usage opts
+end
+site_config = opts.args.first
+
+publication = S3rve.publish! site_config
+
+puts JSON.pretty_generate publication
