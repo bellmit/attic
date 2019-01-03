@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath group: 'com.github.jengelman.gradle.plugins', name: 'shadow', version: '1.2.1'
+    }
+}
+
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'idea'
+
+group = 'com.example.dropwizard'
+mainClassName = 'com.example.dropwizard.MigrationsApp'
+
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    ext {
+        dropwizardVersion = '0.8.0'
+        hibernateVersion = '4.3.8.Final'
+    }
+
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-hibernate', version: dropwizardVersion
+    compile group: 'org.hibernate', name: 'hibernate-core', version: hibernateVersion
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: hibernateVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-migrations', version: dropwizardVersion
+    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: '0.0.1'
+    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-db', version: '0.1.0'
+}
+
+shadowJar {
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    mergeServiceFiles()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:all'
+}
+
+tasks.assemble {
+    dependsOn 'shadowJar'
+}
+
+task stage {
+    dependsOn 'shadowJar'
+}
+
+tasks.run {
+    args = ['server']
+}
