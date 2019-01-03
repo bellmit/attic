@@ -1,0 +1,13 @@
+{
+    "name": "Cadastre",
+    "description": "A document registry service for the Game of Agora",
+    "logo": "https://agoranomic.org/coat_of_arms.png",
+    "buildpacks": [
+        { "url": "https://github.com/ojacobson/heroku-buildpack-build-config" },
+        { "url": "heroku/nodejs" },
+        { "url": "heroku/python" }
+    ],
+    "addons": [
+        "heroku-postgresql"
+    ]
+}
