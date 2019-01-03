@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+"""trigger Jenkins builds via Git
+
+Jenkins builds that support "Trigger Build Remotely" can be triggered using
+this command. To use this command, you must provide the following
+configuration items:
+
+    [jenkins]
+        url = https://builds.example.com/
+        job = my-build-name
+        token = A SECRET VALUE
+
+"""
+
+import urllib as ul
+import urllib2 as ul2
+import urlparse as up
+import posixpath as path
+import argparse as ap
+import sys
+import subprocess as sp
+
+class IncompleteConfig(Exception):
+    pass
+
+def build_url(url, job, token, cause=None):
+    """Concocts the URL for triggering a build, given a Jenkins base URL,
+    the job name, and the build token. This will also include the build cause
+    if it's included and not false-like.
+    """
+    parts = up.urlsplit(url)
+    
+    urlpath = path.join(parts.path, 'job', job, 'build')
+    
+    query = up.parse_qs(parts.query, keep_blank_values=True)
+    query['token'] = token
+    if cause:
+        query['cause'] = cause
+    urlquery = ul.urlencode(query)
+    
+    return up.urlunsplit(parts._replace(path=urlpath, query=urlquery))
+
+def trigger_build(url, job, token, cause=None):
+    if url is None or job is None or token is None:
+        raise IncompleteConfig
+    
+    ul2.urlopen(build_url(url, job, token, cause))
+
+def parse_args():
+    parser = ap.ArgumentParser(
+        description="Trigger a Jenkins build from a Git repository."
+    )
+    parser.add_argument(
+        '-c', '--cause',
+        default=None,
+        metavar='CAUSE',
+        help='include build cause message'
+    )
+    parser.add_argument(
+        '-o', '--optional',
+        action='store_const',
+        default=False,
+        const=True,
+        help='silently ignore incomplete configuration'
+    )
+    return parser.parse_args()
+
+def read_config(key, default):
+    """Reads a value from `git-config`. If the value is not in the config,
+    returns the default value, instead.
+    """
+    try:
+        # remove trailing newline
+        return sp.check_output(['git', 'config', key])[:-1]
+    except sp.CalledProcessError:
+        return default
+
+def main():
+    """trigger a build in the configured Jenkins server
+    
+    If the '--cause' argument is provided, it will be passed along to Jenkins
+    as the cause of the build.
+    
+    If build is run with '--optional', incomplete configuration will cause
+    the build not to be submitted and the command will exit successfully.
+    Otherwise, the command will fail if the build configuration is incomplete.
+    """
+    try:
+        args = parse_args()
+        
+        url = read_config('jenkins.url', None)
+        job = read_config('jenkins.job', None)
+        token = read_config('jenkins.token', None)
+        
+        trigger_build(url, job, token, args.cause)
+    except IncompleteConfig:
+        if not args.optional:
+            print('Incomplete build config.')
+            return 3
+    except ul2.HTTPError as e:
+        print('Failed to submit build: %s' % e)
+        return 2
+    except ul2.URLError as e:
+        print('Failed to submit build: %s' % e.reason)
+        return 2
+
+if __name__ == '__main__':
+    sys.exit(main())
