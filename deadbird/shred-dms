@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import tweepy
+import click
+
+from deadbird import client
+
+def shred_dms(api):
+    for dm in tweepy.Cursor(api.direct_messages).items():
+        api.destroy_direct_message(dm.id)
+    for dm in tweepy.Cursor(api.sent_direct_messages).items():
+        api.destroy_direct_message(dm.id)
+
+@click.command()
+def main():
+    """Delete your DMs.
+    """
+    api = client.make_api()
+
+    shred_dms(api)
+
+
+if __name__ == '__main__':
+    main()

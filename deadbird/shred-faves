@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import click
+
+from deadbird import client
+
+def shred_favorites(api):
+    favorites = api.favorites()
+    while len(favorites) > 0:
+        for status in favorites:
+            api.destroy_favorite(status.id)
+        favorites = api.favorites()
+
+@click.command()
+def main():
+    """Delete your Twitter faves/stars.
+    """
+    api = client.make_api()
+
+    shred_favorites(api)
+
+
+if __name__ == '__main__':
+    main()

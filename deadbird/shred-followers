@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import tweepy
+import click
+
+from deadbird import client
+
+def shred_followers(api):
+    me = api.me()
+    for follower in api.followers_ids(me):
+        api.create_block(follower)
+        api.destroy_block(follower)
+
+@click.command()
+def main():
+    """Force everyone to unfollow you, using the softblock trick.
+    """
+    api = client.make_api()
+
+    shred_followers(api)
+
+
+if __name__ == '__main__':
+    main()
