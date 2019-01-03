@@ -1,0 +1,41 @@
+if (5)
+    return "bare if";
+endif
+
+if (#3)
+    return "if-else if";
+else
+    return "if-else else";
+endif
+
+if (e_perm)
+    return "if-elseif-else if";
+elseif (0)
+    return "if-elseif-else elseif";
+else
+    return "if-elseif-else else";
+endif
+
+if (e_perm)
+    return "if-elseif-elseif if";
+elseif (0)
+    return "if-elseif-elseif elseif (1)";
+elseif (6)
+    return "if-elseif-elseif elseif (2)";
+endif
+
+if ("empty if")
+endif
+
+if ("empty if-elseif if")
+elseif ("empty if-elseif else")
+endif
+
+if ("empty if-else if")
+else
+endif
+
+if ("empty if-elseif-else if")
+elseif("empty if-elseif-else elseif")
+else
+endif

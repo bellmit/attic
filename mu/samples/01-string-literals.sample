@@ -1,0 +1,4 @@
+"String literals as bare expressions are used for (preserved) comments.";
+"Many of them may appear in a single program.";
+"This program returns zero.";
+"Strings can contain \" quotes and \\ backslashes.";
