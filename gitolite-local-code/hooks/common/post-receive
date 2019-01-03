@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+HOOKS="$(dirname "$0")"
+
+# Capture stdin for replay into individual hooks.
+REFS=$(cat)
+
+for hook in "$HOOKS"/post-receive.d/*; do
+    echo "$REFS" | "$hook"
+done

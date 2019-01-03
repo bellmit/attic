@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+# If the repository has a 'hooks.post-receive-command' configuration item,
+# run it as a tiny, tiny shell script. Otherwise, do nothing.
+
+COMMAND="$(git config --local --get hooks.post-receive-command)"
+
+if [ ! -z "$COMMAND" ]; then
+    bash -c "$COMMAND"
+fi
