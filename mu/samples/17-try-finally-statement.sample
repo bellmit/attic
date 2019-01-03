@@ -1,0 +1,5 @@
+try
+    "Try body.";
+finally
+    "Finally body.";
+endtry

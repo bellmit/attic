@@ -1,0 +1,63 @@
+try
+except (e_range)
+endtry
+
+try
+except (any)
+endtry
+
+try
+except (e_range, e_perm)
+endtry
+
+try
+except (@foo)
+endtry
+
+try
+except (e_range)
+except (e_perm)
+endtry
+
+try
+except (e_range)
+except (e_perm)
+except (any)
+endtry
+
+try
+except foo (e_invind)
+endtry
+
+try
+    "One error try body";
+except (e_range)
+    "One error except body";
+endtry
+
+try
+    "One any try body";
+except (any)
+    "One any except body";
+endtry
+
+try
+    "One except (two errors) try body";
+except (e_range, e_perm)
+    "One except (two errors) except body";
+endtry
+
+try
+    "Two except try body";
+except (e_range)
+    "FIRST two-except except body";
+except (e_perm)
+    "SECOND two-except except body";
+endtry
+
+/* Surprise! Try-catch with non-error catch values is legal, but meaningless. */
+try
+    "Surprises";
+except (1, 2, @{3, 4, 5})
+    "are great.";
+endtry
