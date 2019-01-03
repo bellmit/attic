@@ -1,0 +1,54 @@
+Proposal: The Treasuror
+Adoption index: 2.0
+Authors: o
+Co-authors:
+
+Create a new rule, titled "The Treasuror", with power 1, with the
+following text:
+
+    The Treasuror is an office. If the backing document of an asset
+    does not specify a recordkeepor, the Treasuror is the recordkeepor
+    of that asset.
+
+    The Treasuror's weekly report includes
+
+    * A list of all transfers, creations, destructions, transmutations,
+      and other changes to assets for which the Treasuror is the
+      recordkeepor that have taken place in the previous two weeks, and
+
+    * A list of all existing assets for which the Treasuror is the
+      recordkeepor, along with their owners.
+
+Amend rules 248 ("Economics"), replacing all occurrences of
+"Secretary" with "Treasuror".
+
+If proposal 7846 ("Real Estate") has passed, amend rule 2485 ("You
+Can't Take It With You"), replacing its text entirely with:
+
+    "Heir" is a person switch, tracked by the Treasuror, whose value is
+    either empty, or a player other tham emself. Each person's Heir is
+    empty by default. A player may flip eir Heir by announcement.
+
+    When a player is deregistered, if eir Heir switch is not empty, e
+    automatically pays all of eir Shinies and Estates to their Heir
+    immediately before deregistration. Otherwise, if eir Heir switch is
+    empty, e automatically pays all of eir Shinies and Estates to Agora
+    immediately before deregistration.
+
+If proposal 7846 ("Real Estate") has not passed, amend rule 2485 ("You
+Can't Take It With You"), replacing its text entirely with:
+
+    "Heir" is a person switch, tracked by the Treasuror, whose value is
+    either empty, or a player other tham emself. Each person's Heir is
+    empty by default. A player may flip eir Heir by announcement.
+
+    When a player is deregistered, if eir Heir switch is not empty, e
+    automatically pays all of eir Shinies to their Heir immediately
+    before deregistration. Otherwise, if eir Heir switch is empty, e
+    automatically pays all of eir Shinies to Agora immediately before
+    deregistration.
+
+Make o the Treasuror.
+
+If proposal 7846 ("Real Estate") has passed, repeal the rule "The
+Surveyor".

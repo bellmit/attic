@@ -1,0 +1,32 @@
+Agoran Credit Union report
+
+Date of this report: Sun, 14 May 2017
+Date of last report: Sun,  7 May 2017
+
+
+Recent events (all times UTC)
+
+Mon 24 Apr 00:00:00  Union Credits increase (ais523 +90, aranea +150,
+                      nichdel +225, Murphy +150, o +150, omd +60,
+                      Sprocklem +60)
+Thu 27 Apr 05:33:46  nichdel leaves ACU
+----- previous report -----
+Mon  1 May 00:00:00  Union Credits increase (ais523 +90, aranea +150,
+                      Murphy +150, o +150, omd +60, Sprocklem +60)
+----- time of last report -----
+Mon  8 May 00:00:00  Union Credits increase (ditto)
+----- future events -----
+Mon  15May 00:00:00  Union Credits will increase (ditto)
+
+Events marked with a ! are provisional until the status of Quazie's
+actions is resolved.
+
+
+Member     Budget     Union Credits
+-----------------------------------
+ais523       30           6540
+aranea       50           7350
+Murphy       50          11400
+o            50          10200
+omd          20           3840
+Sprocklem    20           3780

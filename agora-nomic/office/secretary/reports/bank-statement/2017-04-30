@@ -1,0 +1,51 @@
+Agoran Credit Union report
+
+Date of this report: Sun, 30 Apr 2017
+Date of last report: Sun, 23 Apr 2017
+
+
+Recent events (all times UTC)
+
+Mon 16 Jan 00:00:00
+Mon 23 Jan 00:00:00  Union Credits increase (ais523 +90, aranea +150,
+                      nichdel +225, Murphy +150, o +150, omd +60,
+                      Sprocklem +60)
+----- previous report -----
+Mon 30 Jan 00:00:00  Union Credits increase (ditto)
+Mon  6 Feb 00:00:00  Union Credits increase (ditto)
+Mon 13 Feb 00:00:00  Union Credits increase (ditto)
+Mon 20 Feb 00:00:00  Union Credits increase (ditto)
+Mon 27 Feb 00:00:00  Union Credits increase (ditto)
+Mon  6 Mar 00:00:00  Union Credits increase (ditto)
+Mon 13 Mar 00:00:00  Union Credits increase (ditto)
+Mon 20 Mar 00:00:00  Union Credits increase (ditto)
+Mon 27 Mar 00:00:00  Union Credits increase (ditto)
+Mon  3 Apr 00:00:00  Union Credits increase (ditto)
+Mon 10 Apr 00:00:00  Union Credits increase (ditto)
+Sun 16 Apr 21:04:27 !Quazie joins ACU (100 Budget)
+Mon 17 Apr 00:00:00 !Union Credits increase (ais523 +90, aranea +150,
+                      nichdel +225, Murphy +150, o +150, omd +60,
+                      Quazie +300, Sprocklem +60)
+Wed 19 Apr 23:29:03 !Quazie declared Bankrupt
+----- time of last report -----
+Mon 24 Apr 00:00:00  Union Credits increase (ais523 +90, aranea +150,
+                      nichdel +225, Murphy +150, o +150, omd +60,
+                      Sprocklem +60)
+Thu 27 Apr 05:33:46  nichdel leaves ACU
+----- future events -----
+Mon  1 May 00:00:00  Union Credits will increase (ais523 +90,
+                      aranea +150, Murphy +150, o +150, omd +60,
+                      Sprocklem +60)
+
+Events marked with a ! are provisional until the status of Quazie as a
+player is resolved.
+
+
+Member     Budget     Union Credits
+-----------------------------------
+ais523       30           6360
+aranea       50           7050
+Murphy       50          11100
+o            50           9900
+omd          20           3720
+Sprocklem    20           3660

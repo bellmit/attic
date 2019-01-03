@@ -1,0 +1,308 @@
+Secretary's Monthly Report
+
+Date of this report: Mon  1 May 2017
+Date of last report: Wed  1 Feb 2017
+
+
+Recent events (all times UTC)
+
+----- previous report -----
+----- time of last report -----
+Thu, 27 Apr 2017 05:33:46  nichdel creates Organization "AAaAA"
+
+
+[Agoran Award and Achivement Association]
+
+An amendment to this Organization is Appropriate if intent to perform
+it was announced between 4 and 14 days ago, and no members of the
+Organization have publicly objected to it since.
+
+When a member of this organization pays any number of shinies to this
+organization they receive as many Proxies as paid shinies.
+
+Once a month any member of this organization may initiate a Voting
+Session. A Voting Session lasts 7 days. During the Voting Session,
+each member may cast a number of votes equal to eir number of Proxies,
+with valid votes being any entity that has a Balance switch. When a
+Voting Session ends, this Organization shall pay X/Y rounded down to
+each entity with the highest number of votes where X is the shinies
+this organization has in its Budget and Y is the number of entities
+to pay. All remaining shinies shall be paid to Agora. All members have
+0 Proxies when a Voting Session ends.
+
+
+[The Agoran Betting Market]
+
+An amendment to this Organization is Appropriate if intent to perform
+it was announced between 4 and 14 days ago, and no members of the
+Organization have publicly objected to it since.
+
+References to a person's Budget Switch in this Charter refer to the
+Budget Switch for the pair consisting of that person and this
+Organization.
+
+For the purposes of Bets made under the provisions of this
+Organization, a reference to an Agoran Decision on whether to adopt a
+proposal can be made by instead referencing the proposal itself, unless
+doing so would be ambiguous.
+
+Any non-member of this Organization can join it via flipping eir Budget
+Switch to 25.
+
+Any member of this Organization whose Budget Switch is currently 25 or
+less, and who has not authored any unResolved Bets that are Covered by
+a Bet with an author other than emself, can leave it via flipping eir
+Budget Switch to 0.
+
+A Bet is a portion of an announcement, labelled as a Bet, that is
+authored by a member of this Organization and contains the following
+information:
+
+Deadline: a moment in the future, defined either by its date, or by
+specifying an event that could potentially happen in the future but
+that has not yet occurred (e.g. "the resolution of Proposal 9999"), in
+which case the Deadline is the first occurrence of such an event;
+Odds: two positive integers separated by a hyphen (e.g. 3-1);
+Event: a statement in the future tense about a property of Agora's
+gamestate, which is evaluated at the time stated in the Deadline.
+
+If two Bets have the same Deadline, reverse Odds (i.e. the number
+before the hyphen and the number after the hyphen are swapped), and
+Events which are negations of each other (i.e. one is necessarily true
+whenever the other is false, and vice versa), the Bets are stated to
+Complement each other. For each bet, the first bet that Complements it
+and has not previously Covered another bet is said to Cover that bet.
+Exception: if a Bet is not Covered by its Deadline, it cannot Cover or
+be Covered by another Bet subsequently.
+
+A statement by a member of this Organization that e "covers" a Bet is
+interpreted as an announcement that would be a Bet that Covers it, if
+such a bet is possible (i.e. if the Bet is unCovered and its Deadline
+has not occurred).
+
+A statement by a member of this Organization that e "withdraws" a Bet
+that e authored is interpreted as though that member had announced that
+e covered that Bet.
+
+If a Bet is Covered and its Deadline has passed, it has not previously
+been Resolved, and the Bet and the Bet that Covers it have different
+authors, any member of this contract can Resolve it. To do so, e flips
+the Bet's author's Budget Switch as follows:
+
+- If the Bet's Event was true when the Deadline occurred, the switch is
+reduced by the integer before the hyphen in the Bet's Odds;
+
+- If the Bet's Event was false when the Deadline occurred, the switch
+is increased by the integer after the hyphen in the Bet's Odds.
+
+Members of this Organization are strongly encouraged to Resolve a Bet
+and the Bet that Covers it within the same message. They are also
+encouraged to identify the Bet, and the Bet that Covers it, via quoting
+the original messages containing them.
+
+
+[The Agoran Credit Union]
+
+ * All actions described by this Charter and pertaining to
+   Organizations are limited in scope to this Organization.
+
+ * An amendment is Appropriate if intent to perform it was announced
+   between 4 and 14 days ago, and no members have publicly objected to
+   it since.
+
+ * A person flipping eir own Budget Switch is Appropriate unless
+   Income would be lower than the Income Floor (50 if not defined by
+   the rules).
+
+ * Each member has a number of Union Credits, initially zero. At the
+   end of each week, each member gains a number of Union Credits
+   equal to three times eir Budget Switch.
+
+
+[The Agoran Voting Market]
+
+    [Preamble]
+
+This section is a non-normative, non-binding summary of the intent of this
+Organization. When resolving disputes, determining whether actions are
+Appropriate, or otherwise regulating the operation of this Organization, do not
+refer to any paragraph in this section other than this one. This section ends
+immediately after the line containing “[The Charter]”.
+
+Members of this organization may freely enter into binding agreements to buy
+and sell votes on Agoran decisions. As votes are non-transferrable, sales are
+realized through voting instructions from the buyer to the seller member. The
+terms of the sale - the identities of the parties, the price paid, the number
+of votes purchased, and the bond with which performance is secured - will be
+public, but the actual voting instructions may be provided privately if the
+parties so choose.
+
+To secure performance, a player buying votes must place their bid in escrow
+with this Organization, and a player selling votes must place a bond, which is
+forfeit if the seller violates the agreement. The price of a vote is
+unregulated, so as to allow a market to develop. The size of a bond, however,
+floats with the price to pend Agoran proposals, and thus with the nominal value
+of a vote.
+
+Finally, this Charter provides for an informal dispute resolution system to
+resolve contracts under this Charter where the seller reneges, or where the
+buyer and seller disagree. Every member of this Organization has the authority
+to object to any resolution of any contract other than one to which they are a
+party.
+
+    [The Charter]
+
+Where it appears in these rules, terms defined in Rule 1728 "Dependent Actions"
+are to be interpreted as under that rule, except that only attempts by members
+of this organization to support or to object to an action are effective.
+
+Actions permitted by this charter are always Appropriate. Actions forbidden by
+this charter are never Appropriate.
+
+All actions described by this Charter and pertaining to Organizations are
+limited in scope to this Organization.
+
+Members of this Organization may amend this Charter with notice.
+
+An amendment to this Charter is Appropriate if intent to perform it was
+announced between 4 and 14 days ago, and no members have publicly objected to
+it since.
+
+Any player may join this Organization by flipping eir Budget switch for this
+Organization to a positive value, by announcement.
+
+Any member of this Organization may leave this Organization by flipping eir
+Budget switch for this Organization to zero, by announcement.
+
+A tender is a document unambiguously specifying:
+
+    * A price, which must be an integer greater than zero; and
+    * A vote count, which must be an integer greater than zero.
+
+A sell tender is a tender which additionally specifies:
+
+    * A bond, which must be an integer greater than zero; and
+    * A seller, which must be a player.
+
+A member of this Organization can pay this Organization an amount equal to the
+current Pending List Price to create a sell tender by announcement. The sell
+tender's bond must be equal to the amount paid, and the sell tender's seller
+must be that member. The seller may set the price and vote count to
+any pair of integers, each greater than zero.
+
+A player may cause this Organization to pay emself an amount equal to the bond
+of any sell tender, if they are the seller on that tender, to retract that sell
+tender by announcement.
+
+A buy tender is a tender which additionally specifies:
+
+    * A buyer, which must be a player.
+
+A member of this Organization can pay this Organization any number of shinies
+to create a buy tender by announcement. The buy tender's price must be equal to
+the amount paid, and the buy tender's buyer must be the name of that member.
+The buyer may set the vote count to integer greater than zero.
+
+A player may cause this Organization to pay emself an amount equal to the price
+of any buy tender, if they are the buyer on that tender, to retract that buy
+tender by announcement.
+
+A sale contract is a document unambiguously specifying the following facts:
+
+    * A price, which must be an integer greater than zero; and
+    * A bond, which must be an integer greater than zero; and
+    * A vote count, which must be an integer greater than zero; and
+    * A buyer, which must be a player; and
+    * A seller, which must be a player.
+
+A member of this Organization can pay this Organization an amount equal to the
+price of a sell tender to accept that tender by announcement and convert it
+into a sale contract. E becomes the buyer of that sale contract. The seller,
+vote count, price, and bond of the sell tender become the seller, vote count,
+price, and bond of the sale contract, respectively.
+
+A member of this Organization can pay this Organization an amount equal to the
+current Pending List Price to accept a buy tender by announcement and convert
+it into a sale contract. E becomes the seller, and the amount e paid becomes
+the bond, of that sale contract. The buyer, price, and vote count of the buy
+tender become the buyer, price, and vote count of the sale contract,
+respectively.
+
+Clauses to the contrary notwithstanding, no player may accept a retracted
+tender.
+
+Clauses to the contrary notwithstanding, no player may become either the buyer
+or the seller of a sale contract without eir consent. Consent shall be
+indicated by publicly accepting a buy tender or a sell tender as described in
+this Charter.
+
+An Agoran Decision is within the scope of a sale contract if the seller has not
+yet voted in a number of resolved Agoran Decisions equal to the vote count of
+that contract. For the purposes of this Charter, the seller has voted in an
+Agoran Decision if and only if they have cast a valid ballot on that decision,
+and not retracted or replaced it, and the Agoran Decision has been resolved.
+
+The buyer of a sale contract may provide the seller with voting instructions
+for any Agoran Decision within the scope of the sale contract. The buyer may
+communicate these voting instructions by any means the buyer and seller find
+mutually acceptable.
+
+Either the buyer or the seller of a sale contract may cause this Organization
+to pay the seller an amount equal to the price of the contract plus the bond of
+the contract to satisfy the contract without objection from the buyer, if the
+seller has voted on a number of Agoran Decisions equal to or greater than the
+vote count of the contract.
+
+Clauses to the contrary notwithstanding, a satisfied contract may not be
+satisfied or declared breached.
+
+The buyer of a contract may cause this Organization to pay emself an amount
+equal to the sale price of the contract, and, in the same message, to pay Agora
+an amount equal to the contract's bond to declare a contract breached, without
+objection from members of this Organization other than the seller.
+
+When stating an intention to declare a contract breached, the buyer must
+unambiguously identify the Agoran Decision in which the seller voted, and the
+voting instruction the seller has failed to satisfy.
+
+Members other than the seller SHOULD object to the intention if, in their
+opinion, the seller has satisfied the buyer's voting instructions.
+
+Clauses to the contrary notwithstanding, a contract that has been declared
+breached may not be satisfied or declared breached.
+
+While any player has stated a valid intention to satisfy a contract, but that
+intention has not yet been resolved or allowed to expire, no attempt to declare
+that contract breached is effective.
+
+While any player has stated a valid intention to declare a contract breached,
+but that intention has not yet been resolved or allowed to expire, no attempt to
+declare that contract breached is effective.
+
+
+[蘭亭社]
+
+1. この憲章には、以下の同じ行に書かれている用語が同意義です。
+    * Agora, アゴラ, 阿呉羅
+    * Announcement, 公表
+    * Appropriate, ふさわしい, 相応しい
+    * The Budget Switch for the pair consisting of X and this Organization, Xの株
+    * CAN, 得る
+    * Charter, 憲章
+    * Duty, 義務
+    * Expenditure, 支出
+    * To flip (switch X to Y), (XがYに)変わる
+    * IMPOSSIBLE, 不可能
+    * Organization, 社
+    * Player, アゴラプレイヤー
+    * POSSIBLE, 可能
+    * SHOULD, べし
+    * Switch, スイッチ
+2. 当社の正式名称は「蘭亭社」で、「ランテイシャ」と読みます。
+3. 当社のメンバーならないアゴラプレイヤーは自分の株が１～５０に変わることによって弊社のメンバーになり得ます。
+4. 当社はアゴラプレイヤーの一員です。当社が滅びずに登録を解除することが不可能です。
+5. この憲章に記載されていない弊社に影響を及ぼす行為は全部相応しくないです。
+6. 相応しい修正箇条とは他のメンバーが日本語に反対していないでメンバーが４～１４日前公表した憲章の修正箇条です。
+7. すべてメンバーは自分の株が低い値に変わることがふさわしいです。
+8. 当社はメンバーが公表で賛成することによってスタンスを発表し得ます。賛成者の株より反対者の株のほうか多ければスタンスが撤廃します。
+9. メンバーの間で紛争はリーチ麻雀の東南戦によって解決されるべきであります。

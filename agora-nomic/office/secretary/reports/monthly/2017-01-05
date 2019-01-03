@@ -1,0 +1,128 @@
+Secretary's Monthly Report
+
+Date of this report: Thu  5 Jan 2017
+Date of last report: Thu  1 Dec 2016
+
+
+Recent events (all times UTC)
+
+Thu 10 Nov 22:28:55  The Agoran Betting Market charter amended (ais523)
+Sun 20 Nov 00:54:06  Organization "蘭亭社" created (天火狐)
+----- previous report -----
+----- time of last report -----
+
+
+[The Agoran Betting Market]
+
+An amendment to this Organization is Appropriate if intent to perform
+it was announced between 4 and 14 days ago, and no members of the
+Organization have publicly objected to it since.
+
+References to a person's Budget Switch in this Charter refer to the
+Budget Switch for the pair consisting of that person and this
+Organization.
+
+For the purposes of Bets made under the provisions of this
+Organization, a reference to an Agoran Decision on whether to adopt a
+proposal can be made by instead referencing the proposal itself, unless
+doing so would be ambiguous.
+
+Any non-member of this Organization can join it via flipping eir Budget
+Switch to 25.
+
+Any member of this Organization whose Budget Switch is currently 25 or
+less, and who has not authored any unResolved Bets that are Covered by
+a Bet with an author other than emself, can leave it via flipping eir
+Budget Switch to 0.
+
+A Bet is a portion of an announcement, labelled as a Bet, that is
+authored by a member of this Organization and contains the following
+information:
+
+Deadline: a moment in the future, defined either by its date, or by
+specifying an event that could potentially happen in the future but
+that has not yet occurred (e.g. "the resolution of Proposal 9999"), in
+which case the Deadline is the first occurrence of such an event;
+Odds: two positive integers separated by a hyphen (e.g. 3-1);
+Event: a statement in the future tense about a property of Agora's
+gamestate, which is evaluated at the time stated in the Deadline.
+
+If two Bets have the same Deadline, reverse Odds (i.e. the number
+before the hyphen and the number after the hyphen are swapped), and
+Events which are negations of each other (i.e. one is necessarily true
+whenever the other is false, and vice versa), the Bets are stated to
+Complement each other. For each bet, the first bet that Complements it
+and has not previously Covered another bet is said to Cover that bet.
+Exception: if a Bet is not Covered by its Deadline, it cannot Cover or
+be Covered by another Bet subsequently.
+
+A statement by a member of this Organization that e "covers" a Bet is
+interpreted as an announcement that would be a Bet that Covers it, if
+such a bet is possible (i.e. if the Bet is unCovered and its Deadline
+has not occurred).
+
+A statement by a member of this Organization that e "withdraws" a Bet
+that e authored is interpreted as though that member had announced that
+e covered that Bet.
+
+If a Bet is Covered and its Deadline has passed, it has not previously
+been Resolved, and the Bet and the Bet that Covers it have different
+authors, any member of this contract can Resolve it. To do so, e flips
+the Bet's author's Budget Switch as follows:
+
+- If the Bet's Event was true when the Deadline occurred, the switch is
+reduced by the integer before the hyphen in the Bet's Odds;
+
+- If the Bet's Event was false when the Deadline occurred, the switch
+is increased by the integer after the hyphen in the Bet's Odds.
+
+Members of this Organization are strongly encouraged to Resolve a Bet
+and the Bet that Covers it within the same message. They are also
+encouraged to identify the Bet, and the Bet that Covers it, via quoting
+the original messages containing them.
+
+
+[The Agoran Credit Union]
+
+ * All actions described by this Charter and pertaining to
+   Organizations are limited in scope to this Organization.
+
+ * An amendment is Appropriate if intent to perform it was announced
+   between 4 and 14 days ago, and no members have publicly objected to
+   it since.
+
+ * A person flipping eir own Budget Switch is Appropriate unless
+   Income would be lower than the Income Floor (50 if not defined by
+   the rules).
+
+ * Each member has a number of Union Credits, initially zero. At the
+   end of each week, each member gains a number of Union Credits
+   equal to three times eir Budget Switch.
+
+
+[蘭亭社]
+
+1. この憲章には、以下の同じ行に書かれている用語が同意義です。
+    * Agora, アゴラ, 阿呉羅
+    * Announcement, 公表
+    * Appropriate, ふさわしい, 相応しい
+    * The Budget Switch for the pair consisting of X and this Organization, Xの株
+    * CAN, 得る
+    * Charter, 憲章
+    * Duty, 義務
+    * Expenditure, 支出
+    * To flip (switch X　to Y), (XがYに)変わる
+    * IMPOSSIBLE, 不可能
+    * Organization, 社
+    * Player,　アゴラプレイヤー
+    * POSSIBLE, 可能
+    * SHOULD, べし
+    * Switch, スイッチ
+2. 当社の正式名称は「蘭亭社」で、「ランテイシャ」と読みます。
+3. 当社のメンバーならないアゴラプレイヤーは自分の株が１～５０に変わることによって弊社のメンバーになり得ます。
+4. 当社はアゴラプレイヤーの一員です。当社が滅びずに登録を解除することが不可能です。
+5. この憲章に記載されていない弊社に影響を及ぼす行為は全部相応しくないです。
+6. 相応しい修正箇条とは他のメンバーが日本語に反対していないでメンバーが４～１４日前公表した憲章の修正箇条です。
+7. すべてメンバーは自分の株が低い値に変わることがふさわしいです。
+8. 当社はメンバーが公表で賛成することによってスタンスを発表し得ます。賛成者の株より反対者の株のほうか多ければスタンスが撤廃します。
+9. メンバーの間で紛争はリーチ麻雀の東南戦によって解決されるべきであります。

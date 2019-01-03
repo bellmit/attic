@@ -1,0 +1,157 @@
+    [Preamble]
+
+This section is a non-normative, non-binding summary of the intent of this
+Organization. When resolving disputes, determining whether actions are
+Appropriate, or otherwise regulating the operation of this Organization, do not
+refer to any paragraph in this section other than this one. This section ends
+immediately after the line containing “[The Charter]”.
+
+Members of this organization may freely enter into binding agreements to buy
+and sell votes on Agoran decisions. As votes are non-transferrable, sales are
+realized through voting instructions from the buyer to the seller member. The
+terms of the sale - the identities of the parties, the price paid, the number
+of votes purchased, and the bond with which performance is secured - will be
+public, but the actual voting instructions may be provided privately if the
+parties so choose.
+
+To secure performance, a player buying votes must place their bid in escrow
+with this Organization, and a player selling votes must place a bond, which is
+forfeit if the seller violates the agreement. The price of a vote is
+unregulated, so as to allow a market to develop. The size of a bond, however,
+floats with the price to pend Agoran proposals, and thus with the nominal value
+of a vote.
+
+Finally, this Charter provides for an informal dispute resolution system to
+resolve contracts under this Charter where the seller reneges, or where the
+buyer and seller disagree. Every member of this Organization has the authority
+to object to any resolution of any contract other than one to which they are a
+party.
+
+    [The Charter]
+
+Where it appears in these rules, terms defined in Rule 1728 "Dependent Actions"
+are to be interpreted as under that rule, except that only attempts by members
+of this organization to support or to object to an action are effective.
+
+Actions permitted by this charter are always Appropriate. Actions forbidden by
+this charter are never Appropriate.
+
+All actions described by this Charter and pertaining to Organizations are
+limited in scope to this Organization.
+
+Members of this Organization may amend this Charter with notice.
+
+An amendment to this Charter is Appropriate if intent to perform it was
+announced between 4 and 14 days ago, and no members have publicly objected to
+it since.
+
+Any player may join this Organization by flipping eir Budget switch for this
+Organization to a positive value, by announcement.
+
+Any member of this Organization may leave this Organization by flipping eir
+Budget switch for this Organization to zero, by announcement.
+
+A tender is a document unambiguously specifying:
+
+    * A price, which must be an integer greater than zero; and
+    * A vote count, which must be an integer greater than zero.
+
+A sell tender is a tender which additionally specifies:
+
+    * A bond, which must be an integer greater than zero; and
+    * A seller, which must be a player.
+
+A member of this Organization can pay this Organization an amount equal to the
+current Pending List Price to create a sell tender by announcement. The sell
+tender's bond must be equal to the amount paid, and the sell tender's seller
+must be that member. The seller may set the price and vote count to
+any pair of integers, each greater than zero.
+
+A player may cause this Organization to pay emself an amount equal to the bond
+of any sell tender, if they are the seller on that tender, to retract that sell
+tender by announcement.
+
+A buy tender is a tender which additionally specifies:
+
+    * A buyer, which must be a player.
+
+A member of this Organization can pay this Organization any number of shinies
+to create a buy tender by announcement. The buy tender's price must be equal to
+the amount paid, and the buy tender's buyer must be the name of that member.
+The buyer may set the vote count to integer greater than zero.
+
+A player may cause this Organization to pay emself an amount equal to the price
+of any buy tender, if they are the buyer on that tender, to retract that buy
+tender by announcement.
+
+A sale contract is a document unambiguously specifying the following facts:
+
+    * A price, which must be an integer greater than zero; and
+    * A bond, which must be an integer greater than zero; and
+    * A vote count, which must be an integer greater than zero; and
+    * A buyer, which must be a player; and
+    * A seller, which must be a player.
+
+A member of this Organization can pay this Organization an amount equal to the
+price of a sell tender to accept that tender by announcement and convert it
+into a sale contract. E becomes the buyer of that sale contract. The seller,
+vote count, price, and bond of the sell tender become the seller, vote count,
+price, and bond of the sale contract, respectively.
+
+A member of this Organization can pay this Organization an amount equal to the
+current Pending List Price to accept a buy tender by announcement and convert
+it into a sale contract. E becomes the seller, and the amount e paid becomes
+the bond, of that sale contract. The buyer, price, and vote count of the buy
+tender become the buyer, price, and vote count of the sale contract,
+respectively.
+
+Clauses to the contrary notwithstanding, no player may accept a retracted
+tender.
+
+Clauses to the contrary notwithstanding, no player may become either the buyer
+or the seller of a sale contract without eir consent. Consent shall be
+indicated by publicly accepting a buy tender or a sell tender as described in
+this Charter.
+
+An Agoran Decision is within the scope of a sale contract if the seller has not
+yet voted in a number of resolved Agoran Decisions equal to the vote count of
+that contract. For the purposes of this Charter, the seller has voted in an
+Agoran Decision if and only if they have cast a valid ballot on that decision,
+and not retracted or replaced it, and the Agoran Decision has been resolved.
+
+The buyer of a sale contract may provide the seller with voting instructions
+for any Agoran Decision within the scope of the sale contract. The buyer may
+communicate these voting instructions by any means the buyer and seller find
+mutually acceptable.
+
+Either the buyer or the seller of a sale contract may cause this Organization
+to pay the seller an amount equal to the price of the contract plus the bond of
+the contract to satisfy the contract without objection from the buyer, if the
+seller has voted on a number of Agoran Decisions equal to or greater than the
+vote count of the contract.
+
+Clauses to the contrary notwithstanding, a satisfied contract may not be
+satisfied or declared breached.
+
+The buyer of a contract may cause this Organization to pay emself an amount
+equal to the sale price of the contract, and, in the same message, to pay Agora
+an amount equal to the contract's bond to declare a contract breached, without
+objection from members of this Organization other than the seller.
+
+When stating an intention to declare a contract breached, the buyer must
+unambiguously identify the Agoran Decision in which the seller voted, and the
+voting instruction the seller has failed to satisfy.
+
+Members other than the seller SHOULD object to the intention if, in their
+opinion, the seller has satisfied the buyer's voting instructions.
+
+Clauses to the contrary notwithstanding, a contract that has been declared
+breached may not be satisfied or declared breached.
+
+While any player has stated a valid intention to satisfy a contract, but that
+intention has not yet been resolved or allowed to expire, no attempt to declare
+that contract breached is effective.
+
+While any player has stated a valid intention to declare a contract breached,
+but that intention has not yet been resolved or allowed to expire, no attempt to
+declare that contract breached is effective.

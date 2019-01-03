@@ -1,0 +1,76 @@
+Proposal: Shame
+Adoption index: 3
+Authors: o
+Co-authors: Alexis, Aris
+
+Create a new rule, "Shame", with power 1, with the following text:
+
+    Shame is a natural player switch, tracked by the Referee. The
+    default Shame of each player is zero.
+
+    A player is Ashamed if eir Shame switch is at least two. A player
+    is Disgraced if eir Shame switch is at least five.
+
+    If at least one player is Disgraced, then any player MAY Shun The
+    Unworthy by announcement. When the Unworthy are Shunned, then the
+    following happens, in order:
+
+    a) a Lockout Event happens immediately to each Disgraced player,
+       then
+
+    b) each Ashamed player's Shame is reset to the default value, then
+
+    c) the player who Shunned The Unworthy's Shame is increased by one.
+
+    An Ashmed player can pay any amount of Shinies to any combination
+    of players, Organizations, and Agora, such that the total number of
+    Shinies paid by that player is equal to the value of eir Shame
+    switch times the Pending List Price, to reduce eir shame by one, by
+    announcement.
+
+[Create a cumulative penalty system and a consequence for accumulating
+too many. Allow charitable donations to extirpate shame, incentivizing
+doing so early by hiking the cost for each point of Shame.]
+
+Amend rule 2427 ("Yellow Cards"), by replacing the sentence:
+
+    When a Yellow Card is issued, the bad sport SHOULD publish a formal
+    apology of at least 200 words explaining eir error, shame, remorse,
+    and ardent desire for self-improvement.
+
+with:
+
+    When a Yellow Card is issued, the bad sport's Shame is increased by
+    one. The bad sport SHOULD publish a formal apology of at least 200
+    words explaining eir error, shame, remorse, and ardent desire for
+    self-improvement.
+
+Amend rule 2475 ("Red Cards"), by replacing the sentence:
+
+    When a Red Card is issued, as a penalty, within the next 7 days,
+    any player CAN once, with 2 Support, Throw the Book at the bad
+    sport.
+
+with:
+
+    When a Red Card is issued, the bad sport's Shame is increased by
+    one. As a penalty, within the next 7 days, any player CAN once,
+    with 2 Support, Throw the Book at the bad sport.
+
+Amend rule 2476 ("Pink Slips"), by replacing the sentence:
+
+    When a Pink Slip is issued, as a penalty, within the next 7 days,
+    any player CAN, with 2 Support, become the holder of one or more of
+    those offices still held by the bad sport.
+
+with:
+
+    When a Pink Slip is issued, the bad sport's Shame is increased by
+    one. As a penalty, within the next 7 days, any player CAN, with 2
+    Support, become the holder of one or more of those offices still
+    held by the bad sport.
+
+[Every Card raises the recipient's Shame by one. More severe Cards
+already have more severe immediate penalties; Shame is meant to punish
+a pattern of getting Carded, so there isn't any additional Shame in
+receiving a more serious Card.]
