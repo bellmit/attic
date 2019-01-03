@@ -1,0 +1,11 @@
+#!/bin/env/python3
+
+# Cadastre CLI is a client for the Cadastre document registry. Its primary
+# purpose is to receive mail from a mail alias or from procmail and to file the
+# contents as a Cadastre document.
+
+import sys
+from cadastre_cli import parse_args, run
+
+args = parse_args()
+sys.exit(run(args))
