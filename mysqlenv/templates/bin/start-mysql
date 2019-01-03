@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+echo "Starting MySQL on 127.0.0.1:@@MYSQL_PORT@@..."
+
+@@MYSQLD_SAFE@@ \
+    --defaults-file=@@ENV_BASE@@/conf/my.cnf \
+    "$@" &
+disown

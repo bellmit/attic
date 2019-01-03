@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+if [ -e "@@ENV_BASE@@/run/mysqld.pid" ]; then
+    kill -TERM "$(< "@@ENV_BASE@@/run/mysqld.pid")"
+else
+    echo "$(basename "$0")": mysql not running or no PID file found "(@@ENV_BASE@@/run/mysqld.pid)"
+fi
