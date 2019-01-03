@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+cd "$(dirname "$(dirname "$0")")"
+exec nginx -c "${PWD}/nginx.conf" "$@"

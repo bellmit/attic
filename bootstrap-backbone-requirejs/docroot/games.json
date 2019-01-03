@@ -1,0 +1,142 @@
+[
+    {
+        "config": {
+            "distributorConfig": null, 
+            "formulaMap": "default", 
+            "generatorConfig": {
+                "class": "com.lewisd.redshift.model.generation.DefaultGeneratorConfig", 
+                "gravityBins": 99, 
+                "gravityMax": 8.0, 
+                "gravityMin": 0.1, 
+                "gravityMode": 1.0, 
+                "planetCount": 100, 
+                "radiationBins": 99, 
+                "radiationMax": 100.0, 
+                "radiationMin": 0.0, 
+                "radiationMode": 0.005, 
+                "temperatureBins": 99, 
+                "temperatureMax": 2000.0, 
+                "temperatureMin": -250.0, 
+                "temperatureMode": 28.0
+            }, 
+            "turnExecutor": "default"
+        }, 
+        "id": 4681353932839590061, 
+        "name": "End of Time", 
+        "open": true, 
+        "status": "SETUP", 
+        "turn": 0
+    }, 
+    {
+        "config": {
+            "distributorConfig": null, 
+            "formulaMap": "default", 
+            "generatorConfig": {
+                "class": "com.lewisd.redshift.model.generation.DefaultGeneratorConfig", 
+                "gravityBins": 99, 
+                "gravityMax": 8.0, 
+                "gravityMin": 0.1, 
+                "gravityMode": 1.0, 
+                "planetCount": 100, 
+                "radiationBins": 99, 
+                "radiationMax": 100.0, 
+                "radiationMin": 0.0, 
+                "radiationMode": 0.005, 
+                "temperatureBins": 99, 
+                "temperatureMax": 2000.0, 
+                "temperatureMin": -250.0, 
+                "temperatureMode": 28.0
+            }, 
+            "turnExecutor": "default"
+        }, 
+        "id": 8012343389516527518, 
+        "name": "Barefoot Jaywalk", 
+        "open": true, 
+        "status": "SETUP", 
+        "turn": 0
+    }, 
+    {
+        "config": {
+            "distributorConfig": null, 
+            "formulaMap": "default", 
+            "generatorConfig": {
+                "class": "com.lewisd.redshift.model.generation.DefaultGeneratorConfig", 
+                "gravityBins": 99, 
+                "gravityMax": 8.0, 
+                "gravityMin": 0.1, 
+                "gravityMode": 1.0, 
+                "planetCount": 100, 
+                "radiationBins": 99, 
+                "radiationMax": 100.0, 
+                "radiationMin": 0.0, 
+                "radiationMode": 0.005, 
+                "temperatureBins": 99, 
+                "temperatureMax": 2000.0, 
+                "temperatureMin": -250.0, 
+                "temperatureMode": 28.0
+            }, 
+            "turnExecutor": "default"
+        }, 
+        "id": 3580915023909084286, 
+        "name": "Why do I hurt all over?", 
+        "open": true, 
+        "status": "SETUP", 
+        "turn": 0
+    }, 
+    {
+        "config": {
+            "distributorConfig": null, 
+            "formulaMap": "default", 
+            "generatorConfig": {
+                "class": "com.lewisd.redshift.model.generation.DefaultGeneratorConfig", 
+                "gravityBins": 99, 
+                "gravityMax": 8.0, 
+                "gravityMin": 0.1, 
+                "gravityMode": 1.0, 
+                "planetCount": 100, 
+                "radiationBins": 99, 
+                "radiationMax": 100.0, 
+                "radiationMin": 0.0, 
+                "radiationMode": 0.005, 
+                "temperatureBins": 99, 
+                "temperatureMax": 2000.0, 
+                "temperatureMin": -250.0, 
+                "temperatureMode": 28.0
+            }, 
+            "turnExecutor": "default"
+        }, 
+        "id": 1226145785180466353, 
+        "name": "Game On", 
+        "open": true, 
+        "status": "SETUP", 
+        "turn": 0
+    }, 
+    {
+        "config": {
+            "distributorConfig": null, 
+            "formulaMap": "default", 
+            "generatorConfig": {
+                "class": "com.lewisd.redshift.model.generation.DefaultGeneratorConfig", 
+                "gravityBins": 99, 
+                "gravityMax": 8.0, 
+                "gravityMin": 0.1, 
+                "gravityMode": 1.0, 
+                "planetCount": 100, 
+                "radiationBins": 99, 
+                "radiationMax": 100.0, 
+                "radiationMin": 0.0, 
+                "radiationMode": 0.005, 
+                "temperatureBins": 99, 
+                "temperatureMax": 2000.0, 
+                "temperatureMin": -250.0, 
+                "temperatureMode": 28.0
+            }, 
+            "turnExecutor": "default"
+        }, 
+        "id": 5978051653882774302, 
+        "name": "Game of Thrones", 
+        "open": true, 
+        "status": "SETUP", 
+        "turn": 0
+    }
+]
