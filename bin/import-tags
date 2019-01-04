@@ -1,0 +1,34 @@
+#!/bin/bash -e
+
+set -o pipefail
+
+PREFIX="$1"
+REMOTE="$2"
+
+git fetch --no-tags --prune "$REMOTE" 'refs/tags/*:refs/import-tags/*'
+
+git for-each-ref refs/import-tags/ | while read HASH TYPE REF; do
+  echo "$HASH :: $TYPE :: $REF"
+  TAG="${REF#refs/import-tags/}"
+
+  case "$TYPE" in
+  commit)
+    git tag "$PREFIX/$TAG"
+    ;;
+  *)
+    # This hideous beast is the only reliable way I can think of to dump the tag
+    # message for a tag, omitting its metadata (the first five lines of
+    # cat-file's output) and any GPG signature present, so that this script can
+    # copy the message to a new tag object.
+    git cat-file tag "$HASH" | tail -n +6 | while read -r; do
+      if [ "$REPLY" == '-----BEGIN PGP SIGNATURE-----' ]; then
+        break
+      fi
+
+      echo "$REPLY"
+    done | git tag -a --sign -F- "$PREFIX/$TAG"
+    ;;
+  esac
+
+  git update-ref -d "$IMPORT_REF"
+done

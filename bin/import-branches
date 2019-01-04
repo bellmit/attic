@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+set -o pipefail
+
+PREFIX="$1"
+REMOTE="$2"
+
+git ls-remote --heads --refs "$REMOTE" | while IFS=$'\t' read HASH REF; do
+  BRANCH="${REF#refs/heads/}"
+  if [ "$BRANCH" == master ]; then
+    git checkout master
+  else
+    git checkout --track origin/master -b "$PREFIX/$BRANCH"
+  fi
+  git subtree add --prefix "$PREFIX" "$REMOTE" "$BRANCH"
+done
