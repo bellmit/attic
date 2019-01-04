@@ -1,0 +1,3 @@
+include redpaste.ini
+recursive-include redpaste/templates *.mako
+recursive-include redpaste/styles *.css
