@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require 'yaml'
+require 'shellwords'
+
+BUILD_DIR, CACHE_DIR, ENV_DIR = ARGV
+HERE = File.dirname(File.dirname $0)
+
+File.open(File.join(BUILD_DIR, ".heroku-build.yml")) do |file|
+  config = YAML.load file
+  env = config['env']
+  if env
+    File.open(File.join(HERE, "export"), 'w') do |exports|
+      env.each do |name, value|
+        exports.puts("export #{name}=#{Shellwords.shellescape(value)}")
+      end
+    end
+  end
+end

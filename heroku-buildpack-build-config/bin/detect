@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+BUILD_DIR=$1
+
+if [ -f "${BUILD_DIR}/.heroku-build.yml" ]; then
+  echo "Configurable Build Environment"
+  exit 0
+fi
+
+exit 1
