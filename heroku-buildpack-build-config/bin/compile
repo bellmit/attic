@@ -1,0 +1,58 @@
+#!/usr/bin/env ruby
+
+require 'tmpdir'
+require 'yaml'
+require 'shellwords'
+
+BUILD_DIR, CACHE_DIR, ENV_DIR = ARGV
+HERE = File.dirname(File.dirname $0)
+
+DETECT_LANGS = %w(
+  ruby
+  nodejs
+  clojure
+  python
+  java
+  gradle
+  scala
+  php
+  go
+)
+
+
+def export(env)
+  File.open(File.join(HERE, "export"), 'w') do |exports|
+    env.each do |name, value|
+      value = value.to_s
+      ENV[name] = value
+      exports.puts("export #{name}=#{Shellwords.shellescape(value)}")
+    end
+  end
+end
+
+def run(*argv)
+  pid = spawn(*argv)
+  Process.wait pid
+  puts "--> #{$?}"
+  exit $?.exitstatus if $?.exitstatus != 0
+end
+
+def build(buildpacks)
+  Dir.mktmpdir do |buildpacks_dir|
+    language_args = DETECT_LANGS.map { |lang| "--language=#{lang}" }
+    run 'cytokine', 'get-default-buildpacks', '--verbose', *language_args, buildpacks_dir
+
+    buildpack_args = (buildpacks || []).map { |pack| "--buildpack=#{pack}" }
+    puts "--> bp: #{buildpack_args}"
+    run 'cytokine', 'run-buildpacks', '--verbose', *buildpack_args, BUILD_DIR, CACHE_DIR, ENV_DIR, buildpacks_dir
+  end
+end
+
+File.open(File.join(BUILD_DIR, ".heroku-build.yml")) do |file|
+  config = YAML.load file
+  env = config['env']
+  export(env) if env
+
+  buildpacks = config['buildpacks']
+  build(buildpacks)
+end
