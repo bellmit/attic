@@ -1,0 +1,70 @@
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
+    id 'com.moowork.node' version '0.8'
+    id 'com.moowork.gulp' version '0.9'
+}
+
+mainClassName = 'com.loginbox.app.LoginBox'
+archivesBaseName = 'login-box'
+
+dependencies {
+    compile project(':collections')
+
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-assets', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-migrations', version: dropwizardVersion
+    compile group: 'io.dropwizard', name: 'dropwizard-views-freemarker', version: dropwizardVersion
+
+    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-config', version: dropwizardHerokuVersion
+    compile group: 'com.loginbox.heroku', name: 'dropwizard-heroku-db', version: dropwizardHerokuVersion
+    compile group: 'com.loginbox.mybatis', name: 'dropwizard-mybatis', version: '1.0.0'
+    compile group: 'com.loginbox.transactor', name: 'transactor', version: '0.1.0'
+
+    compile group: 'org.glassfish.jersey.ext', name: 'jersey-declarative-linking', version: jerseyVersion
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+    compile group: 'de.svenkubiak', name: 'jBCrypt', version: '0.4'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: hamcrestVersion
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: hamcrestVersion
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+}
+
+node {
+    download = true
+    version = '0.10.35'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Implementation-Vendor': project.group,
+            'Implementation-Title': 'Login Box',
+            'Implementation-Version': sourceVersion
+        )
+    }
+}
+
+shadowJar {
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    mergeServiceFiles()
+}
+
+tasks.gulp_assets {
+    dependsOn 'npmInstall'
+}
+
+tasks.processResources {
+    dependsOn 'gulp_assets'
+}
+
+tasks.assemble {
+    dependsOn 'shadowJar'
+}
+
+tasks.run {
+    args = ['server']
+}

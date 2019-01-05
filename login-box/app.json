@@ -1,0 +1,21 @@
+{
+  "name": "Login Box",
+  "description": "An easy-to-deploy login server for your applications.",
+  "keywords": [
+    "authentication"
+  ],
+  "website": "https://github.com/login-box/login-box",
+  "repository": "https://github.com/login-box/login-box.git",
+  "success_url": "/",
+  "scripts": {
+    "postdeploy": "bin/run db migrate"
+  },
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-gradle"
+    }
+  ]
+}
