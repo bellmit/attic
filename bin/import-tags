@@ -8,7 +8,6 @@ REMOTE="$2"
 git fetch --no-tags --prune "$REMOTE" 'refs/tags/*:refs/import-tags/*'
 
 git for-each-ref refs/import-tags/ | while read HASH TYPE REF; do
-  echo "$HASH :: $TYPE :: $REF"
   TAG="${REF#refs/import-tags/}"
 
   case "$TYPE" in
