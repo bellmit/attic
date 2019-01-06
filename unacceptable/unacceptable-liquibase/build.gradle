@@ -1,0 +1,14 @@
+dependencies {
+    ext {
+        hamcrestVersion = '1.3'
+    }
+
+    compile project(':unacceptable-lazy')
+    compile project(':unacceptable-database')
+    compile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.liquibase', name: 'liquibase-core', version: '3.4.1'
+
+    testCompile group: 'org.hamcrest', name: 'hamcrest-core', version: hamcrestVersion
+    testCompile group: 'org.hamcrest', name: 'hamcrest-library', version: hamcrestVersion
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '1.10.19'
+}

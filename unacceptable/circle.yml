@@ -1,0 +1,20 @@
+---
+machine:
+    java:
+        version: oraclejdk8
+
+dependencies:
+    override:
+        - ./gradlew classes
+        - ./gradlew testClasses
+
+test:
+    post:
+        - ./gradlew javadoc
+        - bin/collate-test-results "$CIRCLE_TEST_REPORTS"
+
+deployment:
+    snapshots:
+        branch: master
+        commands:
+            - ./gradlew bintrayUpload

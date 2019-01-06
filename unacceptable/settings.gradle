@@ -1,0 +1,11 @@
+rootProject.name = 'unacceptable'
+
+include 'unacceptable-aliases'
+include 'unacceptable-database'
+include 'unacceptable-dropwizard'
+include 'unacceptable-dsl'
+include 'unacceptable-lazy'
+include 'unacceptable-liquibase'
+include 'unacceptable-rules'
+include 'unacceptable-selenium'
+include 'unacceptable-system'
