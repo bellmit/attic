@@ -88,9 +88,9 @@ bintray {
         userOrg = 'login-box'
         repo = isSnapshot ? 'snapshots' : 'releases'
         name = 'dropwizard-mybatis'
-        websiteUrl = 'https://github.com/login-box/dropwizard-mybatis'
-        issueTrackerUrl = 'https://github.com/login-box/dropwizard-mybatis/issues'
-        vcsUrl = 'https://github.com/login-box/dropwizard-mybatis'
+        websiteUrl = 'https://github.com/ojacobson/dropwizard-mybatis'
+        issueTrackerUrl = 'https://github.com/ojacobson/dropwizard-mybatis/issues'
+        vcsUrl = 'https://github.com/ojacobson/dropwizard-mybatis'
         licenses = ['MIT']
         publicDownloadNumbers = true
         version {
