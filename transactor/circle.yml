@@ -1,0 +1,17 @@
+---
+machine:
+    java:
+        version: oraclejdk8
+
+checkout:
+    post:
+        - bin/use-pull-request-merge
+
+dependencies:
+    post:
+        - ./gradlew assemble
+
+test:
+    override:
+        - ./gradlew check
+        - cp -a build/test-results "${CIRCLE_TEST_REPORTS}/junit"
