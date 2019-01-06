@@ -7,7 +7,7 @@ buildscript {
 
     dependencies {
         classpath group: 'org.ajoberstar', name: 'gradle-git', version: '0.13.0-milestone.1'
-        classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.1'
+        classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.8.4'
     }
 }
 
