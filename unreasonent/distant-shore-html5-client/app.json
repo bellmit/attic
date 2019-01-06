@@ -1,0 +1,24 @@
+{
+  "buildpacks": [
+    {
+      "url": "https://github.com/unreasonent/heroku-buildpack-node-client-shim"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "API_URL": {
+      "description": "Root URL for the Distant Shore API",
+      "required": true
+    },
+    "AUTH0_CLIENT_ID": {
+      "description": "Auth0 public client identifier (obtain from Auth0)",
+      "required": true
+    },
+    "AUTH0_DOMAIN": {
+      "description": "Auth0 authentication domain (obtain from Auth0)",
+      "required": true
+    }
+  }
+}
