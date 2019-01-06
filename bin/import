@@ -1,7 +1,10 @@
 #!/bin/bash -e
 
 REPO="$1"
+
 PREFIX="$(basename "$REPO")"
+[ $# -gt 1 ] && PREFIX="$2"
+
 HERE="$(dirname "$0")"
 
 "$HERE/import-branches" "$PREFIX" "$REPO"
