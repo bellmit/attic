@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unreasonent.ds.squad.query.SquadQueries">
+    <delete id="deleteSquad"><![CDATA[
+        delete from squad_character
+        where userid = #{userId}
+    ]]></delete>
+
+    <insert id="insertCharacter"><![CDATA[
+        insert into squad_character
+            (userid, name, archetype, gender, hair, hat, outfit)
+        values
+            (
+                #{userId},
+                #{character.name},
+                #{character.archetype},
+                #{character.sprite.gender},
+                #{character.sprite.hair},
+                #{character.sprite.hat},
+                #{character.sprite.outfit}
+            )
+    ]]></insert>
+
+    <select id="getSquad" resultMap="SquadResult"><![CDATA[
+        select
+            userid,
+            sequence,
+            name,
+            archetype,
+            gender,
+            hair,
+            hat,
+            outfit
+        from squad_character
+        where userid = #{userId}
+        order by sequence
+    ]]></select>
+
+    <resultMap id="SquadResult" type="com.unreasonent.ds.squad.query.SquadResult">
+        <constructor>
+            <idArg column="userid" javaType="string" />
+        </constructor>
+        <collection property="characters" resultMap="CharacterResult" />
+    </resultMap>
+
+    <resultMap id="CharacterResult" type="com.unreasonent.ds.squad.query.CharacterResult">
+        <constructor>
+            <idArg column="sequence" javaType="_long" />
+            <arg column="name" javaType="string" />
+            <arg column="archetype" javaType="com.unreasonent.ds.squad.api.Archetype" />
+        </constructor>
+        <association property="sprite" resultMap="Sprite" />
+    </resultMap>
+
+    <resultMap id="Sprite" type="com.unreasonent.ds.squad.api.Sprite">
+        <constructor>
+            <idArg column="gender" javaType="com.unreasonent.ds.squad.api.Gender" />
+            <idArg column="hair" javaType="string" />
+            <idArg column="hat" javaType="string" />
+            <idArg column="outfit" javaType="string" />
+        </constructor>
+    </resultMap>
+</mapper>

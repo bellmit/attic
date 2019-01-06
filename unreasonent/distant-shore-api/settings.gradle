@@ -1,0 +1,4 @@
+rootProject.name = 'distant-shore'
+
+include 'app'
+include 'acceptance-tests'
