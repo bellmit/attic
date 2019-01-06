@@ -86,9 +86,9 @@ subprojects {
             userOrg = 'login-box'
             repo = isSnapshot ? 'snapshots' : 'releases'
             name = 'dropwizard-heroku'
-            websiteUrl = 'https://github.com/login-box/dropwizard-heroku'
-            issueTrackerUrl = 'https://github.com/login-box/dropwizard-heroku/issues'
-            vcsUrl = 'https://github.com/login-box/dropwizard-heroku'
+            websiteUrl = 'https://github.com/ojacobson/dropwizard-heroku'
+            issueTrackerUrl = 'https://github.com/ojacobson/dropwizard-heroku/issues'
+            vcsUrl = 'https://github.com/ojacobson/dropwizard-heroku'
             licenses = ['MIT']
             publicDownloadNumbers = true
             version {
