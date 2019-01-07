@@ -1,0 +1,7 @@
+data/setup.py.i
+data/test/__init__.py.i
+data/setup.cfg.i
+data/src/profileware.py.i
+data/docs/conf.py.i
+data/.hgignore.i
+data/docs/index.rst.i

@@ -1,0 +1,31 @@
+dn: <%= database_dn %>
+objectClass: olcDatabaseConfig
+objectClass: olcHdbConfig
+olcDatabase: hdb
+olcSuffix: <%= suffix %>
+olcDbDirectory: <%= data_dir %>
+olcDbConfig: set_cachesize 0 2097152 0
+olcDbConfig: set_lk_max_objects 1500
+olcDbConfig: set_lk_max_locks 1500
+olcDbConfig: set_lk_max_lockers 1500
+olcDbIndex: objectClass eq
+olcDbIndex: uidNumber eq
+olcDbIndex: uid eq
+olcLastMod: TRUE
+olcDbCheckpoint: 512 30
+olcAccess: to attrs=userPassword
+    by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage
+    by anonymous auth
+    by self write
+    by * none
+olcAccess: to attrs=shadowLastChange
+    by self write
+    by users read
+    by * none
+olcAccess: to dn.base=""
+    by users read
+    by * none
+olcAccess: to *
+    by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth manage
+    by users read
+    by * none

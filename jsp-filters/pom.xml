@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ca.grimoire</groupId>
+        <artifactId>alchemy-parent</artifactId>
+        <version>5</version>
+    </parent>
+
+    <groupId>ca.grimoire.jsp</groupId>
+    <artifactId>jsp-filters</artifactId>
+    <version>1.1-SNAPSHOT</version>
+    <name>JSP Output Filters taglib</name>
+
+    <scm>
+        <connection>scm:hg:https://bitbucket.org/ojacobson/jsp-filters</connection>
+        <developerConnection>scm:hg:ssh://hg@bitbucket.org/ojacobson/jsp-filters</developerConnection>
+    </scm>
+
+    <description>
+        Tags and functions for doing text filtering in JSPs.
+    </description>
+
+    <url>http://alchemy.grimoire.ca/m2/sites/ca.grimoire.jsp/jsp-filters</url>
+
+    <developers>
+        <developer>
+            <id>owen.jacobson</id>
+            <name>Owen Jacobson</name>
+            <email>owen.jacobson@grimoire.ca</email>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
+        </license>
+    </licenses>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>alchemy.grimoire.ca:releases-private</id>
+            <url>dav:http://alchemy.grimoire.ca/m2-private/releases</url>
+        </repository>
+
+        <repository>
+            <id>alchemy.grimoire.ca:snapshots-private</id>
+            <url>dav:http://alchemy.grimoire.ca/m2-private/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <site>
+            <id>alchemy.grimoire.ca</id>
+            <url>dav:http://alchemy.grimoire.ca/m2/sites/ca.grimoire.jsp/jsp-filters</url>
+        </site>
+    </distributionManagement>
+</project>

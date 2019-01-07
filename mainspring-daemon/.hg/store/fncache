@@ -1,0 +1,6 @@
+data/src/test/java/ca/grimoire/mainspring/daemon/DaemonContextAwareProcessorTest.java.i
+data/pom.xml.i
+data/src/main/java/ca/grimoire/mainspring/daemon/Bootstrap.java.i
+data/.hgignore.i
+data/src/main/java/ca/grimoire/mainspring/daemon/DaemonContextAware.java.i
+data/src/main/java/ca/grimoire/mainspring/daemon/DaemonContextAwareProcessor.java.i

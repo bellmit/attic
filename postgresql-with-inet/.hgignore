@@ -1,0 +1,9 @@
+syntax: regexp
+^build$
+^jars$
+
+syntax: glob
+org/postgresql/Driver.java
+org/postgresql/ds/PGPooledConnection.java
+org/postgresql/ds/PGPoolingDataSource.java
+org/postgresql/ds/PGSimpleDataSource.java

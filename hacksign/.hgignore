@@ -1,0 +1,7 @@
+syntax: regexp
+(.*)\.pyc$
+^MANIFEST$
+^dist/(.*)
+^build/(.*)
+^hacksign.egg(.*)
+^setuptools(.*)\.egg$

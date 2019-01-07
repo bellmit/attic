@@ -1,0 +1,22 @@
+  ---------------------
+  Maven Metadata Taglib
+  ---------------------
+
+Maven Metadata Taglib
+
+  This taglib provides a simple, easy-to-use JSP tag for showing the
+  active version of a Maven artifact on a page. The artifact information
+  is queried from the WAR and its dependencies, and accurately reflects
+  the application as actually deployed. This makes it much easier to
+  identify which version to use in bug reports, and can help detect
+  runtime classpath problems.
+
+  See also the {{{tlddoc/index.html}Taglib documentation}}.
+
+* Example Use Case
+
++---------------------------------
+  <%@taglib prefix="mvn" uri="http://alchemy.grimoire.ca/taglibs/mvn"%>
+
+  <mvn:version groupId="ca.grimoire.maven" artifactId="maven-taglib" />
++---------------------------------

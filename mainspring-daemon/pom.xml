@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>alchemy-parent</artifactId>
+    <groupId>ca.grimoire</groupId>
+    <version>4</version>
+  </parent>
+
+  <groupId>ca.grimoire</groupId>
+  <artifactId>mainspring-daemon</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>Mainspring Uncontainer for Daemons</name>
+  <url>http://alchemy.grimoire.ca/m2/sites/ca.grimoire/mainspring-daemon</url>
+
+  <description>
+    Mainspring provides a way to bootstrap Spring contexts from JARs
+    without a web or application container. This version uses
+    commons-daemon to bootstrap, rather than main().
+  </description>
+
+  <developers>
+    <developer>
+      <id>owen.jacobson</id>
+      <name>Owen Jacobson</name>
+      <email>owen.jacobson@grimoire.ca</email>
+      <timezone>-5</timezone>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>
+      scm:hg:http://alchemy.grimoire.ca/hg/mainspring-daemon/
+    </connection>
+    <developerConnection>
+      scm:hg:http://alchemy.grimoire.ca/hg/mainspring-daemon/
+    </developerConnection>
+  </scm>
+
+  <issueManagement>
+    <system>JIRA</system>
+    <url>http://alchemy.grimoire.ca/jira/browse/MS</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Hudson</system>
+    <url>http://alchemy.grimoire.ca/hudson/</url>
+  </ciManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>2.5.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-daemon</groupId>
+      <artifactId>commons-daemon</artifactId>
+      <version>1.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock-junit4</artifactId>
+      <version>2.5.0</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+
+        <configuration>
+          <links>
+            <link>http://java.sun.com/javase/6/docs/api</link>
+            <link>
+              http://static.springframework.org/spring/docs/2.5.x/api
+            </link>
+          </links>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <distributionManagement>
+    <site>
+      <id>alchemy.grimoire.ca</id>
+      <url>dav:http://alchemy.grimoire.ca/m2/sites/ca.grimoire/mainspring-daemon</url>
+    </site>
+  </distributionManagement>
+</project>

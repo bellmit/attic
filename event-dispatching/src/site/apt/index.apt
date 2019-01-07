@@ -1,0 +1,108 @@
+ This library provides a generic event handling mechanism for Java classes, this removes the limitations of having to reuse Swing classes or <<<java.util.Observable>>> in Observer-driven applications or state machines. To take advantage of the <<<Dispatcher>>> class, your event source classes need to provide a handful of features.
+
+Downloads
+
+ The {{{http://repo1.maven.org/maven2/ca/grimoire/event-dispatching/1.0/event-dispatching-1.0.jar}latest version of this library}} is always available from the Maven central repository. You can also download it from {{{http://alchemy.grimoire.ca/m2/releases/ca/grimoire/event-dispatching/1.0/event-dispatching-1.0.jar}its home repository}} on alchemy.grimoire.ca.
+
+ Alternately, if you're using Maven, you can add the following dependency to your POM:
+
++-------------------------------+
+    <dependency>
+      <groupId>ca.grimoire</groupId>
+      <artifactId>event-dispatching</artifactId>
+      <version>1.0</version>
+    </dependency>
++-------------------------------+
+
+ The source is available via Mercurial at {{{http://alchemy.grimoire.ca/hg/event-dispatching/}http://alchemy.grimoire.ca/hg/event-dispatching/}}, if you're curious how this is put together. In particular, the {{{http://alchemy.grimoire.ca/hg/event-dispatching/file/tip/src/test/java/ca/grimoire/events}test cases}} cover much of the material below.
+
+Listener Interfaces
+
+ Each event or group of events you want to be able to emit needs a listener interface. Unlike Java's built-in event listener mechanism, this library imposes no constraints on the ancestry of event listeners.
+ 
+ A simple event listener might look like
+
++-------------------------------+
+public interface LightswitchListener {
+
+  public void turnedOn();
+
+  public void turnedOff();
+
+}
++-------------------------------+
+
+Listenable Objects
+
+ The event listener interface is useless unless you can actually listen for it. Types that emit events to listeners need an instance of <<<ca.grimoire.events.Dispatcher>>> for each listener type they support, and to forward <<<addFooListener>>> (and optionally <<<removeFooListener>>>) calls to the dispatcher.
+ 
+ A class that emits <<<LightswitchListener>>> events would look like
+
++-------------------------------+
+import ca.grimoire.events.Dispatcher;
+
+public class Lightswitch {
+  private final Dispatcher<LightswitchListener> lightswitchDispatcher =
+    new Dispatcher<LightswitchListener>();
+  
+  public void addLightswitchListener(LightswitchListener listener) {
+    lightswitchDispatcher.add(listener);
+  }
+  
+  public void removeLightswitchListener(LightswitchListener listener) {
+    lightswitchDispatcher.remove(listener);
+  }
+  
+  /* ... */
+}
++-------------------------------+
+
+Emitting Events
+
+ Once you have a dispatcher set up and listeners added to it, the final piece is to write code that actually triggers events. This library is built around allowing the event emitter to customize dispatching: events are delivered via <<<Firer>>> instances, which act as lambdas to be invoked for each listener.
+
+ To complete the lightswitch example, we need to add some methods that emit events:
+
++-------------------------------+
+import ca.grimoire.events.Dispatcher;
+import ca.grimoire.events.Firer;
+
+public class Lightswitch {
+  private final Dispatcher<LightswitchListener> lightswitchDispatcher =
+    new Dispatcher<LightswitchListener>();
+  
+  /* ... */
+  
+  public void turnOn() {
+    /* ... */
+    
+    lightswitchDispatcher.fire(new Firer<LightswitchListener>() {
+      public void fire(LightswitchListener listener) {
+        listener.turnedOn();
+      }
+    });
+  }
+  
+  public void turnOff() {
+    /* ... */
+    
+    lightswitchDispatcher.fire(new Firer<LightswitchListener>() {
+      public void fire(LightswitchListener listener) {
+        listener.turnedOff();
+      }
+    });
+  }
+}
++-------------------------------+
+
+Apologia
+
+ The primary philosophical difference between the <<<Dispatcher>>> type provided by this library and Swing's <<<EventListenerList>>> type is that you are expected to keep a separate <<<Dispatcher>>> for each listener type. <<<EventListenerList>>> uses a fairly ugly mechanism of alternating <<<Class>>> objects and instances to store every listener for all of an object's event interfaces in a single list. In a modern JVM, this kind of object parsimony is unnecessary; objects are cheap enough that having two or three extra objects for managing events is not a serious resource cost, and short-lived <<<Firer>>> instances are well-supported by modern generational garbage collection algorithms.
+ 
+ The style used in this library unfortunately demonstrates some problems with Java's syntax: the way <<<Firer>>>s and <<<Dispatcher>>>s use generics highlights the lack of inference, and <<<Firer>>>s themselves require far too many lines. However, the structure of this mechanism is very flexible; the exact semantics of "dispatch an event" are left up to the event source, rather than being baked into the library.
+ 
+ For example, it'd be relatively easy to write a "consumable" event type which would stop being delivered after one firer had marked it consumed, much like the Swing UI events, by having the <<<Firer>>> implementation check whether the event had been flagged as consumed before calling the listener.
+
+* Swing-style Events
+
+ The example I've put together here uses "events" with no event object. Swing, by contrast, passes an object derived from <<<java.util.EventObject>>> and delivers events to interfaces derived from <<<java.util.EventListener>>>. While I don't find much value in these semantics-free marker types, this style is very easy to implement within this framework if you're writing custom Swing widgets or something that needs to be compatible with it.

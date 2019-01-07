@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ca.grimoire</groupId>
+    <artifactId>alchemy-parent</artifactId>
+    <version>5</version>
+  </parent>
+
+  <groupId>ca.grimoire.maven</groupId>
+  <artifactId>maven-utils-parent</artifactId>
+  <version>2.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>Maven Utilities Parent</name>
+  <url>http://alchemy.grimoire.ca/m2/sites/ca.grimoire.maven/maven-utils-parent</url>
+
+  <description>
+    A small library and taglib for accessing Maven version metadata at
+    runtime.
+  </description>
+
+  <developers>
+    <developer>
+      <id>owen.jacobson</id>
+      <name>Owen Jacobson</name>
+      <email>owen.jacobson@grimoire.ca</email>
+      <timezone>-5</timezone>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>
+      scm:hg:https://bitbucket.org/ojacobson/maven-utils
+    </connection>
+    <developerConnection>
+      scm:hg:ssh://hg@bitbucket.org/ojacobson/maven-utils
+    </developerConnection>
+  </scm>
+
+  <issueManagement>
+    <system>JIRA</system>
+    <url>http://alchemy.grimoire.ca/jira/browse/MU</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Hudson</system>
+    <url>http://alchemy.grimoire.ca/hudson/</url>
+  </ciManagement>  
+
+  <modules>
+    <module>maven-taglib</module>
+    <module>maven-utils</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Internal project dependencies -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>maven-utils</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!-- Third-party software -->
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.14</version>
+      </dependency>
+
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.1</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- Java EE -->
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.5</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.servlet.jsp</groupId>
+        <artifactId>jsp-api</artifactId>
+        <version>2.1</version>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.0-beta-8</version>
+
+        <configuration>
+          <preparationGoals>clean install</preparationGoals>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+
+        <configuration>
+          <links>
+            <link>http://java.sun.com/javase/6/docs/api</link>
+            <link>http://java.sun.com/javaee/5/docs/api</link>
+          </links>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <distributionManagement>
+    <site>
+      <id>alchemy.grimoire.ca</id>
+      <url>dav:http://alchemy.grimoire.ca/m2/sites/ca.grimoire.maven/maven-utils-parent</url>
+    </site>
+  </distributionManagement>
+</project>

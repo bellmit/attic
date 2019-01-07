@@ -1,0 +1,7 @@
+data/setup.py.i
+data/samples/manual.i
+data/.hgtags.i
+data/.hgignore.i
+data/wallclock.py.i
+data/samples/automatic.i
+data/LICENSE.i

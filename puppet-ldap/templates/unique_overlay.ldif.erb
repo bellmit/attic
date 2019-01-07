@@ -1,0 +1,6 @@
+dn: olcOverlay=unique,<%= database_dn %>
+objectClass: olcUniqueConfig
+olcOverlay: unique
+<% unique_uris.each do |unique_uri| -%>
+olcUniqueURI: <%= unique_uri %>
+<% end -%>

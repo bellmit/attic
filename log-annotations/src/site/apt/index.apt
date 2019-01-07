@@ -1,0 +1,102 @@
+    ---------------
+    Log Annotations
+    ---------------
+
+ This library provides a set of annotations that handle common logging cases for applications using Spring. Calls to methods annotated using the <<<LogBefore>>>, <<<LogReturn>>>, and <<<LogException>>> annotations in this library will be logged using slf4j.
+
+Example
+
++-------------------------------+
+package com.example;
+
+import ca.grimoire.logging.annotations.LogBefore;
+import ca.grimoire.logging.annotations.LogException;
+import ca.grimoire.logging.annotations.LogReturn;
+
+public class Example {
+    @LogBefore("Calling sum with {} and {}")
+    @LogReturn("Sum returned {}")
+    public int sum(int a, int b) {
+        return a + b;
+    }
+
+    @LogBefore("Calling brokenProduct with {} and {}")
+    @LogException("brokenProduct failed")
+    public int brokenProduct(int a, int b) {
+        throw new IllegalArgumentException("This method is broken.");
+    }
+}
++-------------------------------+
+
+ Calls to either method will result in log lines similar to
+
++-------------------------------+
+1 [main] INFO com.example.Example - Calling sum with 3 and 5
+37 [main] INFO com.example.Example - Sum returned 8
+40 [main] INFO com.example.Example - Calling brokenProduct with 3 and 5
+40 [main] ERROR com.example.Example - brokenProduct failed
+java.lang.IllegalArgumentException: This method is broken.
+    at com.example.Example.brokenProduct(...)
+    (...)
++-------------------------------+
+
+ By default, <<<LogBefore>>> and <<<LogReturn>>> log messages at the <<<INFO>>> severity and <<<LogException>>> logs messages at the <<<ERROR>>> severity. All three annotations accept a <<<severity>>> parameter that modifies the severity of the emitted message:
+
++-------------------------------+
+import ca.grimoire.logging.annotations.Severity;
+
+public class Example {
+    @LogBefore(value="Calling sum with {} and {}", severity=Severity.TRACE)
+    public int sum(int a, int b) {
+        return a + b;
+    }
+
+    // ...
+}
++-------------------------------+
+
+Configuration
+
+* The Easy Way
+
+ The log-annotations JAR file includes a Spring context XML file, ready to import into your own Spring contexts:
+
++-------------------------------+
+<beans>
+    <!-- ... -->
+    <import resource="classpath:ca/grimoire/logging/annotations/spring-aop.xml" />
+    <!-- ... -->
+</beans>
++-------------------------------+
+
+ This XML snippet requires Spring AOP and all of its ancillary dependencies as appropriate for your project. The beans and AOP configurations in this XML file are namespaced under <<<ca.grimoire.logging.annotations>>>, so as to avoid collisions with your own definitions.
+
+* The Hard Way
+
+ If the default behaviour isn't quite what you're looking for, you can use Spring AOP to configure this library directly. The following example restricts log annotations to public methods on classes in <<<com.example>>> and sub-packages:
+
++-------------------------------+
+    <bean id="methodLoggingAdvice"
+        class="ca.grimoire.logging.annotations.MethodLoggingAdvice" />
+
+    <aop:config>
+        <aop:pointcut id="logTargets"
+            expression="execution(public com.example.*.*(..)) 
+                        &amp;&amp; @annotation(logAnnotation)" />
+        <aop:aspect
+            ref="methodLoggingAdvice">
+            <aop:before pointcut-ref="logTargets"
+                arg-names="logAnnotation" method="logBefore" />
+            <aop:after-returning
+                pointcut-ref="logTargets"
+                returning="returnValue" arg-names="logAnnotation, returnValue"
+                method="logReturn" />
+            <aop:after-throwing
+                pointcut-ref="logTargets"
+                throwing="exception" arg-names="logAnnotation, exception"
+                method="logException" />
+        </aop:aspect>
+    </aop:config>
++-------------------------------+
+
+ Please see the API documentation for <<<MethodLoggingAdvice>>> and the {{{http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/aop.html}Spring AOP}} documentation for further details.

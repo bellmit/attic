@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+
+# MIT license. You know how to look it up.
+
+import random
+
+possibleparts = [
+    'Payflow',
+    'Website',
+    'Payments',
+    'Pro',
+    'Standard',
+    'Advanced',
+    'Express',
+    'Checkout',
+    'Link',
+    'Online',
+    'Direct',
+]
+
+random.shuffle(possibleparts)
+
+parts = [2] * 4 + [3] * 6 + [4]
+useparts = random.choice(parts)
+
+print """Content-Type: text/plain
+
+    PayPal %s
+
+Inspired by PayPal's habit of renaming acquired products, I present the PayPal
+Product Name Generator. Reload this page to generate a new name. Not
+affiliated with PayPal in any way.
+
+Like it? Fork it: <https://bitbucket.org/ojacobson/mockflow>
+""" % (' '.join(possibleparts[:useparts]),)

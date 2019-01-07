@@ -1,0 +1,9 @@
+data/setup.py.i
+data/test/__init__.py.i
+data/setup.cfg.i
+data/docs/conf.py.i
+data/.hgignore.i
+data/docs/index.rst.i
+data/.hgtags.i
+data/test/test_versiontag.py.i
+data/src/versiontag.py.i

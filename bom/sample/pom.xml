@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ca.grimoire.bom</groupId>
+        <artifactId>bom-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>sample</artifactId>
+    <packaging>jar</packaging>
+    <name>Bill Of Materials Sample</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>bom-tools</artifactId>
+            <version>${version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>${groupId}</groupId>
+                <artifactId>bom-maven-plugin</artifactId>
+                <version>${version}</version>
+                <executions>
+                    <execution>
+                        <id>text</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <name>texts</name>
+                            <includes>
+                                <include>**/*.txt</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>non-text</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <name>non-texts</name>
+                            <excludes>
+                                <exclude>**/*.txt</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>everything</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <name>everything</name>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2</version>
+
+                <configuration>
+                    <mainClass>ca.grimoire.bom.sample.Sample</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

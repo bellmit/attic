@@ -1,0 +1,5 @@
+sytax: regexp
+^([^/]*/)?target$
+^([^/]*/)?\.classpath$
+^([^/]*/)?\.project$
+^([^/]*/)?\.settings$

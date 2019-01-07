@@ -1,0 +1,32 @@
+<assembly>
+  <formats>
+    <format>zip</format>
+  </formats>
+
+  <baseDirectory>jnoise-${version}</baseDirectory>
+
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>/</outputDirectory>
+    </dependencySet>
+  </dependencySets>
+
+  <fileSets>
+    <fileSet>
+      <directory>src/main/assembly/examples
+      </directory>
+      <outputDirectory>/</outputDirectory>
+      <filtered>false</filtered>
+    </fileSet>
+
+    <fileSet>
+      <directory>src/main/java</directory>
+      <outputDirectory>/src/</outputDirectory>
+    </fileSet>
+
+    <fileSet>
+      <directory>src/main/resources</directory>
+      <outputDirectory>/resources/</outputDirectory>
+    </fileSet>
+  </fileSets>
+</assembly>

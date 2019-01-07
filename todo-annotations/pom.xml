@@ -1,0 +1,107 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:proc="file:///dev/null" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ca.grimoire</groupId>
+    <artifactId>alchemy-parent</artifactId>
+    <version>3</version>
+  </parent>
+
+  <groupId>ca.grimoire</groupId>
+  <artifactId>todo-annotations</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.3-SNAPSHOT</version>
+
+  <name>TODO Annotations</name>
+  <url>http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations</url>
+
+  <description>
+    Annotations and processors for tagging questionable code and tracking 
+    TODOs in a compiler-detectable way.
+  </description>
+
+  <developers>
+    <developer>
+      <id>owen.jacobson</id>
+      <name>Owen Jacobson</name>
+      <email>owen.jacobson@grimoire.ca</email>
+      <timezone>-5</timezone>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>
+      scm:hg:http://alchemy.grimoire.ca/hg/todo-annotations/
+    </connection>
+    <developerConnection>
+      scm:hg:http://alchemy.grimoire.ca/hg/todo-annotations/
+    </developerConnection>
+  </scm>
+
+  <issueManagement>
+    <system>JIRA</system>
+    <url>http://alchemy.grimoire.ca/jira/browse/TA</url>
+  </issueManagement>
+
+  <ciManagement>
+    <system>Hudson</system>
+    <url>http://alchemy.grimoire.ca/hudson/</url>
+  </ciManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+
+        <configuration>
+          <compilerArguments>
+            <!--
+              Maven puts resources in the compile classpath, which means
+              the compiler tries to process annotations using the
+              processor it's about to compile. Bad news.
+            -->
+            <proc:none />
+          </compilerArguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+
+        <configuration>
+          <links>
+            <link>http://java.sun.com/javase/6/docs/api/</link>
+          </links>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+  
+  <distributionManagement>
+    <site>
+      <id>alchemy.grimoire.ca</id>
+      <url>dav:http://alchemy.grimoire.ca/m2/sites/ca.grimoire/todo-annotations</url>
+    </site>
+  </distributionManagement>
+  
+</project>

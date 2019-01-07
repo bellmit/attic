@@ -1,0 +1,15 @@
+data/setup.py.i
+data/sqlturk/migration.py.i
+data/sqlturk/__init__.py.i
+data/testmigrations/2_foobar_data.sql.i
+data/setup.cfg.i
+data/testmigrations/1_foobar.sql.i
+data/.hgtags.i
+data/sqlmigration/__init__.py.i
+data/.hgignore.i
+data/docs/index.txt.i
+data/testmigrations/not_a_migration_file.sql.i
+data/testmigrations/10_foobar_delete.sql.i
+data/testmigrations/test_rollback.sql.i
+data/Makefile.i
+data/sqlmigration/api.py.i

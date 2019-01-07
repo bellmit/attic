@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+
+from time import sleep
+from hacksign import Frame
+from hacksign.driver import loop
+
+host = "192.168.111.4"
+port = 2331
+image = "steev.txt"
+
+file = open (image, 'r')
+lines = file.readlines ()
+file.close ()
+
+# kill whitespace
+lines = [line.strip () for line in lines]
+
+palettes = [{
+ '0': 0,
+ '1': 192
+}, {
+ '0': 0,
+ '1': 255
+}, {
+ '0': 192,
+ '1': 0
+}, {
+ '0': 192,
+ '1': 255
+}, {
+ '0': 255,
+ '1': 0
+}, {
+ '0': 255,
+ '1': 192
+}]
+
+def frame_function ():
+    image = Frame ()
+
+    import random
+    palette = random.choice (palettes)
+    rasters = [map (lambda c : palette[c], line) for line in lines]
+
+    for row in range (0, len (rasters)):
+        raster = rasters[row]
+        for col in range (0, len (raster)):
+            image.set_pixel (col, row, raster[col])
+    return image
+
+loop (host, port, frame_function)

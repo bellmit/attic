@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+import argparse
+
+from bugcli import ui
+from bugcli import config
+from bugcli import exception as exc
+from bugcli import auth as a
+from bugcli import message
+from bugcli import trackers
+
+from bugcli import bootstrap
+
+def args():
+    parser = argparse.ArgumentParser(description='Mark a bug as resolved.')
+    parser.add_argument(
+        'bug',
+        metavar='ISSUE',
+        help='Issue number or identifier.'
+    )
+    parser.add_argument(
+        '-r', '--resolution',
+        metavar='RESOLUTION',
+        help='Resolution to mark the bug with.'
+    )
+    parser.add_argument(
+        '-v', '--version',
+        metavar='VERSION',
+        help='Version the bug is resolved in.'
+    )
+    parser.add_argument(
+        '-c', '--comment',
+        metavar='FILE',
+        type=argparse.FileType('rt'),
+        help='Read comment from file. If not set, an $EDITOR will be launched.'
+    )
+    return parser
+tui, auth, args, tracker = bootstrap.terminal(args)
+
+bug = args.bug
+resolution = args.resolution
+version = args.version
+if args.comment:
+    comment_guard = message.from_stream(args.comment)
+else:
+    comment_guard = tui.prompt_comment()
+
+try:
+    with comment_guard as comment:
+        issue, url = tracker.resolve_issue(auth, bug, comment, resolution, version)
+        tui.show_issue_resolved(issue, url)
+except exc.TrackerError, e:
+    tui.show_tracker_error(e)

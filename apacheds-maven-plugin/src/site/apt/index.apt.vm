@@ -1,0 +1,38 @@
+    -----
+    About
+    -----
+
+About ApacheDS Maven Plugin
+
+    ${siteDescription}
+
+    This plugin is designed to provide a real LDAP environment for integration
+    tests. For example, if your application manages authentication via an
+    LDAP backend, you can use this plugin to provide a dummy domain with
+    users and groups while running end-to-end tests with Selenium or another
+    integration-testing tool.
+
+    While this plugin <can> be used for unit testing as well, ApacheDS has
+    an embedded mode designed specifically for unit testing that should be
+    used instead. See the
+    {{{http://directory.apache.org/apacheds/1.5/41-embedding-apacheds-into-an-application.html}Embedding ApacheDS documentation}}
+    for further details.
+
+    A complete example is available under {{{./usage.html}usage}}. For the
+    configuration reference, see {{{./start-mojo.html}apacheds:start}} and
+    {{{./stop-mojo.html}apacheds:stop}}.
+
+What's Supported
+
+    This plugin can create and populate arbitrary domains from an LDIF file
+    during startup.
+
+What's Not Supported
+
+    This plugin does not support configuring SASL authentication or LDAPS
+    connections.
+
+    This plugin does not support loading custom schemata into the LDAP server.
+
+    This plugin does not support using an arbitrary <<<server.xml>>>
+    ApacheDS configuration file.

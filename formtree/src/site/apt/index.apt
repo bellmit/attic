@@ -1,0 +1,209 @@
+    --------
+    FormTree
+    --------
+
+ Tools for converting complex HTML form data into object graphs and
+ collections. It's loosely inspired by the lovely
+ {{{http://formencode.org}FormEncode}} Python library.
+
+Tree-shaped Forms
+
+ FormTree operates on forms that describe <trees>. The form field names are
+ used as <paths> to <values> stored in the tree. The grammar for field names
+ is simple:
+
+-------------------------------------------------
+path ::= [pathElement '.'] pathElement
+pathElement ::= keyPathElement | indexPathElement
+keyPathElement ::= NAME
+indexPathElement ::= NAME '[' DIGITS ']'
+
+DIGITS ::= ('0'..'9')*
+NAMEINITIAL ::= ('-'|'_'|'a'..'z'|'A'..Z')
+NAMETRAILING ::= (NAMEINITIAL|DIGITS)
+NAME ::= NAMEINITIAL NAMETRAILING*
+-------------------------------------------------
+
+* Simple Trees
+
+ Consider a form with the following keys and values:
+ 
+*--------------------*--------*
+|        Field       |  Value |
+*--------------------+--------+
+| user.name          | Bob    |
+*--------------------+--------+
+| user.sign          | Cancer |
+*--------------------+--------+
+| user.son.name      | Alan   |
+*--------------------+--------+
+| user.daughter.name | Jane   |
+*--------------------+--------+
+
+ FormTree will parse this into a tree whose structure looks like this:
+
+[images/example-1-tree.png]
+
+* Trees with Lists
+
+ Of course, with a simple form like the one above, we wouldn't need FormTree.
+ FormTree also supports paths containing indexes, which produce list-like
+ structures in the resulting tree. For example:
+
+*--------------------*--------*
+|        Field       |  Value |
+*--------------------+--------+
+| user[0].name       | Alice  |
+*--------------------+--------+
+| user[0].sign       | Taurus |
+*--------------------+--------+
+| user[1].name       | Bob    |
+*--------------------+--------+
+| user[1].sign       | Cancer |
+*--------------------+--------+
+
+ This produces the following tree:
+
+[images/example-2-tree.png]
+
+ Indexes for a given key don't need to be continuous: gaps leave the
+ corresponding index nodes out of the resulting tree, instead.
+
+* Keys with Many Values
+
+ HTML forms permit multiple values for a single form field, and FormTree
+ supports this, too. A form containing the same key multiple times will assign
+ multiple values to the corresponding node. For example:
+
+*-----------------------*---------*
+|        Field          |  Value  |
+*-----------------------+---------+
+| user[0].name          | Bob     |
+*-----------------------+---------+
+| user[0].food          | Burgers |
+*-----------------------+---------+
+| user[0].food          | Brats   |
+*-----------------------+---------+
+| user[1].name          | Carl    |
+*-----------------------+---------+
+| user[1].food          | Coffee  |
+*-----------------------+---------+
+
+ This produces the following tree:
+
+[images/example-3-tree.png]
+
+Plugging Forms In
+
+ Forms must be adapted to the <<<ca.grimoire.formtree.FormAdapter>>>
+ interface, which provides a consistent  API for retrieving keys and value
+ sets from the form data.
+
+* Servlets
+
+ FormTree includes an adapter for the Servlet API's standard form data source.
+ The <<<ca.grimoire.formtree.adapter.servlet.ServletForm>>> class wraps any
+ <<<HttpServletRequest>>>, providing access to the <<<getParameterNames>>> and
+ <<<getParameterValues>>> methods.
+
+ To use this class in your applications, you must also have an implementation
+ of the Servlet API available.
+
+* JAX-RS
+
+ FormTree also includes an adapter for the JAX-RS <<<MultivaluedMap>>> class.
+ Form data from JAX-RS can be wrapped in instances of
+ <<<ca.grimoire.formtree.adapter.jaxrs.MultivaluedMapForm>>>, providing access
+ to the <<<getKeys>>> and <<<getValue>>> methods.
+
+ To use this class in your application, you must also have the JAX-RS API
+ available.
+
+Extracting Data
+
+ FormTree operates on the idea that the tree extracted from form data should
+ map to a domain-specific data model. It supports adapters (which implement
+ the <<<FormReceiver>>> interface), which accept paths and values from the
+ form and construct the resulting domain model.
+
+* <<<ca.grimoire.formtree.receiver.constructor.ConstructorReceiver>>>
+
+ FormTree includes one a FormReceiver implementation which calls
+ specially-annotated constructors to recreate an object graph.
+
+ A class is <constructible> if it has at least one <form constructor>. A
+ <form constructor> is a constructor where all parameters are annotated with
+ <<<@ca.grimoire.formtree.receiver.annotations.FormField>>>, all of which can
+ be reconstructed by <<<ConstructorReceiver>>> or its collaborator:
+
+ * Constructible classes.
+
+ * List\<T\>, Set\<T\>, and T\[\], where T is a constructible class.
+
+ * Any class with a constructor that accepts a single <<<String>>> argument.
+ 
+ * Any class with a static <<<valueOf>>> or <<<fromString>>> method that accepts a single <<<String>>> argument.
+
+ []
+
+ <<<ConstructorReceiver>>> examines the class it's asked to build before
+ any form parsing occurs, so the results of form parsing depend entirely on
+ the constructors it will invoke. Consider the following example:
+
++-----------
+package com.example;
+
+/* imports elided */
+public class Form {
+    public Form(@FormField("user") List<User> users) {
+        this.users = users;
+    }
+    
+    private final List<User> users;
+    /* ... */
+}
+
+/* ... */
+
+public class User {
+    public User(@FormField("name") String name,
+        @FormField("sign") String sign) {
+        this.name = name;
+        this.sign = sign;
+    }
+    
+    private final String name;
+    private final String sign;
+    /* ... */
+}
++-----------
+
+ The first example form can be parsed into this data model:
+
++-----------
+    /* ... */
+    FormAdapter form = /* See above */;
+    ConstructorReceiver<Form> r = ConstructorReceiver.create(Form.class);
+    
+    FormDecoder decoder = new FormDecoder();
+    
+    Form f = decoder.decode(formData, r);
+    /* ... */
++-----------
+
+ Decoding will produce the following constructor calls (in some
+ non-contradictory order):
+
+ * <<<name = "Bob">>>
+
+ * <<<sign = "Cancer">>>
+
+ * <<<user = new User(name, sign)>>>
+
+ * <<<form = new Form(user)>>>
+
+ []
+
+ The final <<<Form>>> object is returned from the <<<decode>>> method as
+ the resulting data model. The unexpected nodes for <<<user.son.name>>> and
+ <<<user.daughter.name>>> are silently ignored.

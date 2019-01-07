@@ -1,0 +1,13 @@
+data/bom-maven-plugin/src/main/java/ca/grimoire/bom/maven/Paths.java.i
+data/bom-maven-plugin/src/test/java/ca/grimoire/bom/maven/PathsTest.java.i
+data/sample/src/main/resources/example.txt.i
+data/bom-tools/src/main/java/ca/grimoire/bom/BomLoader.java.i
+data/bom-tools/pom.xml.i
+data/sample/src/main/resources/example.xml.i
+data/pom.xml.i
+data/bom-maven-plugin/src/main/java/ca/grimoire/bom/maven/GenerateMojo.java.i
+data/bom-tools/src/main/java/ca/grimoire/bom/PathFilter.java.i
+data/.hgignore.i
+data/sample/pom.xml.i
+data/bom-maven-plugin/pom.xml.i
+data/sample/src/main/java/ca/grimoire/bom/sample/Sample.java.i

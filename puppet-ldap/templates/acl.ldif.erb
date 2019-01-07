@@ -1,0 +1,6 @@
+dn: <%= database_dn %> 
+changetype: modify
+replace: olcAccess
+<% entries.each do |entry| -%>
+olcAccess: <%= entry %>
+<% end -%>

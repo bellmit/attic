@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+
+import argparse
+
+from bugcli import ui
+from bugcli import config
+from bugcli import exception as exc
+from bugcli import auth as a
+from bugcli import message
+from bugcli import trackers
+
+from bugcli import bootstrap
+
+def args():
+    parser = argparse.ArgumentParser(description='Open a new bug.')
+    parser.add_argument(
+        'summary',
+        metavar='SUMMARY',
+        help='Issue summary.'
+    )
+    parser.add_argument(
+        '-t', '--type',
+        metavar='TYPE',
+        help='Issue type.'
+    )
+    parser.add_argument(
+        '-d', '--description',
+        metavar='FILE',
+        type=argparse.FileType('rt'),
+        help='Read issue description from file. If not set, an $EDITOR will be launched.'
+    )
+    return parser
+tui, auth, args, tracker = bootstrap.terminal(args)
+
+summary = args.summary
+if args.description:
+    description_guard = message.from_stream(args.description)
+else:
+    description_guard = tui.prompt_issue_description()
+type = args.type
+
+try:
+    with description_guard as description:
+        issue, url = tracker.open_issue(auth, summary, description, type)
+        tui.show_issue_opened(issue, url)
+except exc.TrackerError, e:
+    tui.show_tracker_error(e)

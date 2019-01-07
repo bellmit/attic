@@ -1,0 +1,10 @@
+data/src/main/java/ca/grimoire/spring/web/requestaware/ServletRequestAwareProcessor.java.i
+data/src/test/java/ca/grimoire/spring/web/requestaware/ServletRequestAwareProcessorTest.java.i
+data/pom.xml.i
+data/.hgtags.i
+data/.hgignore.i
+data/src/test/java/ca/grimoire/spring/web/requestaware/ServletRequestAwareListenerTest.java.i
+data/src/main/java/ca/grimoire/spring/web/requestaware/ServletRequestAwareListener.java.i
+data/src/main/java/ca/grimoire/spring/web/requestaware/ServletRequestAware.java.i
+data/src/main/java/ca/grimoire/spring/web/requestaware/ServletRequestHolder.java.i
+data/src/test/java/ca/grimoire/spring/web/requestaware/ServletRequestHolderTest.java.i

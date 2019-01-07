@@ -1,0 +1,8 @@
+syntax: glob
+*.egg-info
+tags
+*.pyc
+setuptools.pth
+dist
+build
+py

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- An example noise document describing the generators in the sample program. -->
+<noise>
+  <checker black="0.0" white="1.0" />
+
+  <translate x="-0.1">
+    <checker black="0.0" white="1.0" />
+  </translate>
+
+  <rotate z="2.1">
+	<checker black="0.0" white="1.0" />
+  </rotate>
+
+  <scale x="0.5" y="2" z="2">
+    <checker black="0.0" white="1.0" />
+  </scale>
+
+  <integer seed="42" />
+
+  <radius />
+  <sphere frequency="1.0" amplitude="1.0" />
+  
+  <axis />
+  <cylinder frequency="1.0" amplitude="1.0" />
+  
+  <plane />
+  <gradient frequency="1.0" amplitude="1.0" />
+
+  <perlin seed="5" octaves="2" lacunarity="2" persistence="0.5" quality="HIGH" />
+  <perlin seed="5" octaves="8" lacunarity="2" persistence="0.5" quality="HIGH" />
+  <perlin seed="5" octaves="8" lacunarity="1.5" persistence="0.75" quality="HIGH" />
+
+  <bumps seed="5" quality="HIGH" />
+
+  <ridgedmulti seed="5" octaves="8" lacunarity="2" quality="HIGH" />
+
+  <displace>
+    <checker black="0.0" white="1.0" />
+
+    <bias scale="0.5">
+      <perlin seed="5" octaves="8" lacunarity="1.8" persistence="0.5" quality="HIGH" />
+    </bias>
+    <bias scale="0.5">
+      <perlin seed="6" octaves="8" lacunarity="1.8" persistence="0.5" quality="HIGH" />
+    </bias>
+    <bias scale="0.5">
+      <perlin seed="7" octaves="8" lacunarity="1.8" persistence="0.5" quality="HIGH" />
+    </bias>
+  </displace>
+
+  <multiply>
+    <bumps seed="5" quality="HIGH" />
+    <cylinder frequency="1" amplitude="1" />
+  </multiply>
+
+  <maximum>
+    <perlin seed="5" octaves="8" lacunarity="1.8" persistence="0.5" quality="HIGH" />
+    <ridgedmulti seed="5" octaves="8" lacunarity="2" quality="HIGH" />
+  </maximum>
+
+  <minimum>
+    <perlin seed="5" octaves="8" lacunarity="1.8" persistence="0.5" quality="HIGH" />
+    <ridgedmulti seed="5" octaves="8" lacunarity="2" quality="HIGH" />
+  </minimum>
+
+  <select threshold="0.0" falloff="0.2">
+    <checker black="-0.5" white="0.5" />
+    <ridgedmulti seed="5" octaves="8" lacunarity="2" quality="HIGH" />
+
+    <bumps seed="7" quality="HIGH" />
+  </select>
+
+  <exponent power="2.0">
+    <ridgedmulti seed="5" octaves="8" lacunarity="2" quality="HIGH" />
+  </exponent>
+  
+  <sawtooth frequency="1.0" amplitude="1.0">
+    <ridgedmulti seed="5" octaves="8" lacunarity="2" quality="HIGH" />
+  </sawtooth>
+</noise>

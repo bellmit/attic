@@ -1,0 +1,8 @@
+<component-sets>
+    <components>
+        <component>
+            <role>ca.grimoire.maven.apacheds.LdapServerLifecycle</role>
+            <implementation>ca.grimoire.maven.apacheds.LdapServerLifecycle</implementation>
+        </component>
+    </components>
+</component-sets>

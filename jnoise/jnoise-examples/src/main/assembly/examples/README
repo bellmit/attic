@@ -1,0 +1,128 @@
+===== Overview =====
+
+This README describes the JNoise library distribution. This package is
+all you need to create JNoise-based applications. Inside you'll find a
+custom Java library that implements the JNoise noise generation and
+manipulation APIs, as well as a simple demo application.
+
+----- Fiddling with the example -----
+
+The jnoise-examples-VERSION.jar example contains code to load a file
+named jnoise.xml from the working directory, if possible, before
+falling back to a built-in configuration.  If you want to play with
+noise configurations without writing any code, create this XML file or
+copy the resources/ca/grimoire/jnoise/examples/modules.xml to the
+working directory as jnoise.xml and edit it.
+
+Noise configuration starts with a noise tag and contains one or more
+module definitions:
+
+<noise>
+  <perlin seed="42" octaves="8" lacunarity="2.0" 
+          persistence="0.5" quality="HIGH" />
+</noise>
+
+The example program will list each example, from first to last, in the
+drop-down at the top of the window, defaulting to the first module.
+
+Every module listed in the API documentation has an XML
+representation. See the module documentation for details.
+
+----- How to use the Java API -----
+
+To quickly try the API, run
+  java -cp jnoise-examples-VERSION.jar \
+    ca.grimoire.jnoise.examples.ShowNoise
+or
+  java -jar jnoise-examples-VERSION.jar
+
+Windows users can also double-click jnoise-examples-VERSION.jar.
+
+ca.grimoire.jnoise.examples.ShowNoise is only a demonstration; Java
+programmers should look at the source for
+ca.grimoire.jnoise.examples.ShowNoise and the online Javadoc for the
+JNoise API to learn more about how to use JNoise.
+
+To use JNoise in an application merely ensure that the appropriate JAR
+files (listed below) are in the classpath.  No configuration files or
+other resources are required.  JNoise may be shipped with
+applications, subject to the terms laid out in the LICENSE file.
+
+API documentation for JNoise is available online at <${url}>.
+
+===== Contents of this package: =====
+
+jnoise-modules-VERSION.jar
+  Java library containing the JNoise generator modules and utilities.
+jnoise-tools-VERSION.jar
+  Java library containing coordinate and palette mapping tools.
+jnoise-config-VERSION.jar
+  Java library containing an XML configuration parser for noise modules.
+jnoise-examples-VERSION.jar
+  Java library containing an example JNoise application.
+
+LICENSE
+  Terms of use and distribution for the API.
+README
+  You're swimming in it.
+src/
+  Source code and manifest file for the example program.
+resources/
+  Configuration files built into the example program.
+
+===== jnoise-modules-VERSION.jar contents =====
+
+ca.grimoire.jnoise.modules.*;
+  Noise generation and transformation modules included in JNoise.
+ca.grimoire.jnoise.util.*;
+  Small utility classes containing some common code.
+
+===== jnoise-tools-VERSION.jar contents =====
+
+ca.grimoire.jnoise.models.*;
+  Coordinate maps for translating other coordinate systems to JNoise's
+  three-dimensional model.
+ca.grimoire.jnoise.palettes.*;
+  Colour-mapping tools for translating noise values to colors.
+
+===== jnoise-config-VERSION.jar contents =====
+
+ca.grimoire.jnoise.config.*;
+  Tools for loading noise module trees from XML streams.
+
+===== jnoise-examples-VERSION.jar contents =====
+
+ca.grimoire.jnoise.examples.*;
+  Compiled version of the example program in src/ and resources/.
+
+===== Release notes =====
+
+2008-12-24: Version 1.3.0
+
+ - Moved project to alchemy.grimoire.ca.
+ - Package names now match Java conventions.
+ - Internal build rewritten and streamlined using Maven.
+ - No implementation changes.
+
+2006-06-27: Version 1.2
+
+ - New package, jnoise.config (contained in jnoise-config-VERSION.jar),
+   which allows applications to load XML documents as noise modules.
+   The example application has been adjusted to load its noise samples
+   from either a user-supplied or a built-in XML document.
+ - A new palette tool which maps values in arbitrary ranges along an
+   exponentially corrected curve to black, grey, and white.  This
+   provides much more flexible greyscale rendering of noise fields.
+ - A new coordinate mapping tool for converting spherical coordinates
+   (latitude and longitude) into noise values sampled from a module.
+
+2006-04-20: Version 1.1
+
+ - Signifigant documentation improvements throughout.
+ - One new noise generator module, jnoise.modules.RidgedMultifractal.
+
+2006-04-11: first public release of JNoise.
+
+===== Problems?  Suggestions? =====
+
+Feedback and patches are always welcome at <owen.jacobson@grimoire.ca>.

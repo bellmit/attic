@@ -1,0 +1,115 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ca.grimoire</groupId>
+        <artifactId>alchemy-parent</artifactId>
+        <version>5</version>
+    </parent>
+
+    <groupId>ca.grimoire</groupId>
+    <artifactId>formtree</artifactId>
+    <version>1.3-SNAPSHOT</version>
+
+    <name>FormTree</name>
+    <url>http://alchemy.grimoire.ca/m2/sites/ca.grimoire/formtree/</url>
+
+    <description>
+        Tools for converting complex HTML form data into object graphs
+        and collections.
+    </description>
+
+    <developers>
+        <developer>
+            <id>owen.jacobson</id>
+            <name>Owen Jacobson</name>
+            <email>owen.jacobson@grimoire.ca</email>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://bitbucket.org/ojacobson/formtree</url>
+        <connection>scm:hg:https://bitbucket.org/ojacobson/formtree</connection>
+        <developerConnection>scm:hg:ssh://hg@bitbucket.org/ojacobson/formtree</developerConnection>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>jsr311-api</artifactId>
+            <version>1.1.1</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0-beta-3</version>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.2</version>
+                            <configuration>
+                                <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+                                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                            </configuration>
+                            <reports>
+                                <report>license</report>
+                                <report>scm</report>
+                                <report>summary</report>
+                            </reports>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.7</version>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <site>
+            <id>alchemy.grimoire.ca</id>
+            <url>dav:http://alchemy.grimoire.ca/m2/sites/ca.grimoire/formtree</url>
+        </site>
+    </distributionManagement>
+</project>

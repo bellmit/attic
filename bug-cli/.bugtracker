@@ -1,0 +1,6 @@
+[tracker]
+type = bitbucket
+
+[bitbucket]
+user = ojacobson
+project = bug-cli

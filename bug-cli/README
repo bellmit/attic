@@ -1,0 +1,260 @@
+bug-cli is a suite of command-line tools for manipulating bugs. It supports
+the following trackers out of the box:
+
+    * JIRA
+    * Redmine
+    * Bitbucket
+    * GitHub
+
+Additionally new trackers can be added as plugins.
+
+===========
+The scripts
+===========
+
+Each script provides a '--help' command-line option that summarizes its 
+parameters and options.
+
+open-bug 'Your bug summary':
+
+    Creates a new bug in the configured issue tracker. By default, open-bug
+    will open your $EDITOR so that you can enter a more detailed description
+    of the bug.
+
+comment-bug BUGID:
+
+    Adds a new comment to an existing bug. By default, comment-bug will open
+    your $EDITOR so that you can enter your comment text.
+
+resolve-bug BUGID
+
+    Marks a bug as resolved. By default, resolve-bug will open your $EDITOR so
+    that you can enter a comment for the bug resolution.
+
+    GitHub:
+        The --resolution argument is ignored, as GitHub only supports
+        a single bug resolution ("closed").
+
+===========================
+Setting up your environment
+===========================
+
+The bug-cli scripts look for configuration files in two places:
+
+    1. A per-user configuration in ~/.bug-cli.conf, which is a useful place to
+       put user credentials and other user-specific configurations.
+    2. A per-project configuration in .bugtracker, which is a useful place to
+       put the project's bug tracker information.
+
+The two configurations are merged into a single configuration, with 
+per-project settings taking precedence over per-user settings.
+
+The bug-cli scripts will search upwards from the working directory to find the
+.bugtracker configuration, allowing you to run the scripts from any
+subdirectory of your project.
+
+Other than the [tracker] section, the configuration fields below can also be
+set on the command line using the similarly-named options. See each script's
+--help option for a full list.
+
+--------------------
+The .bugtracker file
+--------------------
+
+(Note that bug-cli is self-hosting. There's a simple example configuration in
+the source tree, which configures the Bitbucket tracker for bug-cli itself.)
+
+The project configuration requires, at minimum, the following sections:
+
+[tracker]:
+
+    This section contains a single key, which sets the type of bug tracker in
+    use. Tracker types are CASE SENSITIVE, and by convention are all
+    lower-case.
+    
+        * type:
+            Supported values are the names of any available bug tracker. The
+            included tracker names are 'jira', 'redmine', and 'bitbucket'.
+
+The bug tracker itself is configured by a section specialized for that
+tracker.
+
+[jira]:
+
+    This section configures JIRA bug trackers. It contains the following keys:
+
+        * url:
+            The URL of your JIRA instance: https://jira.example.com/
+        * project:
+            The project key for your JIRA project: EXAMPLE
+        * type (optional):
+            The default issue type when creating new bugs.
+        * resolution (optional):
+            The default resolution to use when resolving bugs. (Defaults to
+            'Fixed.')
+        * resolve_workflow (optional):
+            The default workflow to follow when resolving bugs. (Defaults to
+            'Resolve Issue'.)
+
+    The authentication section for a JIRA tracker is defined by the url field.
+
+[redmine]:
+
+    This section configures Redmine bug trackers. It contains the following
+    keys:
+
+        * url:
+            The URL of your Redmine instance: https://redmine.example.com/
+        * project:
+            The name or ID of your Redmine project: example
+        * type (optional):
+            The default issue type when creating new bugs.
+        * resolution (optional):
+            The default status for resolving bugs. (Defaults to 'Closed'.)
+
+    The authentication section for a Redmine tracker is defined by the url
+    field.
+
+[bitbucket]:
+
+    This section configures Bitbucket bug trackers. It contains the following
+    keys:
+
+        * user:
+            The owner of the repository: ojacobson
+        * project:
+            The name of the repository itself: bug-cli
+        * type (optional):
+            The default issue type when creating new bugs.
+        * resolution (optional):
+            The default status to use when resolving bugs. (Defaults to
+            'resolved')
+        * api_url (optional):
+            An alternate API base URL. Useful for debugging, but otherwise
+            this should not be set.
+
+    The authentication section for a Bitbucket tracker is computed from the
+    user and project fields: https://bitbucket.org/USER/PROJECT
+
+------------------------
+The ~/.bug-cli.conf file
+------------------------
+
+This file contains per-user settings: most commonly, usernames and passwords.
+This file should have permissions set such that other users cannot read your
+password: 0600 is sufficient.
+
+Each tracker comes with an (optional) authentication section. The section name
+depends on the tracker type and configuration, as above. For example, if your
+project configuration contains
+
+    [jira]
+    url = https://jira.example.com/
+
+then the authentication section would be
+
+    [https://jira.example.com/]
+    username = ojacobson
+    password = toomanysecrets
+
+Each tracker has its own authentication section, with the following fields:
+
+    * username:
+        Your username on the associated bug tracker.
+    * password (optional):
+        Your password on the associated bug tracker. If you don't set a 
+        password, the scripts will prompt you for your password on each run.
+
+====================
+Writing new trackers
+====================
+
+Each tracker has a corresponding entry point under the 'bugcli.trackers' 
+group. The entry point must be an object (conventionally a class, but any 
+object will work) with the following callable attributes:
+
+    * command_line_args(parser):
+        Register the tracker's command-line arguments with an argparse parser.
+        The names of the options must match the names of the configuration 
+        fields used in the other callable attributes; the resulting settings
+        will automatically be made available in the 'config' object provided
+        to subsequent calls, along with values from the user's config files.
+
+    * auth_section(config):
+        Returns the name of the authentication configuration section for the
+        tracker configured by the 'config' object.
+
+    * from_config(config):
+        Returns a new tracker object configured by the 'config' object.
+
+-------------------
+The 'config' object
+-------------------
+
+The 'config' object passed to auth_section and from_config provides the 
+following methods:
+
+    * get(section, key, default=None):
+        Returns the configuration value provided by the user. Command-line 
+        arguments named by the 'key' parameter take precedence, followed by
+        the value in the given section of the per-project config, followed by
+        the value in the given section of the per-user config, followed by
+        the default value (or None if no default is given).
+
+    * require(section, key):
+        As with get, but if no value is available, this raises an exception 
+        and reports the configuration error to the user.
+
+--------------------
+The 'tracker' object
+--------------------
+
+Each tracker's from_config must return a tracker object. Tracker objects
+provide the per-bug-tracker implementation of the various workflow tasks, and
+must have the following callable attributes:
+
+    * open_issue(auth, summary, description, issue_type=None):
+        Opens a new issue in the tracker. The auth object provides the user's
+        credentials, and is described below. The summary and description
+        parameters provide a short and long description of the issue to
+        create. The issue_type parameter must be optional, and if not set, the
+        tracker should supply a sensible default issue type.
+
+        open_issue returns a two-element tuple of the created issue's
+        user-facing identifer and the issue's browser-friendly URL. For
+        example, the JIRA tracker returns this:
+
+            ('EXAMPLE-4', 'http://jira.example.com/browse/EXAMPLE-4')
+
+    * comment_issue(auth, issue, comment):
+        Adds a comment to an existing issue. The auth object provides the
+        user's credentials, and is described below. The issue parameter is the
+        issue identifier, as entered by the user (normally the issue number).
+        The comment parameter is the text of the comment.
+
+        comment_issue returns the same two-element tuple as open_issue.
+
+    * resolve_issue(auth, issue, comment, resolution=None, version=None):
+        Resolves an issue in the tracker. The auth object provides the
+        user's credentials, and is described below. The issue parameter is the
+        issue identifier, as entered by the user (normally the issue number).
+        The comment parameter is the text of the comment to include with the
+        issue resolution. The optional resolution parameter is a user-entered
+        name for the issue's resolved state ("Resolved", "Closed", 
+        "Rejected", or any other tracker-appropriate string). The optional
+        version parameter is a user-entered name for the version to associate
+        with the issue.
+
+        resolve_issue returns the same two-element tuple as open_issue.
+
+-----------------
+The 'auth' object
+-----------------
+
+The 'auth' object passed to the tracker methods provides access to the user's
+credentials. It provides the following methods:
+
+    * http_basic():
+        Returns a value suitable for passing to the HTTP methods in the
+        bugcli.rest module containing either anonymous credentials or the
+        user's configured credentials for this tracker.

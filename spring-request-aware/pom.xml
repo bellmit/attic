@@ -1,0 +1,105 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ca.grimoire</groupId>
+        <artifactId>alchemy-parent</artifactId>
+        <version>5</version>
+    </parent>
+
+    <groupId>ca.grimoire.spring</groupId>
+    <artifactId>spring-request-aware</artifactId>
+    <version>1.1-SNAPSHOT</version>
+
+    <name>ServletRequestAware Extension for Spring Web</name>
+    <url>http://alchemy.grimoire.ca/m2/sites/ca.grimoire.spring/spring-request-aware</url>
+
+    <description>
+        Allows injection of the in-flight ServletRequest in a Spring web
+        application.
+    </description>
+
+    <developers>
+        <developer>
+            <id>owen.jacobson</id>
+            <name>Owen Jacobson</name>
+            <email>owen.jacobson@grimoire.ca</email>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>
+            scm:hg:https://bitbucket.org/ojacobson/spring-request-aware
+        </connection>
+        <developerConnection>
+            scm:hg:ssh://hg@bitbucket.org/ojacobson/spring-request-aware
+        </developerConnection>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>1.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+
+                <configuration>
+                    <links>
+                        <link>http://download.oracle.com/javase/6/docs/api/</link>
+                        <link>http://download.oracle.com/javaee/6/api/</link>
+                        <link>http://static.springsource.org/spring/docs/3.0.x/javadoc-api/</link>
+                    </links>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <distributionManagement>
+        <site>
+            <id>alchemy.grimoire.ca</id>
+            <url>dav:http://alchemy.grimoire.ca/m2/sites/ca.grimoire.spring/spring-request-aware</url>
+        </site>
+    </distributionManagement>
+
+</project>

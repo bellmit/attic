@@ -1,0 +1,72 @@
+  -------------------------------
+  Writing Mainspring Applications
+  -------------------------------
+
+Writing Mainspring Applications
+
+ Mainspring provides bootstrap classes that does one thing and one thing only:
+ load a Spring
+ {{{http://static.springframework.org/spring/docs/2.5.x/api/org/springframework/context/support/AbstractXmlApplicationContext.html}application context}}
+ and register its shutdown hooks. 
+ 
+ The application context is loaded from <<<META-INF/mainspring.xml>>>, or from
+ the XML files named on the command line. Mainspring applications use either
+ <<<Bootstrap>>> or <<<Swingstrap>>> to start up.
+
+* Swing applications
+
+ Because of constraints on Swing's threading model, applications which create
+ Swing components directly inside the bootstrap context rather than via
+ factories of their own <<must>> use the <<<Swingstrap>>> class to start up to
+ ensure that the context creation takes place on the Swing Event Dispatch
+ Thread. Applications with complex contexts should probably use a splash
+ banner.
+
+* Executing Code
+
+ Here are some of the known-good ways to kick off application behaviour, along
+ with the gotchas I've already found.
+ 
+ Capsule summary, for the impatient: don't call <<<System.exit>>> if you rely
+ on <<<destroy-method>>> attributes or <<<@PreDestroy>>> for clean shutdown.
+ End your program by ending all non-daemon threads and disposing of any UI
+ components you don't need, or by calling <<<close()>>> on the
+ <<<ApplicationContext>>>, using <<<ApplicationContextAware>>>.
+
+** <<<init-method>>>
+
+ Beans that have <<<init-method>>> attributes, or that implement
+ {{{http://static.springframework.org/spring/docs/2.5.x/api/org/springframework/beans/factory/InitializingBean.html}<<<InitializingBean>>>}},
+ can kick off logic. However, init methods are run when the Spring context is
+ in a somewhat sensitive state. <<<Bootstrap>>> makes a point of setting up
+ the appropriate JVM shutdown hooks, but on some VMs, calling <<<System.exit>>> 
+ or <<<Runtime.exit>>> during a Spring init method locks up the VM.
+
+** ApplicationListener
+
+ Beans implementing the
+ {{{http://static.springframework.org/spring/docs/2.5.x/api/org/springframework/context/ApplicationListener.html}<<<ApplicationListener>>>}}
+ interface are automatically notified of events as the application context
+ configures itself and prepares to shut down. Behavior can be attached to
+ {{{http://static.springframework.org/spring/docs/2.5.x/api/org/springframework/context/event/ContextRefreshedEvent.html}<<<ContextRefreshedEvent>>>}}s
+ to drive application behaviour.
+ 
+ Once again, calling <<<System.exit>>> or <<<Runtime.exit>>> during
+ <<<ContextRefreshedEvent>>> handling will take Spring by surprise. I've never
+ been able to lock up the VM with this, but it does skip bean destroy methods.
+
+** Swing
+
+ Obviously, applications started via <<<Springstrap>>> that create and pack a
+ UI will become visible at the end of Spring startup when control returns to
+ the EDT.
+ 
+ Non-Swing apps can take advantage of a similar pattern by starting their own
+ Executor and using it to schedule code.
+
+* Arguments
+
+ <<<Bootstrap>>> and <<<Swingstrap>>> do not implement any mechanism for
+ accessing command-line parameters, as they both use all parameters themselves. 
+ To pass information into the context, use system properties, a config file in
+ the working directory or a known location, or the Preferences API.

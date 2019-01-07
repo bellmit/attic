@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+from time import sleep
+from hacksign import Frame
+from hacksign.driver import loop
+
+host = "192.168.111.4"
+port = 2333
+
+def hline (image, row):
+    for x in range (0, 96):
+        image.set_pixel (x, row, 0)
+
+class frame_function:
+    row = 0
+    
+    def __call__ (self):
+        sleep (0.2)
+        image = frame (fill=255)
+
+        hline (image, self.row)
+        hline (image, self.row + 1)
+        self.row = (self.row + 1) % 31
+
+        return image
+
+loop (host, port, frame_function ())

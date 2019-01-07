@@ -1,0 +1,14 @@
+<%- if !root_dn.empty? -%>
+dn: <%= database_dn %>
+changetype: modify
+replace: olcRootDN
+olcRootDN: <%= root_dn %>
+
+<%- end -%>
+<%- if !root_pw.empty? -%>
+dn: <%= database_dn %>
+changetype: modify
+replace: olcRootPW
+olcRootPW: <%= root_pw %>
+
+<%- end -%>

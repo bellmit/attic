@@ -1,0 +1,9 @@
+syntax: regexp
+\.pyc$
+^dist/
+^build/
+
+syntax: glob
+*.egg
+*.egg-info
+force-lightning.conf

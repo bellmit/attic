@@ -1,0 +1,55 @@
+ While ideally every daemon or service should be event-driven, at some point you need a pump or a main loop to initiate events. This library is intended to abstract out the actual main loop. This often comes up with various forms of non-multiplexable IO - I originally wrote this to deal with serial ports, where the application had a thread for each port, looping over "write pending data, read until data arrives or interrupted, repeat".
+
+Structure
+
+ A main loop normally consists of two pieces: the loop itself, which controls execution, and the loop body, which performs some action once per iteration. The <<<ExecutorMainloop>>> class in this library implements the first half, freeing up clients to focus on the loop body.
+ 
+ The basic structure of the main loop is designed to allow it to be used with (and controlled by) an <<<Executor>>> or <<<ExecutorService>>> instance, allowing several loops to share a thread pool and shutdown logic. The loop itself is very simple:
+ 
+ [[1]] Run the loop body (a <<<Runnable>>>) once.
+
+ [[2]] Re-submit the main loop to the <<<Executor>>>.
+
+ [[3]] If the <<<Executor>>> rejected the submission, fire an event and exit.
+
+Hello World
+
+ This is a simple example that emits "Hello, World!" messages every second for five seconds, then shuts down cleanly.
+
++-------------------------------+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import ca.grimoire.mainloop.ExecutorMainloop;
+
+public class HelloWorld {
+  public static void main(String[] args) throws InterruptedException {
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    Runnable printHello = new Runnable() {
+      public void run() {
+        try {
+          System.out.println("Hello, world!");
+          Thread.sleep(1000);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+          // Preserve interrupt status... Optional, but tidy.
+          Thread.currentThread().interrupt();
+        }
+      }
+    };
+
+    ExecutorMainloop mainloop = 
+      new ExecutorMainloop(printHello, executor);
+
+    mainloop.start();
+
+    Thread.sleep(5000);
+    executor.shutdown();
+  }
+}
++-------------------------------+
+
+ As expected, when this runs it prints "Hello, world!" (roughly) five times, then exits. The choice of executor services is up to the caller; in this simple example, only a single thread is actually necessary, but a <<<newCachedThreadPool>>> executor is fairly effective when several main loops are sharing a single executor.
+ 
+ We could enforce that the app prints "Hello, world!" exactly five times by moving control over the executor's shutdown into the <<<printHello>>> task, but this kind of loop is intended for situations where termination is not contingent on the loop itself. For example, in daemons and services, shutdown normally happens in response to a signal or network message, and in GUIs, shutdown normally happens in response to a GUI event.

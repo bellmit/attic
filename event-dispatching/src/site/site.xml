@@ -1,0 +1,9 @@
+<project>
+  <body>
+    <menu>
+      <item name="Introduction" href="index.html"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

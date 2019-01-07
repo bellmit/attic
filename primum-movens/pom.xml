@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>ca.grimoire</groupId>
+    <artifactId>alchemy-parent</artifactId>
+    <version>3</version>
+  </parent>
+
+  <groupId>ca.grimoire</groupId>
+  <artifactId>primum-movens</artifactId>
+  <packaging>jar</packaging>
+  <version>1.1-SNAPSHOT</version>
+
+  <name>primum-movens</name>
+  <url>http://alchemy.grimoire.ca/m2/sites/ca.grimoire/primum-movens</url>
+
+  <description>
+    A collection of tools for writing main loops that can be shut down cleanly
+    using standard threading tools.
+  </description>
+
+  <developers>
+    <developer>
+      <id>owen.jacobson</id>
+      <name>Owen Jacobson</name>
+      <email>owen.jacobson@grimoire.ca</email>
+      <timezone>-5</timezone>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>
+      scm:hg:http://alchemy.grimoire.ca/hg/primum-movens/
+    </connection>
+    <developerConnection>
+      scm:hg:http://alchemy.grimoire.ca/hg/primum-movens/
+    </developerConnection>
+  </scm>
+
+  <ciManagement>
+    <system>Hudson</system>
+    <url>http://alchemy.grimoire.ca/hudson/</url>
+  </ciManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>ca.grimoire</groupId>
+      <artifactId>event-dispatching</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit-dep</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock</artifactId>
+      <version>2.5.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock-junit4</artifactId>
+      <version>2.5.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+
+        <configuration>
+          <links>
+            <link>http://java.sun.com/javase/6/docs/api</link>
+          </links>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <distributionManagement>
+    <site>
+      <id>alchemy.grimoire.ca</id>
+      <url>dav:http://alchemy.grimoire.ca/m2/sites/ca.grimoire/primum-movens</url>
+    </site>
+  </distributionManagement>
+</project>

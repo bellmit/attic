@@ -1,0 +1,20 @@
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+        http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+    version="2.1">
+
+    <tlib-version>${project.version}</tlib-version>
+    <short-name>jsp-filters</short-name>
+    <uri>http://alchemy.grimoire.ca/taglibs/jsp-filters/</uri>
+
+    <function>
+        <description>
+            Performs XML escaping of values (as with c:out's escapeXml attribute).
+        </description>
+        <name>escapeXml</name>
+
+        <function-class>org.apache.taglibs.standard.tag.common.core.Util</function-class>
+        <function-signature>java.lang.String escapeXml(java.lang.String)</function-signature>
+    </function>
+
+</taglib>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+  version="2.0">
+  <description>
+    Tags for displaying Maven version information.
+  </description>
+  <display-name>Maven Metadata Taglib</display-name>
+  <tlib-version>${project.version}</tlib-version>
+
+  <short-name>mvn</short-name>
+  <uri>http://alchemy.grimoire.ca/taglibs/mvn</uri>
+
+  <tag>
+    <description>
+      Outputs the in-use version of a Maven artifact identified by the tag's groupId
+      and artifactId attributes. The artifact can either be the webapp itself or any
+      artifact available through the webapp's classloader.
+    </description>
+    <name>version</name>
+    
+    <tag-class>ca.grimoire.maven.taglib.VersionTag</tag-class>
+
+    <body-content>empty</body-content>
+
+    <attribute>
+      <description>The target artifact's Maven groupId.</description>
+      <name>groupId</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <attribute>
+      <description>The target artifact's Maven artifactId.</description>
+      <name>artifactId</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+
+    <example>
+      &lt;mvn:version groupId="ca.grimoire.maven" artifactId="maven-taglib" /&gt;
+    </example>
+  </tag>
+</taglib>
+
+
+

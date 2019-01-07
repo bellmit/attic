@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+from time import sleep
+from hacksign import Frame
+from hacksign.driver import loop
+import cairo
+
+host = "192.168.111.4"
+port = 2330
+
+def frame_function ():
+    sleep (0.1)
+
+    surface = cairo.ImageSurface (cairo.FORMAT_A8, 96, 32)
+    cr = cairo.Context (surface)
+    cr.set_source_rgba (0, 0, 0, 0)
+    cr.paint ()
+    cr.move_to (20, 24)
+    cr.set_font_size (20)
+    cr.set_source_rgba (1, 1, 1, 1)
+    cr.show_text ("test")
+
+    data = surface.get_data ()
+    class proxy:
+        def flatten (self):
+            return [ord(x) for x in data]
+
+    return proxy ()
+
+loop (host, port, frame_function)

@@ -1,0 +1,42 @@
+#!/bin/bash -e
+
+# Collapses one directory into another using svn operations to preserve as
+# much history as possible. Files and directories that already exist in the
+# target will not be replaced.
+
+function usage () {
+    echo "Usage: dirmerge (mv|cp) source target"
+}
+
+function consider_sources () {
+    find "$1" \
+      -name .svn -prune \
+      -o -not -path "$1" -print
+}
+
+function remove_parents () {
+    echo "$1" | sed -e "s,^$2/*,,"
+}
+
+if [ ! $# -eq 3 ]; then
+    usage
+    exit 1
+fi
+
+OP="$1"
+SRC="$2"
+TARGET="$3"
+
+for f in `consider_sources "$SRC"`; do
+    relname=`remove_parents "$f" "$SRC"`
+    if [ ! -e "$SRC/$relname" ]; then
+        # We already moved its parent, if the op was mv.
+        echo Skipped: \""$SRC/$relname"\" >&2
+    elif [ -e "$TARGET/$relname" ]; then
+        # Preserve the existing destination file.
+        echo Exists: \""$TARGET/$relname"\" >&2
+    else
+        echo svn $OP \""$SRC/$relname"\" \""$TARGET/$relname"\" >&2
+        svn $OP "$SRC/$relname" "$TARGET/$relname"
+    fi
+done

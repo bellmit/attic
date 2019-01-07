@@ -1,0 +1,6 @@
+dn: <%= overlay_dn %>
+changetype: modify
+replace: olcUniqueURI
+<% unique_uris.each do |unique_uri| -%>
+olcUniqueURI: <%= unique_uri %>
+<% end -%>

@@ -1,0 +1,15 @@
+data/src/main/java/ca/grimoire/critical/package-info.java.i
+data/src/main/java/ca/grimoire/critical/Todo.java.i
+data/src/main/java/ca/grimoire/App.java.i
+data/src/main/resources/META-INF/services/javax.annotation.processing.Processor.i
+data/src/site/apt/index.apt.i
+data/src/main/java/ca/grimoire/critical/IdeaQualityWarningProcessor.java.i
+data/pom.xml.i
+data/.hgtags.i
+data/.hgignore.i
+data/src/main/java/ca/grimoire/critical/TaskTagProcessor.java.i
+data/src/main/java/ca/grimoire/critical/BadIdea.java.i
+data/src/site/site.xml.i
+data/src/main/java/ca/grimoire/critical/FixMe.java.i
+data/src/main/java/ca/grimoire/critical/MessageFactory.java.i
+data/src/test/java/ca/grimoire/AppTest.java.i

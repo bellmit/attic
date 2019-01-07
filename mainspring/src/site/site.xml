@@ -1,0 +1,9 @@
+<project>
+  <body>
+    <menu name="Using Mainspring">
+      <item name="Writing Apps" href="writing.html"/>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

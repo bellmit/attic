@@ -1,0 +1,6 @@
+dn: <%= database_dn %> 
+changetype: modify
+replace: olcDbIndex
+<% indices.each do |index| -%>
+olcDbIndex: <%= index %>
+<% end -%>

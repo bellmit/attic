@@ -1,0 +1,12 @@
+data/src/main/java/ca/grimoire/maven/apacheds/Partition.java.i
+data/src/site/apt/usage.apt.vm.i
+data/src/main/java/ca/grimoire/maven/apacheds/StopServerMojo.java.i
+data/pom.xml.i
+data/.hgtags.i
+data/src/main/java/ca/grimoire/maven/apacheds/StartServerMojo.java.i
+data/.hgignore.i
+data/src/main/java/ca/grimoire/maven/apacheds/options/Partition.java.i
+data/src/main/java/ca/grimoire/maven/apacheds/LdapServerLifecycle.java.i
+data/src/site/site.xml.i
+data/src/site/apt/index.apt.vm.i
+data/src/main/resources/META-INF/plexus/components.xml.i

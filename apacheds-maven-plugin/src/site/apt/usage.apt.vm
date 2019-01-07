@@ -1,0 +1,76 @@
+    -----
+    Usage
+    -----
+
+A complete example
+
+    The following configuration creates an LDAP directory for
+    <<<dc=example,dc=com>>> in the <<<pre-integration-test>>> phase and tears
+    it down again in the <<<post-integration-test>>> phase.
+
++-------------------------------+
+<project>
+    ...
+    <build>
+        ...
+        <plugins>
+            ...
+            <plugin>
+                <groupId>ca.grimoire.maven</groupId>
+                <artifactId>apacheds-maven-plugin</artifactId>
+                <version>${siteVersion}</version>
+
+                <configuration>
+                    <!-- The LDAP server port. -->
+                    <port>10389</port>
+                    <!-- Apache DS partitions to host. -->
+                    <partitions>
+                        <partition>
+                            <id>example.com</id>
+                            <baseDn>dc=example,dc=com</baseDn>
+                        </partition>
+                    </partitions>
+                    <!-- LDIF files/directory with directory entries to load -->
+                    <ldifDirectory>\${baseDir}/src/test/ldif/example.com.ldif</ldifDirectory>
+                    <!-- Apache DS stores its directory on the filesystem. -->
+                    <workingDirectory>\${project.build.directory}/apache-ds/</workingDirectory>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>start-apache-ds</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>stop-apache-ds</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            ...
+        </plugins>
+        ...
+    </build>
+    ...
+</project>
++-------------------------------+
+
+    You'll also need an LDIF file describing your domain. The following
+    example matches the configuration above, and would be saved in
+    <<<src/test/ldif/example.com.ldif>>>:
+
++-------------------------------+
+version: 1
+
+dn: dc=example,dc=com
+objectClass: domain
+objectClass: top
+dc: example
++-------------------------------+

@@ -1,0 +1,99 @@
+ Raise your hand if you've ever put a <<<// TODO>>> comment in your code.
+
+ This library provides Java annotations for tracking notes about code, such as
+ <<<TODO>>> tags. It also provides an annotation processor that will pick up
+ the annotations and turn them into compiler messages, either as informational
+ messages or as errors that break the build.
+
+Annotating Your Code
+
+ Anywhere you think about writing a <<<// TODO>>> comment, you can instead put
+ an <<<@Todo>>> annotation. So, for example:
+
++-------------------------------+
+  public void sendUpdateToWorld () {
+    // TODO actually send the update.
+  }
++-------------------------------+
+
+ would become
+
++-------------------------------+
+  @Todo("Actually send the update.")
+  public void sendUpdateToWorld () {
+  
+  }
++-------------------------------+
+
+ You can also use <<<@FixMe>>>; exact semantics of each are left up to the user.
+
+ The <<<@Todo>>> and <<<@FixMe>>> annotations do not appear in class files, at
+ runtime, or in Javadoc. However, there is a third annotation, <<<@BadIdea>>>,
+ which is retained at runtime and which does appear in Javadoc.
+
+Processing Annotations
+
+ This library also provides an annotation processor that takes advantage of
+ the <<<@Todo>>>, <<<@FixMe>>>, and <<<@BadIdea>>> annotations to generate
+ compile-time messages. To use the processor, make sure the
+ <<<todo-annotations>>> JAR file is on the compiler classpath. <<<javac>>>'s
+ service lookup code will handle the rest. Alternately, you can use the
+ <<<-processor>>> and <<<-processorpath>>> compiler parameters to explicitly
+ set up the <<<ca.grimoire.critical.TaskTagProcessor>>> processor.
+
++-------------------------------+
+$ javac -classpath todo-annotations-1.0.jar -d classes Hello.java
++-------------------------------+
+
+ For Maven users, things are even easier: including the <<<todo-annotations>>>
+ dependency at any compile-visible scope will also make the processor available
+ to the compile phase. The <<<provided>>> scope will prevent the dependency from
+ "leaking" to downstream projects; alternately, the <<<compile>>> (default)
+ scope with <<<<optional>true</optional>>>> will make it available
+ at compile time without forcing its presence at runtime.
+
++-------------------------------+
+<project>
+  <!-- ... -->
+  <dependencies>
+    <!-- ... -->
+    
+    <dependency>
+      <groupId>ca.grimoire</groupId>
+      <artifact>todo-annotations</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <!-- ... -->
+</project>
++-------------------------------+
+
+* Severity, or, how to turn TODO into a broken build
+
+ By default, the annotation processor that handles <<<@Todo>>>, <<<@FixMe>>>,
+ and <<<@BadIdea>>> annotations treats each one as a warning. However, the
+ processor recognizes a single parameter that can alter the severity of the
+ message. The <<<severity>>> parameter to the processor can be set on the 
+ command line when starting <<<javac>>>:
+
++-------------------------------+
+$ javac -Aseverity=ERROR -classpath todo-annotations-1.0.jar -d classes Hello.java
++-------------------------------+
+
+ The useful severities are <<<ERROR>>>, <<<WARNING>>>, and <<<NOTE>>>. Setting
+ the message severity to <<<ERROR>>> will cause the compiler to treat any of the
+ annotations as a fatal error and abort the compilation.
+
+Limitations
+
+ Java annotations can only be placed on symbols visible at class scope or
+ higher, and on method and constructor parameters. <<<// TODO>>> comments, on
+ the other hand, can be placed directly adjacent to the line they apply to. The
+ easiest way to ensure an annotation is as close to the code it applies to as
+ possible is to keep methods short, so that the annotation applies to the entire
+ method.
+ 
+ There is no support for multiple occurrences of a single annotation or multiple
+ descriptions for a single annotation. If this turns out to be important it will
+ appear in a later version.

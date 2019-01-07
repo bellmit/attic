@@ -1,0 +1,13 @@
+data/src/main/java/ca/grimoire/logging/test/Target.java.i
+data/src/main/java/ca/grimoire/logging/annotations/MethodLoggingAdvice.java.i
+data/src/main/resources/ca/grimoire/logging/annotations/spring-aop.xml.i
+data/src/main/java/ca/grimoire/logging/annotations/LogReturn.java.i
+data/src/main/resources/applicationContext.xml.i
+data/src/main/java/ca/grimoire/logging/annotations/Severity.java.i
+data/pom.xml.i
+data/.hgtags.i
+data/.hgignore.i
+data/src/main/java/ca/grimoire/logging/annotations/LogBefore.java.i
+data/src/site/site.xml.i
+data/src/site/apt/index.apt.i
+data/src/main/java/ca/grimoire/logging/annotations/LogException.java.i

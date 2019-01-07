@@ -1,0 +1,8 @@
+data/src/site/apt/writing.apt.i
+data/src/main/java/com/unreasonent/mainspring/Bootstrap.java.i
+data/src/main/java/ca/grimoire/mainspring/Bootstrap.java.i
+data/src/main/java/ca/grimoire/mainspring/Swingstrap.java.i
+data/pom.xml.i
+data/.hgtags.i
+data/.hgignore.i
+data/src/site/site.xml.i
