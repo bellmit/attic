@@ -1,0 +1,25 @@
+<atlassian-user>
+    <repositories>
+        <ldap key="ldapRepository" name="LDAP Repository@hecate.atlassian.com" cache="true">
+            <host><%= @ldap_server %></host>
+            <port>389</port>
+            <securityPrincipal><%= @bind_dn %></securityPrincipal>
+            <securityCredential><%= @bind_password %></securityCredential>
+            <securityProtocol>plain</securityProtocol>
+            <securityAuthentication>simple</securityAuthentication>
+            <baseContext><%= @base_dn %></baseContext>
+            <baseUserNamespace>ou=People,<%= @base_dn %></baseUserNamespace>
+            <userSearchFilter>(objectClass=posixAccount)</userSearchFilter>
+            <usernameAttribute>uid</usernameAttribute>
+            <firstnameAttribute>givenname</firstnameAttribute>
+            <surnameAttribute>sn</surnameAttribute>
+            <emailAttribute>mail</emailAttribute>
+            <baseGroupNamespace>ou=Group,<%= @base_dn %></baseGroupNamespace>
+            <groupSearchFilter>(objectClass=posixGroup)</groupSearchFilter>
+            <groupnameAttribute>cn</groupnameAttribute>
+            <membershipAttribute>memberUid</membershipAttribute>
+            <useUnqualifiedUsernameForMembershipComparison>true</useUnqualifiedUsernameForMembershipComparison>
+        </ldap>
+        <hibernate name="Hibernate Repository" key="hibernateRepository" description="Hibernate Repository" cache="true"/>
+    </repositories>
+</atlassian-user>

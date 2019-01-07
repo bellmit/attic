@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+	ServerName <%= @hostname %>
+
+	ProxyPass / http://localhost:8085/ retry=0 ttl=30 nocanon
+	ProxyPassReverse / http://localhost:8085/
+	ProxyPreserveHost on
+	AllowEncodedSlashes NoDecode
+
+	<Proxy http://localhost:8085/>
+		Order allow,deny
+		Allow from all
+	</Proxy>
+</VirtualHost>
