@@ -42,8 +42,7 @@ the members, and given over to SOA's use or authority.
 
 Each article has:
 
-1. A title, to aid in its identification. The title is excluded from the
-   article's capacity to govern; and
+1. A title, to aid in its identification; and
 
 2. A body, which should include one or more rules.
 
