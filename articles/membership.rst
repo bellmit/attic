@@ -14,9 +14,9 @@ Joining & Leaving
 
 Membership in SOA is open to all persons aged thirteen years or older.
 
-Subject to the rules of this Charter, any person who is not a member can become
-a member by announcement. Persons joining SOA should specify any additional
-contact information and their preferred forms of address.
+Subject to the articles of this Charter, any person who is not a member can
+become a member by announcement. Persons joining SOA should specify any
+additional contact information and their preferred forms of address.
 
 Any member can leave SOA at any time, by announcement. A member who leaves
 SOA ceases to be a member.

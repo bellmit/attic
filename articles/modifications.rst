@@ -8,42 +8,45 @@ Amendments
 
 Where permitted by this Charter, an instrument can, as part of its effect,
 
-1. Add a rule or article to this Charter.
+1. Add an article to this Charter.
 
-   The enacting instrument can, optionally, specify a title for the new rule.
+   The enacting instrument can, optionally, specify a title for the new article.
 
-2. Repeal a rule or article from this Charter.
+2. Repeal an article from this Charter.
 
-   When a rule or article is repealed, it ceases to be a rule or article and
-   its power is set to 0.
+   When an article is repealed, it ceases to be an article and its power is set
+   to 0.
 
-3. Amend the text of a rule or article in this Charter.
+3. Amend the text of an article in this Charter.
 
-4. Retitle a rule or article in this Charter.
+4. Retitle an article in this Charter.
 
-5. Change the power of a rule or article with power no greater than the power
-   of that instrument.
+5. Change the power of an article with power no greater than the power of that
+   instrument.
 
-An amendment is any effect that falls into the above classes. Rule changes
+6. Change the order of a range of articles, provided that none of the articles
+   in that range have a power greater than the power of that instrument.
+
+An amendment is any effect that falls into the above classes. Article changes
 always occur sequentially, never simultaneously.
 
 An amendment can take effect only if its full text was published to the
 members, along with an unambiguous and clear specification of the method to be
-used for changing the rule, at least 4 days and no more than 60 days before it
-would take effect.
+used for changing the article, at least 4 days and no more than 60 days before
+it would take effect.
 
-When an instrument enacts a rule or changes a rule's power, that rule's new
-power is set to the minimum of:
+When an instrument enacts an article or changes an article's power, that
+article's new power is set to the minimum of:
 
 1. The power specified in that instrument;
 
 2. The power of that instrument itself; and
 
-3. The maximum power allowed by other rules.
+3. The maximum power allowed by other articles.
 
-This regulation provides the only mechanism by which regulations can be
-created, modified, or destroyed, or by which an entity can become a regulation
-or cease to be a regulation.
+This rule provides the only mechanism by which articles can be created,
+modified, or destroyed, or by which an entity can become a article or cease to
+be an article.
 
 Proposals
 ---------
@@ -83,18 +86,18 @@ Adopting Proposals
 ------------------
 
 When a decision about whether to adopt a proposal is resolved, if the outcome
-is ADOPTED, then the proposal in question is adopted. Unless other regulations
+is ADOPTED, then the proposal in question is adopted. Unless other articles
 prevent it from taking effect, its power is set to the minimum of four and its
 adoption index, and then it takes effect.
 
-Except as prohibited by other regulations or by circumstances beyond the
-control of this Charter, a proposal that takes effect can, and does, as
-part of its effect, apply the changes it specifies.
+Except as prohibited by other articles or by circumstances beyond the control
+of this Charter, a proposal that takes effect can, and does, as part of its
+effect, apply the changes it specifies.
 
-Except as prohibited by other regulations or by circumstances beyond the
-control of this Charter, an officer directed to act by a proposal must
-take that action in the time frame specified, or in a timely fashion, unless
-they resign that office.
+Except as prohibited by other articles or by circumstances beyond the control
+of this Charter, an officer directed to act by a proposal must take that action
+in the time frame specified, or in a timely fashion, unless they resign that
+office.
 
 If there is no decision to adopt a particular proposal that has an outcome of
 ADOPTED, that proposal cannot take effect.

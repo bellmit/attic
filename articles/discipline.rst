@@ -6,7 +6,7 @@ This article has a power of 2.
 Infractions
 -----------
 
-An infraction is an act or omission which violates a rule in this Charter.
+An infraction is an act or omission which violates an article in this Charter.
 
 Any person can level a charge by announcement. A charge consists of:
 
@@ -14,10 +14,10 @@ Any person can level a charge by announcement. A charge consists of:
 
 2. A statement outlining the basis for the charge, such that the other members
    can determine whether they support the charge, which at minimum identifies
-   the specific rule or rules violated and the acts or omissions which violated
-   the rules; and
+   the specific articles violated and identifies the acts or omissions which 
+   violated the articles in question; and
 
-3. An optional remedy.
+3. A proposed remedy.
 
 If a member other than the person levelling the charge announces their support
 for this charge within fourteen days, then a provisional mark is placed against
@@ -53,7 +53,7 @@ Standing & Marks
 ----------------
 
 A mark is a remedy. A mark is valid if it was imposed, as allowed by other
-rules under this Charter, within the past 30 days.
+articles under this Charter, within the past 30 days.
 
 A provisional mark is a mark. A provisional mark is not valid if the decision
 to put the remedy to a vote for the associated charge has been resolved. A

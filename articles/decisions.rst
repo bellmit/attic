@@ -33,7 +33,7 @@ notice which sets for their intent to initiate the decision. This notice is inva
 
 3. The quorum for the decision; and
 
-4. Any other essential information, as defined by the rules authorizing the
+4. Any other essential information, as defined by the articles authorizing the
    decision.
 
 Publishing a valid notice in this way initiates the voting period for the
@@ -44,7 +44,7 @@ Voting Methods
 
 Each decision has a voting method, which must be one of Adoption,
 Instant Runoff, or First Past the Post. The voting method for a decision is
-specified by the regulation that authorizes that decision.
+specified by the article that authorizes that decision.
 
 Each decision has a set of valid options, listing the choices that the voters
 are being asked to select from, and a set of valid votes, listing the ways
@@ -97,8 +97,8 @@ indicating its outcome, if the announcement satisfies the following conditions:
 4. It specifies the outcome, as described under this Charter, and provides
 a tally of the valid ballots.
 
-If a rule required that a decision be initiated, then the vote collector must
-resolve the decision in a timely fashion after the end of the voting period.
+The vote collector of a decision authorized by this Charter must resolve that
+decision in a timely fashion after the end of the voting period.
 
 Determining The Outcome
 -----------------------
@@ -135,8 +135,8 @@ Adoption Majority is a voting method.
 An adoption index is a positive integer multiple of 0.1. An adoption index is
 an essential parameter of a decision if the voting method is Adoption Majority,
 and, for any decision with an adoption index, the voting method is Adoption
-Majority. Rules with power less than two cannot define the adoption index
-of an entity.
+Majority. Articles with power less than two cannot define the adoption index of
+an entity.
 
 The valid votes on an Adoption Majority decision are "FOR" and "AGAINST".
 

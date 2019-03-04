@@ -60,7 +60,7 @@ office:
 The Chair's monthly report also includes the following information about this
 Charter:
 
-1. A list of all regulations in effect; and
+1. A list of all articles in effect; and
 
 2. The date of the last change to the Charter.
 
