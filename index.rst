@@ -14,6 +14,14 @@ Charter
    articles/discipline
    articles/modifications
 
+Venues
+======
+
+To participate in the Surface and Orbit Authority, join us in `the forum`_, and on `Discord`_.
+
+.. _the forum: https://talk.lithobrake.club/
+.. _Discord: https://discord.gg/RnGf5rN
+
 Appendices
 ==========
 
