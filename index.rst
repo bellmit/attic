@@ -17,6 +17,8 @@ Charter
 Venues
 ======
 
+Join the server at ``play.lithobrake.club:28015``. You don't have to be a member to play!
+
 To participate in the Surface and Orbit Authority, join us in `the forum`_, and on `Discord`_.
 
 .. _the forum: https://talk.lithobrake.club/
