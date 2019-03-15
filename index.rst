@@ -24,6 +24,18 @@ To participate in the Surface and Orbit Authority, join us in `the forum`_, and 
 .. _the forum: https://talk.lithobrake.club/
 .. _Discord: https://discord.gg/RnGf5rN
 
+Reports
+=======
+
+The following reports document the history and status of the Surface and Orbit
+Authority, and have been published via the public fora.
+
+.. toctree::
+   :numbered:
+   :maxdepth: 1
+
+   reports/chair
+
 Appendices
 ==========
 
