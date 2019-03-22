@@ -95,7 +95,7 @@ indicating its outcome, if the announcement satisfies the following conditions:
 3. It correctly specifies the number or list of voters on that decision;
 
 4. It specifies the outcome, as described under this Charter, and provides
-a tally of the valid ballots.
+   a tally of the valid ballots.
 
 The vote collector of a decision authorized by this Charter must resolve that
 decision in a timely fashion after the end of the voting period.
