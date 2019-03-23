@@ -62,7 +62,7 @@ Harassment includes, but is not limited to:
 
 12. Unwelcome sexual attention;
 
-13. Pattern of inappropriate social contact, such as requesting/assuming
+13. Pattern of inappropriate social contact, such as requesting or assuming
     inappropriate levels of intimacy with others;
 
 14. Continued one-on-one communication after requests to cease;

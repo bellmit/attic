@@ -29,7 +29,7 @@ without their express or reasonably implied consent.
 The following is one example of an appropriate public message to send when
 becoming a member:
 
-   My name is Alex Example, and my preferred pronouns are "they" and "them".
+   My name is Alex Example, and my pronouns are "they" and "them".
 
    I join SOA, and agree to abide by the Charter.
 

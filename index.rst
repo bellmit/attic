@@ -13,6 +13,7 @@ Charter
    articles/decisions
    articles/discipline
    articles/modifications
+   articles/servers
 
 Venues
 ======

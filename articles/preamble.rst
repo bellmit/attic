@@ -18,10 +18,10 @@ create the Surface and Orbit Authority, herein also referred to as "SOA".
 Interpretation
 --------------
 
-This article is a non-binding summary of the intent of this Charter, and
-must not be interpret in any way that would require or prevent any action. It
-may be used to guide the interpretation and application of other articles in
-this Charter.
+This article is a non-binding summary of the intent of this Charter, and must
+not be interpreted in any way that would require or prevent any action. It may
+be used to guide the interpretation and application of other articles in this
+Charter.
 
 Mission
 -------
@@ -45,7 +45,7 @@ The Surface and Orbit Authority exists:
 Organizational Goals
 --------------------
 
-This Charter are designed to provide a structure with the following goals:
+This Charter is designed to provide a structure with the following goals:
 
 1. It is membership-based, to make clear who can participate in its
    decisions;
