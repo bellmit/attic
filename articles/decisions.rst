@@ -55,6 +55,9 @@ The vote "PRESENT" is a valid vote, regardless of voting method.
 Casting Votes
 -------------
 
+A person is an eligible voter for a decision if, at the initiation of that
+decision, they are a member in good standing.
+
 A person submits a ballot on a decision by publishing a notice satisfying the
 following conditions:
 
@@ -63,8 +66,7 @@ following conditions:
 
 2. The ballot is submitted during the voting period for the decision;
 
-3. The person casting the ballot was, at the initiation of the decision, a
-   member in good standing;
+3. The person is an eligible voter for the decision;
 
 4. The ballot clearly identifies the decision for which it is cast;
 
@@ -88,7 +90,8 @@ The person who initiated a decision is the vote collector for that decision.
 The vote collector for an unresolved decision can resolve it by announcement,
 indicating its outcome, if the announcement satisfies the following conditions:
 
-1. It is published after the voting period has ended;
+1. It is published after the voting period has ended, or after the voting
+   period has been ended early;
 
 2. It clearly identifies the decision to be resolved;
 
@@ -148,6 +151,10 @@ The outcome of an Adoption Majority decision is:
    AGAINST, is not less than the adoption index for that decision; or
 
 3. "REJECTED", otherwise.
+
+The vote collector for an Adoption Majority decision can end the voting period
+for that decision early, by announcement, if every eligible voter has a valid
+ballot for that decision, and if there are no votes AGAINST.
 
 Instant Runoff
 --------------

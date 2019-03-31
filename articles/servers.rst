@@ -8,7 +8,12 @@ The Space Master
 
 The Space Master is an office, responsible for operating game services.
 
-The Space Master’s monthly report includes
+The Space Master's weekly duties include:
+
+1. If any member has declared that they desire to end the game, the Space
+   Master is responsible for the Decision & Voting process.
+
+The Space Master’s monthly report includes:
 
 1. All information needed for players to connect to the official server.
 
@@ -32,7 +37,8 @@ The Space Master must take all steps necessary to ensure that the data created
 by the official server is protected from accidental deletion or modification,
 and may only deliberately modify or delete the official server’s data if they
 publicly announce an intent to do so between three and 14 days earlier, unless
-the modification is performed through ordinary gameplay.
+the modification is performed through ordinary gameplay, or is allowed by
+another rule with an equal (or greater) power.
 
 Official Configuration
 ----------------------
@@ -84,7 +90,7 @@ The following settings are official settings, and must have the following
 values:
 
 =============================  =====
-Setting                       Value
+Setting                        Value
 =============================  =====
 ExperimentalMode               true
 InventorySizeMultiplier	       3
@@ -123,7 +129,7 @@ EnableResearch              false
 ==========================  =====
 
 Flight
------
+------
 
 The following mods are official mods:
 
@@ -215,3 +221,55 @@ Title                                                  ModID
 .. _More Catwalks: https://steamcommunity.com/sharedfiles/filedetails/?id=785804182
 .. _Power Cable Blocks: https://steamcommunity.com/sharedfiles/filedetails/?id=971228947
 .. _Benches: https://steamcommunity.com/sharedfiles/filedetails/?id=848361129
+
+Encounters
+----------
+
+The following mods are official mods:
+
+==========================================================================================  ==========
+Title                                                                                       ModID
+==========================================================================================  ==========
+`Modular Encounters Spawner`_                                                               1521905890
+`NPC Programming Extender`_                                                                 1400364273
+`More NPC Encounters V3.0 More Npc's Space CargoShips and NPC Ground Vehicles and Base's`_  1521951493
+==========================================================================================  ==========
+
+.. _Modular Encounters Spawner: https://steamcommunity.com/sharedfiles/filedetails/?id=1521905890
+.. _NPC Programming Extender: https://steamcommunity.com/sharedfiles/filedetails/?id=1400364273
+.. _More NPC Encounters V3.0 More Npc's Space CargoShips and NPC Ground Vehicles and Base's: https://steamcommunity.com/sharedfiles/filedetails/?id=1521951493
+
+The Game Author
+---------------
+
+The Game Author is an office, responsible for creating a new game for the
+purposes of Starting a Game.
+
+The Game Author’s duties include:
+
+1. Providing the Space Master with a save game file and, optionally, any server
+   configuration parameters not defined by the Official Configuration.
+
+2. Verifying that the Official Server is successfully running as their
+   authoring intended, and any communication/coordination with the Space Master
+   necessary to accomplish this.
+
+3. Sending a public message declaring that the game has been started. The Game
+   Author implicitly vacates the office by doing this.
+
+Two weeks after the election, the Game Author resigns. If the duties have not
+all been fulfilled, a new election for Game Author is initiated.
+
+Ending a Game
+-------------
+
+This article has a power of 2.
+
+When any member desires to end the game, they must send a public message that
+clearly identifies the Official Server, and that they would like to end the
+game. Members then vote on ending the game. Votes “FOR” are votes for ending
+the game. Votes “AGAINST” are votes to continue the game. This decision has an
+adoption index of 1
+
+If the vote outcome is “FOR”, then a Game Author is elected. No immediate
+changes are made to the Official Server, unless otherwise specified.
