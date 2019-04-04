@@ -178,13 +178,11 @@ The following mods are official mods:
 =========================================================  ==========
 Title                                                      ModID
 =========================================================  ==========
-`BuildInfo (extra block&terminal info, air leak finder)`_  514062285
 `Easy Inventory`_                                          646796262
 `HUD Compass`_                                             1469072169
 `Clean Camera`_                                            544032930
 =========================================================  ==========
 
-.. _BuildInfo (extra block&terminal info, air leak finder): https://steamcommunity.com/sharedfiles/filedetails/?id=514062285
 .. _Easy Inventory: https://steamcommunity.com/sharedfiles/filedetails/?id=646796262
 .. _HUD Compass: https://steamcommunity.com/sharedfiles/filedetails/?id=1469072169
 .. _Clean Camera: https://steamcommunity.com/sharedfiles/filedetails/?id=544032930
@@ -273,3 +271,10 @@ adoption index of 1
 
 If the vote outcome is “FOR”, then a Game Author is elected. No immediate
 changes are made to the Official Server, unless otherwise specified.
+
+Operation Protection
+--------------------
+
+The mod "`Battle Cannons and Turrets`_", with a modID of 1139824606, is an official mod.
+
+.. _Battle Cannons and Turrets: https://steamcommunity.com/sharedfiles/filedetails/?id=1139824606
