@@ -142,7 +142,7 @@ Title                                                    ModID
 =======================================================  =========
 
 .. _Text HUD API: https://steamcommunity.com/workshop/filedetails/?id=758597413
-.. _Aerodynamic Physics (Deadly Reentry + Drag + Flight): https://steamcommunity.com/workshop/filedetails/?id=758597413
+.. _Aerodynamic Physics (Deadly Reentry + Drag + Flight): https://steamcommunity.com/workshop/filedetails/?id=571920453
 .. _Aerodynamic Wings - blocks for planet atmosphere: https://steamcommunity.com/sharedfiles/filedetails/?id=473571246
 
 Speed
@@ -214,7 +214,7 @@ Title                                                  ModID
 .. _(DX11)Letters Mod: https://steamcommunity.com/sharedfiles/filedetails/?id=298550266
 .. _(DX11) Kitchen: https://steamcommunity.com/sharedfiles/filedetails/?id=817571125
 .. _Advanced Systems\: Scaffolding: https://steamcommunity.com/sharedfiles/filedetails/?id=717073267
-.. _Conveyor Air Vent - full sized block (and slope!): https://steamcommunity.com/sharedfiles/filedetails/?id=397242149
+.. _Conveyor Air Vent - full sized block (and slope!): https://steamcommunity.com/sharedfiles/filedetails/?id=410678202
 .. _Elevator Button Pad+Catwalks - fits tight quarters: https://steamcommunity.com/sharedfiles/filedetails/?id=397242149
 .. _More Catwalks: https://steamcommunity.com/sharedfiles/filedetails/?id=785804182
 .. _Power Cable Blocks: https://steamcommunity.com/sharedfiles/filedetails/?id=971228947
