@@ -30,15 +30,24 @@ server by announcement, and must do so in a timely fashion whenever there is no
 official server. When a server becomes an official server, any other official
 servers cease to be official servers.
 
-Continuity
-----------
-
 The Space Master must take all steps necessary to ensure that the data created
-by the official server is protected from accidental deletion or modification,
-and may only deliberately modify or delete the official server’s data if they
-publicly announce an intent to do so between three and 14 days earlier, unless
-the modification is performed through ordinary gameplay, or is allowed by
-another rule with an equal (or greater) power.
+by the official server is protected from accidental deletion or modification.
+
+The Space Master may only deliberately view, modify, or delete the official
+server’s data through ordinary gameplay, to implement adopted proposals, or to
+address non-gameplay-related technical issues. If the Space Master makes a
+deliberate modification to address a non-gameplay-related technical issue, they
+must publish a complete description of their changes, and their rationale for
+them within a day.
+
+Information about the state of the game on an official server, other than
+information stored in the server’s configuration files or information included
+in the server’s log files, is game information. Game information that the Space
+Master learns of through the execution of their privileged access is privileged
+game information. Persons must not disclose privileged game information to any
+player except when required for the execution of said person’s duties, and then
+only to the most limited set of players feasible, unless required by this
+Charter to disclose.
 
 Official Configuration
 ----------------------
@@ -58,6 +67,41 @@ by this Charter.
 
 A member who operates an official server must configure that server so that
 each official mod is loaded.
+
+The Game Author
+---------------
+
+The Game Author is an office, responsible for creating a new game for the
+purposes of Starting a Game.
+
+The Game Author’s duties include:
+
+1. Providing the Space Master with a save game file and, optionally, any server
+   configuration parameters not defined by the Official Configuration.
+
+2. Verifying that the Official Server is successfully running as their
+   authoring intended, and any communication/coordination with the Space Master
+   necessary to accomplish this.
+
+3. Sending a public message declaring that the game has been started. The Game
+   Author implicitly vacates the office by doing this.
+
+Two weeks after the election, the Game Author resigns. If the duties have not
+all been fulfilled, a new election for Game Author is initiated.
+
+Ending a Game
+-------------
+
+This article has a power of 2.
+
+When any member desires to end the game, they must send a public message that
+clearly identifies the Official Server, and that they would like to end the
+game. Members then vote on ending the game. Votes “FOR” are votes for ending
+the game. Votes “AGAINST” are votes to continue the game. This decision has an
+adoption index of 1
+
+If the vote outcome is “FOR”, then a Game Author is elected. No immediate
+changes are made to the Official Server, unless otherwise specified.
 
 Access
 ------
@@ -126,6 +170,7 @@ EnableWolfs                 false
 EnableSpiders               true
 EnableAutorespawn           true
 EnableResearch              false
+EnvironmentHostility        SAFE
 ==========================  =====
 
 Flight
@@ -160,6 +205,7 @@ Setting         Value
 ==============  =====
 LargeShipSpeed  1000
 SmallShipSpeed  1000
+AutoPilotLimit  800
 ==============  =====
 
 Docking Ports
@@ -236,41 +282,6 @@ Title                                                                           
 .. _Modular Encounters Spawner: https://steamcommunity.com/sharedfiles/filedetails/?id=1521905890
 .. _NPC Programming Extender: https://steamcommunity.com/sharedfiles/filedetails/?id=1400364273
 .. _More NPC Encounters V3.0 More Npc's Space CargoShips and NPC Ground Vehicles and Base's: https://steamcommunity.com/sharedfiles/filedetails/?id=1521951493
-
-The Game Author
----------------
-
-The Game Author is an office, responsible for creating a new game for the
-purposes of Starting a Game.
-
-The Game Author’s duties include:
-
-1. Providing the Space Master with a save game file and, optionally, any server
-   configuration parameters not defined by the Official Configuration.
-
-2. Verifying that the Official Server is successfully running as their
-   authoring intended, and any communication/coordination with the Space Master
-   necessary to accomplish this.
-
-3. Sending a public message declaring that the game has been started. The Game
-   Author implicitly vacates the office by doing this.
-
-Two weeks after the election, the Game Author resigns. If the duties have not
-all been fulfilled, a new election for Game Author is initiated.
-
-Ending a Game
--------------
-
-This article has a power of 2.
-
-When any member desires to end the game, they must send a public message that
-clearly identifies the Official Server, and that they would like to end the
-game. Members then vote on ending the game. Votes “FOR” are votes for ending
-the game. Votes “AGAINST” are votes to continue the game. This decision has an
-adoption index of 1
-
-If the vote outcome is “FOR”, then a Game Author is elected. No immediate
-changes are made to the Official Server, unless otherwise specified.
 
 Operation Protection
 --------------------
