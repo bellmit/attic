@@ -297,11 +297,8 @@ The mod "`Hangar Gates`_", with a modID of 438226588, is an official mod.
 
 The mod "`Rotor Variety`_", with a modID of 1294456467, is an official mod.
 
-The mod "`Armor Ramp Compendium`_", with a modID of 1581994759, is an official mod.
-
 The mod "`Airlock Block`_", with a modID of 643820962, is an official mod.
 
 .. _Hangar Gates: https://steamcommunity.com/sharedfiles/filedetails/?id=438226588
 .. _Rotor Variety: https://steamcommunity.com/sharedfiles/filedetails/?id=1294456467
-.. _Armor Ramp Compendium: https://steamcommunity.com/sharedfiles/filedetails/?id=1581994759
 .. _Airlock Block: https://steamcommunity.com/sharedfiles/filedetails/?id=643820962
