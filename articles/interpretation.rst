@@ -57,7 +57,7 @@ Precedence Between Articles
 
 In a conflict between articles, the conflict shall be resolved as follows:
 
-1. If the artciles in conflict have unequal power, the article with the highest
+1. If the articles in conflict have unequal power, the article with the highest
    power takes precedence; otherwise,
 
 2. The article listed earliest in this Charter takes precedence.
