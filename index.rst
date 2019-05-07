@@ -18,12 +18,17 @@ Charter
 Venues
 ======
 
-Join the server at ``play.lithobrake.club:28015``. You don't have to be a member to play!
+The Surface and Orbit Authority hosts a Space Engineers server at ``play.lithobrake.club:28015``. Everyone is welcome.
 
-To participate in the Surface and Orbit Authority, join us in `the forum`_, and on `Discord`_.
+We make decisions and discuss projects on `our forum`_, and host a `Discord server`_ for casual discussion and gameplay chat.
 
-.. _the forum: https://talk.lithobrake.club/
-.. _Discord: https://discord.gg/RnGf5rN
+.. _our forum: https://talk.lithobrake.club/
+.. _Discord server: https://discord.gg/RnGf5rN
+
+.. raw:: html
+
+   <a href="https://www.patreon.com/bePatron?u=19965486" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
+   <script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
 
 Reports
 =======
