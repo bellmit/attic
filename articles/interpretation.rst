@@ -52,15 +52,18 @@ do so by announcement.
 Members must obey the articles of this Charter, and should immediately and in
 good faith correct any infractions to the best of their abilities.
 
-Precedence Between Articles
----------------------------
+Precedence Between Instruments
+------------------------------
 
-In a conflict between articles, the conflict shall be resolved as follows:
+In a conflict between instruments, the conflict shall be resolved as follows:
 
-1. If the articles in conflict have unequal power, the article with the highest
-   power takes precedence; otherwise,
+1. If the instruments in conflict have unequal power, the instrument with the
+   highest power takes precedence;
 
-2. The article listed earliest in this Charter takes precedence.
+2. Otherwise, of the instruments involved which are articles of this Charter,
+   the article appearing earliest in the Charter takes predecence;
+
+3. Otherwise, the instrument adopted first takes precedence.
 
 No change to this Charter can occur that would cause an article to directly
 claim precedence over this rule as a means of determining precedence. This rule

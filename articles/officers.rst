@@ -88,6 +88,12 @@ For each office:
 Any information defined by this Charter as part of an office's report,
 without specifying which one, is part of that office's monthly report.
 
+An instrument can, as part of its effect, instruct an officer to take one or
+more actions. The officer must perform the actions in a timely fashion, once
+and only once per instruction, in the order the instructions appear in the
+instrument. The officer should publicly announce that the instructions have
+been completed after taking action.
+
 Election Procedure
 ------------------
 
