@@ -37,7 +37,7 @@ notice which sets for their intent to initiate the decision. This notice is inva
    decision.
 
 Publishing a valid notice in this way initiates the voting period for the
-decision. The voting period lasts for 7 days.
+decision. The voting period lasts for four days.
 
 Voting Methods
 --------------
