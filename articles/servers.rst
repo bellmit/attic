@@ -224,10 +224,12 @@ The following mods are official mods:
 =========================================================  ==========
 Title                                                      ModID
 =========================================================  ==========
+`Easy Inventory`_                                          646796262
 `HUD Compass`_                                             1469072169
 `Clean Camera`_                                            544032930
 =========================================================  ==========
 
+.. _Easy Inventory: https://steamcommunity.com/sharedfiles/filedetails/?id=646796262
 .. _HUD Compass: https://steamcommunity.com/sharedfiles/filedetails/?id=1469072169
 .. _Clean Camera: https://steamcommunity.com/sharedfiles/filedetails/?id=544032930
 
