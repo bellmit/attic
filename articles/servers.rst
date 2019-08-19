@@ -171,6 +171,10 @@ EnableSpiders               true
 EnableAutorespawn           true
 EnableResearch              false
 EnvironmentHostility        SAFE
+CargoShipsEnabled           true
+EnableEncounters            true
+EnableDrones                true
+EnableWolves                true
 ==========================  =====
 
 Flight
@@ -227,11 +231,13 @@ Title                                                      ModID
 `Easy Inventory`_                                          646796262
 `HUD Compass`_                                             1469072169
 `Clean Camera`_                                            544032930
+`BuildInfo (extra block&terminal info, air leak finder)`_  514062285
 =========================================================  ==========
 
 .. _Easy Inventory: https://steamcommunity.com/sharedfiles/filedetails/?id=646796262
 .. _HUD Compass: https://steamcommunity.com/sharedfiles/filedetails/?id=1469072169
 .. _Clean Camera: https://steamcommunity.com/sharedfiles/filedetails/?id=544032930
+.. _BuildInfo (extra block&terminal info, air leak finder): https://steamcommunity.com/sharedfiles/filedetails/?id=514062285
 
 Cosmetics & Aesthetics
 ----------------------
@@ -266,39 +272,27 @@ Title                                                  ModID
 .. _Power Cable Blocks: https://steamcommunity.com/sharedfiles/filedetails/?id=971228947
 .. _Benches: https://steamcommunity.com/sharedfiles/filedetails/?id=848361129
 
-Encounters
-----------
-
-The following mods are official mods:
-
-==========================================================================================  ==========
-Title                                                                                       ModID
-==========================================================================================  ==========
-`Modular Encounters Spawner`_                                                               1521905890
-`NPC Programming Extender`_                                                                 1400364273
-`More NPC Encounters V3.0 More Npc's Space CargoShips and NPC Ground Vehicles and Base's`_  1521951493
-==========================================================================================  ==========
-
-.. _Modular Encounters Spawner: https://steamcommunity.com/sharedfiles/filedetails/?id=1521905890
-.. _NPC Programming Extender: https://steamcommunity.com/sharedfiles/filedetails/?id=1400364273
-.. _More NPC Encounters V3.0 More Npc's Space CargoShips and NPC Ground Vehicles and Base's: https://steamcommunity.com/sharedfiles/filedetails/?id=1521951493
-
 Operation Protection
 --------------------
 
-The mod "`Battle Cannons and Turrets`_", with a modID of 1139824606, is an official mod.
+The following mods are official mods:
+
+====================================================================  ==========
+Title   ModID
+====================================================================  ==========
+`Battle Cannons and Turrets`_                                         1139824606
+`Revived Large Ship Railguns (With penetration and shield damage!)`_  1431583896
+====================================================================  ==========
 
 .. _Battle Cannons and Turrets: https://steamcommunity.com/sharedfiles/filedetails/?id=1139824606
+.. _Revived Large Ship Railguns (With penetration and shield damage!): https://steamcommunity.com/sharedfiles/filedetails/?id=1431583896
 
 Technological Upgrade
 ---------------------
-
-The mod "`Hangar Gates`_", with a modID of 438226588, is an official mod.
 
 The mod "`Rotor Variety`_", with a modID of 1294456467, is an official mod.
 
 The mod "`Airlock Block`_", with a modID of 643820962, is an official mod.
 
-.. _Hangar Gates: https://steamcommunity.com/sharedfiles/filedetails/?id=438226588
 .. _Rotor Variety: https://steamcommunity.com/sharedfiles/filedetails/?id=1294456467
 .. _Airlock Block: https://steamcommunity.com/sharedfiles/filedetails/?id=643820962
