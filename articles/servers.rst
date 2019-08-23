@@ -166,7 +166,7 @@ Enable3rdPersonView         false
 SunRotationIntervalMinutes  540
 EnableJetpack               true
 EnableVoxelDestruction      true
-EnableWolfs                 false
+EnableWolfs                 true
 EnableSpiders               true
 EnableAutorespawn           true
 EnableResearch              false
@@ -174,7 +174,6 @@ EnvironmentHostility        SAFE
 CargoShipsEnabled           true
 EnableEncounters            true
 EnableDrones                true
-EnableWolves                true
 ==========================  =====
 
 Flight
