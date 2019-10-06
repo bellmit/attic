@@ -140,7 +140,7 @@
 
     function messageTemplate(alias, line) {
       const elem = document.createElement('p');
-      elem.setAttribute('class', 'message');
+      elem.className = 'message';
       elem.append(aliasTemplate(alias));
       elem.append(': ');
       elem.append(lineTemplate(line));
@@ -154,7 +154,7 @@
      */
     function errorTemplate(message) {
       const elem = document.createElement('p');
-      elem.setAttribute('class', 'error');
+      elem.className = 'error';
       elem.append(message);
       elem.append(' (Reload this page to continue.)');
       return elem;
