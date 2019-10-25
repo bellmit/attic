@@ -1,70 +1,41 @@
 Membership
 ==========
 
-This article has a power of 3.
+Only members may propose changes to this Charter or vote on those changes, and
+only members may be officers of the Surface and Orbit Authority. Membership in
+the Surface and Orbit Authority is open to any person aged thirteen years or
+older.
 
-Persons
--------
+To join, post a message in the Roster & Membership Changes thread announcing
+your membership, and providing any additional contact information (such as a
+Discord username) and your preferred form of address
 
-Any organism that is generally capable of freely originating and communicating
-independent thoughts is a person. No other entities are persons.
+To leave voluntarily, post a message in the Roster & Membership Changes thread announcing your resignation. You can do this at any time, for any reason, and you will be welcome back if you choose to join again.
 
-Joining & Leaving
------------------
-
-Membership in SOA is open to all persons aged thirteen years or older.
-
-Any person who is not a member can become a member by announcement. Persons
-joining SOA should specify any additional contact information and their
-preferred forms of address.
-
-Any member can leave SOA by announcement at any time. A member who leaves SOA
-ceases to be a member.
-
-By becoming a member, a person agrees to abide by this Charter while a member.
-This Charter cannot otherwise bind a person to abide by any agreement without
-that person's willful consent. This Charter cannot compel a person to act
-without their express or reasonably implied consent.
-
-The following is one example of an appropriate public message to send when
-becoming a member:
-
-   My name is Alex Example, and my pronouns are "they" and "them".
-
-   I join SOA, and agree to abide by the Charter.
+Anyone who becomes a member must abide by this Charter.
 
 Fora & Communications
 ---------------------
 
-The Chair can announce their intention to designate any forum as a public forum
-by sending a message to all public fora, and to the forum being designated. If
-no member objects to this intention within seven days, the Chair can designate
-that forum as public by announcing it in the same manner.
+To facilitate the business of the Surface and Orbit Authority, the Chair must
+maintain an internet forum. All official discussions, proposals, membership changes, and other business of the Surface and Orbit Authority must take place on the forum.
 
-A public message is a message sent via a public forum, or sent to all members
-and containing a clear designation of the author's intent to send a public
-message.
+The current forum is hosted at <https://talk.lithobrake.club/>.
 
-A person announces, or publishes, something by sending a public message. Any
-action that can be performed "by announcement" can be completely performed by
-publishing a message clearly specifying the action, and clearly specifying an
-intent to perform it. Where a message contains several actions, they are
-considered to have been performed in the order they appear in within the
-message.
+The Roster
+----------
 
-Members should use persons' preferred forms of address in all public messages.
+The Chair must, as part of their duties, ensure that all membership changes and
+an up-to-date roster of members are posted to the Roster & Membership Changes
+forum.
 
 Lapsed Membership
 -----------------
 
-A member who has not sent a message to any public forum in the last 30 days is
-a lapsed member.
+A member who has not posted a message on the forum in the last 30 days is a
+lapsed member.
 
-A member whose membership is revoked ceases to be a member.
-
-The Chair can announce their intention to revoke the membership of a lapsed
-member by announcement. If no member announces an objection to that intention
-within 7 days, the Chair can revoke the membership of that lapsed member by
-announcement. The Chair should make allowances for for announced vacations,
-unplanned emergencies, and other eventualities when revoking lapsed members'
-memberships.
+The Chair can revoke the membership of lapsed members. The Chair must announce
+their intention to do so seven days in advance, and may not revoke the
+membership of a member who is no longer a lapsed member when the seven days are
+up. A member whose membership is revoked in this way can join again at any time, and will be welcome to return when they are able.

@@ -6,7 +6,6 @@ Charter
    :maxdepth: 1
 
    articles/preamble
-   articles/interpretation
    articles/membership
    articles/conduct
    articles/officers

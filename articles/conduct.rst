@@ -1,33 +1,15 @@
 Code of Conduct
 ===============
 
-This article has a power of 3.
-
-Interpretation
---------------
-
-All persons must abide by this code of conduct whenever participating in any
-SOA activities, including, but not limited to:
-
-1. Any participation in SOA's public fora;
-
-2. Any private business regarding SOA;
-
-3. Participating in any online activities while identified as a member of the
-   SOA; and
-
-4. Any in-person events, meetings, and gatherings involving members of the
-   SOA.
-
-Some SOA activities may have additional rules in place, which will be made
-clearly available to participants. Participants are responsible for knowing and
-abiding by these rules.
+Every person participating in the Surface and Orbit Authority, or participating
+in other activites while representing the Surface and Orbit Authority, must
+abide by this code of conduct.
 
 Harassment
 ----------
 
-SOA is dedicated to providing a harassment-free experience for all persons. No
-person may harass any other person.
+The Surface and Orbit Authority is dedicated to providing a harassment-free
+experience for everyone. No person may harass any other person.
 
 Harassment includes, but is not limited to:
 
@@ -76,13 +58,9 @@ Harassment includes, but is not limited to:
 Reporting
 ---------
 
-Persons asked to stop any harassing behavior must comply immediately.
+Anyone asked to stop any harassing behavior must comply immediately.
 
-Any person can report harassment by levelling a charge.
-
-Some SOA activities may have members on hand who are responsible for
-overseeing the activity. Participants can also report harassment directly to
-those members.
+XXX fix the reporting and enforcement process.
 
 Credit
 ------

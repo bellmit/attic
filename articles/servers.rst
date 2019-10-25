@@ -1,8 +1,6 @@
 Servers
 =======
 
-This article has a power of 1.
-
 The Space Master
 ----------------
 

@@ -1,11 +1,6 @@
 Preamble
 ========
 
-This article has a power of 4.
-
-The Surface and Orbit Authority
--------------------------------
-
 **Whereas** space is big, and
 
 **Whereas** space is dark, and
@@ -18,10 +13,7 @@ create the Surface and Orbit Authority, herein also referred to as "SOA".
 Interpretation
 --------------
 
-This article is a non-binding summary of the intent of this Charter, and must
-not be interpreted in any way that would require or prevent any action. It may
-be used to guide the interpretation and application of other articles in this
-Charter.
+This article is a non-binding summary of the intent of this Charter,.
 
 Mission
 -------
@@ -32,33 +24,26 @@ The Surface and Orbit Authority exists:
    community;
 
 2. To oversee the management and use of common resources, including web sites,
-   mailing lists, and game servers, for the benefit of that community;
+   mailing lists, and game servers, for the benefit of that community; and
 
 3. To provide its members with a testbed for organizational principles and
-   methods; and
-
-4. To develop, distribute, and occasionally revise standards for spacecraft
-   construction, navigation, collision avoidance, and other safety issues in the
-   game *Space Engineers*, by Keen Software House, as far as it is entertaining
-   to do so.
+   methods.
 
 Organizational Goals
 --------------------
 
-This Charter is designed to provide a structure with the following goals:
+This Charter is designed to provide a structure that meets specific goals:
 
-1. It is membership-based, to make clear who can participate in its
+1. It is membership-based, so that it is clear who can make decisions;
+
+2. It conducts its business open to the public, so that it is clear how
+   decisions are made, and so that the membership can be accountable for those
    decisions;
 
-2. It conducts its business open to the public, so that its workings can be an
-   example to others and so that it can be held accountable for its decisions;
+3. It is democratic, so that all members can participate equitably;
 
-3. It is democratic, so that all members can participate equally, unless there
-   is a clear reason that a member should be excluded from a decision;
-
-4. It is participatory, so that its members can have input into all decisions
-   affecting the organization, rather than delegating those decisions to a
-   separate body;
+4. It is participatory, so that its members can have direct input into all
+   decisions affecting them;
 
 5. It is amendable, so that the members are free to redefine the organization to
    better suit their goals and needs;
