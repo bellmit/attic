@@ -99,6 +99,8 @@ The outcome of an Adoption decision is:
 
 3. REJECTED otherwise.
 
+The adopted outcomes are the outcomes SUPERMAJORITY and MAJORITY.
+
 The person who initiated an Adoption decision can end the voting period for
 that decision early by announcing it in the thread where the decision was
 announced, if every eligible voter has a valid ballot for that decision, and if

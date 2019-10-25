@@ -1,7 +1,8 @@
 Modifications to this Charter
 =============================
 
-From time to time, this Charter may need changes to adapt to the changing needs of the members of the Surface and Orbit Authority.
+From time to time, this Charter may need changes to adapt to the changing needs
+of the members of the Surface and Orbit Authority.
 
 This article is protected.
 
@@ -20,19 +21,19 @@ Adoption
 When a member submits a proposal, they also initiate the decision to adopt the proposal. For this decision, the voting method is Adoption.
 
 When a decision about whether to adopt a proposal is resolved, if the outcome
-is MAJORITY or SUPERMAJORITY, then the proposal in question is adopted. It
-takes effect immediately.
+is an adopted outcome, then the proposal in question is adopted. It takes
+effect immediately.
 
 The terms of an adopted proposal are applied in the order written, as follows:
 
-* If a term would amend the Charter, and if the outcome is SUPERMAJORITY, then
-  it is applied;
+1. If a term would amend the Charter, and if the outcome is SUPERMAJORITY, then
+   it is applied;
 
-* If a term would amend the Charter, and if the outcome is MAJORITY, then it is
-  applied only to the parts of this Charter that are not protected;
+2. If a term would amend the Charter, then it is applied only to the parts of
+   this Charter that are not protected;
 
-* If a term includes a special instruction to an officer, and if the outcome is
-  SUPERMAJORITY or MAJORITY, the officer must follow the instruction; and
+3. If a term appoints or removes an officer, and if the outcome is
+   SUPERMAJORITY, then it is applied to the office; and
 
-* If a term appoints or removes an officer, and if the outcome is SUPERMAJORITY,
-  then it is applied to the office.
+4. If a term includes a special instruction to an officer, the officer must
+   follow the instruction.

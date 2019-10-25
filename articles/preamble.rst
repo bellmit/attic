@@ -13,7 +13,7 @@ create the Surface and Orbit Authority, herein also referred to as "SOA".
 Interpretation
 --------------
 
-This article is a non-binding summary of the intent of this Charter,.
+This article is a non-binding summary of the intent of this Charter.
 
 Mission
 -------

@@ -1,95 +1,59 @@
 Disciplinary Actions
 ====================
 
-This article has a power of 2.
+An infraction is an act or omission that violates an article in this Charter.
 
-Infractions
------------
+Charges
+-------
 
-An infraction is an act or omission which violates an article in this Charter.
+Anyone can charge a member with an infraction by posting the charge to the
+forums. A charge must describe the act or omission that violates the Charter,
+and should propose one of the remedies listed in this section to address the
+charge.
 
-Any person can level a charge by announcement. A charge consists of:
+Charging a member with an infraction immediately begins a decision to enforce
+the remedy. For this decision, the voting method is Adoption, and the member
+being charged is not an eligible voter. If the outcome of this decision is an
+adopted outcome, the remedy is imposed immediately.
 
-1. The name of a person (the accused);
+The author of a charge can withdraw it at any time before the decision to
+enforce the remedy has been resolved.
 
-2. A statement outlining the basis for the charge, such that the other members
-   can determine whether they support the charge, which at minimum identifies
-   the specific articles violated and identifies the acts or omissions which
-   violated the articles in question; and
+The Forgiveness Remedy
+----------------------
 
-3. A proposed remedy.
+Forgiveness is a remedy. When a charge is forgiven, no penalty is imposed.
 
-If a member other than the person levelling the charge announces their support
-for this charge within fourteen days, then a provisional mark is placed against
-the accused, and the Chair can and must immediately put the remedy to vote by
-announcement.
+This remedy is appropriate when an infraction is accidental or minor in nature,
+or where the accused has already taken full and appropriate steps to resolve it.
 
-Putting a remedy to vote is a decision. For this decision, the valid options
-are the names of any remedies defined by this Charter, and the remedy proposed
-in the charge, if any, and the voting method is First Past the Post.
+The Black Mark Remedy
+---------------------
 
-When a decision to put a remedy to vote is resolved, the outcome of the
-decision is the preferred remedy for that infraction. The Chair must impose the
-preferred remedy on the accused, or, at the Chair's discretion, a lesser
-remedy, in the message resolving the decision. For the purposes of this rule,
-all remedies defined by this Charter are lesser remedies than any other remedy
-proposed in the charge. The Chair should only use this discretion to prevent
-remedies which are unduly harsh, or which exceed the authority of this
-organization, and must explain their reasoning in the message resolving the
-decision if they reduce the remedy.
+A black mark is a remedy. A member who has had a black mark imposed on them
+within the last 30 days is in poor standing. The Chair must publish and
+maintain a list of members who are in poor standing on the forum.
 
-Discharge
----------
+This remedy is appropriate when a minor infraction is intentional or has been
+repeated in spite of past forgiveness, but is not severe enough to warrant
+stronger action.
 
-Discharge is a remedy.
+The Suspension Remedy
+---------------------
 
-When a charge is discharged, no penalty is imposed.
+Suspension is a remedy. A member who is suspended ceases to be a member, and
+cannot become a member for 30 days.
 
-This remedy is appropriate when there is no infraction, or when an infraction
-is accidental or minor in nature, or where the accused has already taken full
-and appropriate steps to resolve it.
+Suspension is appropriate for more serious infractions, which do not
+permanently endanger the members or the operation of the Surface and Orbit
+Authority.
 
-This remedy is a lesser remedy than a mark, ejection, or permanent ejection.
+The Permanent Ban Remedy
+------------------------
 
-Standing & Marks
-----------------
+A permanent ban is a remedy. A member who is permanently banned ceases to be a
+member, and cannot become a member again unless the ban is lifted by proposal.
 
-A mark is a remedy. A mark is valid if it was imposed, as allowed by other
-articles under this Charter, within the past 30 days.
-
-A provisional mark is a mark. A provisional mark is not valid if the decision
-to put the remedy to a vote for the associated charge has been resolved. A
-provisional mark cannot be imposed by putting a remedy to vote.
-
-A member with at least one valid mark against them is not in good standing. All
-other members are in good standing.
-
-This remedy is appropriate when a minor infraction is intentional or is
-repeated.
-
-A mark is a lesser remedy than ejection or permanent ejection.
-
-Ejection
---------
-
-Ejection is a remedy.
-
-A member who is ejected ceases to be a member, and cannot become a member for
-30 days.
-
-Ejection is appropriate for serious infractions which do not permanently injure
-the reputation of SOA or endanger its members.
-
-Ejection is a lesser remedy than permanent ejection.
-
-Permanent Ejection
-------------------
-
-Permanent ejection is a remedy.
-
-A member who is permanently ejected ceases to be a member, and cannot become a
-member again.
-
-Permanent ejection is appropriate for serious infractions which include the
-risk of injury, illegal acts, sustained harassment, or which would bring the
+A permanent ban is appropriate for serious infractions which include the risk
+of injury, illegal acts, sustained harassment, actions which would bring the
 organization into disrepute, or for wilful and chronic infractions.

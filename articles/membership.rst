@@ -25,9 +25,8 @@ The current forum is hosted at <https://talk.lithobrake.club/>.
 The Roster
 ----------
 
-The Chair must, as part of their duties, ensure that all membership changes and
-an up-to-date roster of members are posted to the Roster & Membership Changes
-forum.
+The Chair must ensure that all membership changes and an up-to-date roster of
+members are posted to the forum.
 
 Lapsed Membership
 -----------------
