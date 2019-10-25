@@ -30,18 +30,6 @@ We make decisions and discuss projects on `our forum`_, and host a `Discord serv
    <a href="https://www.patreon.com/bePatron?u=19965486" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
    <script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
 
-Reports
-=======
-
-The following reports document the history and status of the Surface and Orbit
-Authority, and have been published via the public fora.
-
-.. toctree::
-   :numbered:
-   :maxdepth: 1
-
-   reports/chair
-
 Appendices
 ==========
 
