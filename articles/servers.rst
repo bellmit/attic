@@ -20,9 +20,9 @@ deliberate modification to address a non-gameplay-related technical issue, they
 must post a description of their changes and their rationale for making them
 within a day.
 
-The Space Master must only disclose information they obtain in the course of
-operating the server, other than through normal gameplay, any further than
-is necessary to operate game services.
+The Space Master must not disclose information they obtain in the course of
+operating the server, other than that obtained through normal gameplay, any
+further than is necessary to operate game services.
 
 Official Configuration
 ----------------------
