@@ -64,7 +64,6 @@ ThrusterDamage                 true
 WelderSpeedMultiplier          1
 =============================  =========
 
-
 Official Mods
 -------------
 
@@ -135,3 +134,8 @@ LargeShipSpeed  1000
 SmallShipSpeed  1000
 AutoPilotLimit  800
 ==============  =====
+
+Torch
+-----
+
+The Space Master must manage the official server using Torch.

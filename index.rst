@@ -28,20 +28,3 @@ We make decisions and discuss projects on `our forum`_, and host a `Discord serv
 
    <a href="https://www.patreon.com/bePatron?u=19965486" data-patreon-widget-type="become-patron-button">Become a Patron!</a>
    <script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
-
-Appendices
-==========
-
-The following appendices are not part of the Charter, and shall not be
-construed so as to restrict or compel any person from any action, or to modify
-any part of the Charter.
-
-.. toctree::
-   :numbered:
-   :maxdepth: 1
-
-   README
-   appendices/bootstrapping
-   appendices/risks
-   appendices/compiling
-   appendices/original-report
