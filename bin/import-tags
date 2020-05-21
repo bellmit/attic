@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-set -e
 set -o pipefail
 
 PREFIX="$1"
@@ -13,7 +12,7 @@ git for-each-ref refs/import-tags/ | while read HASH TYPE REF; do
 
   case "$TYPE" in
   commit)
-    git tag "$PREFIX/$TAG"
+    git tag "$PREFIX/$TAG" "$HASH"
     ;;
   *)
     # This hideous beast is the only reliable way I can think of to dump the tag
