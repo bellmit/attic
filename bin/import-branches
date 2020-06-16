@@ -7,10 +7,18 @@ REMOTE="$2"
 
 git ls-remote --heads --refs "$REMOTE" | while IFS=$'\t' read HASH REF; do
   BRANCH="${REF#refs/heads/}"
-  if [ "$BRANCH" == master ]; then
-    git checkout master
-  else
+
+  case "$BRANCH" in
+  master)
+    git checkout main
+    ;;
+  main)
+    git checkout "$BRANCH"
+    ;;
+  *)
     git checkout --track origin/master -b "$PREFIX/$BRANCH"
-  fi
+    ;;
+  esac
+
   git subtree add --prefix "$PREFIX" "$REMOTE" "$BRANCH"
 done
