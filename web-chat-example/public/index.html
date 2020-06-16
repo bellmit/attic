@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web Chat</title>
+</head>
+<body>
+  <div id="messages">
+  </div>
+  <form id="chat" onsubmit="sendChatMessage(event)">
+    <input type="text" name="alias" placeholder="Enter a nickname…" autofocus>
+    <input type="text" size="100" name="line">
+    <input type="submit" value="Send">
+  </form>
+  <script>
+    /*
+     * WebSockets are built in on modern browsers, but the URLs used start
+     * with 'ws' (for insecure sockets) or 'wss' (for secure sockets over
+     * TLS), not 'http' or 'https'. Convert the URL of the current page into
+     * a corresponding WebSocket URL, throwing away the query and fragment
+     * parts in the process, then connect to it.
+     *
+     * See also:
+     *  - MDN: Writing WebSocket client applications
+     *    https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
+     *  - MDN: WebSocket
+     *    https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
+     */
+    const chatSocketUrl = [
+      window.location.protocol === 'https:' ? 'wss:' : 'ws:',
+      window.location.host,
+      window.location.pathname
+    ].join('');
+    const socket = new WebSocket(chatSocketUrl);
+
+    /*
+     * The HTML form in the page for input is a simple two-field chat input
+     * box. To send a message, the user types an alias and a line, then
+     * submits the form (hits enter, clicks the send button). This code
+     * intercepts the browser's default handling of form submission and
+     * replaces it with logic that submits the chat line as a JSON message
+     * over the WebSocket connection with the server.
+     *
+     * Messages are sent over the WebSocket connection in the form of JSON
+     * strings, encoding Javascript objects with the following fields:
+     *
+     *   {
+     *     "alias": "The user's preferred chat alias",
+     *     "line": "A chat message to send to all users"
+     *   }
+     *
+     * The values for these fields come right off the form. Because there's
+     * no validation or authentication, this is socially workable only in
+     * small, trustworthy groups, where the potential for lies and slander
+     * are limited because everyone knows everyone and can verify what's
+     * being said. This is not anywhere near adequate for an open chat
+     * service on the internet.
+     *
+     * This also controls the interaction with the form fields so that the
+     * user's "return" key and input focus behave in ways that make sense
+     * for a chat application. After submitting a message, this code blanks
+     * the input line (but not the alias) and puts focus back on the input
+     * line so that the user can type another message without having to
+     * manually navigate back to the correct input.
+     *
+     * See also:
+     *  - MDN: Working with JSON
+     *    https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/JSON
+     *  - MDN: JSON.stringify()
+     *    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+     *  - MDN: JSON.parse()
+     *    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
+     */
+    const chatForm = document.querySelector('#chat');
+    const aliasField = chatForm.elements.alias;
+    const lineField = chatForm.elements.line;
+
+    function clearLine() {
+      lineField.focus();
+      lineField.value = '';
+    }
+
+    function sendLine(alias, line) {
+      const message = {
+        alias: alias,
+        line: line
+      };
+      socket.send(JSON.stringify(message));
+    }
+
+    // eslint-plugin-html can't see that this is used because it doesn't look in
+    // HTML elements' attributes. Disable the check - it's used in the form's
+    // onsubmit handler.
+    // eslint-disable-next-line no-unused-vars
+    function sendChatMessage(event) {
+      event.preventDefault();
+
+      const alias = aliasField.value || 'Anonymous';
+      const line = lineField.value;
+      if (line !== '') {
+        sendLine(alias, line);
+      }
+      clearLine();
+    }
+
+    /*
+     * When this program receives a chat line, it needs to render it as a
+     * collection of DOM elements that can be shown on the page. The
+     * following functions use an approach loosely inspired by React to
+     * build up the following DOM fragment:
+     *
+     *   <p class="message"><span class="alias">An Alias</span>: <span class="line">A chat line</span></p>
+     *
+     * These functions are as close to side-effect free as it's possible to
+     * get while callimg DOM methods, so that they can be composed together
+     * into more complex templates without worrying about side effect
+     * ordering.
+     *
+     * See also:
+     *  - MDN: Document.createElement()
+     *    https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+     *  - MDN: Element.className
+     *    https://developer.mozilla.org/en-US/docs/Web/API/Element/className
+     *  - MDN: ParentNode.append()
+     *    https://developer.mozilla.org/en-US/docs/Web/API/ParentNode/append
+     */
+    function taggedSpanTemplate(cssClass, text) {
+      const elem = document.createElement('span');
+      elem.className = cssClass;
+      elem.append(text);
+      return elem;
+    }
+
+    function aliasTemplate(alias) {
+      return taggedSpanTemplate('alias', alias);
+    }
+
+    function lineTemplate(line) {
+      return taggedSpanTemplate('line', line);
+    }
+
+    function messageTemplate(alias, line) {
+      const elem = document.createElement('p');
+      elem.className = 'message';
+      elem.append(aliasTemplate(alias));
+      elem.append(': ');
+      elem.append(lineTemplate(line));
+      return elem;
+    }
+
+    /*
+     * Similar templates for rendering the following error message template:
+     *
+     *   <p class="error">An error message. (Reload this page to continue.)</p>
+     */
+    function errorTemplate(message) {
+      const elem = document.createElement('p');
+      elem.className = 'error';
+      elem.append(message);
+      elem.append(' (Reload this page to continue.)');
+      return elem;
+    }
+
+    /*
+     * Whenever we receive a message, decode it from its JSON form back into a
+     * Javascript object, then render it using the templates above and then
+     * insert the results into the DOM as children of the 'messages' div, so
+     * that they are visible to the user. This system is also used to deliver
+     * errors and status messages about the state of the chat application.
+     *
+     * Using an event listener allows the browser's WebSockets implementation to
+     * deliver messages to us as they arrive, without waiting for the user to
+     * click a button or reload the page.
+     */
+    const messages = document.querySelector('#messages');
+    function appendMessage(alias, line) {
+      const messageElement = messageTemplate(alias, line);
+      messages.append(messageElement);
+    }
+
+    function appendError(message) {
+      const errorElement = errorTemplate(message);
+      messages.append(errorElement);
+    }
+
+    socket.addEventListener('message', (event) => {
+      const message = JSON.parse(event.data);
+      appendMessage(message.alias, message.line);
+    });
+
+    socket.addEventListener('error', (event) => {
+      appendError(event.message);
+    });
+
+    socket.addEventListener('close', () => {
+      appendError('Connection closed or timed out.');
+    });
+  </script>
+</body>
+</html>
