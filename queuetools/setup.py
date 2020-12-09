@@ -29,7 +29,6 @@ such as RabbitMQ:
         'Environment :: Console',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
-        'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Topic :: Software Development',
         'Topic :: System :: Systems Administration',

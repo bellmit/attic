@@ -18,7 +18,3 @@ obfuscation applied. Using this on the internet with a server you care about
 is immensely dumb, so don't do it; if you do, and someone swipes your password
 with Wireshark, don't come whining to me when your server is overrun by
 griefers.
-
-This code is under the MIT license. You know how to find a copy of it.
-
-Share and enjoy.

@@ -31,13 +31,6 @@
     </developer>
   </developers>
 
-  <licenses>
-    <license>
-      <name>MIT</name>
-      <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
-    </license>
-  </licenses>
-
   <scm>
     <connection>
       scm:hg:http://alchemy.grimoire.ca/hg/mainspring-daemon/

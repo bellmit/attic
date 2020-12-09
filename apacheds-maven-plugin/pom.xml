@@ -29,13 +29,6 @@
         </developer>
     </developers>
 
-    <licenses>
-        <license>
-            <name>MIT</name>
-            <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
-        </license>
-    </licenses>
-
     <scm>
         <connection>scm:hg:https://bitbucket.org/ojacobson/apacheds-maven-plugin</connection>
         <developerConnection>scm:hg:ssh://hg@bitbucket.org/ojacobson/apacheds-maven-plugin</developerConnection>

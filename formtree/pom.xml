@@ -28,13 +28,6 @@
         </developer>
     </developers>
 
-    <licenses>
-        <license>
-            <name>MIT</name>
-            <url>http://alchemy.grimoire.ca/licenses/MIT-LICENSE</url>
-        </license>
-    </licenses>
-
     <scm>
         <url>https://bitbucket.org/ojacobson/formtree</url>
         <connection>scm:hg:https://bitbucket.org/ojacobson/formtree</connection>

@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# MIT license. You know how to look it up.
-
 import random
 
 possibleparts = [
