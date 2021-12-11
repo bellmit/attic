@@ -1,0 +1,21 @@
+---
+machine:
+    java:
+        version: oraclejdk8
+    environment:
+        ORG_GRADLE_PROJECT_bintrayApiKey: NONE
+        ORG_GRADLE_PROJECT_bintrayUsername: NONE
+
+checkout:
+    post:
+        - bin/use-pull-request-merge
+
+dependencies:
+    override:
+        - ./gradlew classes
+        - ./gradlew testClasses
+
+test:
+    post:
+        - ./gradlew javadoc
+        - bin/collate-test-results "$CIRCLE_TEST_REPORTS"
