@@ -25,9 +25,9 @@ git for-each-ref refs/import-tags/ | while read HASH TYPE REF; do
       fi
 
       echo "$REPLY"
-    done | git tag -a --sign -F- "$PREFIX/$TAG"
+    done | git tag -a -F- "$PREFIX/$TAG"
     ;;
   esac
 
-  git update-ref -d "$IMPORT_REF"
+  git update-ref -d "$REF"
 done
