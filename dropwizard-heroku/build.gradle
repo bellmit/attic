@@ -1,0 +1,99 @@
+import org.ajoberstar.grgit.Grgit
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath group: 'org.ajoberstar', name: 'gradle-git', version: '0.13.0-milestone.1'
+        classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.8.4'
+    }
+}
+
+apply plugin: 'org.ajoberstar.release-opinion'
+
+release {
+    grgit = Grgit.open(projectDir)
+}
+
+allprojects {
+    apply plugin: 'idea'
+
+    group = 'com.loginbox.heroku'
+    version = rootProject.version
+
+    ext {
+        isSnapshot = version.toString().contains("-dev")
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        ext {
+            dropwizardVersion = '0.9.1'
+
+            // The following versions have to track dropwizardVersion but are not equal to it. You
+            // can obtain the correct version numbers from the published dropwizard-parent POM.
+
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.jfrog.bintray'
+
+
+    sourceCompatibility = '1.8'
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+
+                artifact sourcesJar
+                artifact javadocJar
+            }
+        }
+    }
+
+    bintray {
+        user = bintrayUsername
+        key = bintrayApiKey
+
+        publications = ['mavenJava']
+
+        pkg {
+            userOrg = 'login-box'
+            repo = isSnapshot ? 'snapshots' : 'releases'
+            name = 'dropwizard-heroku'
+            websiteUrl = 'https://github.com/ojacobson/dropwizard-heroku'
+            issueTrackerUrl = 'https://github.com/ojacobson/dropwizard-heroku/issues'
+            vcsUrl = 'https://github.com/ojacobson/dropwizard-heroku'
+            licenses = ['MIT']
+            publicDownloadNumbers = true
+            version {
+                name = project.version
+            }
+        }
+    }
+}
